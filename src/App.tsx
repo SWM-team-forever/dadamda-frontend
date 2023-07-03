@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import './App.css'
 import AuthPage from './pages/AuthPage'
+import CardViewPage from './pages/CardViewPage';
 
 function App() {
   
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
       <AuthPage isLogin={isLogin} changeAuthType={changeAuthType}/>
+      <CardViewPage/>
     </>
   )
 }
