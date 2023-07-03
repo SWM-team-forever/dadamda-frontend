@@ -1,7 +1,9 @@
 import { useCallback, useState } from 'react';
 import './App.css'
-import AuthPage from './pages/AuthPage'
+import AuthPage from './pages/AuthPage';
 import CardViewPage from './pages/CardViewPage';
+import Header from './components/Header';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 function App() {
   
@@ -12,8 +14,13 @@ function App() {
 
   return (
     <>
-      <AuthPage isLogin={isLogin} changeAuthType={changeAuthType}/>
-      <CardViewPage/>
+      <BrowserRouter>
+        <Header/>
+        <Routes>
+          <Route path='/' element={<AuthPage isLogin={isLogin} changeAuthType={changeAuthType}/>}></Route>
+          <Route path='/cards' element={<CardViewPage/>}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
