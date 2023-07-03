@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components';
 import { GoogleLoginButton } from 'react-social-login-buttons';
-import { SiReactos } from 'react-icons/si'
+import { SiReactos } from 'react-icons/si';
+import { Link } from 'react-router-dom';
 
 type AuthPageProps = {
     isLogin: boolean,
-    changeAuthType: () => void,
 }
 
-function AuthPage({isLogin, changeAuthType}: AuthPageProps) {
+function AuthPage({isLogin}: AuthPageProps) {
 
     const authTexts = isLogin ? 
     {
@@ -47,7 +47,9 @@ function AuthPage({isLogin, changeAuthType}: AuthPageProps) {
 
             <AuthPanelNavigator>
                 <span style={{ marginRight: "5px" }}>{ authTexts.navigatorDescription }</span>
-                <span style={{ color: "#0000FF", cursor: "pointer"}} onClick={() => changeAuthType()}>{ authTexts.navigatorText }</span>
+                <Link to={isLogin? "/register" : "/"}>
+                    <span style={{ color: "#0000FF", cursor: "pointer"}}>{ authTexts.navigatorText }</span>
+                </Link>
             </AuthPanelNavigator>
         </AuthPanel>
         </AuthFormWrapper>

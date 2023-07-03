@@ -17,7 +17,8 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Routes>
-          <Route path='/' element={<AuthPage isLogin={isLogin} changeAuthType={changeAuthType}/>}></Route>
+          <Route path='/' element={<AuthPage isLogin={true}/>}></Route>
+          <Route path='/register' element={<AuthPage isLogin={false}/>}></Route>
           <Route path='/cards' element={<CardViewPage/>}></Route>
         </Routes>
       </BrowserRouter>
