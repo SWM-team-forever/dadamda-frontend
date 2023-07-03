@@ -194,9 +194,12 @@ const App = () => {
   }, [getProductList]);
 
   return (
-    <Template1List templates = { initProductTemplates }/>
     //<Template1List templates = { articleTemplates } />
    // <Template1List templates = { videoTemplates } />
+    <div>
+      <Template1List templates = { initProductTemplates }/>
+      <p>배포 확인</p>
+    </div>
   )
 }
 
