@@ -30,14 +30,14 @@ function AuthPage({isLogin, changeAuthType}: AuthPageProps) {
     <Container>
         <AuthFormWrapper>
         <AuthPanel>
-            <AuthPanelTop>
+            <AuthPanelHeader>
                 <LogoWrapper>
                     <SiReactos/>
                     <span style={{ fontSize: "1.5rem", fontWeight: "bold" }}>다담다</span>
                 </LogoWrapper>
                 <span style={{ fontSize: "2rem", fontWeight: "bold", margin: "20px 0"}}>{ authTexts.type }</span>
                 <span>{ authTexts.typeDescription }</span>
-            </AuthPanelTop>
+            </AuthPanelHeader>
 
             <AuthPanelButtons>
                 <GoogleLoginButton>
@@ -88,7 +88,7 @@ const LogoWrapper = styled.div`
     align-items: center;
 `
 
-const AuthPanelTop = styled.div`
+const AuthPanelHeader = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
