@@ -7,8 +7,6 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
   const changeAuthType = useCallback(() => {
     setIsLogin(!isLogin);
-    console.log(isLogin);
-    console.log(!isLogin);
   }, [isLogin]);
 
   return (
