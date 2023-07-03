@@ -4,7 +4,7 @@ import LoginOrRegister from './pages/LoginOrRegister'
 function App() {
   return (
     <>
-      <LoginOrRegister/>
+      <LoginOrRegister isLogin={ true }/>
     </>
   )
 }
