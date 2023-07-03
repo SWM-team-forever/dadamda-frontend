@@ -1,10 +1,19 @@
+import { useCallback, useState } from 'react';
 import './App.css'
-import LoginOrRegister from './pages/LoginOrRegister'
+import AuthPage from './pages/AuthPage'
 
 function App() {
+  
+  const [isLogin, setIsLogin] = useState(true);
+  const changeAuthType = useCallback(() => {
+    setIsLogin(!isLogin);
+    console.log(isLogin);
+    console.log(!isLogin);
+  }, [isLogin]);
+
   return (
     <>
-      <LoginOrRegister isLogin={ true }/>
+      <AuthPage isLogin={isLogin} changeAuthType={changeAuthType}/>
     </>
   )
 }
