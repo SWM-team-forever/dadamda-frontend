@@ -41,7 +41,7 @@ function AuthPage({isLogin, changeAuthType}: AuthPageProps) {
 
             <AuthPanelButtons>
                 <GoogleLoginButton>
-                    { authTexts.buttonText }
+                    <ButtonText>{ authTexts.buttonText }</ButtonText>
                 </GoogleLoginButton>
             </AuthPanelButtons>
 
@@ -62,6 +62,11 @@ const Container = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
+    @media(max-width: 768px) {
+        font-size: .7rem;
+        text-align: center;
+    }
 `
 
 const AuthFormWrapper = styled.div`
@@ -88,12 +93,24 @@ const AuthPanelTop = styled.div`
     flex-direction: column;
     align-items: center;
 `
-const AuthPanelButtons = styled.div`
 
+const ButtonText = styled.span`
+    @media(max-width: 768px) {
+        font-size: .6rem;
+        font-weight: bold;
+    }
+`
+
+const AuthPanelButtons = styled.div`
+    
 `
 
 const AuthPanelNavigator = styled.div`
-
+    display: flex;
+    @media(max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+    }
 `
 
 export default AuthPage
