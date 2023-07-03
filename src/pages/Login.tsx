@@ -10,9 +10,9 @@ function Login() {
             <LoginPanelTop>
                 <LogoWrapper>
                     <SiReactos/>
-                    <span>다담다</span>
+                    <span style={{ fontSize: "1.5rem", fontWeight: "bold" }}>다담다</span>
                 </LogoWrapper>
-                <span>Login</span>
+                <span style={{ fontSize: "2rem", fontWeight: "bold", margin: "20px 0"}}>Login</span>
                 <span>로그인이 필요한 서비스 입니다. 로그인 후 이용해주세요</span>
             </LoginPanelTop>
 
@@ -23,7 +23,8 @@ function Login() {
             </LoginPanelButtons>
 
             <LoginPanelNavigator>
-                <span>아직 회원이 아니신가요?</span>
+                <span style={{ marginRight: "5px" }}>아직 회원이 아니신가요?</span>
+                <span style={{ color: "#0000FF", cursor: "pointer" }}>회원 가입하기</span>
             </LoginPanelNavigator>
         </LoginPanel>
         
@@ -32,14 +33,22 @@ function Login() {
 }
 
 const LoginPanel = styled.div`
+    height: 100%;
+    box-sizing: border-box;
     padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 `
 const LogoWrapper = styled.div`
     display: flex;
+    align-items: center;
 `
 
 const LoginPanelTop = styled.div`
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 const LoginPanelButtons = styled.div`
 
