@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
     <HeaderList>
-        <ul>로그인</ul>
-        <ul>회원가입</ul>
-        <ul>카드 뷰 페이지</ul>
+        <Link to="/" style={{ textDecoration: "none"}}><ul>로그인</ul></Link>
+        <Link to="/register" style={{ textDecoration: "none"}}><ul>회원가입</ul></Link>
+        <Link to="/cards" style={{ textDecoration: "none"}}><ul>카드 뷰 페이지</ul></Link>
     </HeaderList>
   )
 }
