@@ -31,45 +31,23 @@ type ProductTemplateProps = {
   title: string,
   type: string,
   price: string,
-  id: number,
-  site: string,
 }
 
 function ProductTemplate({url, image, title, type, price}: ProductTemplateProps) {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: "33%" }}>
       <CardHeader
         title={title}
       />
       <CardMedia
         component="img"
-        height="194"
         image={image}
         alt="Paella dish"
       />
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography>가격 : {price}</Typography>
-        </CardContent>
-      </Collapse>
-
-      {console.log(title)}
+      <CardContent>
+        <Typography>{price}</Typography>
+      </CardContent>
     </Card>
   )
 }

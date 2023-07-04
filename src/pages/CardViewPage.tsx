@@ -26,11 +26,13 @@ function CardViewPage() {
 
   return (
     <Container>
-      <Sidebar />
+      <SidebarArea>
+        <Sidebar />
+      </SidebarArea>
 
       <CardArea>
-        <Box sx={{ width: 500, minHeight: 393 }}>
-          <Masonry columns={3} spacing={2}>
+        <Box sx={{ width: "90%" }}>
+          <Masonry columns={1} spacing={2}>
             {initProductTemplates.map((product, index) => {
               //console.log(product);
               return <ProductTemplate
@@ -53,12 +55,22 @@ function CardViewPage() {
 const Container = styled.div`
     background-color: #dcdefe;
     width: 100vw;
-    height: calc(100vh - 50px);
+    min-height: calc(100vh - 50px);
     display: flex;
+    justify-content: space-around;
+    padding: 10px;
+`
+const SidebarArea = styled.div`
+  width: 7vw;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 468px) {
+        width: 100%;
+    }
 `
 
 const CardArea = styled.div`
     width: 90vw;
-    background-color: #000000;
 `
 export default CardViewPage
