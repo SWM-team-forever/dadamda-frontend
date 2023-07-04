@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MdOutlineDashboard, MdProductionQuantityLimits, MdOutlineArticle, MdOutlineMap, MdOutlineOndemandVideo, MdAccessibility } from 'react-icons/md';
+import ProductTemplate from '../components/ProductTemplate';
 
 function CardViewPage() {
   return (
@@ -33,7 +34,7 @@ function CardViewPage() {
         </Sidebar>
         
         <CardArea>
-
+            <ProductTemplate/>
         </CardArea>
 
     </Container>
