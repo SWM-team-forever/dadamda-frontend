@@ -5,6 +5,23 @@ import styled from 'styled-components';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
+type MenuProps = {
+    icon: object,
+    label: string
+}
+
+function Menu({icon, label}: MenuProps) {
+    //console.log(menu);
+
+    return (
+        <MenuItem>
+            {icon}
+            <span>{label}</span>
+        </MenuItem>
+    )
+}
+
+
 function Sidebar() {
 
     const [value, setValue] = React.useState('상품');
@@ -13,83 +30,59 @@ function Sidebar() {
         setValue(newValue);
     };
 
+    const menus = [
+        {
+            icon: <MdOutlineDashboard/>,
+            label: "보드"
+        },
+        {
+            icon: <MdList/>,
+            label: "전체"
+        },
+        {
+            icon: <MdProductionQuantityLimits/>,
+            label: "상품"
+        },
+        {
+            icon: <MdOutlineArticle/>,
+            label: "아티클"
+        },
+        {
+            icon: <MdOutlineMap/>,
+            label: "지도"
+        },
+        {
+            icon: <MdOutlineOndemandVideo/>,
+            label: "비디오"
+        },
+        {
+            icon: <MdAccessibility/>,
+            label: "기타"
+        }
+    ]
+
     return (
         <>
             <SidebarWrapper>
-                <Board>
-                    <MdOutlineDashboard style={{ width: "2.5rem", height: "2.5rem" }} />
-                    <span>보드</span>
-                </Board>
-                <Scrap>
-                    <MdList style={{ maxWidth: "3rem", maxHeight: "3rem", width: "90%", height: "90%" }} />
-                    <span>전체</span>
-                </Scrap>
-                <Product>
-                    <MdProductionQuantityLimits style={{ maxWidth: "3rem", maxHeight: "3rem", width: "90%", height: "90%" }} />
-                    <span>상품</span>
-                </Product>
-                <Article>
-                    <MdOutlineArticle style={{ maxWidth: "3rem", maxHeight: "3rem", width: "90%", height: "90%" }} />
-                    <span>아티클</span>
-                </Article>
-                <Map>
-                    <MdOutlineMap style={{ maxWidth: "3rem", maxHeight: "3rem", width: "90%", height: "90%" }} />
-                    <span>지도</span>
-                </Map>
-                <Video>
-                    <MdOutlineOndemandVideo style={{ maxWidth: "3rem", maxHeight: "3rem", width: "90%", height: "90%" }} />
-                    <span>비디오</span>
-                </Video>
-                <Etc>
-                    <MdAccessibility style={{ maxWidth: "3rem", maxHeight: "3rem", width: "90%", height: "90%" }} />
-                    <span>기타</span>
-                </Etc>
+                {menus.map((menu, index) => {
+                    return <Menu 
+                    icon={menu.icon}
+                    label={menu.label}
+                    key={index}/>
+                })}
             </SidebarWrapper>
 
             <MobileSidebar>
                 <BottomNavigation value={value} onChange={handleChange}>
-                    <BottomNavigationAction
-                        style={{ margin: 0 }}
-                        label="보드"
-                        value="보드"
-                        icon={<MdOutlineDashboard />}
-                    />
-                    <BottomNavigationAction
-                        style={{ margin: 0 }}
-                        label="전체"
-                        value="전체"
-                        icon={<MdList />}
-                    />
-                    <BottomNavigationAction
-                        style={{ margin: 0 }}
-                        label="상품"
-                        value="상품"
-                        icon={<MdProductionQuantityLimits />}
-                    />
-                    <BottomNavigationAction
-                        style={{ margin: 0 }}
-                        label="아티클"
-                        value="아티클"
-                        icon={<MdOutlineArticle />}
-                    />
-                    <BottomNavigationAction
-                        style={{ margin: 0 }}
-                        label="지도"
-                        value="지도"
-                        icon={<MdOutlineMap />}
-                    />
-                    <BottomNavigationAction
-                        style={{ margin: 0 }}
-                        label="비디오"
-                        value="비디오"
-                        icon={<MdOutlineOndemandVideo />}
-                    />
-                    <BottomNavigationAction
-                        style={{ margin: 0 }}
-                        label="기타"
-                        value="기타"
-                        icon={<MdAccessibility />}
-                    />
+                    {menus.map((menu, index) => {
+                        return <BottomNavigationAction
+                            style={{ margin: 0 }}
+                            label={menu.label}
+                            value={menu.label}
+                            icon={menu.icon}
+                            key={index}
+                        />
+                    })}
                 </BottomNavigation>
             </MobileSidebar>
         </>
@@ -118,6 +111,20 @@ const SidebarWrapper = styled.div`
     }
 `
 
+const MenuItem = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    svg {
+        width: 90%;
+        height: 90%;
+        max-width: 3rem;
+        max-height: 3rem;
+    }
+`
+
 const MobileSidebar = styled.div`
     background-color: white;
     width: 100%;
@@ -134,44 +141,6 @@ const MobileSidebar = styled.div`
         min-width: 13%;
         padding: 0;
     }
-`
-
-const Board = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-const Scrap = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const Product = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-const Article = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-const Map = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-const Video = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-const Etc = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 `
 
 export default Sidebar;
