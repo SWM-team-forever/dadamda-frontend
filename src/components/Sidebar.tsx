@@ -3,34 +3,34 @@ import { MdOutlineDashboard, MdProductionQuantityLimits, MdOutlineArticle, MdOut
 import styled from 'styled-components';
 
 function Sidebar() {
-  return (
-    <SidebarWrapper>
-      <Board>
-                <MdOutlineDashboard style={{ width: "3rem", height: "3rem" }}/>
+    return (
+        <SidebarWrapper>
+            <Board>
+                <MdOutlineDashboard style={{ width: "3rem", height: "3rem" }} />
                 <span>보드</span>
             </Board>
             <Product>
-                <MdProductionQuantityLimits style={{ width: "3rem", height: "3rem" }}/>
+                <MdProductionQuantityLimits style={{ width: "3rem", height: "3rem" }} />
                 <span>상품</span>
             </Product>
             <Article>
-                <MdOutlineArticle style={{ width: "3rem", height: "3rem" }}/>
+                <MdOutlineArticle style={{ width: "3rem", height: "3rem" }} />
                 <span>아티클</span>
             </Article>
             <Map>
-                <MdOutlineMap style={{ width: "3rem", height: "3rem" }}/>
+                <MdOutlineMap style={{ width: "3rem", height: "3rem" }} />
                 <span>지도</span>
             </Map>
             <Video>
-                <MdOutlineOndemandVideo style={{ width: "3rem", height: "3rem" }}/>
+                <MdOutlineOndemandVideo style={{ width: "3rem", height: "3rem" }} />
                 <span>비디오</span>
             </Video>
             <Etc>
-                <MdAccessibility style={{ width: "3rem", height: "3rem" }}/>
+                <MdAccessibility style={{ width: "3rem", height: "3rem" }} />
                 <span>기타</span>
             </Etc>
-    </SidebarWrapper>
-  )
+        </SidebarWrapper>
+    )
 }
 
 const SidebarWrapper = styled.div`
