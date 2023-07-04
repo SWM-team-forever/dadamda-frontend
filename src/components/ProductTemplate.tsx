@@ -15,14 +15,14 @@ type ProductTemplateProps = {
 function ProductTemplate({url, image, title, type, price}: ProductTemplateProps) {
 
   return (
-    <Card sx={{ maxWidth: "33%" }}>
+    <Card sx={{ maxWidth: "100%" }}>
       <CardHeader
         title={title}
       />
       <CardMedia
         component="img"
         image={image}
-        alt="Paella dish"
+        alt="상품 이미지"
       />
       <CardContent>
         <Typography>{price}</Typography>

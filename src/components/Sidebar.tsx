@@ -104,17 +104,13 @@ const SidebarWrapper = styled.div`
     padding: 15px 0;
     box-sizing: border-box;
     height: fit-content;
-    border-radius: 20px;
+    border-radius: 1rem;
     position: fixed;
     top: 50%;
     transform: translate(0, -50%);
 
     @media screen and (max-width: 468px) {
         display: none;
-    }
-
-    div {
-        max-width: 100%;
     }
 
     span {
