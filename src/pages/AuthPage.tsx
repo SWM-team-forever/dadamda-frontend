@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { SiReactos } from 'react-icons/si'
