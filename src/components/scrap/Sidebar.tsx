@@ -95,12 +95,16 @@ const SidebarWrapper = styled.div`
     border-radius: 1rem;
     position: fixed;
     top: 50%;
+    margin: 20px;
     transform: translate(0, -50%);
     @media screen and (max-width: 468px) {
         display: none;
     }
     span {
-        font-size: 0.8em;
+        @media screen and (max-width: 700px) {
+            display: none;
+            font-size: 0.8em;
+        }
     }
 `
 
@@ -114,6 +118,11 @@ const MenuItem = styled.div`
         height: 90%;
         max-width: 3rem;
         max-height: 3rem;
+    }
+    span {
+        @media screen and (max-width: 468px) {
+            display: none;
+        }
     }
 `
 
