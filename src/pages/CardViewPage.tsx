@@ -2,27 +2,26 @@ import {useEffect, useCallback, useState} from 'react';
 import styled from 'styled-components';
 import ProductTemplate from '../components/ProductTemplate';
 import Sidebar from '../components/Sidebar';
-
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Masonry from '@mui/lab/Masonry';
+import { PRODUCT_DATAS } from '../config';
 
 function CardViewPage() {
 
-  const [initProductTemplates, setInitProductTemplates] = useState([]);
-  const productURL = "https://0nyhd85jc9.execute-api.ap-northeast-2.amazonaws.com/beta/scrap";
-  const getProductList = useCallback(
-      () => 
-      fetch(productURL)
-      .then(response => response.json())
-      .then(( data ) => {
-        return data
-      })
-    , []);
+  const [initProductTemplates, setInitProductTemplates] = useState(PRODUCT_DATAS);
+  // const productURL = "https://0nyhd85jc9.execute-api.ap-northeast-2.amazonaws.com/beta/scrap";
+  // const getProductList = useCallback(
+  //     () => 
+  //     fetch(productURL)
+  //     .then(response => response.json())
+  //     .then(( data ) => {
+  //       return data
+  //     })
+  //   , []);
 
-  useEffect(() => {
-    getProductList().then(data => setInitProductTemplates(data))
-  }, [getProductList]);
+  // useEffect(() => {
+  //   getProductList().then(data => setInitProductTemplates(data))
+  // }, [getProductList]);
+
 
   return (
     <Container>
