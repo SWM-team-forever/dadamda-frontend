@@ -10,8 +10,7 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Routes>
-          <Route path='/' element={<AuthPage isLogin={true}/>}></Route>
-          <Route path='/register' element={<AuthPage isLogin={false}/>}></Route>
+          <Route path='/' element={<AuthPage/>}></Route>
           <Route path='/cards' element={<ScrapPage/>}></Route>
         </Routes>
       </BrowserRouter>

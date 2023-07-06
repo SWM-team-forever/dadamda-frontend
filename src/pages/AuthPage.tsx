@@ -1,29 +1,15 @@
 import styled from 'styled-components';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { SiReactos } from 'react-icons/si';
-import { Link } from 'react-router-dom';
 
-type AuthPageProps = {
-    isLogin: boolean,
-}
+function AuthPage() {
 
-function AuthPage({isLogin}: AuthPageProps) {
-
-    const authTexts = isLogin ? 
-    {
+    const authTexts = {
         type: "로그인",
         typeDescription: "로그인이 필요한 서비스입니다. 로그인 후 이용해주세요.",
-        buttonText: "구글로 로그인하기",
         navigatorDescription: "아직 회원이 아니신가요?",
         navigatorText: "회원가입하기"
-    } :
-    {
-        type: "회원가입",
-        typeDescription: "회원가입하시겠습니까?",
-        buttonText: "구글로 회원가입하기",
-        navigatorDescription: "이미 회원가입 하셨나요?",
-        navigatorText: "로그인하기"
-    };
+    }
 
   return (
     <Container>
@@ -38,16 +24,8 @@ function AuthPage({isLogin}: AuthPageProps) {
                 <span>{ authTexts.typeDescription }</span>
             </AuthPanelHeader>
             <AuthPanelButtons>
-                <GoogleLoginButton>
-                    <ButtonText>{ authTexts.buttonText }</ButtonText>
-                </GoogleLoginButton>
+                <GoogleLoginButton style={{ width: "fit-content", padding: "0 20px"}}/>
             </AuthPanelButtons>
-            <AuthPanelNavigator>
-                <span style={{ marginRight: "5px" }}>{ authTexts.navigatorDescription }</span>
-                <Link to={isLogin? "/register" : "/"}>
-                    <span style={{ color: "#0000FF", cursor: "pointer"}}>{ authTexts.navigatorText }</span>
-                </Link>
-            </AuthPanelNavigator>
         </AuthPanel>
         </AuthFormWrapper>
     </Container>
@@ -100,7 +78,8 @@ const ButtonText = styled.span`
 `
 
 const AuthPanelButtons = styled.div`
-    
+    display: flex;
+    justify-content: center;
 `
 
 const AuthPanelNavigator = styled.div`
