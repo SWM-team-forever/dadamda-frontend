@@ -34,7 +34,6 @@ function AuthPage() {
 const Container = styled.div`
     background-color: #dcdefe;
     width: 100vw;
-    
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -81,12 +80,4 @@ const AuthPanelButtons = styled.div`
     justify-content: center;
 `
 
-const AuthPanelNavigator = styled.div`
-    display: flex;
-    @media(max-width: 768px) {
-        flex-direction: column;
-        align-items: center;
-    }
-`
-
-export default AuthPage
+export default AuthPage;
