@@ -5,7 +5,7 @@ import Sidebar from '../components/scrap/Sidebar';
 import Masonry from '@mui/lab/Masonry';
 import { PRODUCT_DATAS } from '../config';
 
-function CardViewPage() {
+function ScrapPage() {
 
   const [productDatas, setProductDatas] = useState(PRODUCT_DATAS);
 
@@ -57,4 +57,4 @@ const CardArea = styled.div`
     }
   }
 `
-export default CardViewPage
+export default ScrapPage;
