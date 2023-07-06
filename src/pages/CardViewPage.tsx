@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import ProductTemplate from '../components/ProductTemplate';
-import Sidebar from '../components/Sidebar';
+import ProductTemplate from '../components/scrap/ProductTemplate';
+import Sidebar from '../components/scrap/Sidebar';
 import Masonry from '@mui/lab/Masonry';
 import { PRODUCT_DATAS } from '../config';
 
