@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -30,8 +28,8 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+  <AppBar position='sticky'>
+      <Container maxWidth="xl" style={{width: '100%'}}>
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -82,9 +80,11 @@ function Header() {
               }}
             >
               {pages.map((page) => (
+                <Link to={page} style={{ textDecoration: 'none' }}>
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -109,6 +109,7 @@ function Header() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+              <Link to={page} style={{ textDecoration: 'none' }}>
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -116,6 +117,7 @@ function Header() {
               >
                 {page}
               </Button>
+              </Link>
             ))}
           </Box>
 
@@ -125,31 +127,11 @@ function Header() {
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-            </Menu>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   )
 }
-
-const HeaderList = styled.li`
-    display: flex;
-    height: 50px;
-    align-items: center;
-`
 
 export default Header

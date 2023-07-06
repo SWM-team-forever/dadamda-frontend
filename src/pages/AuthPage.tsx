@@ -3,7 +3,6 @@ import { GoogleLoginButton } from 'react-social-login-buttons';
 import { SiReactos } from 'react-icons/si';
 
 function AuthPage() {
-
     const authTexts = {
         type: "로그인",
         typeDescription: "로그인이 필요한 서비스입니다. 로그인 후 이용해주세요.",
@@ -35,7 +34,7 @@ function AuthPage() {
 const Container = styled.div`
     background-color: #dcdefe;
     width: 100vw;
-    height: calc(100vh - 50px);
+    
     display: flex;
     justify-content: space-evenly;
     align-items: center;

@@ -33,12 +33,9 @@ function ScrapPage() {
 }
 
 const Container = styled.div`
-    background-color: #dcdefe;
-    width: 100vw;
-    min-height: calc(100vh - 50px);
+    width: 100%;
     display: flex;
     justify-content: space-around;
-    padding: 10px;
 `
 const SidebarArea = styled.div`
   width: 7vw;
@@ -52,6 +49,7 @@ const SidebarArea = styled.div`
 
 const CardArea = styled.div`
   width: 90vw;
+  margin-top: 20px;
   @media screen and (max-width: 468px) {
       width: 100vw;
     }

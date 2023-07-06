@@ -11,11 +11,12 @@ function App() {
         <Header/>
         <Routes>
           <Route path='/' element={<AuthPage/>}></Route>
-          <Route path='/cards' element={<ScrapPage/>}></Route>
+          <Route path='/Login' element={<AuthPage/>}></Route>
+          <Route path='/Scrap' element={<ScrapPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
   )
 }
 
-export default App
+export default App;
