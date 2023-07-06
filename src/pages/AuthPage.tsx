@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components';
 import { GoogleLoginButton } from 'react-social-login-buttons';
 import { SiReactos } from 'react-icons/si';
@@ -38,13 +37,11 @@ function AuthPage({isLogin}: AuthPageProps) {
                 <span style={{ fontSize: "2rem", fontWeight: "bold", margin: "20px 0"}}>{ authTexts.type }</span>
                 <span>{ authTexts.typeDescription }</span>
             </AuthPanelHeader>
-
             <AuthPanelButtons>
                 <GoogleLoginButton>
                     <ButtonText>{ authTexts.buttonText }</ButtonText>
                 </GoogleLoginButton>
             </AuthPanelButtons>
-
             <AuthPanelNavigator>
                 <span style={{ marginRight: "5px" }}>{ authTexts.navigatorDescription }</span>
                 <Link to={isLogin? "/register" : "/"}>
@@ -64,7 +61,6 @@ const Container = styled.div`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-
     @media(max-width: 768px) {
         font-size: .7rem;
         text-align: center;

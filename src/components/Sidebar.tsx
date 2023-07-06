@@ -1,7 +1,6 @@
-import React from 'react';
+import { useState }from 'react';
 import { MdOutlineDashboard, MdProductionQuantityLimits, MdOutlineArticle, MdOutlineMap, MdOutlineOndemandVideo, MdAccessibility, MdList } from 'react-icons/md';
 import styled from 'styled-components';
-
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
@@ -11,8 +10,6 @@ type MenuProps = {
 }
 
 function Menu({icon, label}: MenuProps) {
-    //console.log(menu);
-
     return (
         <MenuItem>
             {icon}
@@ -23,9 +20,7 @@ function Menu({icon, label}: MenuProps) {
 
 
 function Sidebar() {
-
-    const [value, setValue] = React.useState('상품');
-
+    const [value, setValue] = useState('상품');
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
@@ -101,11 +96,9 @@ const SidebarWrapper = styled.div`
     position: fixed;
     top: 50%;
     transform: translate(0, -50%);
-
     @media screen and (max-width: 468px) {
         display: none;
     }
-
     span {
         font-size: 0.8em;
     }
@@ -116,7 +109,6 @@ const MenuItem = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-
     svg {
         width: 90%;
         height: 90%;
@@ -132,11 +124,9 @@ const MobileSidebar = styled.div`
     position: fixed;
     bottom: 0;
     left: 0;
-
     @media screen and (min-width: 468px) {
         display: none;
     }
-
     button {
         min-width: 13%;
         padding: 0;
