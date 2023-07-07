@@ -1,4 +1,5 @@
 import { useState }from 'react';
+import { Link } from 'react-router-dom';
 import { MdOutlineDashboard, MdProductionQuantityLimits, MdOutlineArticle, MdOutlineMap, MdOutlineOndemandVideo, MdAccessibility, MdList } from 'react-icons/md';
 import styled from 'styled-components';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -28,31 +29,38 @@ function Sidebar() {
     const menus = [
         {
             icon: <MdOutlineDashboard/>,
-            label: "보드"
+            label: "보드",
+            route: "board",
         },
         {
             icon: <MdList/>,
-            label: "전체"
+            label: "전체",
+            route: "entire",
         },
         {
             icon: <MdProductionQuantityLimits/>,
-            label: "상품"
+            label: "상품",
+            route: "product",
         },
         {
             icon: <MdOutlineArticle/>,
-            label: "아티클"
+            label: "아티클",
+            route: "article",
         },
         {
             icon: <MdOutlineMap/>,
-            label: "지도"
+            label: "지도",
+            route: "map",
         },
         {
             icon: <MdOutlineOndemandVideo/>,
-            label: "비디오"
+            label: "비디오",
+            route: "video",
         },
         {
             icon: <MdAccessibility/>,
-            label: "기타"
+            label: "기타",
+            route: "other",
         }
     ]
 
@@ -60,10 +68,11 @@ function Sidebar() {
         <>
             <SidebarWrapper>
                 {menus.map((menu, index) => {
-                    return <Menu 
+                    return <Link to={`/scrap/${menu.route}`}><Menu 
                     icon={menu.icon}
                     label={menu.label}
                     key={index}/>
+                    </Link>
                 })}
             </SidebarWrapper>
 

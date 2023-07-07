@@ -11,8 +11,8 @@ function App() {
         <Header/>
         <Routes>
           <Route path='/' element={<AuthPage/>}></Route>
-          <Route path='/Login' element={<AuthPage/>}></Route>
-          <Route path='/Scrap' element={<ScrapPage/>}></Route>
+          <Route path='/login' element={<AuthPage/>}></Route>
+          <Route path='/scrap' element={<ScrapPage/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
