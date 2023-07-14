@@ -6,7 +6,7 @@ import Masonry from '@mui/lab/Masonry';
 import { PRODUCT_DATAS } from '../config';
 
 function ScrapPage() {
-
+  const scrapCategories = ["entire", "product", "article", "map", "video", "other"];
   const [productDatas, setProductDatas] = useState(PRODUCT_DATAS);
 
   return (
