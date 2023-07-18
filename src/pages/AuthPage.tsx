@@ -32,7 +32,7 @@ function AuthPage() {
 }
 
 const Container = styled.div`
-    background-color: #dcdefe;
+    background-color: ${props => props.theme.color.primary_color};
     width: 100vw;
     display: flex;
     justify-content: space-evenly;
