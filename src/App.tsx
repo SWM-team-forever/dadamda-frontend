@@ -3,6 +3,7 @@ import AuthPage from './pages/AuthPage';
 import ScrapPage from './pages/ScrapPage';
 import Header from './components/common/Header';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import MainPage from './pages/MainPage';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Header/>
         <Routes>
-          <Route path='/' element={<AuthPage/>}></Route>
+          <Route path='/' element={<MainPage/>}></Route>
           <Route path='/login' element={<AuthPage/>}></Route>
           <Route path='/scrap' element={<ScrapPage/>}></Route>
         </Routes>
