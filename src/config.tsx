@@ -45,3 +45,9 @@ export const PRODUCT_DATAS = [
       site : "11번가"
       },
   ];
+
+export const USER = {
+    email: "lukey0515@gmail.com",
+    name: "프론트_제로",
+    profile_url: "https://images.unsplash.com/photo-1689718107045-513b35f1a356?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+}

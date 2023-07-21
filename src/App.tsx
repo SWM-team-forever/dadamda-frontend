@@ -1,18 +1,20 @@
 import './App.css'
 import AuthPage from './pages/AuthPage';
 import ScrapPage from './pages/ScrapPage';
-import Header from './components/common/Header';
+import Header from './components/molcules/Header';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import MainPage from './pages/MainPage';
+import { USER } from './config';
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Header/>
+        <Header user={USER} size='large'/>
         <Routes>
           <Route path='/' element={<MainPage/>}></Route>
-          <Route path='/login' element={<AuthPage/>}></Route>
+          <Route path='/main' element={<MainPage/>}></Route>
+          <Route path='/user' element={<ScrapPage/>}></Route>
           <Route path='/scrap' element={<ScrapPage/>}></Route>
         </Routes>
       </BrowserRouter>

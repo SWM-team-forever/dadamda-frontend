@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Header } from './Header';
+import Header from '../components/molcules/Header';
 
 const meta = {
-  title: 'Example/Header',
+  title: 'Molcules/Header',
   component: Header,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],
@@ -17,10 +17,24 @@ type Story = StoryObj<typeof meta>;
 
 export const LoggedIn: Story = {
   args: {
-    user: {
-      name: 'Jane Doe',
-    },
+    size: 'large',
   },
 };
 
-export const LoggedOut: Story = {};
+export const LoggedOut: Story = {
+  args: {
+    size: 'large',
+  }
+};
+
+export const Small: Story = {
+  args: {
+    size: 'small',
+  }
+}
+
+export const Large: Story = {
+  args: {
+    size: 'large'
+  }
+}
