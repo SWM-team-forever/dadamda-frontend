@@ -6,12 +6,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import { USER } from './config';
 import UserPage from './pages/UserPage';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
   return (
     <>
+      {/* <GoogleOAuthProvider> */}
       <BrowserRouter>
-        <Header user={USER} size='large' />
+        <Header user={null} size='large' />
         <Routes>
           <Route path='/' element={<MainPage />}></Route>
           <Route path='/main' element={<MainPage />}></Route>
@@ -19,6 +21,7 @@ function App() {
           <Route path='/scrap' element={<ScrapPage />}></Route>
         </Routes>
       </BrowserRouter>
+      {/* </GoogleOAuthProvider > */}
     </>
   )
 }

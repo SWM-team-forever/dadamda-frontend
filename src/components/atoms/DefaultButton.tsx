@@ -11,18 +11,19 @@ interface ButtonProps {
     variant?: string;
     color?: string;
     size: string;
+    onClick?: () => void;
 }
 
-function Button({label, buttonStyle, isRound, fullWidth,
-    }: ButtonProps) {
+function Button({ label, buttonStyle, isRound, fullWidth, onClick,
+}: ButtonProps) {
     return (
-    <ButtonContainer buttonStyle={buttonStyle} fullWidth={fullWidth} isRound={isRound}>
+        <ButtonContainer buttonStyle={buttonStyle} fullWidth={fullWidth} isRound={isRound} onClick={onClick}>
             {label}
-    </ButtonContainer>
-  );
+        </ButtonContainer>
+    );
 }
 
-const ButtonContainer = styled.button<{buttonStyle: string, fullWidth: boolean, isRound: boolean}>`
+const ButtonContainer = styled.button<{ buttonStyle: string, fullWidth: boolean, isRound: boolean }>`
     ${props => getButtonStyle(props.buttonStyle)};
     ${props => props.fullWidth && 'width: 100%'};
     ${props => props.isRound && 'border-radius: 4px'};
@@ -32,7 +33,7 @@ const ButtonContainer = styled.button<{buttonStyle: string, fullWidth: boolean, 
 `
 
 const getButtonStyle = (buttonStyle: string) => {
-    switch(buttonStyle) {
+    switch (buttonStyle) {
         case 'primary':
             return `
     background-color: ${theme.color.primary_color};

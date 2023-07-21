@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 function MobileNavbar({ toggleMobileNavbar, user }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
     isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
@@ -58,13 +59,14 @@ function MobileNavbar({ toggleMobileNavbar, user }) {
       <IconContainer src={CrossIcon} onClick={toggleMobileNavbar} />
       <NavbarMenu>
         {navbarMenus.map(menu => {
+          const isMenuVisible = menu.isVisibleWithoutLogin || user;
           const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen;
-          return <><ItemContainer>
+          return <>{isMenuVisible && <ItemContainer>
             <Link to={menu.link} style={{ textDecoration: 'inherit', color: 'inherit' }}>
               <EmpasizedTypography>{menu.name}</EmpasizedTypography>
             </Link>
             {menu.isMenuOpen && <IconImg src={menuIcon} onClick={toggleMenu} />}
-          </ItemContainer>
+          </ItemContainer>}
             {
               isMenuHasMenuAndOpen && <MenuContainer>
                 <DefaultTypography>전체</DefaultTypography>

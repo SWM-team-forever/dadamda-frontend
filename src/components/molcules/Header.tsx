@@ -7,6 +7,7 @@ import { useState } from 'react';
 import MobileNavbar from './MobileNavbar';
 import { USER } from '../../config';
 import { Link } from 'react-router-dom';
+import LoginModal from '../organisms/LoginModal';
 
 interface HeaderProps {
     user: object;
@@ -36,6 +37,16 @@ function Header({
 }: HeaderProps) {
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
+    const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+
+    const showLoginModal = () => {
+        setIsLoginModalVisible(true);
+    }
+
+    const hideLoginModal = () => {
+        setIsLoginModalVisible(false);
+        console.log("no");
+    }
 
     return (
         <HeaderContainer>
@@ -49,11 +60,12 @@ function Header({
             <LargeRightPanel>
                 {props.user ?
                     <Link to={'/user'}><AvatarContainer src={props.user.profile_url} /></Link> :
-                    <Button buttonStyle='text-only' label={"로그인/회원가입"} />
+                    <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                 }
             </LargeRightPanel>
             <IconContainer onClick={toggleMobileNavbar} src={!isClicked && MenuIcon} />
-            {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} user={USER} />}
+            {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} user={''} />}
+            {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
         </HeaderContainer>
     );
 }
