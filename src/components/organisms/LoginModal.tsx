@@ -3,8 +3,18 @@ import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import { useGoogleLogin } from '@react-oauth/google';
+import React, { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
+import { USER } from '../../config';
 
-function LoginModal(hideLoginModal) {
+function LoginModal({ hideLoginModal }) {
+    const { userLogin } = useContext(UserContext);
+
+    const login = () => {
+        googleSocialLogin();
+        hideLoginModal();
+        userLogin();
+    }
     const googleSocialLogin = useGoogleLogin({
         onSuccess: tokenResponse => console.log(tokenResponse),
         onError: errorResponse => console.log(errorResponse),
@@ -13,7 +23,7 @@ function LoginModal(hideLoginModal) {
     return (
         <ModalContainer>
             <CrossIconContainer>
-                <img src={CrossIcon} style={{ width: "24px", height: "24px" }} onClick={() => hideLoginModal} />
+                <img src={CrossIcon} style={{ width: "24px", height: "24px" }} onClick={hideLoginModal} />
             </CrossIconContainer>
             <LogoContainer>
                 <img src={logo} style={{ width: "36px", height: "36px" }} />
@@ -26,7 +36,7 @@ function LoginModal(hideLoginModal) {
             </TextContainer>
             <hr />
             <ButtonContainer>
-                <button style={{ width: "80%" }} onClick={googleSocialLogin}>구글로 시작하기</button>
+                <button style={{ width: "80%" }} onClick={login}>구글로 시작하기</button>
                 <button style={{ width: "80%" }}>카카오로 시작하기</button>
                 <button style={{ width: "80%" }}>네이버로 시작하기</button>
             </ButtonContainer>

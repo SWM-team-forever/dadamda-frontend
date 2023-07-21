@@ -3,14 +3,15 @@ import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
 import Button from '../atoms/DefaultButton';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import MobileNavbar from './MobileNavbar';
 import { USER } from '../../config';
 import { Link } from 'react-router-dom';
 import LoginModal from '../organisms/LoginModal';
+import React from 'react';
+import { UserContext } from '../../context/UserContext';
 
 interface HeaderProps {
-    user: object;
     size: 'small' | 'large';
 }
 
@@ -38,6 +39,7 @@ function Header({
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+    const { user } = useContext(UserContext);
 
     const showLoginModal = () => {
         setIsLoginModalVisible(true);
@@ -45,7 +47,6 @@ function Header({
 
     const hideLoginModal = () => {
         setIsLoginModalVisible(false);
-        console.log("no");
     }
 
     return (
@@ -53,18 +54,18 @@ function Header({
             <LogoContainer src={logo} />
             <HeaderPanel>
                 {headerPanelMenus.map(menu => {
-                    const isVisible = props.user || menu.isVisibleWithoutLogin;
+                    const isVisible = user || menu.isVisibleWithoutLogin;
                     return isVisible && <Link to={menu.link}><Button buttonStyle='text-only' label={menu.name} /></Link>
                 })}
             </HeaderPanel>
             <LargeRightPanel>
-                {props.user ?
-                    <Link to={'/user'}><AvatarContainer src={props.user.profile_url} /></Link> :
+                {user ?
+                    <Link to={'/user'}><AvatarContainer src={user.profile_url} /></Link> :
                     <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                 }
             </LargeRightPanel>
             <IconContainer onClick={toggleMobileNavbar} src={!isClicked && MenuIcon} />
-            {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} user={''} />}
+            {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
             {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
         </HeaderContainer>
     );
