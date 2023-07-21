@@ -3,8 +3,9 @@ import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import { useGoogleLogin } from '@react-oauth/google';
+import React from 'react';
 
-function LoginModal(hideLoginModal) {
+function LoginModal({ hideLoginModal }) {
     const googleSocialLogin = useGoogleLogin({
         onSuccess: tokenResponse => console.log(tokenResponse),
         onError: errorResponse => console.log(errorResponse),
@@ -13,7 +14,7 @@ function LoginModal(hideLoginModal) {
     return (
         <ModalContainer>
             <CrossIconContainer>
-                <img src={CrossIcon} style={{ width: "24px", height: "24px" }} onClick={() => hideLoginModal} />
+                <img src={CrossIcon} style={{ width: "24px", height: "24px" }} onClick={hideLoginModal} />
             </CrossIconContainer>
             <LogoContainer>
                 <img src={logo} style={{ width: "36px", height: "36px" }} />

@@ -7,6 +7,7 @@ import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
 import { useState } from 'react';
 import logo from '../../assets/images/dadamda-logo128.png';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 function MobileNavbar({ toggleMobileNavbar, user }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

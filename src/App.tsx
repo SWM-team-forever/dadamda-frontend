@@ -7,21 +7,22 @@ import MainPage from './pages/MainPage';
 import { USER } from './config';
 import UserPage from './pages/UserPage';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import React from 'react';
 
 function App() {
   return (
     <>
-      {/* <GoogleOAuthProvider> */}
-      <BrowserRouter>
-        <Header user={null} size='large' />
-        <Routes>
-          <Route path='/' element={<MainPage />}></Route>
-          <Route path='/main' element={<MainPage />}></Route>
-          <Route path='/user' element={<UserPage />}></Route>
-          <Route path='/scrap' element={<ScrapPage />}></Route>
-        </Routes>
-      </BrowserRouter>
-      {/* </GoogleOAuthProvider > */}
+      <GoogleOAuthProvider clientId='1068894831951-1dhm7g6ic955q77gmlfs5k5r774d57hd.apps.googleusercontent.com'>
+        <BrowserRouter>
+          <Header user={null} size='large' />
+          <Routes>
+            <Route path='/' element={<MainPage />}></Route>
+            <Route path='/main' element={<MainPage />}></Route>
+            <Route path='/user' element={<UserPage />}></Route>
+            <Route path='/scrap' element={<ScrapPage />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </GoogleOAuthProvider >
     </>
   )
 }
