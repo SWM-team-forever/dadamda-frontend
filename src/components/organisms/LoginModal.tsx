@@ -12,8 +12,8 @@ function LoginModal({ hideLoginModal }) {
 
     const login = () => {
         googleSocialLogin();
-        hideLoginModal();
         userLogin();
+        hideLoginModal();
     }
     const googleSocialLogin = useGoogleLogin({
         onSuccess: tokenResponse => console.log(tokenResponse),
