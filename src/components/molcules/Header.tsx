@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
-import { NavLink, Navigate, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink, NavLinkProps } from 'react-router-dom';
 
 import LoginModal from '../organisms/LoginModal';
 import Button from '../atoms/DefaultButton';
@@ -11,10 +11,6 @@ import MobileNavbar from './MobileNavbar';
 import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
-
-interface HeaderProps {
-    size: 'small' | 'large';
-}
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -34,14 +30,11 @@ const headerPanelMenus = [{
     link: '/scrap',
 }];
 
-function Header({
-    ...props
-}: HeaderProps) {
+function Header() {
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-    const [user, dispatch] = UserConsumer();
-    console.log(user);
+    const [user] = UserConsumer() as any;
 
     const showLoginModal = () => {
         setIsLoginModalVisible(true);
@@ -51,7 +44,7 @@ function Header({
         setIsLoginModalVisible(false);
     }
 
-    function ActiveLink(props) {
+    function ActiveLink(props: NavLinkProps) {
         return <NavLink
             style={({ isActive }) => {
                 return {

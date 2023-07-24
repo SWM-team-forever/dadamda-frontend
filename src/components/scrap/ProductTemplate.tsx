@@ -12,7 +12,7 @@ type ProductTemplateProps = {
   price: string,
 }
 
-function ProductTemplate({url, image, title, price}: ProductTemplateProps) {
+function ProductTemplate({ image, title, price }: ProductTemplateProps) {
   return (
     <Card sx={{ maxWidth: "100%" }}>
       <CardHeader

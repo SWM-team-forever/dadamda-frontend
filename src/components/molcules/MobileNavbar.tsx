@@ -9,7 +9,11 @@ import logo from '../../assets/images/dadamda-logo128.png';
 import { Link, useNavigate } from 'react-router-dom';
 import UserConsumer from '../../context/UserContext';
 
-function MobileNavbar({ toggleMobileNavbar }) {
+interface MobileNavbarProps {
+  toggleMobileNavbar: () => void;
+}
+
+function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
 
@@ -17,7 +21,7 @@ function MobileNavbar({ toggleMobileNavbar }) {
     setIsMenuOpen(!isMenuOpen)
     isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
   };
-  const [user, dispatch] = UserConsumer();
+  const [user, dispatch] = UserConsumer() as any;
 
   const navigate = useNavigate();
 

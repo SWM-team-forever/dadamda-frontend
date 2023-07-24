@@ -4,8 +4,7 @@ import theme from '../assets/styles/theme';
 import UserConsumer from '../context/UserContext';
 
 function UserPage() {
-
-    const [user] = UserConsumer();
+    const [user] = UserConsumer() as any;
     return (
         <>
             <Wrapper>

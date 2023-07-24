@@ -6,8 +6,12 @@ import { useGoogleLogin } from '@react-oauth/google';
 import UserConsumer from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
-function LoginModal({ hideLoginModal }) {
-    const [user, dispatch] = UserConsumer();
+interface LoginModalProps {
+    hideLoginModal: () => void;
+}
+
+function LoginModal({ hideLoginModal }: LoginModalProps) {
+    const [, dispatch] = UserConsumer() as any;
     const navigate = useNavigate();
 
     const login = () => {
