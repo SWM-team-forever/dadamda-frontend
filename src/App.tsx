@@ -22,7 +22,7 @@ function App() {
               <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
               <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}></Route>
               <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
-              <Route path='/trending' element={<RequireAuth><TrendingPage /></RequireAuth>}></Route>
+              <Route path='/trending' element={<TrendingPage />}></Route>
             </Routes>
           </BrowserRouter>
         </GoogleOAuthProvider >
