@@ -1,15 +1,21 @@
 import styled from 'styled-components';
-import CrossIcon from '../../assets/icons/CrossIcon.png';
-import theme from '../../assets/styles/theme';
-import Button from '../atoms/DefaultButton';
-import ChervronDownIcon from '../../assets/icons/ChevronDownIcon.png';
-import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
 import { useState } from 'react';
-import logo from '../../assets/images/dadamda-logo128.png';
 import { Link, useNavigate } from 'react-router-dom';
+
+import Button from '../atoms/DefaultButton';
 import UserConsumer from '../../context/UserContext';
 
-function MobileNavbar({ toggleMobileNavbar }) {
+import ChervronDownIcon from '../../assets/icons/ChevronDownIcon.png';
+import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
+import logo from '../../assets/images/dadamda-logo128.png';
+import CrossIcon from '../../assets/icons/CrossIcon.png';
+import theme from '../../assets/styles/theme';
+
+interface MobileNavbarProps {
+  toggleMobileNavbar: () => void;
+}
+
+function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
 
@@ -17,7 +23,7 @@ function MobileNavbar({ toggleMobileNavbar }) {
     setIsMenuOpen(!isMenuOpen)
     isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
   };
-  const [user, dispatch] = UserConsumer();
+  const [user, dispatch] = UserConsumer() as any;
 
   const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-import { useState }from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdOutlineDashboard, MdProductionQuantityLimits, MdOutlineArticle, MdOutlineMap, MdOutlineOndemandVideo, MdAccessibility, MdList } from 'react-icons/md';
 import styled from 'styled-components';
@@ -10,7 +10,7 @@ type MenuProps = {
     label: string
 }
 
-function Menu({icon, label}: MenuProps) {
+function Menu({ icon, label }: MenuProps) {
     return (
         <MenuItem>
             {icon}
@@ -22,43 +22,43 @@ function Menu({icon, label}: MenuProps) {
 
 function Sidebar() {
     const [value, setValue] = useState('상품');
-    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
 
     const menus = [
         {
-            icon: <MdOutlineDashboard/>,
+            icon: <MdOutlineDashboard />,
             label: "보드",
             route: "board",
         },
         {
-            icon: <MdList/>,
+            icon: <MdList />,
             label: "전체",
             route: "entire",
         },
         {
-            icon: <MdProductionQuantityLimits/>,
+            icon: <MdProductionQuantityLimits />,
             label: "상품",
             route: "product",
         },
         {
-            icon: <MdOutlineArticle/>,
+            icon: <MdOutlineArticle />,
             label: "아티클",
             route: "article",
         },
         {
-            icon: <MdOutlineMap/>,
+            icon: <MdOutlineMap />,
             label: "지도",
             route: "map",
         },
         {
-            icon: <MdOutlineOndemandVideo/>,
+            icon: <MdOutlineOndemandVideo />,
             label: "비디오",
             route: "video",
         },
         {
-            icon: <MdAccessibility/>,
+            icon: <MdAccessibility />,
             label: "기타",
             route: "other",
         }
@@ -68,10 +68,10 @@ function Sidebar() {
         <>
             <SidebarWrapper>
                 {menus.map((menu, index) => {
-                    return <Link to={`/scrap/${menu.route}`}><Menu 
-                    icon={menu.icon}
-                    label={menu.label}
-                    key={index}/>
+                    return <Link to={`/scrap/${menu.route}`}><Menu
+                        icon={menu.icon}
+                        label={menu.label}
+                        key={index} />
                     </Link>
                 })}
             </SidebarWrapper>

@@ -1,11 +1,11 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 interface ProfileImageProps {
   size: number,
-  source: any,
+  source: string,
 }
 
-function ProfileImage({ source, size, ...props }: ProfileImageProps) {
+function ProfileImage({ source, size }: ProfileImageProps) {
   return (
     <ImageContainer>
       <Image src={source} size={size} />
