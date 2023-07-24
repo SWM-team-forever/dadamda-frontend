@@ -1,13 +1,16 @@
 import styled from 'styled-components';
+import { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+
+import LoginModal from '../organisms/LoginModal';
+import Button from '../atoms/DefaultButton';
+import UserConsumer from '../../context/UserContext';
+import ProfileImage from '../atoms/ProfileImage';
+import MobileNavbar from './MobileNavbar';
+
 import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
-import Button from '../atoms/DefaultButton';
-import { useContext, useState } from 'react';
-import MobileNavbar from './MobileNavbar';
-import { NavLink } from 'react-router-dom';
-import LoginModal from '../organisms/LoginModal';
-import UserConsumer, { UserContext } from '../../context/UserContext';
 
 interface HeaderProps {
     size: 'small' | 'large';
@@ -49,11 +52,6 @@ function Header({
     }
 
     function ActiveLink(props) {
-        // const NavLinkStyle = {
-        //     padding: '5px 12px',
-        //     props.isActive ? theme.color.primary_color : theme.color.text_gray_color,
-        // }
-
         return <NavLink
             style={({ isActive }) => {
                 return {
@@ -78,7 +76,7 @@ function Header({
             </HeaderPanel>
             <LargeRightPanel>
                 {user ?
-                    <ActiveLink to={'/user'}><AvatarContainer src={user.profile_url} /></ActiveLink> :
+                    <ActiveLink to={'/user'}><ProfileImage source={user.profile_url} size={24} /></ActiveLink> :
                     <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                 }
             </LargeRightPanel>
@@ -92,7 +90,7 @@ function Header({
 const HeaderContainer = styled.div`
     height: 50px;
     width: 100vw;
-    padding: 15px 20px;
+    padding: 0 20px;
     box-shadow: ${theme.style.shadow};
     box-sizing: border-box;
     background-color: white;
@@ -106,13 +104,6 @@ const LogoContainer = styled.img`
     height: 24px;
     width: auto;
     cursor: pointer;
-`
-
-const AvatarContainer = styled.img`
-    height: 24px;
-    width: 24px;
-    cursor: pointer;
-    border-radius: 100%;
 `
 
 const HeaderPanel = styled.div`
