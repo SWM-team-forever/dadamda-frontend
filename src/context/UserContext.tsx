@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react"
-import { USER } from "../config";
 import { Navigate, useLocation } from "react-router-dom";
+
+import { USER } from "../config";
 
 const initialUserState: null | object = null;
 

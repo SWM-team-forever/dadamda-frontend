@@ -1,10 +1,10 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import './App.css'
 import ScrapPage from './pages/ScrapPage';
 import Header from './components/molcules/Header';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import UserPage from './pages/UserPage';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { RequireAuth, UserProvider } from './context/UserContext';
 import TrendingPage from './pages/TrendingPage';
 import BoardPage from './pages/BoardPage';

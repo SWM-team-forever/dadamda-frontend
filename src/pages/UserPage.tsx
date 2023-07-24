@@ -1,7 +1,10 @@
-import Button from '../components/atoms/DefaultButton';
 import styled from 'styled-components';
-import theme from '../assets/styles/theme';
+
+import Button from '../components/atoms/DefaultButton';
 import UserConsumer from '../context/UserContext';
+
+import theme from '../assets/styles/theme';
+
 
 function UserPage() {
     const [user] = UserConsumer() as any;

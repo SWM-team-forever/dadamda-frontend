@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
+import UserConsumer from '../../context/UserContext';
+
 import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
-import UserConsumer from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
 
 interface LoginModalProps {
     hideLoginModal: () => void;
