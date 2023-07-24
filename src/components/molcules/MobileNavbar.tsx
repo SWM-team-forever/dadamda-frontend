@@ -83,12 +83,9 @@ function MobileNavbar({ toggleMobileNavbar }) {
           </ItemContainer>}
             {
               isMenuHasMenuAndOpen && <MenuContainer>
-                <DefaultTypography>전체</DefaultTypography>
-                <DefaultTypography>아티클</DefaultTypography>
-                <DefaultTypography>상품</DefaultTypography>
-                <DefaultTypography>비디오</DefaultTypography>
-                <DefaultTypography>장소</DefaultTypography>
-                <DefaultTypography>기타</DefaultTypography>
+                {scrapMenu.map(menu => {
+                  return <DefaultTypography>{menu.name}</DefaultTypography>
+                })}
               </MenuContainer>
             }</>
         })}
