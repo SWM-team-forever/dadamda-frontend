@@ -10,7 +10,7 @@ interface ButtonProps {
     fullWidth?: boolean;
     variant?: string;
     color?: string;
-    size: string;
+    size?: string;
     onClick?: () => void;
 }
 
