@@ -3,16 +3,17 @@ import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import { useGoogleLogin } from '@react-oauth/google';
-import React, { useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
-import { USER } from '../../config';
+import UserConsumer from '../../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function LoginModal({ hideLoginModal }) {
-    const { userLogin } = useContext(UserContext);
+    const [user, dispatch] = UserConsumer();
+    const navigate = useNavigate();
 
     const login = () => {
         googleSocialLogin();
-        userLogin();
+        dispatch({ type: 'login' });
+        navigate('/scrap');
         hideLoginModal();
     }
     const googleSocialLogin = useGoogleLogin({
