@@ -15,7 +15,7 @@ function App() {
       <UserProvider>
         <GoogleOAuthProvider clientId='1068894831951-1dhm7g6ic955q77gmlfs5k5r774d57hd.apps.googleusercontent.com'>
           <BrowserRouter>
-            <Header size='large' />
+            <Header />
             <Routes>
               <Route path='/' element={<MainPage />}></Route>
               <Route path='/main' element={<MainPage />}></Route>
