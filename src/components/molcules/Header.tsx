@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate, useLocation } from 'react-router-dom';
 
 import LoginModal from '../organisms/LoginModal';
 import Button from '../atoms/DefaultButton';

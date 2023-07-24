@@ -1,12 +1,12 @@
 import Button from '../components/atoms/DefaultButton';
 import styled from 'styled-components';
 import theme from '../assets/styles/theme';
-import { UserContext } from '../context/UserContext';
+import UserConsumer from '../context/UserContext';
 import { useContext } from 'react';
 
 function UserPage() {
-    const { user } = useContext(UserContext);
 
+    const [user, dispatch] = UserConsumer();
     return (
         <>
             <Wrapper>
