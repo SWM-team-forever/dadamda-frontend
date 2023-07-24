@@ -13,19 +13,17 @@ function App() {
   return (
     <>
       <UserProvider>
-        <GoogleOAuthProvider clientId='1068894831951-1dhm7g6ic955q77gmlfs5k5r774d57hd.apps.googleusercontent.com'>
-          <BrowserRouter>
-            <Header />
-            <Routes>
-              <Route path='/' element={<MainPage />}></Route>
-              <Route path='/main' element={<MainPage />}></Route>
-              <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
-              <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}></Route>
-              <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
-              <Route path='/trending' element={<TrendingPage />}></Route>
-            </Routes>
-          </BrowserRouter>
-        </GoogleOAuthProvider >
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path='/' element={<MainPage />}></Route>
+            <Route path='/main' element={<MainPage />}></Route>
+            <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
+            <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}></Route>
+            <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
+            <Route path='/trending' element={<TrendingPage />}></Route>
+          </Routes>
+        </BrowserRouter>
       </UserProvider>
     </>
   )

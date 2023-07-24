@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
-import { useGoogleLogin } from '@react-oauth/google';
 import UserConsumer from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,15 +14,10 @@ function LoginModal({ hideLoginModal }: LoginModalProps) {
     const navigate = useNavigate();
 
     const login = () => {
-        googleSocialLogin();
         dispatch({ type: 'login' });
         navigate('/scrap');
         hideLoginModal();
     }
-    const googleSocialLogin = useGoogleLogin({
-        onSuccess: tokenResponse => console.log(tokenResponse),
-        onError: errorResponse => console.log(errorResponse),
-    });
 
     return (
         <ModalContainer>
