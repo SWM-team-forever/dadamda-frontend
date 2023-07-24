@@ -4,12 +4,10 @@ import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
 import ChervronDownIcon from '../../assets/icons/ChevronDownIcon.png';
 import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import logo from '../../assets/images/dadamda-logo128.png';
-import { Link } from 'react-router-dom';
-import React from 'react';
-import { UserContext } from '../../context/UserContext';
-import { Login } from '../../stories/LoginModal.stories';
+import { Link, useNavigate } from 'react-router-dom';
+import UserConsumer from '../../context/UserContext';
 
 function MobileNavbar({ toggleMobileNavbar }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,8 +17,19 @@ function MobileNavbar({ toggleMobileNavbar }) {
     setIsMenuOpen(!isMenuOpen)
     isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
   };
+  const [user, dispatch] = UserConsumer();
 
-  const { user, userLogin, userLogout } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const login = () => {
+    dispatch({ type: 'login' });
+    navigate('/scrap');
+  }
+
+  const logout = () => {
+    dispatch({ type: 'logout' });
+    navigate('/main');
+  }
 
   const navbarMenus = [{
     isVisibleWithoutLogin: true,
@@ -74,16 +83,13 @@ function MobileNavbar({ toggleMobileNavbar }) {
           </ItemContainer>}
             {
               isMenuHasMenuAndOpen && <MenuContainer>
-                <DefaultTypography>전체</DefaultTypography>
-                <DefaultTypography>아티클</DefaultTypography>
-                <DefaultTypography>상품</DefaultTypography>
-                <DefaultTypography>비디오</DefaultTypography>
-                <DefaultTypography>장소</DefaultTypography>
-                <DefaultTypography>기타</DefaultTypography>
+                {scrapMenu.map(menu => {
+                  return <DefaultTypography>{menu.name}</DefaultTypography>
+                })}
               </MenuContainer>
             }</>
         })}
-        {user ? <Button label='로그아웃' buttonStyle='primary' onClick={userLogout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={userLogin} />}
+        {user ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
         <IconImg src={logo} style={{ width: "36px", height: "36px", position: "absolute", bottom: "20px", right: "20px" }} />
       </NavbarMenu>
     </NavbarContainer>

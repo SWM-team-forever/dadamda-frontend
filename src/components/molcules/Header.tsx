@@ -1,15 +1,16 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { useContext, useState } from 'react';
+import { NavLink, Navigate, useLocation } from 'react-router-dom';
+
+import LoginModal from '../organisms/LoginModal';
+import Button from '../atoms/DefaultButton';
+import UserConsumer from '../../context/UserContext';
+import ProfileImage from '../atoms/ProfileImage';
+import MobileNavbar from './MobileNavbar';
+
 import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
-import Button from '../atoms/DefaultButton';
-import { useContext, useState } from 'react';
-import MobileNavbar from './MobileNavbar';
-import { USER } from '../../config';
-import { Link } from 'react-router-dom';
-import LoginModal from '../organisms/LoginModal';
-import React from 'react';
-import { UserContext } from '../../context/UserContext';
 
 interface HeaderProps {
     size: 'small' | 'large';
@@ -39,7 +40,8 @@ function Header({
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-    const { user } = useContext(UserContext);
+    const [user, dispatch] = UserConsumer();
+    console.log(user);
 
     const showLoginModal = () => {
         setIsLoginModalVisible(true);
@@ -49,18 +51,32 @@ function Header({
         setIsLoginModalVisible(false);
     }
 
+    function ActiveLink(props) {
+        return <NavLink
+            style={({ isActive }) => {
+                return {
+                    padding: '5px 12px',
+                    textDecoration: 'none',
+                    lineHeight: '100px',
+                    color: isActive ? theme.color.primary_color : theme.color.text_gray_color,
+                }
+            }}
+            {...props}
+        />
+    }
+
     return (
         <HeaderContainer>
             <LogoContainer src={logo} />
             <HeaderPanel>
                 {headerPanelMenus.map(menu => {
                     const isVisible = user || menu.isVisibleWithoutLogin;
-                    return isVisible && <Link to={menu.link}><Button buttonStyle='text-only' label={menu.name} /></Link>
+                    return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
                 })}
             </HeaderPanel>
             <LargeRightPanel>
                 {user ?
-                    <Link to={'/user'}><AvatarContainer src={user.profile_url} /></Link> :
+                    <ActiveLink to={'/user'}><ProfileImage source={user.profile_url} size={24} /></ActiveLink> :
                     <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                 }
             </LargeRightPanel>
@@ -74,7 +90,7 @@ function Header({
 const HeaderContainer = styled.div`
     height: 50px;
     width: 100vw;
-    padding: 15px 20px;
+    padding: 0 20px;
     box-shadow: ${theme.style.shadow};
     box-sizing: border-box;
     background-color: white;
@@ -88,13 +104,6 @@ const LogoContainer = styled.img`
     height: 24px;
     width: auto;
     cursor: pointer;
-`
-
-const AvatarContainer = styled.img`
-    height: 24px;
-    width: 24px;
-    cursor: pointer;
-    border-radius: 100%;
 `
 
 const HeaderPanel = styled.div`
