@@ -2,11 +2,10 @@ import Button from '../components/atoms/DefaultButton';
 import styled from 'styled-components';
 import theme from '../assets/styles/theme';
 import UserConsumer from '../context/UserContext';
-import { useContext } from 'react';
 
 function UserPage() {
 
-    const [user, dispatch] = UserConsumer();
+    const [user] = UserConsumer();
     return (
         <>
             <Wrapper>
@@ -78,10 +77,6 @@ const Content = styled.div`
 const TextWrapper = styled.div`
     display: flex;
     gap: 10px;
-`
-
-const EmpasizedTypography = styled.span`
-    font-size: 20px;
 `
 
 const DefaultTypography = styled.span`
