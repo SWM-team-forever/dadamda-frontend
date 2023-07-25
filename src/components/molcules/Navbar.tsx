@@ -16,39 +16,51 @@ const NavbarMenus = [{
     items: [{
         name: '보드',
         icon: boardIcon,
+        link: '/board',
     }],
 }, {
     title: '스크랩',
     items: [{
         name: '전체',
         icon: listIcon,
+        link: '/scrap/list',
     }, {
         name: '아티클',
         icon: articleIcon,
+        link: '/scrap/article',
     }, {
         name: '상품',
         icon: productIcon,
+        link: '/scrap/product',
     }, {
         name: '비디오',
         icon: videoIcon,
+        link: '/scrap/video',
     }, {
         name: '장소',
         icon: mapIcon,
+        link: '/scrap/location',
     }, {
         name: '기타',
         icon: otherIcon,
+        link: '/scrap/other',
     }]
 }]
 
 function Navbar() {
-    const [clickedNavbarMenu, setClickedNavbarMenu] = useState('스크랩북');
+    const [focusedMenu, setFocusedMenu] = useState('전체');
+
     return (
         <NavbarContainer>
             {NavbarMenus.map(list => {
                 return <ListContainer>
                     <ListTitleTypography>{list.title}</ListTitleTypography>
                     {list.items.map(item => {
-                        return <ItemContainer>
+                        const isFocused = focusedMenu === item.name;
+                        console.log(focusedMenu);
+                        console.log(item.name);
+                        console.log(isFocused);
+                        return <ItemContainer isFocused to={item.link}>
                             <ItemIcon src={item.icon} />
                             {item.name}
                         </ItemContainer>;
@@ -85,17 +97,14 @@ const ListTitleTypography = styled.span`
     font-size: 12px;
 `
 
-const ItemContainer = styled(NavLink)`
-    &:active {
-        background: ${theme.color.background_color};
-        color: ${theme.color.primary_color};
-    }
+const ItemContainer = styled(NavLink) <{ isFocused: boolean }>`
     display: flex;
     color: ${theme.color.text_gray_color};
     font-size: 14px;
     align-items: center;
     text-decoration: none;
     gap: 10px;
+    ${props => props.isFocused && `background-color: ${theme.color.background_color}`};
 `
 
 const ItemIcon = styled.img`
