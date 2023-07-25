@@ -28,7 +28,7 @@ const headerPanelMenus = [{
 }, {
     isVisibleWithoutLogin: false,
     name: '스크랩북',
-    link: '/scrap/list',
+    link: '/scrap',
 }];
 
 function Header() {
