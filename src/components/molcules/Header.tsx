@@ -59,7 +59,6 @@ function Header() {
         dispatch({ type: 'logout' });
         navigate('/main');
         hideLoginTooltip();
-        console.log('here');
     }
 
     const userPopOverMenus = [{
