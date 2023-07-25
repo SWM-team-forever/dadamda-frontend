@@ -63,7 +63,7 @@ function Header() {
     }
 
     const userPopOverMenus = [{
-        name: '프로필 수정',
+        name: '프로필 정보',
         link: '/user',
         onClick: hideLoginTooltip,
     }, {
