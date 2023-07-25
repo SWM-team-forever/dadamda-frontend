@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { PRODUCT_DATAS } from '../../config';
+import { OTHER_DATAS } from '../../config';
 import theme from '../../assets/styles/theme';
 import searchIcon from '../../assets/icons/SearchIcon.png';
+import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
+import EmptyOtherScrapContainer from '../organisms/EmptyOtherScrapContainer';
 
 function OtherTemplate() {
-    const [productDatas] = useState(PRODUCT_DATAS);
+    const [others, setOthers] = useState(OTHER_DATAS);
 
     return (
         <ScrapListContainer>
@@ -22,9 +24,7 @@ function OtherTemplate() {
                     <EmpasizedTypography>Search</EmpasizedTypography>
                 </SearchBar>
             </ScrapListHeader>
-            <ScrapList>
-                <EmpasizedTypography>스크랩을 추가해주세요</EmpasizedTypography>
-            </ScrapList>
+            {others ? <ExistOtherScrapContainer contents={others} /> : <EmptyOtherScrapContainer />}
         </ScrapListContainer>
     )
 }
@@ -46,13 +46,6 @@ const ScrapListHeader = styled.div`
     display: flex;
     padding: 20px;
     justify-content: space-between;
-`
-
-const ScrapList = styled.div`
-    display: flex;
-    justify-content: center;
-    flex: 1;
-    align-items: center;
 `
 
 const ScarpCountWrapper = styled.div`

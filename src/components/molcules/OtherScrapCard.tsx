@@ -4,20 +4,22 @@ import Button from '../atoms/DefaultButton';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 
 interface OtherScrapCardProps {
-    pageUrl: string,
-    title: string,
-    description: string,
-    thumbnailURL: string,
-    scrapCreatedDate: string,
+    content: {
+        pageUrl: string,
+        title: string,
+        description: string,
+        thumbnailURL: string,
+        scrapCreatedDate: string,
+    }
 }
 
-function OtherScrapCard(props: OtherScrapCardProps) {
+function OtherScrapCard({ content }: OtherScrapCardProps) {
     return (
         <CardWrapper>
-            <CardImage src={props.thumbnailURL} />
+            <CardImage src={content.thumbnailURL} />
             <CardInfoWrapper>
-                <EmpasizedTypography>{props.title}</EmpasizedTypography>
-                <DefaultTypography>{props.description}</DefaultTypography>
+                <EmpasizedTypography>{content.title}</EmpasizedTypography>
+                <DefaultTypography>{content.description}</DefaultTypography>
             </CardInfoWrapper>
             <ButtonContainer>
                 <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound />
