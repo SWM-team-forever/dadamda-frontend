@@ -14,7 +14,7 @@ function OtherTemplate() {
         <ScrapListContainer>
             <ScrapListHeader>
                 <ScarpCountWrapper>
-                    <EmpasizedTypography>0 </EmpasizedTypography>
+                    <EmpasizedTypography>{others.length} </EmpasizedTypography>
                     <DefaultTypography>개의 </DefaultTypography>
                     <EmpasizedTypography>기타 스크랩</EmpasizedTypography>
                     <DefaultTypography>이 있습니다.</DefaultTypography>
