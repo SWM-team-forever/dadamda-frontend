@@ -57,11 +57,8 @@ function Navbar() {
                     <ListTitleTypography>{list.title}</ListTitleTypography>
                     {list.items.map(item => {
                         const isFocused = focusedMenu === item.name;
-                        console.log(focusedMenu);
-                        console.log(item.name);
-                        console.log(isFocused);
-                        return <ItemContainer isFocused to={item.link}>
-                            <ItemIcon src={item.icon} />
+                        return <ItemContainer isFocused={isFocused} to={item.link} onClick={() => setFocusedMenu(item.name)}>
+                            <ItemIcon src={item.icon} isFocused={isFocused} />
                             {item.name}
                         </ItemContainer>;
                     })}
@@ -89,7 +86,7 @@ const NavbarContainer = styled.div`
 const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 `
 
 const ListTitleTypography = styled.span`
@@ -104,12 +101,17 @@ const ItemContainer = styled(NavLink) <{ isFocused: boolean }>`
     align-items: center;
     text-decoration: none;
     gap: 10px;
-    ${props => props.isFocused && `background-color: ${theme.color.background_color}`};
+    ${props => props.isFocused &&
+        `background-color: ${theme.color.background_color};`
+    };
+    padding: 10px 5px;
+    border-radius: 4px;
 `
 
-const ItemIcon = styled.img`
+const ItemIcon = styled.img<{ isFocused: boolean }>`
     width: 24px;
     height: 24px;
+    ${props => props.isFocused && `color: ${theme.color.primary_color}`};
 `
 
 const ItemTypography = styled(NavLink)`
