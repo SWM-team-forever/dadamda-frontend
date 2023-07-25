@@ -30,7 +30,7 @@ const ScrapList = styled.div`
     display: flex;
     justify-content: center;
     flex: 1;
-    align-items: center;
+    padding: 0 10px;
 `
 
 export default ExistOtherScrapContainer
