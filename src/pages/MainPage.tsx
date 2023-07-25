@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import theme from '../assets/styles/theme';
 import Button from '../components/atoms/DefaultButton';
-import Navbar from '../components/molcules/Navbar';
 
 function MainPage() {
   return (
