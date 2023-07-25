@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { NavLink, NavLinkProps } from 'react-router-dom';
+import { NavLink, NavLinkProps, useNavigate } from 'react-router-dom';
 
 import LoginModal from '../organisms/LoginModal';
 import Button from '../atoms/DefaultButton';
@@ -11,6 +11,7 @@ import MobileNavbar from './MobileNavbar';
 import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
+import Tooltip from '../atoms/Tooltip';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -34,7 +35,9 @@ function Header() {
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-    const [user] = UserConsumer() as any;
+    const [user, dispatch] = UserConsumer() as any;
+    const [isLoginTooltipVisible, setIsLoginTooltipVisible] = useState(false);
+    const navigate = useNavigate();
 
     const showLoginModal = () => {
         setIsLoginModalVisible(true);
@@ -43,6 +46,31 @@ function Header() {
     const hideLoginModal = () => {
         setIsLoginModalVisible(false);
     }
+
+    const showLoginTooltip = () => {
+        setIsLoginTooltipVisible(true);
+    }
+
+    const hideLoginTooltip = () => {
+        setIsLoginTooltipVisible(false);
+    }
+
+    const logout = () => {
+        dispatch({ type: 'logout' });
+        navigate('/main');
+        hideLoginTooltip();
+        console.log('here');
+    }
+
+    const userPopOverMenus = [{
+        name: '프로필 수정',
+        link: '/user',
+        onClick: hideLoginTooltip,
+    }, {
+        name: '로그아웃',
+        link: '/main',
+        onClick: logout,
+    }]
 
     function ActiveLink(props: NavLinkProps) {
         return <NavLink
@@ -69,13 +97,14 @@ function Header() {
             </HeaderPanel>
             <LargeRightPanel>
                 {user ?
-                    <ActiveLink to={'/user'}><ProfileImage source={user.profile_url} size={24} /></ActiveLink> :
+                    <ProfileImage source={user.profile_url} size={24} onClick={showLoginTooltip} /> :
                     <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                 }
             </LargeRightPanel>
             <IconContainer onClick={toggleMobileNavbar} src={!isClicked && MenuIcon} />
             {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
             {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
+            {isLoginTooltipVisible && <Tooltip contents={userPopOverMenus} />}
         </HeaderContainer>
     );
 }
@@ -83,7 +112,7 @@ function Header() {
 const HeaderContainer = styled.div`
     height: 50px;
     width: 100vw;
-    padding: 0 20px;
+    padding: 0 15px;
     box-shadow: ${theme.style.shadow};
     box-sizing: border-box;
     background-color: white;
