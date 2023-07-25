@@ -112,7 +112,7 @@ function Header() {
 const HeaderContainer = styled.div`
     height: 50px;
     width: 100vw;
-    padding: 0 20px;
+    padding: 0 15px;
     box-shadow: ${theme.style.shadow};
     box-sizing: border-box;
     background-color: white;
@@ -120,7 +120,7 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 6px;
-    position: relative;
+    position: fixed;
 `
 const LogoContainer = styled.img`
     height: 24px;

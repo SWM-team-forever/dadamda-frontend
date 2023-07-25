@@ -25,8 +25,8 @@ const TooltipWrapper = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 60px;
-    right: 10px;
+    top: 105%;
+    right: 5px;
     padding: 10px 10px;
     border-radius: 4px;
     background: white;
@@ -44,6 +44,7 @@ const HoverLink = styled(NavLink)`
         color: ${theme.color.primary_color};
     } 
     color: ${theme.color.text_gray_color};
+    font-size: 12px;
 `
 
 export default Tooltip;
