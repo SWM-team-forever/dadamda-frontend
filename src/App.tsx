@@ -9,6 +9,7 @@ import { RequireAuth, UserProvider } from './context/UserContext';
 import TrendingPage from './pages/TrendingPage';
 import BoardPage from './pages/BoardPage';
 import ScrapTemplate from './components/templates/ScrapTemplate';
+import OtherTemplate from './components/templates/OtherTemplate';
 
 function App() {
   return (
@@ -20,7 +21,14 @@ function App() {
             <Route path='/' element={<MainPage />}></Route>
             <Route path='/main' element={<MainPage />}></Route>
             <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
-            <Route path='/scrap' element={<RequireAuth><ScrapTemplate /></RequireAuth>}></Route>
+            <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
+              <Route path='list' element={<OtherTemplate />}></Route>
+              <Route path='article' element={<OtherTemplate />}></Route>
+              <Route path='product' element={<OtherTemplate />}></Route>
+              <Route path='video' element={<OtherTemplate />}></Route>
+              <Route path='location' element={<OtherTemplate />}></Route>
+              <Route path='other' element={<OtherTemplate />}></Route>
+            </Route>
             <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
             <Route path='/trending' element={<TrendingPage />}></Route>
           </Routes>
