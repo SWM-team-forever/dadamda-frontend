@@ -3,7 +3,7 @@ import styled from 'styled-components';
 function TrendingPage() {
     return (
         <PageWrapper>
-            트렌딩 페이지 입니다.
+            아직 지원하지 않는 기능입니다.
         </PageWrapper>
     );
 }
