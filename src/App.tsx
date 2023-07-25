@@ -8,6 +8,7 @@ import UserPage from './pages/UserPage';
 import { RequireAuth, UserProvider } from './context/UserContext';
 import TrendingPage from './pages/TrendingPage';
 import BoardPage from './pages/BoardPage';
+import ScrapTemplate from './components/templates/ScrapTemplate';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route path='/' element={<MainPage />}></Route>
             <Route path='/main' element={<MainPage />}></Route>
             <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
-            <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}></Route>
+            <Route path='/scrap' element={<RequireAuth><ScrapTemplate /></RequireAuth>}></Route>
             <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
             <Route path='/trending' element={<TrendingPage />}></Route>
           </Routes>

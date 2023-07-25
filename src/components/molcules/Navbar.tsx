@@ -60,14 +60,16 @@ function Navbar() {
 const NavbarContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 60px 20px;
+    padding: 20px 20px;
     box-shadow: ${theme.style.shadow};
     width: 200px;
-    height: calc(100% - 50px);
+    height: 100%;
     @media screen and (max-width: 600px) {
       display: none;
     }
     gap: 30px;
+    background: white;
+    box-sizing: border-box;
 `
 
 const ListContainer = styled.div`
