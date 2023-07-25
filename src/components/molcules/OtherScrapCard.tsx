@@ -30,7 +30,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
 }
 
 const CardWrapper = styled.div`
-    max-width: 200px;
+    min-width: 200px;
     padding: 15px;
     display: flex;
     flex-direction: column;

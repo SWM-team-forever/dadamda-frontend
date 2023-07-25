@@ -1,4 +1,6 @@
 import styled from "styled-components"
+import { Masonry } from "@mui/lab"
+
 import OtherScrapCard from "../molcules/OtherScrapCard"
 
 interface ExistOtherScrapContainerProps {
@@ -14,10 +16,12 @@ interface ExistOtherScrapContainerProps {
 function ExistOtherScrapContainer({ contents }: ExistOtherScrapContainerProps) {
     return (
         <ScrapList>
-            {contents.map(content => {
-                return <OtherScrapCard content={content} />
-            }
-            )}
+            <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}>
+                {contents.map(content => {
+                    return <OtherScrapCard content={content} />
+                }
+                )}
+            </Masonry>
         </ScrapList>
     )
 }
