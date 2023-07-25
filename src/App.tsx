@@ -28,6 +28,7 @@ function App() {
               <Route path='video' element={<OtherTemplate />}></Route>
               <Route path='location' element={<OtherTemplate />}></Route>
               <Route path='other' element={<OtherTemplate />}></Route>
+              <Route path='' element={<ListTemplate />}></Route>
             </Route>
             <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
             <Route path='/trending' element={<TrendingPage />}></Route>
