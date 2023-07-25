@@ -48,17 +48,14 @@ const NavbarMenus = [{
 }]
 
 function Navbar() {
-    const [focusedMenu, setFocusedMenu] = useState('전체');
-
     return (
         <NavbarContainer>
             {NavbarMenus.map(list => {
                 return <ListContainer>
                     <ListTitleTypography>{list.title}</ListTitleTypography>
                     {list.items.map(item => {
-                        const isFocused = focusedMenu === item.name;
-                        return <ItemContainer isFocused={isFocused} to={item.link} onClick={() => setFocusedMenu(item.name)}>
-                            <ItemIcon src={item.icon} isFocused={isFocused} />
+                        return <ItemContainer to={item.link}>
+                            <ItemIcon src={item.icon} />
                             {item.name}
                         </ItemContainer>;
                     })}
@@ -71,7 +68,7 @@ function Navbar() {
 const NavbarContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px 20px;
+    padding: 20px 10px;
     box-shadow: ${theme.style.shadow};
     width: 200px;
     height: 100%;
@@ -86,36 +83,33 @@ const NavbarContainer = styled.div`
 const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 `
 
 const ListTitleTypography = styled.span`
     color: ${theme.color.text_gray_color};
     font-size: 12px;
+    padding: 0 5px;
 `
 
-const ItemContainer = styled(NavLink) <{ isFocused: boolean }>`
+const ItemContainer = styled(NavLink)`
     display: flex;
     color: ${theme.color.text_gray_color};
     font-size: 14px;
     align-items: center;
     text-decoration: none;
     gap: 10px;
-    ${props => props.isFocused &&
-        `background-color: ${theme.color.background_color};`
-    };
-    padding: 10px 5px;
+    padding: 10px;
     border-radius: 4px;
+    &.active{
+        background-color: ${theme.color.background_color};
+    }
 `
 
 const ItemIcon = styled.img<{ isFocused: boolean }>`
     width: 24px;
     height: 24px;
     ${props => props.isFocused && `color: ${theme.color.primary_color}`};
-`
-
-const ItemTypography = styled(NavLink)`
-    
 `
 
 export default Navbar;
