@@ -23,6 +23,7 @@ function TextArea({ labelText, defaultValue }: TextAreaProps) {
                         boxSizing: 'border-box',
                         borderRadius: '4px',
                         padding: '10px',
+                        fontFamily: "'NanumSquare', sans-serif",
                     }}
                 />
                 <div style={{ position: 'absolute', top: '-12px', right: '-12px' }}>
