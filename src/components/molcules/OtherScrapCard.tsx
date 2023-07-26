@@ -87,7 +87,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
             </CardWrapper>
             {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
             {isScrapEditModalVisible && <ScrapEditModal />}
-            {isScrapDeleteModalVisible && <ScrapDeleteModal />}
+            {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible) && <Overlay />}
         </CardContainer>
     );
@@ -98,7 +98,6 @@ const CardContainer = styled.div`
 `
 
 const CardWrapper = styled.div`
-    min-width: 200px;
     padding: 15px;
     display: flex;
     flex-direction: column;
