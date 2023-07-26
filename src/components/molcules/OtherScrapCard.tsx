@@ -86,7 +86,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
                 </ButtonContainer>
             </CardWrapper>
             {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
-            {isScrapEditModalVisible && <ScrapEditModal />}
+            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible) && <Overlay />}
         </CardContainer>
