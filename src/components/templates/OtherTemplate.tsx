@@ -33,7 +33,9 @@ const ScrapListContainer = styled.div`
     width: calc(100% - 200px);
     height: 100%;
     background-color: ${theme.color.background_color};
-    left: 200px;
+    position: fixed;
+    right: 0;
+    top: 50px;
     @media screen and (max-width: 600px) {
       width: 100vw;
       left: 0;

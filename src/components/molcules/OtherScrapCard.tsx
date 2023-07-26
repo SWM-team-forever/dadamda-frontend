@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Button from '../atoms/DefaultButton';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
+import Tooltip from '../atoms/Tooltip';
 
 interface OtherScrapCardProps {
     content: {
@@ -14,20 +15,34 @@ interface OtherScrapCardProps {
 }
 
 function OtherScrapCard({ content }: OtherScrapCardProps) {
+    const scrapCardMenu = [{
+        name: '카드 수정하기',
+        onClick: () => console.log("clicked"),
+    }, {
+        name: '카드 삭제하기',
+        onClick: () => console.log("clicked2"),
+    }];
     return (
-        <CardWrapper>
-            <CardImage src={content.thumbnailURL} />
-            <CardInfoWrapper>
-                <EmpasizedTypography>{content.title}</EmpasizedTypography>
-                <DefaultTypography>{content.description}</DefaultTypography>
-            </CardInfoWrapper>
-            <ButtonContainer>
-                <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound />
-                <MoreIconContainer src={MoreIcon} />
-            </ButtonContainer>
-        </CardWrapper>
+        <CardContainer>
+            <CardWrapper>
+                <CardImage src={content.thumbnailURL} />
+                <CardInfoWrapper>
+                    <EmpasizedTypography>{content.title}</EmpasizedTypography>
+                    <DefaultTypography>{content.description}</DefaultTypography>
+                </CardInfoWrapper>
+                <ButtonContainer>
+                    <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound />
+                    <MoreIconContainer src={MoreIcon} />
+                </ButtonContainer>
+            </CardWrapper>
+            <Tooltip contents={scrapCardMenu} />
+        </CardContainer>
     );
 }
+
+const CardContainer = styled.div`
+    position: relative;
+`
 
 const CardWrapper = styled.div`
     min-width: 200px;
@@ -63,6 +78,7 @@ const DefaultTypography = styled.span`
 
 const ButtonContainer = styled.div`
     display: flex;
+    align-items: center;
 `
 
 const MoreIconContainer = styled.img`

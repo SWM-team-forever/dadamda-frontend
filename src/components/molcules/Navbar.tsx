@@ -78,6 +78,7 @@ const NavbarContainer = styled.div`
     gap: 30px;
     background: white;
     box-sizing: border-box;
+    position: fixed;
 `
 
 const ListContainer = styled.div`

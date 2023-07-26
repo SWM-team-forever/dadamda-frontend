@@ -5,7 +5,7 @@ import theme from "../../assets/styles/theme";
 
 interface TooltipProps {
     contents: {
-        link: string,
+        link?: string,
         onClick: () => void,
         name: string,
     }[]
@@ -25,8 +25,9 @@ const TooltipWrapper = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 105%;
-    right: 5px;
+    right: 0;
+    top: 102%;
+    width: fit-content;
     padding: 10px 10px;
     border-radius: 4px;
     background: white;
