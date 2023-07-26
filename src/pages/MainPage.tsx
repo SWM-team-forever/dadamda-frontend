@@ -72,10 +72,11 @@ const TopContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: calc(100vh - 50px);
+    overflow: auto;
 `
 
-const BackgroundContainer = styled.div`
-    padding-top: 70px;
+const BackgroundContainer = styled.div`    
     width: 100%;
     display: flex;
     justify-content: center;

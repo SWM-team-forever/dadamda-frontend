@@ -14,7 +14,6 @@ const PageWrapper = styled.div`
     height: calc(100vh - 50px);
     justify-content: center;
     align-items: center;
-    padding-top: 50px;
 `
 
 export default BoardPage;

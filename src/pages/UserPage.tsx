@@ -43,7 +43,6 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     background-color: ${theme.color.background_color};
-    padding-top: 50px;
 `
 
 const ProfileContainer = styled.div`

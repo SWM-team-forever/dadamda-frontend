@@ -42,6 +42,7 @@ const ScrapListContainer = styled.div`
     }
     display: flex;
     flex-direction: column;
+    overflow: auto;
 `
 
 const ScrapListHeader = styled.div`
