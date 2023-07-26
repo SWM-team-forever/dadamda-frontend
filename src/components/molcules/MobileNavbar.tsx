@@ -112,6 +112,7 @@ const NavbarContainer = styled.div`
     display: flex;
     flex-direction: column;
     box-shadow: ${theme.style.shadow};
+    z-index: 100;
 `
 
 const EmpasizedTypography = styled.span`
