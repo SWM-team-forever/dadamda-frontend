@@ -24,6 +24,7 @@ const Image = styled.img<{ size: number }>`
   ${props => `width: ${props.size}px`};
   ${props => `height: ${props.size}px`};
   border-radius: 100%;
+  cursor: pointer;
 `
 
 export default ProfileImage;

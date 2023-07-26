@@ -59,7 +59,6 @@ function Header() {
         dispatch({ type: 'logout' });
         navigate('/main');
         hideLoginTooltip();
-        console.log('here');
     }
 
     const userPopOverMenus = [{
@@ -87,27 +86,33 @@ function Header() {
     }
 
     return (
-        <HeaderContainer>
-            <LogoContainer src={logo} />
-            <HeaderPanel>
-                {headerPanelMenus.map(menu => {
-                    const isVisible = user || menu.isVisibleWithoutLogin;
-                    return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
-                })}
-            </HeaderPanel>
-            <LargeRightPanel>
-                {user ?
-                    <ProfileImage source={user.profile_url} size={24} onClick={showLoginTooltip} /> :
-                    <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
-                }
-            </LargeRightPanel>
-            <IconContainer onClick={toggleMobileNavbar} src={!isClicked && MenuIcon} />
-            {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
-            {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
-            {isLoginTooltipVisible && <Tooltip contents={userPopOverMenus} />}
-        </HeaderContainer>
+        <TooltipContainer>
+            <HeaderContainer>
+                <LogoContainer src={logo} />
+                <HeaderPanel>
+                    {headerPanelMenus.map(menu => {
+                        const isVisible = user || menu.isVisibleWithoutLogin;
+                        return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
+                    })}
+                </HeaderPanel>
+                <LargeRightPanel>
+                    {user ?
+                        <ProfileImage source={user.profile_url} size={24} onClick={showLoginTooltip} /> :
+                        <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
+                    }
+                </LargeRightPanel>
+                <IconContainer onClick={toggleMobileNavbar} src={!isClicked && MenuIcon} />
+                {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
+                {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
+            </HeaderContainer>
+            {isLoginTooltipVisible && <Tooltip contents={userPopOverMenus} color={'#FFFFFF'} />}
+        </TooltipContainer>
     );
 }
+
+const TooltipContainer = styled.div`
+    position: relative;
+`
 
 const HeaderContainer = styled.div`
     height: 50px;
@@ -120,7 +125,7 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 6px;
-    position: fixed;
+    
 `
 const LogoContainer = styled.img`
     height: 24px;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Tooltip from '../components/atoms/Tooltip';
 
 const meta= {
-    title: 'Atoms/Tooltip',
+    title: 'ATOMS/Tooltip',
     component: Tooltip,
     tags: ['autodocs'],
     parameters: {
@@ -12,3 +12,12 @@ const meta= {
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+
+interface TooltipProps {
+    contents: {
+        link?: string,
+        onClick: () => void,
+        name: string,
+    }[]
+}
