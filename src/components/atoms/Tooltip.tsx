@@ -8,12 +8,14 @@ interface TooltipProps {
         link?: string,
         onClick: () => void,
         name: string,
-    }[]
+        color: string,
+    }[];
+    color: string;
 }
 
-function Tooltip({ contents }: TooltipProps) {
+function Tooltip({ contents, color }: TooltipProps) {
     return (
-        <TooltipWrapper>
+        <TooltipWrapper color={color}>
             {contents.map(menu => {
                 return <HoverLink to={menu.link} onClick={menu.onClick}>{menu.name}</HoverLink>
             })}
@@ -21,16 +23,16 @@ function Tooltip({ contents }: TooltipProps) {
     );
 }
 
-const TooltipWrapper = styled.div`
+const TooltipWrapper = styled.div<{ color: string }>`
     display: flex;
     flex-direction: column;
     position: absolute;
     right: 0;
     top: 102%;
     width: fit-content;
-    padding: 10px 10px;
+    padding: 10px 20px;
     border-radius: 4px;
-    background: white;
+    background: ${props => props.color};
     text-align: center;
     color: ${theme.color.text_gray_color};
     box-shadow: ${theme.style.shadow};
@@ -39,7 +41,6 @@ const TooltipWrapper = styled.div`
 `
 
 const HoverLink = styled(NavLink)`
-    padding: 5px 12px;
     text-decoration: none;
     &:hover {
         color: ${theme.color.primary_color};

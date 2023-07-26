@@ -105,7 +105,7 @@ function Header() {
                 {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
                 {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
             </HeaderContainer>
-            {isLoginTooltipVisible && <Tooltip contents={userPopOverMenus} />}
+            {isLoginTooltipVisible && <Tooltip contents={userPopOverMenus} color={'#FFFFFF'} />}
         </TooltipContainer>
     );
 }

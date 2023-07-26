@@ -14,7 +14,6 @@ function ScrapPage() {
 
 const ScrapTemplateContainer = styled.div`
     display: flex;
-    padding-top: 50px;
     width: 100%;
     height: 100%;
 `

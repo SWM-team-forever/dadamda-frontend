@@ -9,7 +9,6 @@ import listIcon from '../../assets/icons/ListIcon.png';
 import articleIcon from '../../assets/icons/PageIcon.png';
 import boardIcon from '../../assets/icons/SwitcherIcon.png';
 import videoIcon from '../../assets/icons/VideoIcon.png';
-import { useState } from 'react';
 
 const NavbarMenus = [{
     title: '보드',

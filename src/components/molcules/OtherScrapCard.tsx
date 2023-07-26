@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../atoms/DefaultButton';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import Tooltip from '../atoms/Tooltip';
+import theme from '../../assets/styles/theme';
 
 interface OtherScrapCardProps {
     content: {
@@ -35,7 +36,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
                     <MoreIconContainer src={MoreIcon} />
                 </ButtonContainer>
             </CardWrapper>
-            <Tooltip contents={scrapCardMenu} />
+            <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />
         </CardContainer>
     );
 }
