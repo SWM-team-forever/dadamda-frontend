@@ -8,7 +8,6 @@ interface TooltipProps {
         link?: string,
         onClick: () => void,
         name: string,
-        color: string,
     }[];
     color: string;
 }

@@ -13,20 +13,6 @@ const meta= {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const defaultTooltip: Story ={
-    args: {
-        contents: [{
-        name: '프로필 정보',
-        link: '/user',
-        onClick: () => console.log("hi"),
-    }, {
-        name: '로그아웃',
-        link: '/main',
-        onClick: () => console.log("hi"),
-    }]
-    }
-}
-
 
 interface TooltipProps {
     contents: {
