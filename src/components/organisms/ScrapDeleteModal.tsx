@@ -55,16 +55,6 @@ const ModalTitleContainer = styled.div`
     gap: 5px;
 `
 
-const EditText = styled.textarea`
-    font-size: 12px;
-    border-radius: 4px;
-    padding: 15px;
-    background-color: ${theme.color.background_color};
-    border: none;
-    width: 100%;
-    box-sizing: border-box;
-`
-
 const ModalFooter = styled.div`
     display: flex;
     width: 100%;
