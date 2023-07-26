@@ -18,7 +18,7 @@ function ScrapEditModal() {
                 <TextArea labelText={'설명'} defaultValue={'시승을 원하는 렉서스 모델과 가까운 렉서스 공식 전시장을 확인하세요. 렉서스 공식 홈페이지에서 간편하게 시승신청을 하실 수 있습니다.'} />
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
-                    <AddableElement elementTitle={'메'} />
+                    <AddableElement elementTitle={'메모'} />
                 </ContentAddSection>
             </ContentWrapper>
             <ModalFooter>
@@ -36,10 +36,18 @@ const ModalWrapper = styled.div`
     display: flex;
     flex-direction: column;
     max-width: 450px;
+    width: calc(100vw - 30px);
+    box-sizing: border-box;
     border-radius: 4px;
     background-color: white;
     padding: 15px;
     gap: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    box-shadow: ${theme.style.shadow};
+    transform: translate(-50%, -50%);
 `
 
 const DefaultTypography = styled.span`

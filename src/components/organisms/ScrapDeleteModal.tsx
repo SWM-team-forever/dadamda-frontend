@@ -28,10 +28,18 @@ const ModalWrapper = styled.div`
     display: flex;
     flex-direction: column;
     max-width: 450px;
+    width: calc(100% - 30px);
     border-radius: 4px;
+    box-sizing: border-box;
     background-color: white;
     padding: 15px;
     gap: 15px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+    box-shadow: ${theme.style.shadow};
 `
 
 const DefaultTypography = styled.span`
