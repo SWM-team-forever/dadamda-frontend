@@ -64,6 +64,7 @@ const EditText = styled.textarea`
     height: 100px;
     width: 100%;
     box-sizing: border-box;
+    resize: none;
 `
 
 const ModalFooter = styled.div`
