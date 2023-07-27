@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
 import Button from '../components/atoms/DefaultButton';
-import UserConsumer from '../context/UserContext';
 
 import theme from '../assets/styles/theme';
+import { USER } from '../config';
 
 
 function UserPage() {
-    const [user] = UserConsumer() as any;
+
     return (
         <>
             <Wrapper>
                 <UserInfoWrapper>
                     <ProfileContainer>
-                        <ProfileImage src={user.profile_url} />
+                        <ProfileImage src={USER.profile_url} />
                         <Button label='이미지 변경하기' buttonStyle='primary' isRound />
                     </ProfileContainer>
                     <Content>

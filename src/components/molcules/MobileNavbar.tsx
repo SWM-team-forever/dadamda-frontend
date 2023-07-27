@@ -1,21 +1,23 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '../atoms/DefaultButton';
-import UserConsumer from '../../context/UserContext';
 
 import ChervronDownIcon from '../../assets/icons/ChevronDownIcon.png';
 import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import theme from '../../assets/styles/theme';
+import { LoginContext } from '../../context/LoginContext';
+import { googleLoginURL } from '../../secret';
 
 interface MobileNavbarProps {
   toggleMobileNavbar: () => void;
 }
 
 function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
+  // const [userInformation, setUserInformation] = useContext(LoginContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
 
@@ -23,17 +25,21 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
     setIsMenuOpen(!isMenuOpen)
     isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
   };
-  const [user, dispatch] = UserConsumer() as any;
 
   const navigate = useNavigate();
 
+  const oAuthHandler = (): void => {
+    window.location.href = googleLoginURL;
+  };
+
   const login = () => {
-    dispatch({ type: 'login' });
+    oAuthHandler();
     navigate('/scrap');
   }
 
   const logout = () => {
-    dispatch({ type: 'logout' });
+    localStorage.removeItem('token');
+    localStorage.removeItem('profileImageURL');
     navigate('/main');
   }
 
@@ -74,13 +80,15 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
     name: '기타',
   }]
 
+  const isLogin = localStorage.getItem('token') ? true : false;
+
   return (
     <NavbarContainer>
       <IconContainer src={CrossIcon} onClick={toggleMobileNavbar} />
       <NavbarMenu>
         {navbarMenus.map(menu => {
-          const isMenuVisible = menu.isVisibleWithoutLogin || user;
-          const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen && user;
+          const isMenuVisible = menu.isVisibleWithoutLogin || isLogin;
+          const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen && isLogin;
           return <>{isMenuVisible && <ItemContainer>
             <Link to={menu.link} style={{ textDecoration: 'inherit', color: 'inherit' }}>
               <EmpasizedTypography>{menu.name}</EmpasizedTypography>
@@ -95,7 +103,7 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
               </MenuContainer>
             }</>
         })}
-        {user ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
+        {isLogin ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
         <IconImg src={logo} style={{ width: "36px", height: "36px", position: "absolute", bottom: "20px", right: "20px" }} />
       </NavbarMenu>
     </NavbarContainer>

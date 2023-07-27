@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { createButton } from 'react-social-login-buttons';
 
-import UserConsumer from '../../context/UserContext';
-
 import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
@@ -15,19 +13,8 @@ interface LoginModalProps {
 }
 
 function LoginModal({ hideLoginModal }: LoginModalProps) {
-    const [, dispatch] = UserConsumer() as any;
-    const navigate = useNavigate();
-
-    const login = () => {
-        dispatch({ type: 'login' });
-        navigate('/scrap');
-        hideLoginModal();
-    }
-
     const oAuthHandler = (): void => {
-        const URL = googleLoginURL;
-        window.location.assign(URL);
-        navigate('/scrap');
+        window.location.href = googleLoginURL;
     };
 
     return (
@@ -50,7 +37,7 @@ function LoginModal({ hideLoginModal }: LoginModalProps) {
             <hr />
             <ButtonContainer>
                 <ColumnContainer style={{ width: "80%" }}>
-                    <GoogleLoginButton onClick={login} />
+                    <GoogleLoginButton onClick={oAuthHandler} />
                     <KakaoLoginButton />
                     <NaverLoginButton />
                 </ColumnContainer>
