@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { OTHER_DATAS } from '../../config';
@@ -6,9 +6,33 @@ import theme from '../../assets/styles/theme';
 import searchIcon from '../../assets/icons/SearchIcon.png';
 import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
 import EmptyOtherScrapContainer from '../organisms/EmptyOtherScrapContainer';
+import { GET_OTHER_SCRAP_URL } from '../../secret';
+import fab from '../../assets/icons/fab.png';
+import IconButton from '../atoms/IconButton';
 
 function OtherTemplate() {
-    const [others, setOthers] = useState(OTHER_DATAS);
+    const [others, setOthers] = useState([]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        fetch(GET_OTHER_SCRAP_URL, {
+            method: "GET",
+            headers: {
+                "Access-Control-Allow-Origin": 'http://localhost:5173/',
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token,
+            },
+            parameters: {
+                pageable: {
+                    "page": 0,
+                    "size": 1,
+                    "sort": [
+                        "string"
+                    ]
+                }
+            }
+        }).then((response) => console.log(response));
+    });
 
     return (
         <ScrapListContainer>
@@ -24,7 +48,14 @@ function OtherTemplate() {
                     <EmpasizedTypography>Search</EmpasizedTypography>
                 </SearchBar>
             </ScrapListHeader>
-            {others ? <ExistOtherScrapContainer contents={others} /> : <EmptyOtherScrapContainer />}
+            {others.length ? <ExistOtherScrapContainer contents={others} /> : <EmptyOtherScrapContainer />}
+            <IconButton src={fab} style={{
+                position: 'fixed',
+                bottom: '15px',
+                right: '15px',
+                width: '48px',
+                height: '48px',
+            }} />
         </ScrapListContainer>
     )
 }
