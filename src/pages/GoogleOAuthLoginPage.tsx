@@ -14,7 +14,7 @@ function GoogleOAuthLoginpage() {
         //     profileImageURL: null,
         //     token: token,
         // });
-        localStorage.setItem('token', token)
+        token && localStorage.setItem('token', token)
         navigate('/scrap');
     }, [])
     return (

@@ -17,7 +17,7 @@ export function LoginProvider({ children }: { children: React.ReactNode }) {
 
     // const value: any = useMemo(() => ({ userInformation, setUserInformation }), [userInformation, setUserInformation]);
 
-    return <LoginContext.Provider value={[userInformation, setUserInformation]}>{children}</LoginContext.Provider>;
+    return <LoginContext.Provider value={userInformation}>{children}</LoginContext.Provider>;
 }
 
 export function useLoginState() {
