@@ -3,11 +3,12 @@ import styled from 'styled-components';
 interface IconButtonProps {
     src: string,
     style: object,
+    onClick?: () => {},
 }
 
-function IconButton({ src, style }: IconButtonProps) {
+function IconButton({ src, style, onClick }: IconButtonProps) {
     return (
-        <Icon src={src} style={style} />
+        <Icon src={src} style={style} onClick={onClick} />
     )
 }
 

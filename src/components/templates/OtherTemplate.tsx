@@ -9,9 +9,19 @@ import EmptyOtherScrapContainer from '../organisms/EmptyOtherScrapContainer';
 import { GET_OTHER_SCRAP_URL } from '../../secret';
 import fab from '../../assets/icons/fab.png';
 import IconButton from '../atoms/IconButton';
+import Overlay from '../atoms/Overlay';
+import ScrapCreateModal from '../organisms/ScrapCreateModal';
 
 function OtherTemplate() {
     const [others, setOthers] = useState([]);
+    const [isScrapCreateModalVisible, setIsScrapCreateModalVisible] = useState(false);
+    const showScrapCreateModal = () => {
+        setIsScrapCreateModalVisible(true);
+    }
+
+    function hideScrapCreateModal() {
+        setIsScrapCreateModalVisible(false);
+    }
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -31,7 +41,8 @@ function OtherTemplate() {
                     ]
                 }
             }
-        }).then((response) => console.log(response));
+        }).then((response) => response.json())
+            .then((data) => console.log(data));
     });
 
     return (
@@ -49,13 +60,18 @@ function OtherTemplate() {
                 </SearchBar>
             </ScrapListHeader>
             {others.length ? <ExistOtherScrapContainer contents={others} /> : <EmptyOtherScrapContainer />}
-            <IconButton src={fab} style={{
-                position: 'fixed',
-                bottom: '15px',
-                right: '15px',
-                width: '48px',
-                height: '48px',
-            }} />
+            <IconButton src={fab}
+                style={{
+                    position: 'fixed',
+                    bottom: '15px',
+                    right: '15px',
+                    width: '48px',
+                    height: '48px',
+                }}
+                onClick={showScrapCreateModal} />
+            {isScrapCreateModalVisible && <Overlay>
+                <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} />
+            </Overlay>}
         </ScrapListContainer>
     )
 }
