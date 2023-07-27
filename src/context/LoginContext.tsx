@@ -30,12 +30,13 @@ export function useLoginState() {
 }
 
 export function RequireAuth({ children }: { children: React.ReactNode }) {
-    const { profileImageURL, token } = useLoginState();
+    // const { profileImageURL, token } = useLoginState();
+    const token = localStorage.getItem('token');
     const location = useLocation();
 
     return token ? (
         children
     ) : (
-        <Navigate to={"/"} replace state={{ path: location.pathname }}></Navigate>
+        <Navigate to={"/main"} replace state={{ path: location.pathname }}></Navigate>
     )
 }
