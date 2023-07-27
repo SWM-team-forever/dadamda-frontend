@@ -5,16 +5,17 @@ import ScrapPage from './pages/ScrapPage';
 import Header from './components/molcules/Header';
 import MainPage from './pages/MainPage';
 import UserPage from './pages/UserPage';
-import { RequireAuth, UserProvider } from './context/UserContext';
 import TrendingPage from './pages/TrendingPage';
 import BoardPage from './pages/BoardPage';
 import OtherTemplate from './components/templates/OtherTemplate';
 import ListTemplate from './components/templates/ListTemplate';
+import GoogleOAuthLoginpage from './pages/GoogleOAuthLoginPage.tsx';
+import { LoginProvider, RequireAuth } from './context/LoginContext.tsx';
 
 function App() {
   return (
     <>
-      <UserProvider>
+      <LoginProvider>
         <BrowserRouter>
           <Header />
           <Routes>
@@ -32,9 +33,10 @@ function App() {
             </Route>
             <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
             <Route path='/trending' element={<TrendingPage />}></Route>
+            <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
           </Routes>
         </BrowserRouter>
-      </UserProvider>
+      </LoginProvider>
     </>
   )
 }

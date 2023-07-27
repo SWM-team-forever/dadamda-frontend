@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink, NavLinkProps, useNavigate } from 'react-router-dom';
 
 import LoginModal from '../organisms/LoginModal';
 import Button from '../atoms/DefaultButton';
-import UserConsumer from '../../context/UserContext';
 import ProfileImage from '../atoms/ProfileImage';
 import MobileNavbar from './MobileNavbar';
 
@@ -12,6 +11,8 @@ import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
 import Tooltip from '../atoms/Tooltip';
+import { LoginContext } from '../../context/LoginContext';
+import { USER } from '../../config';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -32,10 +33,10 @@ const headerPanelMenus = [{
 }];
 
 function Header() {
+    // const [userInformation, setUserInformation] = useContext(LoginContext);
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-    const [user, dispatch] = UserConsumer() as any;
     const [isLoginTooltipVisible, setIsLoginTooltipVisible] = useState(false);
     const navigate = useNavigate();
 
@@ -56,7 +57,12 @@ function Header() {
     }
 
     const logout = () => {
-        dispatch({ type: 'logout' });
+        // setUserInformation({
+        //     profileImageURL: null,
+        //     token: null,
+        // });
+        localStorage.removeItem('token');
+        localStorage.removeItem('profileImageURL');
         navigate('/main');
         hideLoginTooltip();
     }
@@ -86,19 +92,21 @@ function Header() {
         />
     }
 
+    const isLogin = localStorage.getItem('token') ? true : false;
+
     return (
         <TooltipContainer>
             <HeaderContainer>
                 <LogoContainer src={logo} />
                 <HeaderPanel>
                     {headerPanelMenus.map(menu => {
-                        const isVisible = user || menu.isVisibleWithoutLogin;
+                        const isVisible = isLogin || menu.isVisibleWithoutLogin;
                         return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
                     })}
                 </HeaderPanel>
                 <LargeRightPanel>
-                    {user ?
-                        <ProfileImage source={user.profile_url} size={24} onClick={showLoginTooltip} /> :
+                    {isLogin ?
+                        <ProfileImage source={USER.profile_url} size={24} onClick={showLoginTooltip} /> :
                         <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                     }
                 </LargeRightPanel>
