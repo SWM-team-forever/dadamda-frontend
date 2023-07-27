@@ -5,63 +5,63 @@ import Button from '../components/atoms/DefaultButton';
 function MainPage() {
   return (
     <TopContainer>
-        <BackgroundContainer>
-          <ContentContainer>
-            <TextContainer>
-              <TypographyGroup>
-              <EmpasizedTypography style={{fontWeight: "bold"}}>뭘 좋아하는 지 몰라서</EmpasizedTypography>
+      <BackgroundContainer>
+        <ContentContainer>
+          <TextContainer>
+            <TypographyGroup>
+              <EmpasizedTypography style={{ fontWeight: "bold" }}>뭘 좋아하는 지 몰라서</EmpasizedTypography>
               <EmpasizedTypography>다 준비해보았습니다</EmpasizedTypography>
-              </TypographyGroup>
-              <TypographyGroup>
+            </TypographyGroup>
+            <TypographyGroup>
               <DefaultTypography>내용에 따라 자동으로 북마크를 구성하는</DefaultTypography>
               <DefaultTypography>신개념 컨텐츠 맞춤 스크랩 서비스, 다담다</DefaultTypography>
-              </TypographyGroup>
-              <Button label='서비스 시작하기' fullWidth isRound buttonStyle='primary'/>
-            </TextContainer>
-            <ImageContainer/>
-          </ContentContainer>
-        </BackgroundContainer>
+            </TypographyGroup>
+            <Button label='서비스 시작하기' fullWidth isRound buttonStyle='primary' />
+          </TextContainer>
+          <ImageContainer />
+        </ContentContainer>
+      </BackgroundContainer>
 
-        <BackgroundContainer>
-          <Container>
-            <EmpasizedTypography style={{fontWeight: "bold", margin: "20px"}}>쉽게 저장하고, 꾸미고, 공유하고</EmpasizedTypography>
-            <Content>
-              <ImageTextContainer>
-              <Image/>
+      <BackgroundContainer>
+        <Container>
+          <EmpasizedTypography style={{ fontWeight: "bold", margin: "20px" }}>쉽게 저장하고, 꾸미고, 공유하고</EmpasizedTypography>
+          <Content>
+            <ImageTextContainer>
+              <Image />
               <TypographyGroup>
-              <DefaultTypography>링크를 저장하면</DefaultTypography>
-              <DefaultTypography>해당 컨텐츠에 적합한 형태로 정보를 보여줍니다.</DefaultTypography>
+                <DefaultTypography>링크를 저장하면</DefaultTypography>
+                <DefaultTypography>해당 컨텐츠에 적합한 형태로 정보를 보여줍니다.</DefaultTypography>
               </TypographyGroup>
             </ImageTextContainer>
             <ImageTextContainer>
-              <Image/>
+              <Image />
               <TypographyGroup>
-              <DefaultTypography>저장한 북마크는</DefaultTypography>
-              <DefaultTypography>사용자의 취향에 맞추어 보드에 정렬할 수 있습니다.</DefaultTypography>
+                <DefaultTypography>저장한 북마크는</DefaultTypography>
+                <DefaultTypography>사용자의 취향에 맞추어 보드에 정렬할 수 있습니다.</DefaultTypography>
               </TypographyGroup>
             </ImageTextContainer>
             <ImageTextContainer>
-              <Image/>
+              <Image />
               <TypographyGroup>
-              <DefaultTypography>다른 사람의 보드를 구경하며</DefaultTypography>
-              <DefaultTypography>인사이트를 얻어보세요!</DefaultTypography>
+                <DefaultTypography>다른 사람의 보드를 구경하며</DefaultTypography>
+                <DefaultTypography>인사이트를 얻어보세요!</DefaultTypography>
               </TypographyGroup>
             </ImageTextContainer>
-            </Content>
-          </Container>
-        </BackgroundContainer>
-        
-        <LastContainer>
-          <EmpasizedTypography><strong>세상 모든 컨텐츠를 다담다</strong></EmpasizedTypography>
-          <TypographyGroup>
+          </Content>
+        </Container>
+      </BackgroundContainer>
+
+      <LastContainer>
+        <EmpasizedTypography><strong>세상 모든 컨텐츠를 다담다</strong></EmpasizedTypography>
+        <TypographyGroup>
           <DefaultTypography>다담다 서비스는 사용자의 편의를 위해 크롬 익스텐션을 제공하고 있습니다.</DefaultTypography>
           <DefaultTypography>크롬 익스텐션을 설치하시겠습니까?</DefaultTypography>
-          </TypographyGroup>
-          <ButtonContainer>
-            <Button label='크롬익스텐션 설치하기' fullWidth isRound buttonStyle='primary'/>
-            <Button label='웹으로 서비스 시작하기' fullWidth isRound buttonStyle='primary'/>
-          </ButtonContainer>
-        </LastContainer>
+        </TypographyGroup>
+        <ButtonContainer>
+          <Button label='크롬익스텐션 설치하기' fullWidth isRound buttonStyle='primary' />
+          <Button label='웹으로 서비스 시작하기' fullWidth isRound buttonStyle='primary' />
+        </ButtonContainer>
+      </LastContainer>
     </TopContainer>
   )
 }
@@ -71,11 +71,13 @@ const TopContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: calc(100vh - 50px);
+    overflow: auto;
 `
 
-const BackgroundContainer = styled.div`
-    padding-top: 70px;
-    width: 100vw;
+const BackgroundContainer = styled.div`    
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

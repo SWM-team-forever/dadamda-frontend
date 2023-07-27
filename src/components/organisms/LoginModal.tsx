@@ -1,19 +1,35 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { createButton } from 'react-social-login-buttons';
+
+import UserConsumer from '../../context/UserContext';
+
 import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
-import { useGoogleLogin } from '@react-oauth/google';
+import ColumnContainer from '../atoms/ColumnContainer';
 
-function LoginModal(hideLoginModal) {
-    const googleSocialLogin = useGoogleLogin({
-        onSuccess: tokenResponse => console.log(tokenResponse),
-        onError: errorResponse => console.log(errorResponse),
-    });
+interface LoginModalProps {
+    hideLoginModal: () => void;
+}
+
+function LoginModal({ hideLoginModal }: LoginModalProps) {
+    const [, dispatch] = UserConsumer() as any;
+    const navigate = useNavigate();
+
+    const login = () => {
+        dispatch({ type: 'login' });
+        navigate('/scrap');
+        hideLoginModal();
+    }
 
     return (
         <ModalContainer>
             <CrossIconContainer>
-                <img src={CrossIcon} style={{ width: "24px", height: "24px" }} onClick={() => hideLoginModal} />
+                <img src={CrossIcon}
+                    style={{ width: "24px", height: "24px", cursor: "pointer" }}
+                    onClick={hideLoginModal}
+                />
             </CrossIconContainer>
             <LogoContainer>
                 <img src={logo} style={{ width: "36px", height: "36px" }} />
@@ -26,9 +42,11 @@ function LoginModal(hideLoginModal) {
             </TextContainer>
             <hr />
             <ButtonContainer>
-                <button style={{ width: "80%" }} onClick={googleSocialLogin}>구글로 시작하기</button>
-                <button style={{ width: "80%" }}>카카오로 시작하기</button>
-                <button style={{ width: "80%" }}>네이버로 시작하기</button>
+                <ColumnContainer style={{ width: "80%" }}>
+                    <GoogleLoginButton onClick={login} />
+                    <KakaoLoginButton />
+                    <NaverLoginButton />
+                </ColumnContainer>
             </ButtonContainer>
         </ModalContainer>
     );
@@ -94,5 +112,45 @@ const EmpasizedTypography = styled.span`
     font-size: 20px;
     font-weight: bold;
 `
+
+const googleLoginConfig = {
+    text: "Google로 시작하기",
+    icon: "google",
+    style: {
+        background: "white",
+        color: theme.color.text_gray_color,
+        fontFamily: "'NanumSquare', sans-serif",
+        fontSize: "14px",
+    },
+    activeStyle: { background: "#293e69" }
+}
+
+const kakaoLoginConfig = {
+    text: "카카오로 시작하기",
+    icon: "google",
+    style: {
+        background: "white",
+        color: theme.color.text_gray_color,
+        fontFamily: "'NanumSquare', sans-serif",
+        fontSize: "14px",
+    },
+    activeStyle: { background: "#293e69" }
+}
+
+const naverLoginConfig = {
+    text: "네이버로 시작하기",
+    icon: "google",
+    style: {
+        background: "white",
+        color: theme.color.text_gray_color,
+        fontFamily: "'NanumSquare', sans-serif",
+        fontSize: "14px",
+    },
+    activeStyle: { background: "#293e69" }
+}
+
+const GoogleLoginButton = createButton(googleLoginConfig);
+const KakaoLoginButton = createButton(kakaoLoginConfig);
+const NaverLoginButton = createButton(naverLoginConfig);
 
 export default LoginModal;

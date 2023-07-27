@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import theme from '../assets/styles/theme';
 import Button from '../components/atoms/DefaultButton';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
@@ -42,8 +41,3 @@ export const TextOnly: Story = {
   },
 }
 
-export const RoundButton: Story = {
-  args: {
-    isRound: true,
-  }
-}

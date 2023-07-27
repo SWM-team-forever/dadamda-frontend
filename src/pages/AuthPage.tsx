@@ -10,25 +10,25 @@ function AuthPage() {
         navigatorText: "회원가입하기"
     }
 
-  return (
-    <Container>
-        <AuthFormWrapper>
-        <AuthPanel>
-            <AuthPanelHeader>
-                <LogoWrapper>
-                    <SiReactos/>
-                    <span style={{ fontSize: "1.5rem", fontWeight: "bold" }}>다담다</span>
-                </LogoWrapper>
-                <span style={{ fontSize: "2rem", fontWeight: "bold", margin: "20px 0"}}>{ authTexts.type }</span>
-                <span>{ authTexts.typeDescription }</span>
-            </AuthPanelHeader>
-            <AuthPanelButtons>
-                <GoogleLoginButton style={{ width: "fit-content", padding: "0 20px"}}/>
-            </AuthPanelButtons>
-        </AuthPanel>
-        </AuthFormWrapper>
-    </Container>
-  )
+    return (
+        <Container>
+            <AuthFormWrapper>
+                <AuthPanel>
+                    <AuthPanelHeader>
+                        <LogoWrapper>
+                            <SiReactos />
+                            <span style={{ fontSize: "1.5rem", fontWeight: "bold" }}>다담다</span>
+                        </LogoWrapper>
+                        <span style={{ fontSize: "2rem", fontWeight: "bold", margin: "20px 0" }}>{authTexts.type}</span>
+                        <span>{authTexts.typeDescription}</span>
+                    </AuthPanelHeader>
+                    <AuthPanelButtons>
+                        <GoogleLoginButton style={{ width: "fit-content", padding: "0 20px" }} />
+                    </AuthPanelButtons>
+                </AuthPanel>
+            </AuthFormWrapper>
+        </Container>
+    )
 }
 
 const Container = styled.div`
@@ -66,13 +66,6 @@ const AuthPanelHeader = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
-
-const ButtonText = styled.span`
-    @media(max-width: 768px) {
-        font-size: .6rem;
-        font-weight: bold;
-    }
 `
 
 const AuthPanelButtons = styled.div`

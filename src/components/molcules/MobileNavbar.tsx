@@ -1,14 +1,21 @@
 import styled from 'styled-components';
-import CrossIcon from '../../assets/icons/CrossIcon.png';
-import theme from '../../assets/styles/theme';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
 import Button from '../atoms/DefaultButton';
+import UserConsumer from '../../context/UserContext';
+
 import ChervronDownIcon from '../../assets/icons/ChevronDownIcon.png';
 import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
-import { useState } from 'react';
 import logo from '../../assets/images/dadamda-logo128.png';
-import { Link } from 'react-router-dom';
+import CrossIcon from '../../assets/icons/CrossIcon.png';
+import theme from '../../assets/styles/theme';
 
-function MobileNavbar({ toggleMobileNavbar, user }) {
+interface MobileNavbarProps {
+  toggleMobileNavbar: () => void;
+}
+
+function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
 
@@ -16,6 +23,19 @@ function MobileNavbar({ toggleMobileNavbar, user }) {
     setIsMenuOpen(!isMenuOpen)
     isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
   };
+  const [user, dispatch] = UserConsumer() as any;
+
+  const navigate = useNavigate();
+
+  const login = () => {
+    dispatch({ type: 'login' });
+    navigate('/scrap');
+  }
+
+  const logout = () => {
+    dispatch({ type: 'logout' });
+    navigate('/main');
+  }
 
   const navbarMenus = [{
     isVisibleWithoutLogin: true,
@@ -60,7 +80,7 @@ function MobileNavbar({ toggleMobileNavbar, user }) {
       <NavbarMenu>
         {navbarMenus.map(menu => {
           const isMenuVisible = menu.isVisibleWithoutLogin || user;
-          const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen;
+          const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen && user;
           return <>{isMenuVisible && <ItemContainer>
             <Link to={menu.link} style={{ textDecoration: 'inherit', color: 'inherit' }}>
               <EmpasizedTypography>{menu.name}</EmpasizedTypography>
@@ -69,16 +89,13 @@ function MobileNavbar({ toggleMobileNavbar, user }) {
           </ItemContainer>}
             {
               isMenuHasMenuAndOpen && <MenuContainer>
-                <DefaultTypography>전체</DefaultTypography>
-                <DefaultTypography>아티클</DefaultTypography>
-                <DefaultTypography>상품</DefaultTypography>
-                <DefaultTypography>비디오</DefaultTypography>
-                <DefaultTypography>장소</DefaultTypography>
-                <DefaultTypography>기타</DefaultTypography>
+                {scrapMenu.map(menu => {
+                  return <DefaultTypography>{menu.name}</DefaultTypography>
+                })}
               </MenuContainer>
             }</>
         })}
-        {user ? <Button label='로그아웃' buttonStyle='primary' /> : <Button label='로그인/회원가입' buttonStyle='primary' />}
+        {user ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
         <IconImg src={logo} style={{ width: "36px", height: "36px", position: "absolute", bottom: "20px", right: "20px" }} />
       </NavbarMenu>
     </NavbarContainer>
@@ -95,6 +112,7 @@ const NavbarContainer = styled.div`
     display: flex;
     flex-direction: column;
     box-shadow: ${theme.style.shadow};
+    z-index: 100;
 `
 
 const EmpasizedTypography = styled.span`

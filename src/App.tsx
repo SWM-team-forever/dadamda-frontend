@@ -1,27 +1,40 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 import './App.css'
-import AuthPage from './pages/AuthPage';
 import ScrapPage from './pages/ScrapPage';
 import Header from './components/molcules/Header';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
-import { USER } from './config';
 import UserPage from './pages/UserPage';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { RequireAuth, UserProvider } from './context/UserContext';
+import TrendingPage from './pages/TrendingPage';
+import BoardPage from './pages/BoardPage';
+import OtherTemplate from './components/templates/OtherTemplate';
+import ListTemplate from './components/templates/ListTemplate';
 
 function App() {
   return (
     <>
-      {/* <GoogleOAuthProvider> */}
-      <BrowserRouter>
-        <Header user={null} size='large' />
-        <Routes>
-          <Route path='/' element={<MainPage />}></Route>
-          <Route path='/main' element={<MainPage />}></Route>
-          <Route path='/user' element={<UserPage />}></Route>
-          <Route path='/scrap' element={<ScrapPage />}></Route>
-        </Routes>
-      </BrowserRouter>
-      {/* </GoogleOAuthProvider > */}
+      <UserProvider>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path='/' element={<MainPage />}></Route>
+            <Route path='/main' element={<MainPage />}></Route>
+            <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
+            <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
+              <Route path='list' element={<ListTemplate />}></Route>
+              <Route path='article' element={<OtherTemplate />}></Route>
+              <Route path='product' element={<OtherTemplate />}></Route>
+              <Route path='video' element={<OtherTemplate />}></Route>
+              <Route path='location' element={<OtherTemplate />}></Route>
+              <Route path='other' element={<OtherTemplate />}></Route>
+              <Route path='' element={<ListTemplate />}></Route>
+            </Route>
+            <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
+            <Route path='/trending' element={<TrendingPage />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </>
   )
 }
