@@ -12,6 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: properties 파일 복사
+        run: |
+          echo "${{ secrets.WEB_SECRET }}" | base64 --decode > src/secret.tsx
+
       - name: Build
         run: |
           npm install --legacy-peer-deps
