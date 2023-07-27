@@ -8,6 +8,7 @@ import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import ColumnContainer from '../atoms/ColumnContainer';
+import { googleLoginURL } from '../../secret';
 
 interface LoginModalProps {
     hideLoginModal: () => void;
@@ -24,7 +25,8 @@ function LoginModal({ hideLoginModal }: LoginModalProps) {
     }
 
     const oAuthHandler = (): void => {
-        window.location.assign('https://api.dadamda.me/oauth2/authorization/google');
+        const URL = googleLoginURL;
+        window.location.assign(URL);
         navigate('/scrap');
     };
 
