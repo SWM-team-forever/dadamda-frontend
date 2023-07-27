@@ -13,7 +13,7 @@ interface OtherScrapCardProps {
         pageUrl: string,
         title: string,
         description: string,
-        thumbnailURL: string,
+        thumbnailUrl: string,
         scrapCreatedDate: string,
     }
 }
@@ -75,7 +75,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
     return (
         <CardContainer>
             <CardWrapper>
-                <CardImage src={content.thumbnailURL} />
+                <CardImage src={content.thumbnailUrl} />
                 <CardInfoWrapper>
                     <EmpasizedTypography>{content.title}</EmpasizedTypography>
                     <DefaultTypography>{content.description}</DefaultTypography>

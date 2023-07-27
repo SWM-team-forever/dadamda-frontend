@@ -42,7 +42,7 @@ function OtherTemplate() {
                 }
             }
         }).then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => setOthers(data.data.content));
     });
 
     return (

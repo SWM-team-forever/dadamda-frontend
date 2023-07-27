@@ -24,7 +24,7 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
                 "X-AUTH-TOKEN": token,
             },
             body: JSON.stringify({
-                pageUrl: 'https://www.google.com',
+                pageUrl: 'https://mui.com/material-ui/react-progress/',
             }),
         };
 
