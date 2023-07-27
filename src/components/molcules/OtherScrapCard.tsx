@@ -28,8 +28,8 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
     }, {
         name: '카드 삭제하기',
         onClick: () => {
-            hideTooltip(),
-                showScrapDeleteModal();
+            hideTooltip();
+            showScrapDeleteModal();
         },
     }];
 
@@ -106,10 +106,9 @@ const CardWrapper = styled.div`
     border-radius: 4px;
 `
 
-const CardImage = styled.img<{ thumbnailURL: string }>`
+const CardImage = styled.img`
     width: 100%;
     height: 140px;
-    background: url(${props => props.thumbnailURL}), cover no-repeat;
     border-radius: 4px;
 `
 

@@ -63,11 +63,12 @@ function Header() {
 
     const userPopOverMenus = [{
         name: '프로필 정보',
-        link: '/user',
-        onClick: hideLoginTooltip,
+        onClick: () => {
+            navigate('/user');
+            hideLoginTooltip();
+        },
     }, {
         name: '로그아웃',
-        link: '/main',
         onClick: logout,
     }]
 
@@ -101,7 +102,7 @@ function Header() {
                         <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                     }
                 </LargeRightPanel>
-                <IconContainer onClick={toggleMobileNavbar} src={!isClicked && MenuIcon} />
+                {!isClicked && <IconContainer onClick={toggleMobileNavbar} src={MenuIcon} />}
                 {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
                 {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
             </HeaderContainer>

@@ -14,7 +14,7 @@ interface ButtonProps {
     onClick?: () => void;
 }
 
-function Button({ label, buttonStyle, isRound, fullWidth, onClick,
+function Button({ label, buttonStyle, isRound, fullWidth, onClick
 }: ButtonProps) {
     return (
         <ButtonContainer buttonStyle={buttonStyle} fullWidth={fullWidth} isRound={isRound} onClick={onClick}>
@@ -23,7 +23,7 @@ function Button({ label, buttonStyle, isRound, fullWidth, onClick,
     );
 }
 
-const ButtonContainer = styled.button<{ buttonStyle: string, fullWidth: boolean, isRound: boolean }>`
+const ButtonContainer = styled.button<{ buttonStyle: string, fullWidth?: boolean, isRound?: boolean }>`
     ${props => getButtonStyle(props.buttonStyle)};
     ${props => props.fullWidth && 'width: 100%'};
     ${props => props.isRound && 'border-radius: 4px'};

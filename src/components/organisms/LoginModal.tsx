@@ -23,6 +23,11 @@ function LoginModal({ hideLoginModal }: LoginModalProps) {
         hideLoginModal();
     }
 
+    const oAuthHandler = (): void => {
+        window.location.assign('https://api.dadamda.me/oauth2/authorization/google');
+        navigate('/scrap');
+    };
+
     return (
         <ModalContainer>
             <CrossIconContainer>
