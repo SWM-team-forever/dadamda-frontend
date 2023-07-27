@@ -1,11 +1,9 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
 import theme from "../../assets/styles/theme";
 
 interface TooltipProps {
     contents: {
-        link?: string,
         onClick: () => void,
         name: string,
     }[];
@@ -16,7 +14,7 @@ function Tooltip({ contents, color }: TooltipProps) {
     return (
         <TooltipWrapper color={color}>
             {contents.map(menu => {
-                return <HoverLink to={menu.link} onClick={menu.onClick}>{menu.name}</HoverLink>
+                return <HoverLink onClick={menu.onClick}>{menu.name}</HoverLink>
             })}
         </TooltipWrapper>
     );
@@ -39,13 +37,14 @@ const TooltipWrapper = styled.div<{ color: string }>`
     gap: 10px;
 `
 
-const HoverLink = styled(NavLink)`
+const HoverLink = styled.span`
     text-decoration: none;
     &:hover {
         color: ${theme.color.primary_color};
     } 
     color: ${theme.color.text_gray_color};
     font-size: 12px;
+    cursor: pointer;
 `
 
 export default Tooltip;

@@ -13,7 +13,7 @@ function ScrapCreateModal() {
                 </ModalTitleContainer>
                 <IconContainer />
             </ModalHeader>
-            <EditText rows="1" placeholder="예) www.naver.com" />
+            <EditText rows={1} placeholder="예) www.naver.com" />
             <ModalFooter>
                 <ButtonContainer>
                     <Button buttonStyle={'gray'} label={'취소하기'} isRound />
