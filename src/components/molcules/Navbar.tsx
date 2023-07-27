@@ -106,10 +106,9 @@ const ItemContainer = styled(NavLink)`
     }
 `
 
-const ItemIcon = styled.img<{ isFocused: boolean }>`
+const ItemIcon = styled.img`
     width: 24px;
     height: 24px;
-    ${props => props.isFocused && `color: ${theme.color.primary_color}`};
 `
 
 export default Navbar;
