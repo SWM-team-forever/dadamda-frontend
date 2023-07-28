@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
-import { PRODUCT_DATAS } from '../../config';
 import theme from '../../assets/styles/theme';
 import searchIcon from '../../assets/icons/SearchIcon.png';
 
 function OtherTemplate() {
-    const [productDatas] = useState(PRODUCT_DATAS);
 
     return (
         <ScrapListContainer>

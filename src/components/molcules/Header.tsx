@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { NavLink, NavLinkProps, useNavigate } from 'react-router-dom';
 
 import LoginModal from '../organisms/LoginModal';
@@ -11,7 +11,6 @@ import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
 import Tooltip from '../atoms/Tooltip';
-import { LoginContext } from '../../context/LoginContext';
 import { USER } from '../../config';
 import Overlay from '../atoms/Overlay';
 

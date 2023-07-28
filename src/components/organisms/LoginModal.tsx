@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { createButton } from 'react-social-login-buttons';
 
 import theme from '../../assets/styles/theme';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
@@ -118,45 +117,5 @@ const EmpasizedTypography = styled.span`
     font-size: 20px;
     font-weight: bold;
 `
-
-const googleLoginConfig = {
-    text: "Google로 시작하기",
-    icon: "google",
-    style: {
-        background: "white",
-        color: theme.color.text_gray_color,
-        fontFamily: "'NanumSquare', sans-serif",
-        fontSize: "14px",
-    },
-    activeStyle: { background: "#293e69" }
-}
-
-const kakaoLoginConfig = {
-    text: "카카오로 시작하기",
-    icon: "google",
-    style: {
-        background: "white",
-        color: theme.color.text_gray_color,
-        fontFamily: "'NanumSquare', sans-serif",
-        fontSize: "14px",
-    },
-    activeStyle: { background: "#293e69" }
-}
-
-const naverLoginConfig = {
-    text: "네이버로 시작하기",
-    icon: "google",
-    style: {
-        background: "white",
-        color: theme.color.text_gray_color,
-        fontFamily: "'NanumSquare', sans-serif",
-        fontSize: "14px",
-    },
-    activeStyle: { background: "#293e69" }
-}
-
-const GoogleLoginButton = createButton(googleLoginConfig);
-const KakaoLoginButton = createButton(kakaoLoginConfig);
-const NaverLoginButton = createButton(naverLoginConfig);
 
 export default LoginModal;

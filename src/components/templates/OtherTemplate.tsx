@@ -42,8 +42,7 @@ function OtherTemplate() {
                     console.log(data.data.content);
                 })
                 .catch(err => console.error(err));
-
-    }, []);
+    }, [token]);
 
     return (
         <ScrapListContainer>

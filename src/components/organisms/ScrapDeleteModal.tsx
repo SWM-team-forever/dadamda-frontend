@@ -14,7 +14,7 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalPro
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
-    });
+    }, []);
 
     async function deleteScrap() {
         const url = DELETE_SCRAP_URL + `/${scrapId}`;

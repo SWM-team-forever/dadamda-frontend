@@ -14,7 +14,7 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
-    });
+    }, []);
 
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();

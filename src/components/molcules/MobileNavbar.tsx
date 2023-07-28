@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '../atoms/DefaultButton';
@@ -9,7 +9,6 @@ import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import theme from '../../assets/styles/theme';
-import { LoginContext } from '../../context/LoginContext';
 import { googleLoginURL } from '../../secret';
 
 interface MobileNavbarProps {

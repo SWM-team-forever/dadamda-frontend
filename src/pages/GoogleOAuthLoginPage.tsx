@@ -1,8 +1,7 @@
 import RowContainer from "../components/atoms/RowContainer";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../context/LoginContext";
 
 function GoogleOAuthLoginpage() {
     const navigate = useNavigate();
@@ -16,7 +15,7 @@ function GoogleOAuthLoginpage() {
         // });
         token && localStorage.setItem('token', token)
         navigate('/scrap/list');
-    }, [])
+    }, [navigate])
     return (
         <RowContainer style={{
             width: '100vw',
