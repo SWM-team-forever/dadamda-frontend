@@ -8,7 +8,7 @@ interface ExistOtherScrapContainerProps {
         pageUrl: string,
         title: string,
         description: string,
-        thumbnailURL: string,
+        thumbnailUrl: string,
         scrapCreatedDate: string,
     }[]
 }
