@@ -44,7 +44,7 @@ function OtherTemplate() {
                 })
                 .catch(err => console.error(err));
 
-    }, [others]);
+    }, []);
 
     return (
         <ScrapListContainer>
