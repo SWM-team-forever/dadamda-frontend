@@ -1,125 +1,14 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import theme from '../../assets/styles/theme';
-import searchIcon from '../../assets/icons/SearchIcon.png';
 import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
-import EmptyOtherScrapContainer from '../organisms/EmptyOtherScrapContainer';
-import { GET_OTHER_SCRAP_URL } from '../../secret';
-import fab from '../../assets/icons/fab.png';
-import IconButton from '../atoms/IconButton';
-import Overlay from '../atoms/Overlay';
-import ScrapCreateModal from '../organisms/ScrapCreateModal';
+import ScrapListHeader from '../molcules/ScrapListHeader';
+import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
 
-function OtherTemplate() {
-    const [others, setOthers] = useState([]);
-    const [isScrapCreateModalVisible, setIsScrapCreateModalVisible] = useState(false);
-    const showScrapCreateModal = () => {
-        setIsScrapCreateModalVisible(true);
-    }
-
-    function hideScrapCreateModal() {
-        setIsScrapCreateModalVisible(false);
-    }
-
-    const token = localStorage.getItem('token');
-
-    useEffect(() => {
-        const page = 0;
-        const size = 20;
-
-        const url = GET_OTHER_SCRAP_URL + `?page=${page}&size=${size}`;
-        token &&
-            fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-            }).then((response) => response.json())
-                .then((data) => {
-                    setOthers(data.data.content);
-                })
-                .catch(err => console.error(err));
-    }, [token]);
-
+function OtherTemplate({ others }) {
     return (
-        <ScrapListContainer>
-            <ScrapListHeader>
-                <ScarpCountWrapper>
-                    <EmpasizedTypography>{others.length} </EmpasizedTypography>
-                    <DefaultTypography>개의 </DefaultTypography>
-                    <EmpasizedTypography>기타 스크랩</EmpasizedTypography>
-                    <DefaultTypography>이 있습니다.</DefaultTypography>
-                </ScarpCountWrapper>
-                <SearchBar>
-                    <SearchIconWrapper src={searchIcon} />
-                    <EmpasizedTypography>Search</EmpasizedTypography>
-                </SearchBar>
-            </ScrapListHeader>
-            {others.length ? <ExistOtherScrapContainer contents={others} /> : <EmptyOtherScrapContainer />}
-            <IconButton src={fab}
-                style={{
-                    position: 'fixed',
-                    bottom: '15px',
-                    right: '15px',
-                    width: '48px',
-                    height: '48px',
-                }}
-                onClick={showScrapCreateModal} />
-            {isScrapCreateModalVisible && <Overlay>
-                <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} />
-            </Overlay>}
-        </ScrapListContainer>
+        <>
+            <ScrapListHeader type='기타' count={others.length} />
+            {others.length ? <ExistOtherScrapContainer contents={others} /> : <EmptyScrapContainer />}
+        </>
     )
 }
-
-const ScrapListContainer = styled.div`
-    width: calc(100% - 200px);
-    height: calc(100% - 50px);
-    background-color: ${theme.color.background_color};
-    position: fixed;
-    right: 0;
-    top: 50px;
-    @media screen and (max-width: 600px) {
-      width: 100vw;
-      left: 0;
-    }
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-`
-
-const ScrapListHeader = styled.div`
-    display: flex;
-    padding: 20px;
-    justify-content: space-between;
-`
-
-const ScarpCountWrapper = styled.div`
-
-`
-
-const DefaultTypography = styled.span`
-    font-size: 14px;
-    color: ${theme.color.text_gray_color};
-`
-
-const EmpasizedTypography = styled.span`
-    font-size: 14px;
-    font-weight: bold;
-    color: ${theme.color.text_gray_color};
-`
-
-const SearchBar = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-`
-
-const SearchIconWrapper = styled.img`
-    width: 24px;
-    height: 24px;
-`
 
 export default OtherTemplate;
