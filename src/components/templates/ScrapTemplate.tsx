@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import ScrapListHeader from '../molcules/ScrapListHeader';
 import Overlay from '../atoms/Overlay';
 import ScrapCreateModal from '../organisms/ScrapCreateModal';
 import theme from '../../assets/styles/theme';
@@ -25,17 +24,18 @@ function ScrapTemplate({ type }) {
     const page = 0;
     const size = 20;
 
-    const [types, setTypes] = useState([]);
     const urlMatching = {
-        'other': GET_OTHER_SCRAP_URL,
-        'list': GET_LIST_SCRAP_URL,
-        'article': GET_ARTICLE_SCRAP_URL,
-        'product': GET_PRODUCT_SCRAP_URL,
-        'video': GET_PRODUCT_SCRAP_URL,
+        other: GET_OTHER_SCRAP_URL,
+        list: GET_LIST_SCRAP_URL,
+        article: GET_ARTICLE_SCRAP_URL,
+        product: GET_PRODUCT_SCRAP_URL,
+        video: GET_PRODUCT_SCRAP_URL,
     }
-    const url = urlMatching[type] + `?page=${page}&size=${size}`;
+
+    const [types, setTypes] = useState([]);
 
     useEffect(() => {
+        const url = urlMatching[type] + `?page=${page}&size=${size}`;
         token &&
             fetch(url, {
                 method: "GET",
@@ -46,9 +46,10 @@ function ScrapTemplate({ type }) {
             }).then((response) => response.json())
                 .then((data) => {
                     setTypes(data.data.content);
+                    console.log(data.data.content);
                 })
                 .catch(err => console.error(err));
-    }, [token]);
+    }, [type]);
     return (
         <>
             <ScrapListContainer>
