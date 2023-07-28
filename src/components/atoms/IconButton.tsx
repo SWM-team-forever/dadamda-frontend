@@ -3,7 +3,7 @@ import styled from 'styled-components';
 interface IconButtonProps {
     src: string,
     style: object,
-    onClick?: () => {},
+    onClick?: () => void,
 }
 
 function IconButton({ src, style, onClick }: IconButtonProps) {

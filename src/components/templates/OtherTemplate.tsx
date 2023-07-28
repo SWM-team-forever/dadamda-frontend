@@ -25,23 +25,27 @@ function OtherTemplate() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        fetch(GET_OTHER_SCRAP_URL, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "X-AUTH-TOKEN": token,
-            },
-            parameters: {
-                pageable: {
-                    "page": 0,
-                    "size": 1,
-                    "sort": [
-                        "string"
-                    ]
-                }
+        const parameters = {
+            pageable: {
+                "page": 0,
+                "size": 1,
+                "sort": [
+                    "string"
+                ]
             }
-        }).then((response) => response.json())
-            .then((data) => setOthers(data.data.content));
+        };
+        const url = GET_OTHER_SCRAP_URL + parameters.toString();
+        token &&
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+            }).then((response) => response.json())
+                .then((data) => setOthers(data.data.content))
+                .catch(err => console.error(err));
+
     });
 
     return (

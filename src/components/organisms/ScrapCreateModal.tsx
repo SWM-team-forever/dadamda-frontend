@@ -10,30 +10,31 @@ interface ScrapCreateModalProps {
 }
 
 function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
-    const [token, setToken] = useState('');
+    const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
     });
 
     async function createScrap() {
-        const options = {
-            method: "POST",
-            headers: {
-                "Access-Control-Allow-Origin": 'http://localhost:5173/',
-                "Content-Type": "application/json",
-                "X-AUTH-TOKEN": token,
-            },
-            body: JSON.stringify({
-                pageUrl: 'https://mui.com/material-ui/react-progress/',
-            }),
-        };
+        if (token) {
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+                body: JSON.stringify({
+                    pageUrl: 'https://mui.com/material-ui/react-progress/',
+                }),
+            };
 
-        const res = await fetch(POST_CREATE_OTHER_SCRAP_URL, options);
-        const data = await res.json();
-        if (res.ok) {
-            console.log(data);
-        } else {
-            console.log(data);
+            const res = await fetch(POST_CREATE_OTHER_SCRAP_URL, options);
+            const data = await res.json();
+            if (res.ok) {
+                console.log(data);
+            } else {
+                console.log(data);
+            }
         }
     }
 

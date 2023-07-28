@@ -16,7 +16,7 @@ export const Primary: Story = {
         pageUrl: 'www.tistory.com/123',
         title: '홍길동이 추천하는 맛집1',
         description: '고기 맛집을 위주로 하고 있습니다.',
-        thumbnailURL: 'https://lh3.googleusercontent.com/-TOE8rYMLSEY/AAAAAAAAAAI/AAAAAAAAANc/TLiDjKKULqo/photo.jpg?sz=128',
+        thumbnailUrl: 'https://lh3.googleusercontent.com/-TOE8rYMLSEY/AAAAAAAAAAI/AAAAAAAAANc/TLiDjKKULqo/photo.jpg?sz=128',
         scrapCreatedDate: '2023/03/23'
     }
   }
