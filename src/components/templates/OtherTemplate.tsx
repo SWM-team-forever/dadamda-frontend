@@ -79,7 +79,7 @@ function OtherTemplate() {
 
 const ScrapListContainer = styled.div`
     width: calc(100% - 200px);
-    height: 100%;
+    height: calc(100% - 50px);
     background-color: ${theme.color.background_color};
     position: fixed;
     right: 0;
