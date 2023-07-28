@@ -12,12 +12,6 @@ interface ButtonProps {
     onClick?: () => void;
 }
 
-const sizeMapping = {
-    'small': 12,
-    'medium': 24,
-    'large': 36,
-}
-
 function Button({ label, buttonStyle, isRound, fullWidth, onClick, startIcon, endIcon, size,
 }: ButtonProps) {
     return (
