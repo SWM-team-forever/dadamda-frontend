@@ -28,6 +28,7 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalPro
             }).then((response) => response.json())
                 .then((data) => {
                     console.log(data);
+                    hideScrapDeleteModal();
                 })
                 .catch(err => console.error(err));
     }
