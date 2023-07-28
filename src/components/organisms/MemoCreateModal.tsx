@@ -23,8 +23,8 @@ function MemoCreateModal({ hideMemoCreateModal, scrapId }: MemoCreateModalProps)
     }
 
     async function createMemo() {
-        if (token) {
-            const options = {
+        token &&
+            fetch(POST_CREATE_MEMO_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -34,19 +34,13 @@ function MemoCreateModal({ hideMemoCreateModal, scrapId }: MemoCreateModalProps)
                     scrapId: scrapId,
                     memoText: textAreaValue,
                 }),
-            };
-
-            const res = await fetch(POST_CREATE_MEMO_URL, options);
-            const data = await res.json();
-            if (res.ok) {
-                console.log(data);
-
-            } else {
-                console.log(data);
-            }
-
-            hideMemoCreateModal();
-        }
+            }).then((response) => response.json())
+                .then((response) => {
+                    if (response.ok) {
+                        hideMemoCreateModal();
+                    }
+                })
+                .catch(err => console.error(err));
     }
 
     return (

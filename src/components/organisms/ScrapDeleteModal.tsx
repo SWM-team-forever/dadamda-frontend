@@ -26,9 +26,10 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalPro
                     "X-AUTH-TOKEN": token,
                 },
             }).then((response) => response.json())
-                .then((data) => {
-                    console.log(data);
-                    hideScrapDeleteModal();
+                .then((response) => {
+                    if (response.ok) {
+                        hideScrapDeleteModal();
+                    }
                 })
                 .catch(err => console.error(err));
     }

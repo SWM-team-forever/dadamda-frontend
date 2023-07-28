@@ -22,8 +22,8 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
     }
 
     async function createScrap() {
-        if (token) {
-            const options = {
+        token &&
+            fetch(POST_CREATE_OTHER_SCRAP_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -32,17 +32,13 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
                 body: JSON.stringify({
                     pageUrl: textAreaValue,
                 }),
-            };
-
-            const res = await fetch(POST_CREATE_OTHER_SCRAP_URL, options);
-            const data = await res.json();
-            if (res.ok) {
-                console.log(data);
-                hideScrapCreateModal();
-            } else {
-                console.log(data);
-            }
-        }
+            }).then((response) => response.json())
+                .then((response) => {
+                    if (response.ok) {
+                        hideScrapCreateModal();
+                    }
+                })
+                .catch(err => console.error(err));
     }
 
     return (
