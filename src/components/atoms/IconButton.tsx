@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 interface IconButtonProps {
     src: string,
-    style: object,
+    style?: object,
     onClick?: () => void,
 }
 

@@ -26,16 +26,10 @@ function OtherTemplate() {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        const parameters = {
-            pageable: {
-                "page": 0,
-                "size": 1,
-                "sort": [
-                    "string"
-                ]
-            }
-        };
-        const url = GET_OTHER_SCRAP_URL + parameters.toString();
+        const page = 0;
+        const size = 20;
+
+        const url = GET_OTHER_SCRAP_URL + `?page=${page}&size=${size}`;
         token &&
             fetch(url, {
                 method: "GET",
@@ -43,7 +37,6 @@ function OtherTemplate() {
                     "Content-Type": "application/json",
                     "X-AUTH-TOKEN": token,
                 },
-                credentials: 'include'
             }).then((response) => response.json())
                 .then((data) => setOthers(data.data.content))
                 .catch(err => console.error(err));

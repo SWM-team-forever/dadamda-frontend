@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { createButton } from 'react-social-login-buttons';
 
 import theme from '../../assets/styles/theme';
@@ -7,6 +6,10 @@ import CrossIcon from '../../assets/icons/CrossIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import ColumnContainer from '../atoms/ColumnContainer';
 import { googleLoginURL } from '../../secret';
+import LoginButton from '../atoms/LoginButton';
+import googleLogo from '../../assets/icons/btn_google_light_normal_ios.svg';
+import naverLogo from '../../assets/icons/btnG_아이콘사각.png';
+import kakaoLogo from '../../assets/icons/kakao_login_large_wide.png';
 
 interface LoginModalProps {
     hideLoginModal: () => void;
@@ -34,12 +37,19 @@ function LoginModal({ hideLoginModal }: LoginModalProps) {
                 <DefaultTypography>다담다 서비스를 사용하기 위해</DefaultTypography>
                 <DefaultTypography>로그인해주세요.</DefaultTypography>
             </TextContainer>
-            <hr />
             <ButtonContainer>
-                <ColumnContainer style={{ width: "80%" }}>
-                    <GoogleLoginButton onClick={oAuthHandler} />
-                    <KakaoLoginButton />
-                    <NaverLoginButton />
+                <ColumnContainer style={{ width: '100%', gap: "10px" }}>
+                    <LoginButton
+                        text={'구글로 시작하기'}
+                        iconSource={googleLogo}
+                        style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
+                        onClick={oAuthHandler}
+                    />
+                    <img src={kakaoLogo} />
+                    <LoginButton
+                        text={'네이버로 시작하기'}
+                        iconSource={naverLogo}
+                        style={{ color: 'white', backgroundColor: '#03C75A' }} />
                 </ColumnContainer>
             </ButtonContainer>
         </ModalContainer>
@@ -87,6 +97,8 @@ const ButtonContainer = styled.div`
     width: 100%;
     align-items: center;
     padding-bottom: 20px;
+    padding: 20px;
+    box-sizing: border-box;
 `
 
 const TextContainer = styled.div`
@@ -94,7 +106,7 @@ const TextContainer = styled.div`
     flex-direction: column;
     gap: 5px;
     padding: 20px;
-    width: 80%;
+    width: 100%;
     box-sizing: border-box;
 `
 

@@ -13,6 +13,7 @@ import MenuIcon from '../../assets/icons/MenuIcon.png';
 import Tooltip from '../atoms/Tooltip';
 import { LoginContext } from '../../context/LoginContext';
 import { USER } from '../../config';
+import Overlay from '../atoms/Overlay';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -112,7 +113,9 @@ function Header() {
                 </LargeRightPanel>
                 {!isClicked && <IconContainer onClick={toggleMobileNavbar} src={MenuIcon} />}
                 {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
-                {isLoginModalVisible && <LoginModal hideLoginModal={hideLoginModal} />}
+                {isLoginModalVisible && <Overlay>
+                    <LoginModal hideLoginModal={hideLoginModal} />
+                </Overlay>}
             </HeaderContainer>
             {isLoginTooltipVisible && <Tooltip contents={userPopOverMenus} color={'#FFFFFF'} />}
         </TooltipContainer>
