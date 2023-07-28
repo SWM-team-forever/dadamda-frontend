@@ -104,6 +104,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
 
 const CardContainer = styled.div`
     position: relative;
+    border-radius: 4px;
 `
 
 const CardWrapper = styled.div`
@@ -130,10 +131,12 @@ const CardInfoWrapper = styled.div`
 const EmpasizedTypography = styled.span`
     font-size: 20px;
     font-weight: bold;
+    color: ${theme.color.text_gray_color};
 `
 
 const DefaultTypography = styled.span`
     font-size: 14px;
+    color: ${theme.color.text_gray_color};
 `
 
 const ButtonContainer = styled.div`
