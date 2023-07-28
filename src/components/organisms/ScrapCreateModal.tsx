@@ -33,10 +33,8 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
                     pageUrl: textAreaValue,
                 }),
             }).then((response) => response.json())
-                .then((response) => {
-                    if (response.ok) {
-                        hideScrapCreateModal();
-                    }
+                .then(() => {
+                    hideScrapCreateModal();
                 })
                 .catch(err => console.error(err));
     }

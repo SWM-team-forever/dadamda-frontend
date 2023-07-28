@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 interface RowContainerProps {
-    children: React.ReactNode,
-    style: object,
+    children?: React.ReactNode,
+    style?: object,
 }
 
 function RowContainer({ children, style }: RowContainerProps) {
     return (
-        <Wrapper style={{ ...style }}>
+        <Wrapper style={style}>
             {children}
         </Wrapper>
     );
