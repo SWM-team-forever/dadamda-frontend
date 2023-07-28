@@ -23,8 +23,9 @@ function OtherTemplate() {
         setIsScrapCreateModalVisible(false);
     }
 
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
-        const token = localStorage.getItem('token');
         const parameters = {
             pageable: {
                 "page": 0,
@@ -42,11 +43,12 @@ function OtherTemplate() {
                     "Content-Type": "application/json",
                     "X-AUTH-TOKEN": token,
                 },
+                credentials: 'include'
             }).then((response) => response.json())
                 .then((data) => setOthers(data.data.content))
                 .catch(err => console.error(err));
 
-    });
+    }, []);
 
     return (
         <ScrapListContainer>
