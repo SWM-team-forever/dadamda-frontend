@@ -28,7 +28,6 @@ function OtherTemplate() {
         fetch(GET_OTHER_SCRAP_URL, {
             method: "GET",
             headers: {
-                "Access-Control-Allow-Origin": 'http://localhost:5173/',
                 "Content-Type": "application/json",
                 "X-AUTH-TOKEN": token,
             },
