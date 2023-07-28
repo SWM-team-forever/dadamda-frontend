@@ -10,6 +10,12 @@ interface ExistOtherScrapContainerProps {
         description: string,
         thumbnailUrl: string,
         scrapCreatedDate: string,
+        scrapId: number,
+        memoList: [{
+            memoId: number,
+            memoImageURL?: string,
+            memoText?: string,
+        }],
     }[]
 }
 

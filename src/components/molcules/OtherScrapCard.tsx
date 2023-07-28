@@ -16,7 +16,6 @@ interface OtherScrapCardProps {
         title: string,
         description: string,
         thumbnailUrl: string,
-        scrapCreatedDate: string,
         scrapId: number,
         memoList: [{
             memoId: number,
