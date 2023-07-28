@@ -27,7 +27,7 @@ function OtherTemplate() {
 
     useEffect(() => {
         const page = 0;
-        const size = 1;
+        const size = 20;
 
         const url = GET_OTHER_SCRAP_URL + `?page=${page}&size=${size}`;
         token &&
