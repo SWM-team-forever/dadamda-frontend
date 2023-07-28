@@ -3,17 +3,23 @@ import styled from 'styled-components';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
 import { POST_CREATE_OTHER_SCRAP_URL } from '../../secret';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 interface ScrapCreateModalProps {
     hideScrapCreateModal: () => void;
 }
 
 function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
+    const [textAreaValue, setTextAreaValue] = useState('');
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
     });
+
+    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        e.preventDefault();
+        setTextAreaValue(e.target.value);
+    }
 
     async function createScrap() {
         if (token) {
@@ -24,7 +30,7 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
                     "X-AUTH-TOKEN": token,
                 },
                 body: JSON.stringify({
-                    pageUrl: 'https://mui.com/material-ui/react-progress/',
+                    pageUrl: textAreaValue,
                 }),
             };
 
@@ -32,6 +38,7 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
             const data = await res.json();
             if (res.ok) {
                 console.log(data);
+                hideScrapCreateModal();
             } else {
                 console.log(data);
             }
@@ -47,7 +54,7 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
                 </ModalTitleContainer>
                 <IconContainer hideScrapCreateModal={hideScrapCreateModal} />
             </ModalHeader>
-            <EditText rows={1} placeholder="예) www.naver.com" />
+            <EditText rows={1} placeholder="예) www.naver.com" onChange={(e) => handleSetValue(e)} />
             <ModalFooter>
                 <ButtonContainer>
                     <Button buttonStyle={'gray'} label={'취소하기'} isRound onClick={hideScrapCreateModal} />
