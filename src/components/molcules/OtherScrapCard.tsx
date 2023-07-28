@@ -16,6 +16,7 @@ interface OtherScrapCardProps {
         description: string,
         thumbnailUrl: string,
         scrapCreatedDate: string,
+        scrapId: number,
     }
 }
 
@@ -88,7 +89,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible || isMemoCreateModalVisible) && <Overlay />}
-            {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} />}
+            {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} scrapId={content.scrapId} />}
         </CardContainer>
     );
 }

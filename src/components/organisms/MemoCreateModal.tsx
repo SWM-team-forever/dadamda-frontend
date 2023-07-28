@@ -2,12 +2,53 @@ import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { POST_CREATE_MEMO_URL } from '../../secret';
 
 interface MemoCreateModalProps {
     hideMemoCreateModal: () => void,
+    scrapId: number,
 }
 
-function MemoCreateModal({ hideMemoCreateModal }: MemoCreateModalProps) {
+function MemoCreateModal({ hideMemoCreateModal, scrapId }: MemoCreateModalProps) {
+    const [textAreaValue, setTextAreaValue] = useState('');
+    const [token, setToken] = useState<string | null>(null);
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    });
+
+    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        e.preventDefault();
+        setTextAreaValue(e.target.value);
+    }
+
+    async function createMemo() {
+        if (token) {
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+                body: JSON.stringify({
+                    scrapId: scrapId,
+                    memoText: textAreaValue,
+                }),
+            };
+
+            const res = await fetch(POST_CREATE_MEMO_URL, options);
+            const data = await res.json();
+            if (res.ok) {
+                console.log(data);
+
+            } else {
+                console.log(data);
+            }
+
+            hideMemoCreateModal();
+        }
+    }
+
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -17,11 +58,11 @@ function MemoCreateModal({ hideMemoCreateModal }: MemoCreateModalProps) {
                 </ModalTitleContainer>
                 <IconContainer hideMemoCreateModal={hideMemoCreateModal} />
             </ModalHeader>
-            <EditText placeholder="추가할 메모를 입력하세요." />
+            <EditText placeholder="추가할 메모를 입력하세요." onChange={(e) => handleSetValue(e)} />
             <ModalFooter>
                 <ButtonContainer>
                     <Button buttonStyle={'gray'} label={'취소하기'} isRound onClick={hideMemoCreateModal} />
-                    <Button buttonStyle={'secondary'} label={'추가하기'} isRound />
+                    <Button buttonStyle={'secondary'} label={'추가하기'} isRound onClick={createMemo} />
                 </ButtonContainer>
             </ModalFooter>
         </ModalWrapper>
