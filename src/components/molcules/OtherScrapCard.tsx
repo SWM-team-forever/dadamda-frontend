@@ -8,6 +8,7 @@ import theme from '../../assets/styles/theme';
 import ScrapEditModal from '../organisms/ScrapEditModal';
 import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
 import MemoCreateModal from '../organisms/MemoCreateModal';
+import Memo from './Memo';
 
 interface OtherScrapCardProps {
     content: {
@@ -17,6 +18,11 @@ interface OtherScrapCardProps {
         thumbnailUrl: string,
         scrapCreatedDate: string,
         scrapId: number,
+        memoList: [{
+            memoId: number,
+            memoImageURL?: string,
+            memoText?: string,
+        }],
     }
 }
 
@@ -80,6 +86,9 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
                     <EmpasizedTypography>{content.title}</EmpasizedTypography>
                     <DefaultTypography>{content.description}</DefaultTypography>
                 </CardInfoWrapper>
+                {content.memoList.map(memo => {
+                    return <Memo memoImageURL={memo.memoImageURL} memoText={memo.memoText} />
+                })}
                 <ButtonContainer>
                     <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={showMemoCreateModal} />
                     <MoreIconContainer src={MoreIcon} onClick={() => showTooltip()} />

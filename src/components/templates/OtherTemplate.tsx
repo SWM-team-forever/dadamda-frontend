@@ -38,7 +38,10 @@ function OtherTemplate() {
                     "X-AUTH-TOKEN": token,
                 },
             }).then((response) => response.json())
-                .then((data) => setOthers(data.data.content))
+                .then((data) => {
+                    setOthers(data.data.content);
+                    console.log(data.data.content);
+                })
                 .catch(err => console.error(err));
 
     }, []);
