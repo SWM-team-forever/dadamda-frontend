@@ -5,7 +5,8 @@ import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
 
 interface ScrapEditModalProps {
-    hideScrapEditModal: () => void;
+    hideScrapEditModal: () => void,
+    scrapId: number,
 }
 
 function ScrapEditModal({ hideScrapEditModal }: ScrapEditModalProps) {

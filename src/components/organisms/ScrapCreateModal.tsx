@@ -6,7 +6,7 @@ import { POST_CREATE_OTHER_SCRAP_URL } from '../../secret';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 interface ScrapCreateModalProps {
-    hideScrapCreateModal: () => void;
+    hideScrapCreateModal: () => void,
 }
 
 function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
