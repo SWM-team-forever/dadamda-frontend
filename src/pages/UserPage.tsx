@@ -5,7 +5,6 @@ import Button from '../components/atoms/DefaultButton';
 import theme from '../assets/styles/theme';
 import { USER } from '../config';
 
-
 function UserPage() {
 
     return (

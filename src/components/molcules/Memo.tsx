@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import theme from '../../assets/styles/theme';
 
 interface MemoProps {
-    imageSource?: string,
-    textContent?: string,
+    memoImageURL?: string,
+    memoText?: string,
 }
 
-function Memo({ imageSource, textContent }: MemoProps) {
+function Memo({ memoImageURL, memoText }: MemoProps) {
     return (
         <MemoContainer>
-            {textContent}
-            {imageSource && <ImageMemo src={imageSource} />}
+            {memoText}
+            {memoImageURL && <ImageMemo src={memoImageURL} />}
         </MemoContainer>
     );
 }

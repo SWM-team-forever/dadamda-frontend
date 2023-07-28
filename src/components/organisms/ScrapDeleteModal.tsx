@@ -2,12 +2,38 @@ import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
+import { useEffect, useState } from 'react';
+import { DELETE_SCRAP_URL } from '../../secret';
 
 interface ScrapDeleteModalProps {
-    hideScrapDeleteModal: () => void;
+    hideScrapDeleteModal: () => void,
+    scrapId: number,
 }
 
-function ScrapDeleteModal({ hideScrapDeleteModal }: ScrapDeleteModalProps) {
+function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalProps) {
+    const [token, setToken] = useState<string | null>(null);
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
+
+    async function deleteScrap() {
+        const url = DELETE_SCRAP_URL + `/${scrapId}`;
+        token &&
+            fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+            }).then((response) => response.json())
+                .then((response) => {
+                    if (response.ok) {
+                        hideScrapDeleteModal();
+                    }
+                })
+                .catch(err => console.error(err));
+    }
+
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -19,7 +45,7 @@ function ScrapDeleteModal({ hideScrapDeleteModal }: ScrapDeleteModalProps) {
             <DefaultTypography>한 번 삭제된 스크랩은 다시 복구되지 않습니다.<br />정말 삭제하시겠습니까?</DefaultTypography>
             <ModalFooter>
                 <ButtonContainer>
-                    <Button buttonStyle={'gray'} label={'삭제하기'} isRound />
+                    <Button buttonStyle={'gray'} label={'삭제하기'} isRound onClick={deleteScrap} />
                     <Button buttonStyle={'secondary'} label={'취소하기'} isRound onClick={() => hideScrapDeleteModal()} />
                 </ButtonContainer>
             </ModalFooter>

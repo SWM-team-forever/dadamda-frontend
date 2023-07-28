@@ -7,6 +7,8 @@ import Tooltip from '../atoms/Tooltip';
 import theme from '../../assets/styles/theme';
 import ScrapEditModal from '../organisms/ScrapEditModal';
 import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
+import MemoCreateModal from '../organisms/MemoCreateModal';
+import Memo from './Memo';
 
 interface OtherScrapCardProps {
     content: {
@@ -14,7 +16,12 @@ interface OtherScrapCardProps {
         title: string,
         description: string,
         thumbnailUrl: string,
-        scrapCreatedDate: string,
+        scrapId: number,
+        memoList: [{
+            memoId: number,
+            memoImageURL?: string,
+            memoText?: string,
+        }],
     }
 }
 
@@ -36,17 +43,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
     const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
     const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
-
-    function reducer(state: any, action: any) {
-        switch (action.type) {
-            case 'SHOW':
-                return true;
-            case 'HIDE':
-                return false;
-            default:
-                return state;
-        }
-    }
+    const [isMemoCreateModalVisible, setIsMemoCreateModalVisible] = useState(false);
 
     function showTooltip() {
         setIsTooltipVisible(true);
@@ -72,6 +69,14 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
         setIsScrapDeleteModalVisible(false);
     }
 
+    function showMemoCreateModal() {
+        setIsMemoCreateModalVisible(true);
+    }
+
+    function hideMemoCreateModal() {
+        setIsMemoCreateModalVisible(false);
+    }
+
     return (
         <CardContainer>
             <CardWrapper>
@@ -80,15 +85,19 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
                     <EmpasizedTypography>{content.title}</EmpasizedTypography>
                     <DefaultTypography>{content.description}</DefaultTypography>
                 </CardInfoWrapper>
+                {content.memoList.map(memo => {
+                    return <Memo memoImageURL={memo.memoImageURL} memoText={memo.memoText} />
+                })}
                 <ButtonContainer>
-                    <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound />
+                    <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={showMemoCreateModal} />
                     <MoreIconContainer src={MoreIcon} onClick={() => showTooltip()} />
                 </ButtonContainer>
             </CardWrapper>
             {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
-            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} />}
-            {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} />}
-            {(isScrapEditModalVisible || isScrapDeleteModalVisible) && <Overlay />}
+            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} scrapId={content.scrapId} />}
+            {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={content.scrapId} />}
+            {(isScrapEditModalVisible || isScrapDeleteModalVisible || isMemoCreateModalVisible) && <Overlay />}
+            {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} scrapId={content.scrapId} />}
         </CardContainer>
     );
 }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { OTHER_DATAS } from '../../config';
 import theme from '../../assets/styles/theme';
 import searchIcon from '../../assets/icons/SearchIcon.png';
 import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
@@ -38,10 +37,11 @@ function OtherTemplate() {
                     "X-AUTH-TOKEN": token,
                 },
             }).then((response) => response.json())
-                .then((data) => setOthers(data.data.content))
+                .then((data) => {
+                    setOthers(data.data.content);
+                })
                 .catch(err => console.error(err));
-
-    }, []);
+    }, [token]);
 
     return (
         <ScrapListContainer>
@@ -76,7 +76,7 @@ function OtherTemplate() {
 
 const ScrapListContainer = styled.div`
     width: calc(100% - 200px);
-    height: 100%;
+    height: calc(100% - 50px);
     background-color: ${theme.color.background_color};
     position: fixed;
     right: 0;
