@@ -15,7 +15,7 @@ function GoogleOAuthLoginpage() {
         //     token: token,
         // });
         token && localStorage.setItem('token', token)
-        navigate('/scrap');
+        navigate('/scrap/list');
     }, [])
     return (
         <RowContainer style={{

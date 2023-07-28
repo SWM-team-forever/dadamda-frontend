@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { OTHER_DATAS } from '../../config';
@@ -6,9 +6,49 @@ import theme from '../../assets/styles/theme';
 import searchIcon from '../../assets/icons/SearchIcon.png';
 import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
 import EmptyOtherScrapContainer from '../organisms/EmptyOtherScrapContainer';
+import { GET_OTHER_SCRAP_URL } from '../../secret';
+import fab from '../../assets/icons/fab.png';
+import IconButton from '../atoms/IconButton';
+import Overlay from '../atoms/Overlay';
+import ScrapCreateModal from '../organisms/ScrapCreateModal';
 
 function OtherTemplate() {
-    const [others, setOthers] = useState(OTHER_DATAS);
+    const [others, setOthers] = useState([]);
+    const [isScrapCreateModalVisible, setIsScrapCreateModalVisible] = useState(false);
+    const showScrapCreateModal = () => {
+        setIsScrapCreateModalVisible(true);
+    }
+
+    function hideScrapCreateModal() {
+        setIsScrapCreateModalVisible(false);
+    }
+
+    const token = localStorage.getItem('token');
+
+    useEffect(() => {
+        const parameters = {
+            pageable: {
+                "page": 0,
+                "size": 1,
+                "sort": [
+                    "string"
+                ]
+            }
+        };
+        const url = GET_OTHER_SCRAP_URL + parameters.toString();
+        token &&
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+                credentials: 'include'
+            }).then((response) => response.json())
+                .then((data) => setOthers(data.data.content))
+                .catch(err => console.error(err));
+
+    }, []);
 
     return (
         <ScrapListContainer>
@@ -24,7 +64,19 @@ function OtherTemplate() {
                     <EmpasizedTypography>Search</EmpasizedTypography>
                 </SearchBar>
             </ScrapListHeader>
-            {others ? <ExistOtherScrapContainer contents={others} /> : <EmptyOtherScrapContainer />}
+            {others.length ? <ExistOtherScrapContainer contents={others} /> : <EmptyOtherScrapContainer />}
+            <IconButton src={fab}
+                style={{
+                    position: 'fixed',
+                    bottom: '15px',
+                    right: '15px',
+                    width: '48px',
+                    height: '48px',
+                }}
+                onClick={showScrapCreateModal} />
+            {isScrapCreateModalVisible && <Overlay>
+                <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} />
+            </Overlay>}
         </ScrapListContainer>
     )
 }
