@@ -4,11 +4,16 @@ import { TextareaAutosize } from '@mui/material';
 import theme from '../../assets/styles/theme';
 
 interface TextAreaProps {
-    labelText: string,
+    labelText?: string,
     defaultValue: string,
+    hideState: () => void,
 }
 
-function TextArea({ labelText, defaultValue }: TextAreaProps) {
+function TextArea({ labelText, defaultValue, hideState }: TextAreaProps) {
+    const onClick = () => {
+        hideState();
+        console.log('clicked!');
+    }
     return (
         <TextAreaWrapper>
             <Label>{labelText}</Label>
@@ -26,7 +31,7 @@ function TextArea({ labelText, defaultValue }: TextAreaProps) {
                         fontFamily: "'NanumSquare', sans-serif",
                     }}
                 />
-                <div style={{ position: 'absolute', top: '-12px', right: '-12px' }}>
+                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={hideState}>
                     <DeleteIcon />
                 </div>
             </InputAreaWrapper>

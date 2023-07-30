@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
+import { useState } from 'react';
+import { element } from 'prop-types';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
@@ -25,60 +27,101 @@ interface ScrapEditModalProps {
     },
 }
 
-const editalbeContent = [
-    {
-        name: 'title',
-        label: '제목',
-        isDeleteable: true,
-    },
-    {
-        name: 'description',
-        label: '설명',
-        isDeleteable: true,
-    },
-    {
-        name: 'siteName',
-        label: '사이트명',
-        isDeleteable: true,
-    },
-    {
-        name: 'author',
-        label: '저자',
-        isDeleteable: true,
-    },
-    {
-        name: 'blogname',
-        label: '블로그명',
-        isDeleteable: true,
-    },
-    {
-        name: 'publishedDate',
-        label: '게시일',
-        isDeleteable: true,
-    },
-    {
-        name: 'price',
-        label: '가격',
-        isDeleteable: true,
-    },
-    {
-        name: 'channelName',
-        label: '채널명',
-        isDeleteable: true,
-    },
-    {
-        name: 'playTime',
-        label: '재생 시간',
-        isDeleteable: true,
-    },
-    {
-        name: 'watchedCnt',
-        label: '조회수',
-        isDeleteable: true,
-    },
-]
-
 function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
+    const [title, setTitle] = useState(content.title);
+    const [description, setDescription] = useState(content.description);
+    const [siteName, setSiteName] = useState(content.siteName);
+    const [author, setAuthor] = useState(content.author);
+    const [blogName, setBlogName] = useState(content.blogName);
+    const [publishedDate, setPublishedDate] = useState(content.publishedDate);
+    const [price, setPrice] = useState(content.price);
+    const [channelName, setChannelName] = useState(content.channelName);
+    const [playTime, setPlayTime] = useState(content.playTime);
+    const [watchedCnt, setWatchedCnt] = useState(content.watchedCnt);
+
+    const editalbeContent = [
+        {
+            name: 'title',
+            label: '제목',
+            isDeleteable: true,
+            state: title,
+            showState: () => { setTitle(content.title) },
+            hideState: () => { setTitle(null) },
+        },
+        {
+            name: 'description',
+            label: '설명',
+            isDeleteable: true,
+            state: description,
+            showState: () => setDescription(content.description),
+            hideState: () => setDescription(null),
+        },
+        {
+            name: 'siteName',
+            label: '사이트명',
+            isDeleteable: true,
+            state: siteName,
+            showState: () => setSiteName(content.siteName),
+            hideState: () => setSiteName(null),
+        },
+        {
+            name: 'author',
+            label: '저자',
+            isDeleteable: true,
+            state: author,
+            showState: () => setAuthor(content.author),
+            hideState: () => setAuthor(null),
+        },
+        {
+            name: 'blogname',
+            label: '블로그명',
+            isDeleteable: true,
+            state: blogName,
+            showState: () => setBlogName(content.blogName),
+            hideState: () => setBlogName(null),
+        },
+        {
+            name: 'publishedDate',
+            label: '게시일',
+            isDeleteable: true,
+            state: publishedDate,
+            showState: () => setPublishedDate(content.publishedDate),
+            hideState: () => setPublishedDate(null),
+        },
+        {
+            name: 'price',
+            label: '가격',
+            isDeleteable: true,
+            state: price,
+            showState: () => setPrice(content.price),
+            hideState: () => setPrice(null),
+        },
+        {
+            name: 'channelName',
+            label: '채널명',
+            isDeleteable: true,
+            price: channelName,
+            showState: () => setChannelName(content.channelName),
+            hideState: () => setChannelName(null),
+        },
+        {
+            name: 'playTime',
+            label: '재생 시간',
+            isDeleteable: true,
+            state: playTime,
+            showState: () => setPlayTime(content.playTime),
+            hideState: () => setPlayTime(null),
+        },
+        {
+            name: 'watchedCnt',
+            label: '조회수',
+            isDeleteable: true,
+            state: watchedCnt,
+            showState: () => setWatchedCnt(content.watchedCnt),
+            hideState: () => setWatchedCnt(null),
+        },
+    ];
+
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -89,11 +132,17 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             </ModalHeader>
             <ContentWrapper>
                 {editalbeContent.map(element => {
-                    return content[element.name] && <TextArea labelText={element.label} defaultValue={content[element.name]} />
+                    return (content[element.name] && element.state) && <TextArea labelText={element.label} defaultValue={content[element.name]} hideState={element.hideState} />
+                })}
+                {content.memoList.map((memo) => {
+                    return memo.memoText && <TextArea labelText={'메모'} defaultValue={memo.memoText} />
                 })}
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
                     <AddableElement elementTitle={'메모'} />
+                    {editalbeContent.map(element => {
+                        return (content[element.name] && !element.state) && <AddableElement elementTitle={element.label} />
+                    })}
                 </ContentAddSection>
             </ContentWrapper>
             <ModalFooter>
