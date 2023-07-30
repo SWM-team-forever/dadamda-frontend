@@ -4,7 +4,6 @@ import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
 import { useState } from 'react';
-import { element } from 'prop-types';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
@@ -27,17 +26,21 @@ interface ScrapEditModalProps {
     },
 }
 
+
+let createdMemoCount = 0;
+
 function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
-    const [title, setTitle] = useState(content.title);
-    const [description, setDescription] = useState(content.description);
-    const [siteName, setSiteName] = useState(content.siteName);
-    const [author, setAuthor] = useState(content.author);
-    const [blogName, setBlogName] = useState(content.blogName);
-    const [publishedDate, setPublishedDate] = useState(content.publishedDate);
-    const [price, setPrice] = useState(content.price);
-    const [channelName, setChannelName] = useState(content.channelName);
-    const [playTime, setPlayTime] = useState(content.playTime);
-    const [watchedCnt, setWatchedCnt] = useState(content.watchedCnt);
+    const [title, setTitle] = useState<string | null>(content.title);
+    const [description, setDescription] = useState<string | null>(content.description);
+    const [siteName, setSiteName] = useState<string | null>(content.siteName);
+    const [author, setAuthor] = useState<string | null>(content.author);
+    const [blogName, setBlogName] = useState<string | null>(content.blogName);
+    const [publishedDate, setPublishedDate] = useState<string | null>(content.publishedDate);
+    const [price, setPrice] = useState<string | null>(content.price);
+    const [channelName, setChannelName] = useState<string | null>(content.channelName);
+    const [playTime, setPlayTime] = useState<string | null>(content.playTime);
+    const [watchedCnt, setWatchedCnt] = useState<string | null>(content.watchedCnt);
+    const [memos, setMemos] = useState<object[] | null>(content.memoList);
 
     const editalbeContent = [
         {
@@ -122,6 +125,22 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         },
     ];
 
+    const emptyMemoText = '메모를 입력하세요';
+    const createMemo = () => {
+        createdMemoCount += 1;
+        setMemos([...memos, {
+            memoId: -1 * createdMemoCount,
+            memoText: emptyMemoText,
+        }]);
+    };
+
+    const hideMemo = (memoId: number) => {
+        let tempMemos = [...memos];
+        tempMemos = tempMemos.filter(item => item.memoId !== memoId);
+        setMemos(tempMemos);
+        console.log(memos);
+    }
+
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -134,15 +153,15 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 {editalbeContent.map(element => {
                     return (content[element.name] && element.state) && <TextArea labelText={element.label} defaultValue={content[element.name]} hideState={element.hideState} />
                 })}
-                {content.memoList.map((memo) => {
-                    return memo.memoText && <TextArea labelText={'메모'} defaultValue={memo.memoText} />
+                {memos.map((memo) => {
+                    return <TextArea labelText={'메모'} defaultValue={memo.memoText} hideState={() => hideMemo(memo.memoId)} />
                 })}
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
                     {editalbeContent.map(element => {
                         return (content[element.name] && !element.state) && <AddableElement elementTitle={element.label} onClick={element.showState} />
                     })}
-                    <AddableElement elementTitle={'메모'} />
+                    <AddableElement elementTitle={'메모'} onClick={() => createMemo()} />
                 </ContentAddSection>
             </ContentWrapper>
             <ModalFooter>
@@ -161,6 +180,8 @@ const ModalWrapper = styled.div`
     flex-direction: column;
     max-width: 450px;
     width: calc(100vw - 30px);
+    max-height: 90%;
+    overflow: auto;
     box-sizing: border-box;
     border-radius: 4px;
     background-color: white;

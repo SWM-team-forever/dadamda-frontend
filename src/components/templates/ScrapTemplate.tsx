@@ -10,7 +10,11 @@ import { useEffect, useState } from 'react';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
 import ListTemplate from './ListTemplate';
 
-function ScrapTemplate({ type }) {
+interface ScrapTemplateProps {
+    type: string,
+}
+
+function ScrapTemplate({ type }: ScrapTemplateProps) {
     const [isScrapCreateModalVisible, setIsScrapCreateModalVisible] = useState(false);
     const showScrapCreateModal = () => {
         setIsScrapCreateModalVisible(true);
@@ -24,12 +28,12 @@ function ScrapTemplate({ type }) {
     const page = 0;
     const size = 20;
 
-    const urlMatching = {
-        other: GET_OTHER_SCRAP_URL,
-        list: GET_LIST_SCRAP_URL,
-        article: GET_ARTICLE_SCRAP_URL,
-        product: GET_PRODUCT_SCRAP_URL,
-        video: GET_PRODUCT_SCRAP_URL,
+    const urlMatching: { [key: string]: string } = {
+        'other': GET_OTHER_SCRAP_URL,
+        'list': GET_LIST_SCRAP_URL,
+        'article': GET_ARTICLE_SCRAP_URL,
+        'product': GET_PRODUCT_SCRAP_URL,
+        'video': GET_PRODUCT_SCRAP_URL,
     }
 
     const [types, setTypes] = useState([]);

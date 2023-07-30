@@ -10,10 +10,6 @@ interface TextAreaProps {
 }
 
 function TextArea({ labelText, defaultValue, hideState }: TextAreaProps) {
-    const onClick = () => {
-        hideState();
-        console.log('clicked!');
-    }
     return (
         <TextAreaWrapper>
             <Label>{labelText}</Label>
