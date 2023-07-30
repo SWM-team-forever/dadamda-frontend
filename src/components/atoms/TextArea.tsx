@@ -5,7 +5,7 @@ import theme from '../../assets/styles/theme';
 
 interface TextAreaProps {
     labelText?: string,
-    defaultValue: string,
+    defaultValue?: string,
     hideState: () => void,
 }
 

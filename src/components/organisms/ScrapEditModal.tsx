@@ -3,22 +3,22 @@ import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
     content: {
-        title: string,
-        description: string,
-        siteName: string,
-        author: string,
-        blogName: string,
-        publishedDate: string,
-        price: string,
-        channelName: string,
-        playTime: string,
-        watchedCnt: string,
-        memoList: [{
+        title?: string,
+        description?: string,
+        siteName?: string,
+        author?: string,
+        blogName?: string,
+        publishedDate?: string,
+        price?: string,
+        channelName?: string,
+        playTime?: string,
+        watchedCnt?: string,
+        memoList?: [{
             memoId: number,
             memoImageURL?: string,
             memoText?: string,
@@ -30,17 +30,21 @@ interface ScrapEditModalProps {
 let createdMemoCount = 0;
 
 function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
-    const [title, setTitle] = useState<string | null>(content.title);
-    const [description, setDescription] = useState<string | null>(content.description);
-    const [siteName, setSiteName] = useState<string | null>(content.siteName);
-    const [author, setAuthor] = useState<string | null>(content.author);
-    const [blogName, setBlogName] = useState<string | null>(content.blogName);
-    const [publishedDate, setPublishedDate] = useState<string | null>(content.publishedDate);
-    const [price, setPrice] = useState<string | null>(content.price);
-    const [channelName, setChannelName] = useState<string | null>(content.channelName);
-    const [playTime, setPlayTime] = useState<string | null>(content.playTime);
-    const [watchedCnt, setWatchedCnt] = useState<string | null>(content.watchedCnt);
-    const [memos, setMemos] = useState<object[] | null>(content.memoList);
+    const [title, setTitle] = useState<string | undefined>(content.title);
+    const [description, setDescription] = useState<string | undefined>(content.description);
+    const [siteName, setSiteName] = useState<string | undefined>(content.siteName);
+    const [author, setAuthor] = useState<string | undefined>(content.author);
+    const [blogName, setBlogName] = useState<string | undefined>(content.blogName);
+    const [publishedDate, setPublishedDate] = useState<string | undefined>(content.publishedDate);
+    const [price, setPrice] = useState<string | undefined>(content.price);
+    const [channelName, setChannelName] = useState<string | undefined>(content.channelName);
+    const [playTime, setPlayTime] = useState<string | undefined>(content.playTime);
+    const [watchedCnt, setWatchedCnt] = useState<string | undefined>(content.watchedCnt);
+    const [memos, setMemos] = useState<{
+        memoId: number,
+        memoImageURL?: string,
+        memoText?: string,
+    }[] | undefined>(content.memoList);
 
     const editalbeContent = [
         {
@@ -49,7 +53,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: title,
             showState: () => { setTitle(content.title) },
-            hideState: () => { setTitle(null) },
+            hideState: () => { setTitle(undefined) },
         },
         {
             name: 'description',
@@ -57,7 +61,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: description,
             showState: () => setDescription(content.description),
-            hideState: () => setDescription(null),
+            hideState: () => setDescription(undefined),
         },
         {
             name: 'siteName',
@@ -65,7 +69,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: siteName,
             showState: () => setSiteName(content.siteName),
-            hideState: () => setSiteName(null),
+            hideState: () => setSiteName(undefined),
         },
         {
             name: 'author',
@@ -73,7 +77,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: author,
             showState: () => setAuthor(content.author),
-            hideState: () => setAuthor(null),
+            hideState: () => setAuthor(undefined),
         },
         {
             name: 'blogname',
@@ -81,7 +85,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: blogName,
             showState: () => setBlogName(content.blogName),
-            hideState: () => setBlogName(null),
+            hideState: () => setBlogName(undefined),
         },
         {
             name: 'publishedDate',
@@ -89,7 +93,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: publishedDate,
             showState: () => setPublishedDate(content.publishedDate),
-            hideState: () => setPublishedDate(null),
+            hideState: () => setPublishedDate(undefined),
         },
         {
             name: 'price',
@@ -97,7 +101,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: price,
             showState: () => setPrice(content.price),
-            hideState: () => setPrice(null),
+            hideState: () => setPrice(undefined),
         },
         {
             name: 'channelName',
@@ -105,7 +109,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             price: channelName,
             showState: () => setChannelName(content.channelName),
-            hideState: () => setChannelName(null),
+            hideState: () => setChannelName(undefined),
         },
         {
             name: 'playTime',
@@ -113,7 +117,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: playTime,
             showState: () => setPlayTime(content.playTime),
-            hideState: () => setPlayTime(null),
+            hideState: () => setPlayTime(undefined),
         },
         {
             name: 'watchedCnt',
@@ -121,25 +125,22 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             isDeleteable: true,
             state: watchedCnt,
             showState: () => setWatchedCnt(content.watchedCnt),
-            hideState: () => setWatchedCnt(null),
+            hideState: () => setWatchedCnt(undefined),
         },
     ];
 
     const emptyMemoText = '메모를 입력하세요';
     const createMemo = () => {
         createdMemoCount += 1;
-        setMemos([...memos, {
+        setMemos([...(memos || []), {
             memoId: -1 * createdMemoCount,
             memoText: emptyMemoText,
         }]);
     };
 
-    const hideMemo = (memoId: number) => {
-        let tempMemos = [...memos];
-        tempMemos = tempMemos.filter(item => item.memoId !== memoId);
-        setMemos(tempMemos);
-        console.log(memos);
-    }
+    const hideMemo = useCallback((memoId: number) => {
+        setMemos(memos?.filter(memo => memo.memoId !== memoId));
+    }, [memos]);
 
     return (
         <ModalWrapper>
@@ -151,15 +152,15 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             </ModalHeader>
             <ContentWrapper>
                 {editalbeContent.map(element => {
-                    return (content[element.name] && element.state) && <TextArea labelText={element.label} defaultValue={content[element.name]} hideState={element.hideState} />
+                    return (content[element.name as keyof typeof content] && element.state) && <TextArea labelText={element.label} defaultValue={content[element.name as keyof typeof content] as string} hideState={element.hideState} />
                 })}
-                {memos.map((memo) => {
+                {memos && memos.map(memo => {
                     return <TextArea labelText={'메모'} defaultValue={memo.memoText} hideState={() => hideMemo(memo.memoId)} />
                 })}
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
                     {editalbeContent.map(element => {
-                        return (content[element.name] && !element.state) && <AddableElement elementTitle={element.label} onClick={element.showState} />
+                        return (content[element.name as keyof typeof content] && !element.state) && <AddableElement elementTitle={element.label} onClick={element.showState} />
                     })}
                     <AddableElement elementTitle={'메모'} onClick={() => createMemo()} />
                 </ContentAddSection>
