@@ -6,10 +6,79 @@ import Button from '../atoms/DefaultButton';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
-    scrapId: number,
+    content: {
+        title: string,
+        description: string,
+        siteName: string,
+        author: string,
+        blogName: string,
+        publishedDate: string,
+        price: string,
+        channelName: string,
+        playTime: string,
+        watchedCnt: string,
+        memoList: [{
+            memoId: number,
+            memoImageURL?: string,
+            memoText?: string,
+        }],
+    },
 }
 
-function ScrapEditModal({ hideScrapEditModal }: ScrapEditModalProps) {
+const editalbeContent = [
+    {
+        name: 'title',
+        label: '제목',
+        isDeleteable: true,
+    },
+    {
+        name: 'description',
+        label: '설명',
+        isDeleteable: true,
+    },
+    {
+        name: 'siteName',
+        label: '사이트명',
+        isDeleteable: true,
+    },
+    {
+        name: 'author',
+        label: '저자',
+        isDeleteable: true,
+    },
+    {
+        name: 'blogname',
+        label: '블로그명',
+        isDeleteable: true,
+    },
+    {
+        name: 'publishedDate',
+        label: '게시일',
+        isDeleteable: true,
+    },
+    {
+        name: 'price',
+        label: '가격',
+        isDeleteable: true,
+    },
+    {
+        name: 'channelName',
+        label: '채널명',
+        isDeleteable: true,
+    },
+    {
+        name: 'playTime',
+        label: '재생 시간',
+        isDeleteable: true,
+    },
+    {
+        name: 'watchedCnt',
+        label: '조회수',
+        isDeleteable: true,
+    },
+]
+
+function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -19,8 +88,9 @@ function ScrapEditModal({ hideScrapEditModal }: ScrapEditModalProps) {
                 <IconContainer hideScrapEditModal={hideScrapEditModal} />
             </ModalHeader>
             <ContentWrapper>
-                <TextArea labelText={'제목'} defaultValue={'제트스킨 투명 나노슬림 아이폰 케이스'} />
-                <TextArea labelText={'설명'} defaultValue={'시승을 원하는 렉서스 모델과 가까운 렉서스 공식 전시장을 확인하세요. 렉서스 공식 홈페이지에서 간편하게 시승신청을 하실 수 있습니다.'} />
+                {editalbeContent.map(element => {
+                    return content[element.name] && <TextArea labelText={element.label} defaultValue={content[element.name]} />
+                })}
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
                     <AddableElement elementTitle={'메모'} />

@@ -10,9 +10,6 @@ import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
 import MemoCreateModal from '../organisms/MemoCreateModal';
 import Memo from './Memo';
 import Chip from '../atoms/Chip';
-import RowContainer from '../atoms/RowContainer';
-import ProfileImage from '../atoms/ProfileImage';
-import ColumnContainer from '../atoms/ColumnContainer';
 
 interface ProductScrapCardProps {
     content: {
@@ -102,7 +99,7 @@ function ProductScrapCard({ content }: ProductScrapCardProps) {
                 </ButtonContainer>
             </CardWrapper>
             {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
-            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} scrapId={content.scrapId} />}
+            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={content.scrapId} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible || isMemoCreateModalVisible) && <Overlay />}
             {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} scrapId={content.scrapId} />}

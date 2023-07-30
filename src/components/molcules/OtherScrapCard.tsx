@@ -94,7 +94,7 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
                 </ButtonContainer>
             </CardWrapper>
             {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
-            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} scrapId={content.scrapId} />}
+            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={content.scrapId} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible || isMemoCreateModalVisible) && <Overlay />}
             {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} scrapId={content.scrapId} />}

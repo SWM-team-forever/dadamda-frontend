@@ -14,7 +14,7 @@ import RowContainer from '../atoms/RowContainer';
 import ProfileImage from '../atoms/ProfileImage';
 import ColumnContainer from '../atoms/ColumnContainer';
 
-interface VideoScrapCardProps {
+interface ArticleScrapCardProps {
     content: {
         scrapId: number,
         description: string,
@@ -29,17 +29,14 @@ interface VideoScrapCardProps {
                 memoImageUrl?: string,
             }
         ],
-        channelImageUrl: string,
-        channelName: string,
-        embedUrl: string,
-        genre: string,
-        playTime: string,
-        watchedCnt: string,
+        author: string,
+        authorImageUrl: string,
+        blogName: string,
         publishedDate: string,
     }
 }
 
-function VideoScrapCard({ content }: VideoScrapCardProps) {
+function ArticleScrapCard({ content }: ArticleScrapCardProps) {
     const scrapCardMenu = [{
         name: '카드 수정하기',
         onClick: () => {
@@ -91,34 +88,21 @@ function VideoScrapCard({ content }: VideoScrapCardProps) {
         setIsMemoCreateModalVisible(false);
     }
 
-    const videoMenus = [{
-        title: '게시일',
-        content: content.publishedDate,
-    }, {
-        title: '조회수',
-        content: content.watchedCnt,
-    }, {
-        title: '영상 길이',
-        content: content.playTime,
-    },]
-
     return (
         <CardContainer>
             <CardWrapper>
                 <Chip>{content.siteName}</Chip>
                 <EmpasizedTypography>{content.title}</EmpasizedTypography>
-                <VideoPlayer src={content.embedUrl} />
-                <RowContainer style={{ alignItems: 'center', gap: '10px' }}>
-                    <ProfileImage size={24} source={content.channelImageUrl} />
-                    <DefaultTypography>{content.channelName}</DefaultTypography>
-                </RowContainer>
+                <CardImage src={content.thumbnailUrl} />
                 <RowContainer style={{ justifyContent: 'space-between' }}>
-                    {videoMenus.map(menu => {
-                        return (<ColumnContainer style={{ alignItems: 'center' }}>
-                            <EmpasizedTypography>{menu.content}</EmpasizedTypography>
-                            <DefaultTypography>{menu.title}</DefaultTypography>
-                        </ColumnContainer>)
-                    })}
+                    <RowContainer style={{ gap: '10px' }}>
+                        <ProfileImage size={30} source={content.authorImageUrl} />
+                        <ColumnContainer>
+                            <EmpasizedTypography>{content.author}</EmpasizedTypography>
+                            <DefaultTypography>{content.blogName}</DefaultTypography>
+                        </ColumnContainer>
+                    </RowContainer>
+                    <DefaultTypography>{content.publishedDate}</DefaultTypography>
                 </RowContainer>
                 <DefaultTypography>{content.description}</DefaultTypography>
                 {content.memoList.map(memo => {
@@ -152,7 +136,9 @@ const CardWrapper = styled.div`
     border-radius: 4px;
 `
 
-const VideoPlayer = styled.iframe`
+const CardImage = styled.img`
+    width: 100%;
+    height: 140px;
     border-radius: 4px;
 `
 
@@ -165,6 +151,10 @@ const EmpasizedTypography = styled.span`
 const DefaultTypography = styled.span`
     font-size: 14px;
     color: ${theme.color.text_gray_color};
+`
+
+const ColoredTypography = styled(DefaultTypography)`
+    font-size: 16px;
 `
 
 const ButtonContainer = styled.div`
@@ -187,4 +177,4 @@ const Overlay = styled.div`
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
 `
-export default VideoScrapCard;
+export default ArticleScrapCard;
