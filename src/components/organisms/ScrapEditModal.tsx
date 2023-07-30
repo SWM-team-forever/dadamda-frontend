@@ -139,10 +139,10 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 })}
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
-                    <AddableElement elementTitle={'메모'} />
                     {editalbeContent.map(element => {
-                        return (content[element.name] && !element.state) && <AddableElement elementTitle={element.label} />
+                        return (content[element.name] && !element.state) && <AddableElement elementTitle={element.label} onClick={element.showState} />
                     })}
+                    <AddableElement elementTitle={'메모'} />
                 </ContentAddSection>
             </ContentWrapper>
             <ModalFooter>
@@ -238,11 +238,12 @@ function PlusIconContainer() {
 
 interface AddableElementProps {
     elementTitle: string,
+    onClick: () => void,
 }
 
-function AddableElement({ elementTitle }: AddableElementProps) {
+function AddableElement({ elementTitle, onClick }: AddableElementProps) {
     return (
-        <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }} onClick={onClick}>
             <PlusIconContainer />
             <DefaultTypography>{elementTitle}</DefaultTypography>
         </div>
