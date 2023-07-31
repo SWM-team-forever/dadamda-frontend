@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
@@ -18,14 +19,13 @@ interface ScrapEditModalProps {
         channelName?: string,
         playTime?: string,
         watchedCnt?: string,
-        memoList?: [{
+        memoList?: {
             memoId: number,
             memoImageURL?: string,
             memoText?: string,
-        }],
+        }[],
     },
 }
-
 
 let createdMemoCount = 0;
 
@@ -138,9 +138,12 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         }]);
     };
 
-    const hideMemo = useCallback((memoId: number) => {
-        setMemos(memos?.filter(memo => memo.memoId !== memoId));
-    }, [memos]);
+
+    const hideMemo = (memoId: number) => {
+        if (memos) {
+            setMemos(memos.filter(memo => memo.memoId !== memoId))
+        }
+    }
 
     return (
         <ModalWrapper>
@@ -154,9 +157,11 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 {editalbeContent.map(element => {
                     return (content[element.name as keyof typeof content] && element.state) && <TextArea labelText={element.label} defaultValue={content[element.name as keyof typeof content] as string} hideState={element.hideState} />
                 })}
-                {memos && memos.map(memo => {
-                    return <TextArea labelText={'메모'} defaultValue={memo.memoText} hideState={() => hideMemo(memo.memoId)} />
-                })}
+                {memos && memos.map(memo =>
+                    <TextArea labelText={'메모' + memo.memoId} defaultValue={memo.memoText} hideState={() =>
+                        hideMemo(memo.memoId)
+                    } key={memo.memoId} />
+                )}
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
                     {editalbeContent.map(element => {
@@ -171,7 +176,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                     <Button buttonStyle={'secondary'} label={'변경하기'} isRound />
                 </ButtonContainer>
             </ModalFooter>
-        </ModalWrapper>
+        </ModalWrapper >
     );
 }
 
