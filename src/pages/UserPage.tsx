@@ -29,6 +29,7 @@ function UserPage() {
                             <DefaultTypography>구글 계정으로 가입하셨습니다.</DefaultTypography>
                         </TextWrapper>
                     </Content>
+                    <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
             </Wrapper>
         </>
@@ -39,6 +40,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: calc(100vh - 50px);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: ${theme.color.background_color};

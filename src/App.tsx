@@ -12,6 +12,7 @@ import ListTemplate from './components/templates/ListTemplate';
 import GoogleOAuthLoginpage from './pages/GoogleOAuthLoginPage.tsx';
 import { LoginProvider, RequireAuth } from './context/LoginContext.tsx';
 import ScrapTemplate from './components/templates/ScrapTemplate.tsx';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage.tsx';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
             <Route path='/trending' element={<TrendingPage />}></Route>
             <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
+            <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
           </Routes>
         </BrowserRouter>
       </LoginProvider>
