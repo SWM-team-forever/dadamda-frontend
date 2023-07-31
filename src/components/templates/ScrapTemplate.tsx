@@ -50,7 +50,6 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
             }).then((response) => response.json())
                 .then((data) => {
                     setTypes(data.data.content);
-                    console.log(data.data.content);
                 })
                 .catch(err => console.error(err));
     }, [type]);
