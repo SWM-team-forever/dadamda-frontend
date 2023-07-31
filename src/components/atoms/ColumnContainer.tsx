@@ -7,7 +7,7 @@ interface ColumnContainer {
 
 function ColumnContainer({ children, style }: ColumnContainer) {
     return (
-        <Wrapper style={{ ...style }}>
+        <Wrapper style={style}>
             {children}
         </Wrapper>
     );
