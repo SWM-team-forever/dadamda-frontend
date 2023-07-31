@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { useCallback, useEffect, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { useState } from 'react';
 import MemoTextArea from '../molcules/MemoTextArea';
 
 interface ScrapEditModalProps {
