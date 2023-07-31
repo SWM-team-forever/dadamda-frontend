@@ -1,19 +1,18 @@
 import styled from 'styled-components';
 
 import Button from '../components/atoms/DefaultButton';
-import UserConsumer from '../context/UserContext';
 
 import theme from '../assets/styles/theme';
-
+import { USER } from '../config';
 
 function UserPage() {
-    const [user] = UserConsumer() as any;
+
     return (
         <>
             <Wrapper>
                 <UserInfoWrapper>
                     <ProfileContainer>
-                        <ProfileImage src={user.profile_url} />
+                        <ProfileImage src={USER.profile_url} />
                         <Button label='이미지 변경하기' buttonStyle='primary' isRound />
                     </ProfileContainer>
                     <Content>
@@ -30,6 +29,7 @@ function UserPage() {
                             <DefaultTypography>구글 계정으로 가입하셨습니다.</DefaultTypography>
                         </TextWrapper>
                     </Content>
+                    <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
             </Wrapper>
         </>
@@ -40,6 +40,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: calc(100vh - 50px);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: ${theme.color.background_color};

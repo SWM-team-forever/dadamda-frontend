@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import OtherScrapCard from '../components/molcules/OtherScrapCard';
+import VideoScrapCard from '../components/molcules/VideoScrapCard';
 
-const meta: Meta<typeof OtherScrapCard> = {
-  title: 'Organisms/OtherScrapCard',
-  component: OtherScrapCard,
+const meta: Meta<typeof VideoScrapCard> = {
+  title: 'Organisms/VideoScrapCard',
+  component: VideoScrapCard,
 };
 
 export default meta;
-type Story = StoryObj<typeof OtherScrapCard>;
+type Story = StoryObj<typeof VideoScrapCard>;
 
-export const Primary: Story = {
+export const DefaultStyle: Story = {
   args: {
     content: {
       pageUrl: "https://developer.mozilla.org/ko/docs/Web/CSS/height",
@@ -22,6 +22,14 @@ export const Primary: Story = {
         memoId: 1,
         memoText: "안녕, 안녕"
     }],
+    siteName: 'YOUTUBE',
+    channelImageUrl: 'https://yt3.ggpht.com/hkRZlmV18W3wm8DlqOZaQHe-g-h8ugcsIdeSk6ZpCOyhOXf1ReGTseiNi8ek92Waosv4r32G=s88-c-k-c0x00ffffff-no-rj',
+    channelName: 'You, Me and Automation',
+    embedUrl: 'https://www.youtube.com/embed/Jyh8pVWQ8sU',
+    genre: 'know-how',
+    playTime: '6:08',
+    watchedCnt: '2.2천회',
+    publishedDate: '1년 전',
     }
   }
 };

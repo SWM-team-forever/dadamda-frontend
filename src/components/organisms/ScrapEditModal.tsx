@@ -3,12 +3,142 @@ import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
+import { useCallback, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
+import MemoTextArea from '../molcules/MemoTextArea';
 
 interface ScrapEditModalProps {
-    hideScrapEditModal: () => void;
+    hideScrapEditModal: () => void,
+    content: {
+        title?: string,
+        description?: string,
+        siteName?: string,
+        author?: string,
+        blogName?: string,
+        publishedDate?: string,
+        price?: string,
+        channelName?: string,
+        playTime?: string,
+        watchedCnt?: string,
+        memoList?: {
+            memoId: number,
+            memoImageURL?: string,
+            memoText?: string,
+        }[],
+    },
 }
 
-function ScrapEditModal({ hideScrapEditModal }: ScrapEditModalProps) {
+let createdMemoCount = 0;
+
+function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
+    const [title, setTitle] = useState<string | undefined>(content.title);
+    const [description, setDescription] = useState<string | undefined>(content.description);
+    const [siteName, setSiteName] = useState<string | undefined>(content.siteName);
+    const [author, setAuthor] = useState<string | undefined>(content.author);
+    const [blogName, setBlogName] = useState<string | undefined>(content.blogName);
+    const [publishedDate, setPublishedDate] = useState<string | undefined>(content.publishedDate);
+    const [price, setPrice] = useState<string | undefined>(content.price);
+    const [channelName, setChannelName] = useState<string | undefined>(content.channelName);
+    const [playTime, setPlayTime] = useState<string | undefined>(content.playTime);
+    const [watchedCnt, setWatchedCnt] = useState<string | undefined>(content.watchedCnt);
+    const [memos, setMemos] = useState<{
+        memoId: number,
+        memoImageURL?: string,
+        memoText?: string,
+    }[] | undefined>(content.memoList);
+
+    const editalbeContent = [
+        {
+            name: 'title',
+            label: '제목',
+            isDeleteable: true,
+            state: title,
+            showState: () => { setTitle(content.title) },
+            hideState: () => { setTitle(undefined) },
+        },
+        {
+            name: 'description',
+            label: '설명',
+            isDeleteable: true,
+            state: description,
+            showState: () => setDescription(content.description),
+            hideState: () => setDescription(undefined),
+        },
+        {
+            name: 'siteName',
+            label: '사이트명',
+            isDeleteable: true,
+            state: siteName,
+            showState: () => setSiteName(content.siteName),
+            hideState: () => setSiteName(undefined),
+        },
+        {
+            name: 'author',
+            label: '저자',
+            isDeleteable: true,
+            state: author,
+            showState: () => setAuthor(content.author),
+            hideState: () => setAuthor(undefined),
+        },
+        {
+            name: 'blogname',
+            label: '블로그명',
+            isDeleteable: true,
+            state: blogName,
+            showState: () => setBlogName(content.blogName),
+            hideState: () => setBlogName(undefined),
+        },
+        {
+            name: 'publishedDate',
+            label: '게시일',
+            isDeleteable: true,
+            state: publishedDate,
+            showState: () => setPublishedDate(content.publishedDate),
+            hideState: () => setPublishedDate(undefined),
+        },
+        {
+            name: 'price',
+            label: '가격',
+            isDeleteable: true,
+            state: price,
+            showState: () => setPrice(content.price),
+            hideState: () => setPrice(undefined),
+        },
+        {
+            name: 'channelName',
+            label: '채널명',
+            isDeleteable: true,
+            price: channelName,
+            showState: () => setChannelName(content.channelName),
+            hideState: () => setChannelName(undefined),
+        },
+        {
+            name: 'playTime',
+            label: '재생 시간',
+            isDeleteable: true,
+            state: playTime,
+            showState: () => setPlayTime(content.playTime),
+            hideState: () => setPlayTime(undefined),
+        },
+        {
+            name: 'watchedCnt',
+            label: '조회수',
+            isDeleteable: true,
+            state: watchedCnt,
+            showState: () => setWatchedCnt(content.watchedCnt),
+            hideState: () => setWatchedCnt(undefined),
+        },
+    ];
+
+    const emptyMemoText = '메모를 입력하세요';
+    const createMemo = () => {
+        createdMemoCount += 1;
+        setMemos([...(memos || []), {
+            memoId: -1 * createdMemoCount,
+            memoText: emptyMemoText,
+        }]);
+    };
+
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -18,11 +148,18 @@ function ScrapEditModal({ hideScrapEditModal }: ScrapEditModalProps) {
                 <IconContainer hideScrapEditModal={hideScrapEditModal} />
             </ModalHeader>
             <ContentWrapper>
-                <TextArea labelText={'제목'} defaultValue={'제트스킨 투명 나노슬림 아이폰 케이스'} />
-                <TextArea labelText={'설명'} defaultValue={'시승을 원하는 렉서스 모델과 가까운 렉서스 공식 전시장을 확인하세요. 렉서스 공식 홈페이지에서 간편하게 시승신청을 하실 수 있습니다.'} />
+                {editalbeContent.map(element => {
+                    return (content[element.name as keyof typeof content] && element.state) && <TextArea labelText={element.label} defaultValue={content[element.name as keyof typeof content] as string} hideState={element.hideState} />
+                })}
+                {memos &&
+                    <MemoTextArea memos={memos} setMemos={setMemos} />
+                }
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
-                    <AddableElement elementTitle={'메모'} />
+                    {editalbeContent.map(element => {
+                        return (content[element.name as keyof typeof content] && !element.state) && <AddableElement elementTitle={element.label} onClick={element.showState} />
+                    })}
+                    <AddableElement elementTitle={'메모'} onClick={() => createMemo()} />
                 </ContentAddSection>
             </ContentWrapper>
             <ModalFooter>
@@ -31,7 +168,7 @@ function ScrapEditModal({ hideScrapEditModal }: ScrapEditModalProps) {
                     <Button buttonStyle={'secondary'} label={'변경하기'} isRound />
                 </ButtonContainer>
             </ModalFooter>
-        </ModalWrapper>
+        </ModalWrapper >
     );
 }
 
@@ -41,6 +178,8 @@ const ModalWrapper = styled.div`
     flex-direction: column;
     max-width: 450px;
     width: calc(100vw - 30px);
+    max-height: 90%;
+    overflow: auto;
     box-sizing: border-box;
     border-radius: 4px;
     background-color: white;
@@ -118,11 +257,12 @@ function PlusIconContainer() {
 
 interface AddableElementProps {
     elementTitle: string,
+    onClick: () => void,
 }
 
-function AddableElement({ elementTitle }: AddableElementProps) {
+function AddableElement({ elementTitle, onClick }: AddableElementProps) {
     return (
-        <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }} onClick={onClick}>
             <PlusIconContainer />
             <DefaultTypography>{elementTitle}</DefaultTypography>
         </div>

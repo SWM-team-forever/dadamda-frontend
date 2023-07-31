@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
 
-function EmptyOtherScrapContainer() {
+function EmptyScrapContainer() {
     return (
         <ScrapList>
             <EmpasizedTypography>스크랩을 추가해주세요</EmpasizedTypography>
@@ -23,4 +23,4 @@ const ScrapList = styled.div`
     align-items: center;
 `
 
-export default EmptyOtherScrapContainer;
+export default EmptyScrapContainer;

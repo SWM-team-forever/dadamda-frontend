@@ -9,23 +9,28 @@ import ScrapEditModal from '../organisms/ScrapEditModal';
 import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
 import MemoCreateModal from '../organisms/MemoCreateModal';
 import Memo from './Memo';
+import Chip from '../atoms/Chip';
 
-interface OtherScrapCardProps {
+interface ProductScrapCardProps {
     content: {
-        pageUrl: string,
-        title: string,
-        description: string,
-        thumbnailUrl: string,
         scrapId: number,
-        memoList: [{
-            memoId: number,
-            memoImageURL?: string,
-            memoText?: string,
-        }],
+        description: string,
+        pageUrl: string,
+        siteName: string,
+        thumbnailUrl: string,
+        title: string,
+        memoList: [
+            {
+                memoId: number,
+                memoText?: string,
+                memoImageUrl?: string,
+            }
+        ],
+        price: string,
     }
 }
 
-function OtherScrapCard({ content }: OtherScrapCardProps) {
+function ProductScrapCard({ content }: ProductScrapCardProps) {
     const scrapCardMenu = [{
         name: '카드 수정하기',
         onClick: () => {
@@ -80,13 +85,13 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
     return (
         <CardContainer>
             <CardWrapper>
+                <Chip>{content.siteName}</Chip>
+                <EmpasizedTypography>{content.title}</EmpasizedTypography>
                 <CardImage src={content.thumbnailUrl} />
-                <CardInfoWrapper>
-                    <EmpasizedTypography>{content.title}</EmpasizedTypography>
-                    <DefaultTypography>{content.description}</DefaultTypography>
-                </CardInfoWrapper>
+                <ColoredTypography>{content.price}</ColoredTypography>
+                <DefaultTypography>{content.description}</DefaultTypography>
                 {content.memoList.map(memo => {
-                    return <Memo memoImageURL={memo.memoImageURL} memoText={memo.memoText} />
+                    return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })}
                 <ButtonContainer>
                     <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={showMemoCreateModal} />
@@ -111,7 +116,7 @@ const CardWrapper = styled.div`
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     background-color: white;
     border-radius: 4px;
 `
@@ -120,12 +125,6 @@ const CardImage = styled.img`
     width: 100%;
     height: 140px;
     border-radius: 4px;
-`
-
-const CardInfoWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 `
 
 const EmpasizedTypography = styled.span`
@@ -137,6 +136,10 @@ const EmpasizedTypography = styled.span`
 const DefaultTypography = styled.span`
     font-size: 14px;
     color: ${theme.color.text_gray_color};
+`
+
+const ColoredTypography = styled(EmpasizedTypography)`
+    color: ${theme.color.primary_opacity_color};
 `
 
 const ButtonContainer = styled.div`
@@ -159,4 +162,4 @@ const Overlay = styled.div`
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
 `
-export default OtherScrapCard;
+export default ProductScrapCard;
