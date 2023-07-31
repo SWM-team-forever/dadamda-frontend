@@ -5,6 +5,7 @@ import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
 import { useCallback, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
+import MemoTextArea from '../molcules/MemoTextArea';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
@@ -138,13 +139,6 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         }]);
     };
 
-
-    const hideMemo = (memoId: number) => {
-        if (memos) {
-            setMemos(memos.filter(memo => memo.memoId !== memoId))
-        }
-    }
-
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -157,11 +151,9 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 {editalbeContent.map(element => {
                     return (content[element.name as keyof typeof content] && element.state) && <TextArea labelText={element.label} defaultValue={content[element.name as keyof typeof content] as string} hideState={element.hideState} />
                 })}
-                {memos && memos.map(memo =>
-                    <TextArea labelText={'메모' + memo.memoId} defaultValue={memo.memoText} hideState={() =>
-                        hideMemo(memo.memoId)
-                    } key={memo.memoId} />
-                )}
+                {memos &&
+                    <MemoTextArea memos={memos} setMemos={setMemos} />
+                }
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
                     {editalbeContent.map(element => {
