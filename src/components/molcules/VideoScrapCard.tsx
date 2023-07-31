@@ -9,23 +9,37 @@ import ScrapEditModal from '../organisms/ScrapEditModal';
 import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
 import MemoCreateModal from '../organisms/MemoCreateModal';
 import Memo from './Memo';
+import Chip from '../atoms/Chip';
+import RowContainer from '../atoms/RowContainer';
+import ProfileImage from '../atoms/ProfileImage';
+import ColumnContainer from '../atoms/ColumnContainer';
 
-interface OtherScrapCardProps {
+interface VideoScrapCardProps {
     content: {
-        pageUrl: string,
-        title: string,
-        description: string,
-        thumbnailUrl: string,
         scrapId: number,
-        memoList: [{
-            memoId: number,
-            memoImageURL?: string,
-            memoText?: string,
-        }],
+        description: string,
+        pageUrl: string,
+        siteName: string,
+        thumbnailUrl: string,
+        title: string,
+        memoList: [
+            {
+                memoId: number,
+                memoText?: string,
+                memoImageUrl?: string,
+            }
+        ],
+        channelImageUrl: string,
+        channelName: string,
+        embedUrl: string,
+        genre: string,
+        playTime: string,
+        watchedCnt: string,
+        publishedDate: string,
     }
 }
 
-function OtherScrapCard({ content }: OtherScrapCardProps) {
+function VideoScrapCard({ content }: VideoScrapCardProps) {
     const scrapCardMenu = [{
         name: '카드 수정하기',
         onClick: () => {
@@ -77,16 +91,38 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
         setIsMemoCreateModalVisible(false);
     }
 
+    const videoMenus = [{
+        title: '게시일',
+        content: content.publishedDate,
+    }, {
+        title: '조회수',
+        content: content.watchedCnt,
+    }, {
+        title: '영상 길이',
+        content: content.playTime,
+    },]
+
     return (
         <CardContainer>
             <CardWrapper>
-                <CardImage src={content.thumbnailUrl} />
-                <CardInfoWrapper>
-                    <EmpasizedTypography>{content.title}</EmpasizedTypography>
-                    <DefaultTypography>{content.description}</DefaultTypography>
-                </CardInfoWrapper>
+                <Chip>{content.siteName}</Chip>
+                <EmpasizedTypography>{content.title}</EmpasizedTypography>
+                <VideoPlayer src={content.embedUrl} />
+                <RowContainer style={{ alignItems: 'center', gap: '10px' }}>
+                    <ProfileImage size={24} source={content.channelImageUrl} />
+                    <DefaultTypography>{content.channelName}</DefaultTypography>
+                </RowContainer>
+                <RowContainer style={{ justifyContent: 'space-between' }}>
+                    {videoMenus.map(menu => {
+                        return (<ColumnContainer style={{ alignItems: 'center' }}>
+                            <EmpasizedTypography>{menu.content}</EmpasizedTypography>
+                            <DefaultTypography>{menu.title}</DefaultTypography>
+                        </ColumnContainer>)
+                    })}
+                </RowContainer>
+                <DefaultTypography>{content.description}</DefaultTypography>
                 {content.memoList.map(memo => {
-                    return <Memo memoImageURL={memo.memoImageURL} memoText={memo.memoText} />
+                    return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })}
                 <ButtonContainer>
                     <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={showMemoCreateModal} />
@@ -111,21 +147,13 @@ const CardWrapper = styled.div`
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     background-color: white;
     border-radius: 4px;
 `
 
-const CardImage = styled.img`
-    width: 100%;
-    height: 140px;
+const VideoPlayer = styled.iframe`
     border-radius: 4px;
-`
-
-const CardInfoWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 `
 
 const EmpasizedTypography = styled.span`
@@ -159,4 +187,4 @@ const Overlay = styled.div`
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
 `
-export default OtherScrapCard;
+export default VideoScrapCard;

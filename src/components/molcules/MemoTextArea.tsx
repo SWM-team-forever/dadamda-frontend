@@ -2,20 +2,36 @@ import styled from 'styled-components';
 import { TextareaAutosize } from '@mui/material';
 
 import theme from '../../assets/styles/theme';
+import Memo from './Memo';
 
-interface TextAreaProps {
-    labelText?: string,
-    defaultValue?: string,
-    hideState: () => void,
+interface MemoTextAreaProps {
+    memos: {
+        memoId: number,
+        memoImageURL?: string,
+        memoText?: string,
+    }[] | undefined,
+    setMemos: (changedMemos: {
+        memoId: number,
+        memoImageURL?: string,
+        memoText?: string,
+    }[] | undefined) => void,
 }
 
-function TextArea({ labelText, defaultValue, hideState }: TextAreaProps) {
+function MemoTextArea({ memos, setMemos }: MemoTextAreaProps) {
+    const hideMemo = (memoId: number) => {
+        if (memos) {
+            setMemos(memos.filter(memo => memo.memoId !== memoId))
+        }
+    }
+
     return (
         <TextAreaWrapper>
-            <Label>{labelText}</Label>
-            <InputAreaWrapper>
+            {memos && memos.length > 0 && <Label>메모</Label>}
+            {memos?.map(memo =>
+            (memo.memoText ? <InputAreaWrapper>
                 <TextareaAutosize
-                    defaultValue={defaultValue}
+                    key={'memo' + memo.memoText}
+                    defaultValue={memo.memoText}
                     style={{
                         resize: 'none',
                         background: theme.color.background_color,
@@ -27,10 +43,18 @@ function TextArea({ labelText, defaultValue, hideState }: TextAreaProps) {
                         fontFamily: "'NanumSquare', sans-serif",
                     }}
                 />
-                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={hideState}>
+                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => hideMemo(memo.memoId)}>
                     <DeleteIcon />
                 </div>
-            </InputAreaWrapper>
+            </InputAreaWrapper> :
+                (<InputAreaWrapper>
+                    <Memo memoImageURL={memo.memoImageURL} />
+                    <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => hideMemo(memo.memoId)}>
+                        <DeleteIcon />
+                    </div>
+                </InputAreaWrapper>))
+            )}
+
         </TextAreaWrapper >
     );
 }
@@ -61,4 +85,4 @@ function DeleteIcon() {
     );
 }
 
-export default TextArea;
+export default MemoTextArea;

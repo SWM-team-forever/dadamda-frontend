@@ -35,10 +35,8 @@ function MemoCreateModal({ hideMemoCreateModal, scrapId }: MemoCreateModalProps)
                     memoText: textAreaValue,
                 }),
             }).then((response) => response.json())
-                .then((response) => {
-                    if (response.ok) {
-                        hideMemoCreateModal();
-                    }
+                .then(() => {
+                    hideMemoCreateModal();
                 })
                 .catch(err => console.error(err));
     }

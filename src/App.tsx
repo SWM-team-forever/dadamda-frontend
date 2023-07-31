@@ -11,6 +11,7 @@ import OtherTemplate from './components/templates/OtherTemplate';
 import ListTemplate from './components/templates/ListTemplate';
 import GoogleOAuthLoginpage from './pages/GoogleOAuthLoginPage.tsx';
 import { LoginProvider, RequireAuth } from './context/LoginContext.tsx';
+import ScrapTemplate from './components/templates/ScrapTemplate.tsx';
 
 function App() {
   return (
@@ -23,13 +24,13 @@ function App() {
             <Route path='/main' element={<MainPage />}></Route>
             <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
             <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
-              <Route path='list' element={<ListTemplate />}></Route>
-              <Route path='article' element={<OtherTemplate />}></Route>
-              <Route path='product' element={<OtherTemplate />}></Route>
-              <Route path='video' element={<OtherTemplate />}></Route>
-              <Route path='location' element={<OtherTemplate />}></Route>
-              <Route path='other' element={<OtherTemplate />}></Route>
-              <Route path='' element={<ListTemplate />}></Route>
+              <Route path='list' element={<ScrapTemplate type={'list'} />}></Route>
+              <Route path='article' element={<ScrapTemplate type={'article'} />}></Route>
+              <Route path='product' element={<ScrapTemplate type={'product'} />}></Route>
+              <Route path='video' element={<ScrapTemplate type={'video'} />}></Route>
+              <Route path='location' element={<ScrapTemplate type={'location'} />}></Route>
+              <Route path='other' element={<ScrapTemplate type={'other'} />}></Route>
+              <Route path='' element={<ScrapTemplate type={'list'} />}></Route>
             </Route>
             <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
             <Route path='/trending' element={<TrendingPage />}></Route>

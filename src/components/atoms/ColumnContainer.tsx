@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 interface ColumnContainer {
-    children: React.ReactNode,
-    style: object,
+    children?: React.ReactNode,
+    style?: object,
 }
 
 function ColumnContainer({ children, style }: ColumnContainer) {
