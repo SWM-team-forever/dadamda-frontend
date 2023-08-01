@@ -86,7 +86,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             setState: setAuthor,
         },
         {
-            name: 'blogname',
+            name: 'blogName',
             label: '블로그명',
             isDeleteable: true,
             state: blogName,
@@ -152,6 +152,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             }
         });
         content = { ...content, memoList: memos };
+        console.log(content);
 
         const url = EDIT_sCRAP_URL;
         token &&
