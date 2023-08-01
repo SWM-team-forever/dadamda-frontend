@@ -81,7 +81,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         {
             name: 'author',
             label: '저자',
-            isDeleteable: false,
+            isDeleteable: true,
             state: author,
             showState: () => setAuthor(content.author),
             setState: setAuthor,
@@ -89,7 +89,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         {
             name: 'blogName',
             label: '블로그명',
-            isDeleteable: false,
+            isDeleteable: true,
             state: blogName,
             showState: () => setBlogName(content.blogName),
             setState: setBlogName,
@@ -97,7 +97,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         // {
         //     name: 'publishedDate',
         //     label: '게시일',
-        //     isDeleteable: false,
+        //     isDeleteable: true,
         //     state: publishedDate,
         //     showState: () => setPublishedDate(content.publishedDate),
         //     setState: setPublishedDate,
@@ -113,7 +113,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         {
             name: 'channelName',
             label: '채널명',
-            isDeleteable: false,
+            isDeleteable: true,
             state: channelName,
             showState: () => setChannelName(content.channelName),
             setState: setChannelName,
@@ -121,7 +121,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         {
             name: 'playTime',
             label: '영상 길이',
-            isDeleteable: false,
+            isDeleteable: true,
             state: playTime,
             showState: () => setPlayTime(content.playTime),
             setState: setPlayTime,
@@ -129,7 +129,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         // {
         //     name: 'watchedCnt',
         //     label: '조회수',
-        //     isDeleteable: false,
+        //     isDeleteable: true,
         //     state: watchedCnt,
         //     showState: () => setWatchedCnt(content.watchedCnt),
         //     setState: setWatchedCnt,
