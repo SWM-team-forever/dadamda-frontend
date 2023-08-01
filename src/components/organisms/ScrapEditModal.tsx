@@ -153,7 +153,6 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             }
         });
         content = { ...content, memoList: memos };
-        console.log(content);
 
         const url = EDIT_sCRAP_URL;
         token &&
