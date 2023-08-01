@@ -85,11 +85,11 @@ function ProductScrapCard({ content }: ProductScrapCardProps) {
     return (
         <CardContainer>
             <CardWrapper>
-                <Chip>{content.siteName}</Chip>
-                <EmpasizedTypography>{content.title}</EmpasizedTypography>
+                {content.siteName && <Chip>{content.siteName}</Chip>}
+                {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
                 <CardImage src={content.thumbnailUrl} />
-                <ColoredTypography>{content.price}</ColoredTypography>
-                <DefaultTypography>{content.description}</DefaultTypography>
+                {content.price && <ColoredTypography>{content.price}</ColoredTypography>}
+                {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
                 {content.memoList?.map(memo => {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })}
