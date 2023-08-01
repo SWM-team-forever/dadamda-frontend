@@ -97,7 +97,7 @@ function ArticleScrapCard({ content }: ArticleScrapCardProps) {
                 <CardImage src={content.thumbnailUrl} />
                 <RowContainer style={{ justifyContent: 'space-between' }}>
                     {(content.author || content.blogName) &&
-                        <RowContainer style={{ gap: '10px' }}>
+                        <RowContainer style={{ gap: '10px', alignItems: 'center' }}>
                             {content.authorImageUrl ? <ProfileImage size={30} source={content.authorImageUrl} /> : <ProfileImage size={30} source={defaultImage} />}
                             <ColumnContainer>
                                 {content.author && <EmpasizedTypography>{content.author}</EmpasizedTypography>}
