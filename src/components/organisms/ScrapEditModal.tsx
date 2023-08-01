@@ -94,14 +94,14 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             showState: () => setBlogName(content.blogName),
             setState: setBlogName,
         },
-        {
-            name: 'publishedDate',
-            label: '게시일',
-            isDeleteable: true,
-            state: publishedDate,
-            showState: () => setPublishedDate(content.publishedDate),
-            setState: setPublishedDate,
-        },
+        // {
+        //     name: 'publishedDate',
+        //     label: '게시일',
+        //     isDeleteable: true,
+        //     state: publishedDate,
+        //     showState: () => setPublishedDate(content.publishedDate),
+        //     setState: setPublishedDate,
+        // },
         {
             name: 'price',
             label: '가격',
@@ -120,20 +120,20 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         },
         {
             name: 'playTime',
-            label: '재생 시간',
+            label: '영상 길이',
             isDeleteable: true,
             state: playTime,
             showState: () => setPlayTime(content.playTime),
             setState: setPlayTime,
         },
-        {
-            name: 'watchedCnt',
-            label: '조회수',
-            isDeleteable: true,
-            state: watchedCnt,
-            showState: () => setWatchedCnt(content.watchedCnt),
-            setState: setWatchedCnt,
-        },
+        // {
+        //     name: 'watchedCnt',
+        //     label: '조회수',
+        //     isDeleteable: true,
+        //     state: watchedCnt,
+        //     showState: () => setWatchedCnt(content.watchedCnt),
+        //     setState: setWatchedCnt,
+        // },
     ];
 
     const emptyMemoText = '메모를 입력하세요';
@@ -152,7 +152,13 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 [item.name]: item.state,
             }
         });
-        content = { ...content, memoList: memos };
+
+        // setMemos(memos?.filter(memo => memo.memoImageURL || (memo.memoText && memo.memoText.length > 0)));
+        // memos?.map(memo => {
+        //    console.log(memo.memoImageURL || (memo.memoText && memo.memoText.length > 0));
+        // })
+
+        content = { ...content, memoList: memos }
 
         const url = EDIT_sCRAP_URL;
         token &&
@@ -186,6 +192,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                             defaultValue={content[element.name as keyof typeof content] as string}
                             setState={element.setState}
                             key={element.label + content.scrapId}
+                            isDeleteable={element.isDeleteable}
                         />
                 })}
                 {memos &&

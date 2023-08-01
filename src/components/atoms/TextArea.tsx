@@ -8,9 +8,10 @@ interface TextAreaProps {
     labelText?: string,
     defaultValue?: string,
     setState: (value: string | null) => void,
+    isDeleteable: boolean,
 }
 
-function TextArea({ labelText, defaultValue, setState }: TextAreaProps) {
+function TextArea({ labelText, defaultValue, setState, isDeleteable }: TextAreaProps) {
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
         setState(e.target.value);
@@ -34,9 +35,11 @@ function TextArea({ labelText, defaultValue, setState }: TextAreaProps) {
                     }}
                     onChange={e => handleSetValue(e)}
                 />
-                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => setState(null)}>
-                    <DeleteIcon />
-                </div>
+                {isDeleteable &&
+                    <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => setState(null)}>
+                        <DeleteIcon />
+                    </div>
+                }
             </InputAreaWrapper>
         </TextAreaWrapper >
     );

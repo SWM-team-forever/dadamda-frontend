@@ -14,19 +14,19 @@ import Chip from '../atoms/Chip';
 interface ProductScrapCardProps {
     content: {
         scrapId: number,
-        description: string,
+        description?: string,
         pageUrl: string,
-        siteName: string,
+        siteName?: string,
         thumbnailUrl: string,
-        title: string,
-        memoList: [
+        title?: string,
+        memoList?: [
             {
                 memoId: number,
                 memoText?: string,
                 memoImageUrl?: string,
             }
         ],
-        price: string,
+        price?: string,
     }
 }
 
@@ -85,12 +85,12 @@ function ProductScrapCard({ content }: ProductScrapCardProps) {
     return (
         <CardContainer>
             <CardWrapper>
-                <Chip>{content.siteName}</Chip>
-                <EmpasizedTypography>{content.title}</EmpasizedTypography>
+                {content.siteName && <Chip>{content.siteName}</Chip>}
+                {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
                 <CardImage src={content.thumbnailUrl} />
-                <ColoredTypography>{content.price}</ColoredTypography>
-                <DefaultTypography>{content.description}</DefaultTypography>
-                {content.memoList.map(memo => {
+                {content.price && <ColoredTypography>{content.price}</ColoredTypography>}
+                {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+                {content.memoList?.map(memo => {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })}
                 <ButtonContainer>
