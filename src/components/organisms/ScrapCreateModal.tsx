@@ -21,7 +21,7 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
         setTextAreaValue(e.target.value);
     }
 
-    async function createScrap() {
+    function createScrap() {
         token &&
             fetch(POST_CREATE_OTHER_SCRAP_URL, {
                 method: "POST",

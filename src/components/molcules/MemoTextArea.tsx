@@ -3,6 +3,7 @@ import { TextareaAutosize } from '@mui/material';
 
 import theme from '../../assets/styles/theme';
 import Memo from './Memo';
+import { ChangeEvent } from 'react';
 
 interface MemoTextAreaProps {
     memos: {
@@ -24,6 +25,15 @@ function MemoTextArea({ memos, setMemos }: MemoTextAreaProps) {
         }
     }
 
+    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>, memoId: number) => {
+        e.preventDefault();
+        memos?.map(memo => {
+            if (memo.memoId === memoId) {
+                memo.memoText = e.target.value;
+            }
+        })
+    }
+
     return (
         <TextAreaWrapper>
             {memos && memos.length > 0 && <Label>메모</Label>}
@@ -32,6 +42,7 @@ function MemoTextArea({ memos, setMemos }: MemoTextAreaProps) {
                 <TextareaAutosize
                     key={'memo' + memo.memoText}
                     defaultValue={memo.memoText}
+                    onChange={(e) => handleSetValue(e, memo.memoId)}
                     style={{
                         resize: 'none',
                         background: theme.color.background_color,
@@ -43,13 +54,15 @@ function MemoTextArea({ memos, setMemos }: MemoTextAreaProps) {
                         fontFamily: "'NanumSquare', sans-serif",
                     }}
                 />
-                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => hideMemo(memo.memoId)}>
+                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }}
+                    onClick={() => hideMemo(memo.memoId)}>
                     <DeleteIcon />
                 </div>
             </InputAreaWrapper> :
                 (<InputAreaWrapper>
                     <Memo memoImageURL={memo.memoImageURL} />
-                    <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => hideMemo(memo.memoId)}>
+                    <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }}
+                        onClick={() => hideMemo(memo.memoId)}>
                         <DeleteIcon />
                     </div>
                 </InputAreaWrapper>))

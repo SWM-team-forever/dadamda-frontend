@@ -53,6 +53,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 })
                 .catch(err => console.error(err));
     }, [type]);
+
     return (
         <>
             <ScrapListContainer>

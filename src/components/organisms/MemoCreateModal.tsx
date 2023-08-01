@@ -22,7 +22,7 @@ function MemoCreateModal({ hideMemoCreateModal, scrapId }: MemoCreateModalProps)
         setTextAreaValue(e.target.value);
     }
 
-    async function createMemo() {
+    function createMemo() {
         token &&
             fetch(POST_CREATE_MEMO_URL, {
                 method: "POST",
