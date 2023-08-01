@@ -82,8 +82,8 @@ function OtherScrapCard({ content }: OtherScrapCardProps) {
             <CardWrapper>
                 <CardImage src={content.thumbnailUrl} />
                 <CardInfoWrapper>
-                    <EmpasizedTypography>{content.title}</EmpasizedTypography>
-                    <DefaultTypography>{content.description}</DefaultTypography>
+                    {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
+                    {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
                 </CardInfoWrapper>
                 {content.memoList?.map(memo => {
                     return <Memo memoImageURL={memo.memoImageURL} memoText={memo.memoText} />
