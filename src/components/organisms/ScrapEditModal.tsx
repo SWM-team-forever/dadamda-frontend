@@ -25,6 +25,7 @@ interface ScrapEditModalProps {
             memoImageURL?: string,
             memoText?: string,
         }[],
+        scrapId: number,
     },
 }
 
@@ -180,11 +181,13 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
             </ModalHeader>
             <ContentWrapper>
                 {editalbeContent.map(element => {
-                    return (content[element.name as keyof typeof content] && element.state) &&
+                    return (content[element.name as keyof typeof content] && element.state !== null) &&
                         <TextArea
                             labelText={element.label}
                             defaultValue={content[element.name as keyof typeof content] as string}
-                            setState={element.setState} />
+                            setState={element.setState}
+                            key={element.label + content.scrapId}
+                        />
                 })}
                 {memos &&
                     <MemoTextArea memos={memos} setMemos={setMemos} />
@@ -192,7 +195,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
                     {editalbeContent.map(element => {
-                        return (content[element.name as keyof typeof content] && !element.state) && <AddableElement elementTitle={element.label} onClick={element.showState} />
+                        return (content[element.name as keyof typeof content] && element.state === null) && <AddableElement elementTitle={element.label} onClick={element.showState} />
                     })}
                     <AddableElement elementTitle={'메모'} onClick={() => createMemo()} />
                 </ContentAddSection>
