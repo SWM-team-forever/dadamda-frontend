@@ -81,7 +81,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         {
             name: 'author',
             label: '저자',
-            isDeleteable: true,
+            isDeleteable: false,
             state: author,
             showState: () => setAuthor(content.author),
             setState: setAuthor,
@@ -89,7 +89,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         {
             name: 'blogName',
             label: '블로그명',
-            isDeleteable: true,
+            isDeleteable: false,
             state: blogName,
             showState: () => setBlogName(content.blogName),
             setState: setBlogName,
@@ -97,7 +97,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         // {
         //     name: 'publishedDate',
         //     label: '게시일',
-        //     isDeleteable: true,
+        //     isDeleteable: false,
         //     state: publishedDate,
         //     showState: () => setPublishedDate(content.publishedDate),
         //     setState: setPublishedDate,
@@ -113,15 +113,15 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         {
             name: 'channelName',
             label: '채널명',
-            isDeleteable: true,
+            isDeleteable: false,
             state: channelName,
             showState: () => setChannelName(content.channelName),
             setState: setChannelName,
         },
         {
             name: 'playTime',
-            label: '재생 시간',
-            isDeleteable: true,
+            label: '영상 길이',
+            isDeleteable: false,
             state: playTime,
             showState: () => setPlayTime(content.playTime),
             setState: setPlayTime,
@@ -129,7 +129,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         // {
         //     name: 'watchedCnt',
         //     label: '조회수',
-        //     isDeleteable: true,
+        //     isDeleteable: false,
         //     state: watchedCnt,
         //     showState: () => setWatchedCnt(content.watchedCnt),
         //     setState: setWatchedCnt,
@@ -186,6 +186,7 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                             defaultValue={content[element.name as keyof typeof content] as string}
                             setState={element.setState}
                             key={element.label + content.scrapId}
+                            isDeleteable={element.isDeleteable}
                         />
                 })}
                 {memos &&
