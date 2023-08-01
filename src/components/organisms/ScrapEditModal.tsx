@@ -152,7 +152,13 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 [item.name]: item.state,
             }
         });
-        content = { ...content, memoList: memos };
+
+        // setMemos(memos?.filter(memo => memo.memoImageURL || (memo.memoText && memo.memoText.length > 0)));
+        // memos?.map(memo => {
+        //    console.log(memo.memoImageURL || (memo.memoText && memo.memoText.length > 0));
+        // })
+
+        content = { ...content, memoList: memos }
 
         const url = EDIT_sCRAP_URL;
         token &&
