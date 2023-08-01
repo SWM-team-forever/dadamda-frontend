@@ -7,11 +7,10 @@ import { ChangeEvent } from 'react';
 interface TextAreaProps {
     labelText?: string,
     defaultValue?: string,
-    hideState: () => void,
-    setState: (value: string) => void,
+    setState: (value: string | null) => void,
 }
 
-function TextArea({ labelText, defaultValue, hideState, setState }: TextAreaProps) {
+function TextArea({ labelText, defaultValue, setState }: TextAreaProps) {
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
         setState(e.target.value);
@@ -35,7 +34,7 @@ function TextArea({ labelText, defaultValue, hideState, setState }: TextAreaProp
                     }}
                     onChange={e => handleSetValue(e)}
                 />
-                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={hideState}>
+                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => setState(null)}>
                     <DeleteIcon />
                 </div>
             </InputAreaWrapper>
