@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MemoTextArea from '../molcules/MemoTextArea';
+import { EDIT_sCRAP_URL } from '../../secret';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
@@ -45,6 +46,11 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
         memoImageURL?: string,
         memoText?: string,
     }[] | undefined>(content.memoList);
+
+    const [token, setToken] = useState<string | null>(null);
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
 
     const editalbeContent = [
         {
@@ -145,8 +151,22 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                 [item.name]: item.state,
             }
         });
+        content = { ...content, memoList: memos };
 
-        console.log(content);
+        const url = EDIT_sCRAP_URL;
+        token &&
+            fetch(url, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+                body: JSON.stringify(content),
+            }).then((response) => response.json())
+                .then(() => {
+                    hideScrapEditModal();
+                })
+                .catch(err => console.error(err));
     }
 
     return (
