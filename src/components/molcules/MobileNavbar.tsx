@@ -10,6 +10,8 @@ import logo from '../../assets/images/dadamda-logo128.png';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import theme from '../../assets/styles/theme';
 import { googleLoginURL } from '../../secret';
+import LoginModal from '../organisms/LoginModal';
+import Overlay from '../atoms/Overlay';
 
 interface MobileNavbarProps {
   toggleMobileNavbar: () => void;
@@ -19,11 +21,21 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   // const [userInformation, setUserInformation] = useContext(LoginContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const [isLoginTooltipVisible, setIsLoginTooltipVisible] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
     isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
   };
+
+  const showLoginModal = () => {
+    setIsLoginModalVisible(true);
+  }
+
+  const hideLoginModal = () => {
+    setIsLoginModalVisible(false);
+  }
 
   const navigate = useNavigate();
 
@@ -32,8 +44,7 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   };
 
   const login = () => {
-    oAuthHandler();
-    navigate('/scrap');
+    showLoginModal();
   }
 
   const logout = () => {
@@ -105,6 +116,11 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
         {isLogin ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
         <IconImg src={logo} style={{ width: "36px", height: "36px", position: "absolute", bottom: "20px", right: "20px" }} />
       </NavbarMenu>
+      {isLoginModalVisible &&
+        <Overlay>
+          <LoginModal hideLoginModal={hideLoginModal} />
+        </Overlay>
+      }
     </NavbarContainer>
   );
 }
