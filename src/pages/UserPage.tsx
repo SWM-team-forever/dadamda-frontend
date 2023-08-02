@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/atoms/DefaultButton';
+import RowContainer from '../components/atoms/RowContainer';
 
 import theme from '../assets/styles/theme';
 import { GET_USER_INFORMATION_URL } from '../secret';
-import RowContainer from '../components/atoms/RowContainer';
-import { useNavigate } from 'react-router-dom';
+import defaultUserImage from '../assets/images/Avatar.png';
 
 function UserPage() {
     const [userName, setUserName] = useState('');
@@ -44,7 +45,10 @@ function UserPage() {
             <Wrapper>
                 <UserInfoWrapper>
                     <ProfileContainer>
-                        <ProfileImage src={profileImageUrl} />
+                        {profileImageUrl
+                            ? <ProfileImage src={profileImageUrl} />
+                            : <ProfileImage src={defaultUserImage} />
+                        }
                         <Button label='이미지 변경하기' buttonStyle='primary' isRound />
                     </ProfileContainer>
                     <Content>
