@@ -22,7 +22,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-  const [isLoginTooltipVisible, setIsLoginTooltipVisible] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -39,10 +38,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
 
   const navigate = useNavigate();
 
-  const oAuthHandler = (): void => {
-    window.location.href = googleLoginURL;
-  };
-
   const login = () => {
     showLoginModal();
   }
@@ -56,38 +51,56 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   const navbarMenus = [{
     isVisibleWithoutLogin: true,
     name: '사이트 소개',
-    link: '/main',
+    onclick: () => {
+      navigate('/main');
+      toggleMobileNavbar();
+    },
   }, {
     isVisibleWithoutLogin: true,
     name: '트렌딩',
-    link: '/trending',
+    onclick: () => {
+      navigate('/trending');
+      toggleMobileNavbar();
+    },
   }, {
     isVisibleWithoutLogin: false,
     name: '보드',
-    link: '/board',
+    onclick: () => {
+      navigate('/board');
+      toggleMobileNavbar();
+    },
   }, {
     isVisibleWithoutLogin: false,
     name: '스크랩',
-    link: '/scrap',
+    onclick: () => toggleMenu(),
     isMenuOpen: true,
   }, {
     isVisibleWithoutLogin: false,
     name: '회원 정보',
-    link: '/user',
+    onclick: () => {
+      navigate('/user');
+      toggleMobileNavbar();
+    },
   }];
 
   const scrapMenu = [{
     name: '전체',
+    link: '/scrap/list',
   }, {
     name: '아티클',
+    link: '/scrap/article',
   }, {
     name: '상품',
+    link: '/scrap/product',
   }, {
     name: '비디오',
+    link: '/scrap/video',
   }, {
     name: '장소',
+    link: '/scrap/location',
   }, {
     name: '기타',
+    link: '/scrap/other',
   }]
 
   const isLogin = localStorage.getItem('token') ? true : false;
@@ -99,16 +112,21 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
         {navbarMenus.map(menu => {
           const isMenuVisible = menu.isVisibleWithoutLogin || isLogin;
           const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen && isLogin;
-          return <>{isMenuVisible && <ItemContainer>
-            <Link to={menu.link} style={{ textDecoration: 'inherit', color: 'inherit' }}>
-              <EmpasizedTypography>{menu.name}</EmpasizedTypography>
-            </Link>
-            {menu.isMenuOpen && <IconImg src={menuIcon} onClick={toggleMenu} />}
-          </ItemContainer>}
+          return <>{isMenuVisible &&
+            <ItemContainer>
+              <div style={{ flex: '1' }} onClick={menu.onclick}>
+                <EmpasizedTypography>{menu.name}</EmpasizedTypography>
+              </div>
+              {menu.isMenuOpen && <IconImg src={menuIcon} onClick={toggleMenu} />}
+            </ItemContainer>}
             {
               isMenuHasMenuAndOpen && <MenuContainer>
                 {scrapMenu.map(menu => {
-                  return <DefaultTypography>{menu.name}</DefaultTypography>
+                  return (
+                    <Link to={menu.link} style={{ textDecoration: 'inherit', color: 'inherit' }} onClick={toggleMobileNavbar}>
+                      <DefaultTypography>{menu.name}</DefaultTypography>
+                    </Link>
+                  )
                 })}
               </MenuContainer>
             }</>
@@ -140,6 +158,7 @@ const NavbarContainer = styled.div`
 
 const EmpasizedTypography = styled.span`
   font-size: 20px;
+  flex: 1;
 `
 
 const DefaultTypography = styled.span`
