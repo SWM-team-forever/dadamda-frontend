@@ -120,7 +120,7 @@ function VideoScrapCard({ content }: VideoScrapCardProps) {
                         return (
                             <>
                                 {menu.content &&
-                                    <ColumnContainer style={{ alignItems: 'center' }}>
+                                    <ColumnContainer style={{ alignItems: 'center', flex: '1' }}>
                                         <EmpasizedTypography>{menu.content}</EmpasizedTypography>
                                         <DefaultTypography>{menu.title}</DefaultTypography>
                                     </ColumnContainer>
