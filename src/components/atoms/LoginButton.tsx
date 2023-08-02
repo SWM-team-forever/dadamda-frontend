@@ -12,7 +12,10 @@ interface LoginButtonProps {
 function LoginButton({ text, iconSource, onClick, style }: LoginButtonProps) {
     return (
         <LoginButtonContainer onClick={onClick} style={style}>
-            <IconButton src={iconSource} style={{ width: '46px', height: '46px' }} />
+            <IconButton src={iconSource} style={{
+                width: '46px',
+                height: '46px',
+            }} />
             <span style={{ flex: '1', textAlign: 'center' }}>{text}</span>
         </LoginButtonContainer>
     );
@@ -30,6 +33,7 @@ const LoginButtonContainer = styled.div<{ style: object }>`
     align-items: center;
     font-weight: bold;
     padding: 5px;
+    cursor: pointer;
 `
 
 export default LoginButton;
