@@ -8,6 +8,8 @@ import RowContainer from '../components/atoms/RowContainer';
 import theme from '../assets/styles/theme';
 import { DELETE_USER_URL, GET_USER_INFORMATION_URL } from '../secret';
 import defaultUserImage from '../assets/images/Avatar.png';
+import Overlay from '../components/atoms/Overlay';
+import UserDeleteModal from '../components/organisms/UserDeleteModal';
 
 function UserPage() {
     const [userName, setUserName] = useState('');
@@ -58,6 +60,16 @@ function UserPage() {
             .catch(err => console.error(err));
     }
 
+    const [isUserDeleteModalVisible, setIsUserDeleteModalVisible] = useState(false);
+
+    const showUserDeleteModal = () => {
+        setIsUserDeleteModalVisible(true);
+    }
+
+    const hideUserDeleteModal = () => {
+        setIsUserDeleteModalVisible(false);
+    }
+
     return (
         <>
             <Wrapper>
@@ -85,10 +97,15 @@ function UserPage() {
                     </Content>
                     <RowContainer>
                         <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={logout} />
-                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={deleteUser} />
+                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={showUserDeleteModal} />
                     </RowContainer>
                     <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
+                {isUserDeleteModalVisible &&
+                    <Overlay>
+                        <UserDeleteModal hideUserDeleteModal={hideUserDeleteModal} deleteUser={deleteUser} />
+                    </Overlay>
+                }
             </Wrapper>
         </>
     );
