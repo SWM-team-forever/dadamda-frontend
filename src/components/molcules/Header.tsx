@@ -62,7 +62,6 @@ function Header() {
         //     token: null,
         // });
         localStorage.removeItem('token');
-        localStorage.removeItem('profileImageURL');
         navigate('/main');
         hideLoginTooltip();
     }

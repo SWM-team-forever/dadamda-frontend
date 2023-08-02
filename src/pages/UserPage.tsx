@@ -5,6 +5,8 @@ import Button from '../components/atoms/DefaultButton';
 
 import theme from '../assets/styles/theme';
 import { GET_USER_INFORMATION_URL } from '../secret';
+import RowContainer from '../components/atoms/RowContainer';
+import { useNavigate } from 'react-router-dom';
 
 function UserPage() {
     const [userName, setUserName] = useState('');
@@ -30,6 +32,13 @@ function UserPage() {
             });
     }, []);
 
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        navigate('/main');
+    };
+
     return (
         <>
             <Wrapper>
@@ -52,6 +61,10 @@ function UserPage() {
                             <DefaultTypography>{accountProvider} 계정으로 가입하셨습니다.</DefaultTypography>
                         </TextWrapper>
                     </Content>
+                    <RowContainer>
+                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={logout} />
+                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} />
+                    </RowContainer>
                     <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
             </Wrapper>
