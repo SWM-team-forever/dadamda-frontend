@@ -26,7 +26,6 @@ export const DefaultStyle: Story = {
     channelImageUrl: 'https://yt3.ggpht.com/hkRZlmV18W3wm8DlqOZaQHe-g-h8ugcsIdeSk6ZpCOyhOXf1ReGTseiNi8ek92Waosv4r32G=s88-c-k-c0x00ffffff-no-rj',
     channelName: 'You, Me and Automation',
     embedUrl: 'https://www.youtube.com/embed/Jyh8pVWQ8sU',
-    genre: 'know-how',
     playTime: '6:08',
     watchedCnt: '2.2천회',
     publishedDate: '1년 전',
