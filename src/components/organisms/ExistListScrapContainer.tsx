@@ -6,6 +6,7 @@ import ProductScrapCard from "../molcules/ProductScrapCard"
 import VideoScrapCard from "../molcules/VideoScrapCard"
 import ArticleScrapCard from "../molcules/ArticleScrapCard"
 import { useEffect } from "react"
+import { CircularProgress } from "@mui/material"
 
 interface ExistListScrapContainerProps {
     contents: {
@@ -71,6 +72,7 @@ function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistL
                 }
                 )}
             </Masonry>
+            {isFetching ? <CircularProgress /> : <h3>더 이상 스크랩이 없습니다.</h3>}
         </ScrapList>
     )
 }
@@ -81,6 +83,8 @@ const ScrapList = styled.div`
     flex: 1;
     padding: 0 10px;
     box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
 `
 
 export default ExistListScrapContainer;
