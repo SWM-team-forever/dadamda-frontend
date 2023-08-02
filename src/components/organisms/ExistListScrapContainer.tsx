@@ -8,6 +8,7 @@ import ArticleScrapCard from "../molcules/ArticleScrapCard"
 import { useEffect, useRef, useState } from "react"
 import { CircularProgress } from "@mui/material"
 import useInfiniteScroll from "../../hooks/useInfiniteScroll"
+import theme from "../../assets/styles/theme"
 
 interface ExistListScrapContainerProps {
     contents: {
@@ -64,7 +65,14 @@ function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistL
                 )}
             </Masonry>
             {isFetching && <CircularProgress />}
-            <h3 ref={setBottom}>더 이상 스크랩이 없습니다.</h3>
+            <h5
+                ref={setBottom}
+                style={{
+                    marginTop: '0',
+                    color: theme.color.icon_color,
+                }}>
+                더 이상 스크랩이 없습니다.
+            </h5>
 
         </ScrapList>
     )

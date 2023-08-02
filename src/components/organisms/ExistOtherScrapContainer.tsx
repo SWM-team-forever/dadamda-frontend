@@ -5,6 +5,7 @@ import OtherScrapCard from "../molcules/OtherScrapCard"
 import { useState } from "react";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import { CircularProgress } from "@mui/material";
+import theme from "../../assets/styles/theme";
 
 interface ExistOtherScrapContainerProps {
     contents: {
@@ -37,7 +38,14 @@ function ExistOtherScrapContainer({ contents, isFetching, setIsFetching }: Exist
                 )}
             </Masonry>
             {isFetching && <CircularProgress />}
-            <h3 ref={setBottom}>더 이상 스크랩이 없습니다.</h3>
+            <h5
+                ref={setBottom}
+                style={{
+                    marginTop: '0',
+                    color: theme.color.icon_color,
+                }}>
+                더 이상 스크랩이 없습니다.
+            </h5>
         </ScrapList>
     )
 }
