@@ -1,32 +1,55 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 import Button from '../components/atoms/DefaultButton';
 
 import theme from '../assets/styles/theme';
-import { USER } from '../config';
+import { GET_USER_INFORMATION_URL } from '../secret';
 
 function UserPage() {
+    const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [accountProvider, setAccountProvider] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const url = GET_USER_INFORMATION_URL;
+        fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token,
+            },
+        }).then((response) => response.json())
+            .then((data) => {
+                setUserName(data.data.name);
+                setUserEmail(data.data.email);
+                setAccountProvider(data.data.provider);
+                setProfileImageUrl(data.data.profileUrl);
+            });
+    }, []);
 
     return (
         <>
             <Wrapper>
                 <UserInfoWrapper>
                     <ProfileContainer>
-                        <ProfileImage src={USER.profile_url} />
+                        <ProfileImage src={profileImageUrl} />
                         <Button label='이미지 변경하기' buttonStyle='primary' isRound />
                     </ProfileContainer>
                     <Content>
                         <TextWrapper>
                             <DefaultTypography><b>이름</b></DefaultTypography>
-                            <DefaultTypography>영원한_제로</DefaultTypography>
+                            <DefaultTypography>{userName}</DefaultTypography>
                         </TextWrapper>
                         <TextWrapper>
                             <DefaultTypography><b>이메일</b></DefaultTypography>
-                            <DefaultTypography>lukey0515@gmail.com</DefaultTypography>
+                            <DefaultTypography>{userEmail}</DefaultTypography>
                         </TextWrapper>
                         <TextWrapper>
                             <DefaultTypography><b>연결된 소셜 계정</b></DefaultTypography>
-                            <DefaultTypography>구글 계정으로 가입하셨습니다.</DefaultTypography>
+                            <DefaultTypography>{accountProvider} 계정으로 가입하셨습니다.</DefaultTypography>
                         </TextWrapper>
                     </Content>
                     <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
