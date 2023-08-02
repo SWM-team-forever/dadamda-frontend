@@ -5,7 +5,7 @@ import OtherScrapCard from "../molcules/OtherScrapCard"
 import ProductScrapCard from "../molcules/ProductScrapCard"
 import VideoScrapCard from "../molcules/VideoScrapCard"
 import ArticleScrapCard from "../molcules/ArticleScrapCard"
-import { useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CircularProgress } from "@mui/material"
 
 interface ExistListScrapContainerProps {
@@ -40,18 +40,39 @@ interface ExistListScrapContainerProps {
 }
 
 function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistListScrapContainerProps) {
+    const [bottom, setBottom] = useState(null);
+    const bottomObserver = useRef(null);
+
     useEffect(() => {
-        const handleScroll = () => {
-            const { scrollTop, offsetHeight, scrollHeight } = document.documentElement;
-            if (window.innerHeight + scrollTop >= offsetHeight) {
-                setIsFetching(true);
-            }
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5,
+        }
+        const observer = new IntersectionObserver(
+            entries => {
+                if (entries[0].isIntersecting) {
+                    setIsFetching(true);
+                }
+            },
+            observerOptions,
+        );
+
+        bottomObserver.current = observer;
+    }, []);
+
+    useEffect(() => {
+        const observer = bottomObserver.current;
+        if (bottom) {
+            observer.observe(bottom);
         }
 
-        setIsFetching(true);
-        window.addEventListener('scroll', handleScroll, true);
-        return () => window.removeEventListener('scroll', handleScroll, true);
-    });
+        return () => {
+            if (bottom) {
+                observer.unobserve(bottom);
+            }
+        };
+    }, [bottom]);
 
     return (
         <ScrapList>
@@ -72,7 +93,9 @@ function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistL
                 }
                 )}
             </Masonry>
-            {isFetching ? <CircularProgress /> : <h3>더 이상 스크랩이 없습니다.</h3>}
+            {isFetching && <CircularProgress />}
+            <span ref={setBottom}>더 이상 스크랩이 없습니다.</span>
+
         </ScrapList>
     )
 }

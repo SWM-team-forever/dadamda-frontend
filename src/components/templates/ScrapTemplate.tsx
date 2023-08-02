@@ -49,7 +49,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 },
             }).then((response) => response.json())
                 .then((data) => {
-                    setTypes(...types, data.data.content);
+                    setTypes([...types, ...data.data.content]);
                     setPages(data.data.pageable.pageNumber + 1);
                     setHasNextPage(!data.data.last);
                     console.log(data);
@@ -65,7 +65,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         else if (!hasNextPage) {
             setIsFetching(false);
         }
-    }, []);
+    }, [isFetching]);
 
     return (
         <>

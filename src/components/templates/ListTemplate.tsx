@@ -36,7 +36,6 @@ interface ListTemplateProps {
 
 function ListTemplate({ lists, isFetching, setIsFetching }: ListTemplateProps) {
 
-
     return (
         <>
             <ScrapListHeader type='전체' count={lists.length} />
