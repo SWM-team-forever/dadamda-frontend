@@ -41,7 +41,7 @@ interface ExistListScrapContainerProps {
 }
 
 function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistListScrapContainerProps) {
-    const [bottom, setBottom] = useState();
+    const [bottom, setBottom] = useState<HTMLDivElement | null>(null);
     useInfiniteScroll(setIsFetching, bottom);
 
     return (
@@ -64,7 +64,7 @@ function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistL
                 )}
             </Masonry>
             {isFetching && <CircularProgress />}
-            <span ref={setBottom}>더 이상 스크랩이 없습니다.</span>
+            <h3 ref={setBottom}>더 이상 스크랩이 없습니다.</h3>
 
         </ScrapList>
     )

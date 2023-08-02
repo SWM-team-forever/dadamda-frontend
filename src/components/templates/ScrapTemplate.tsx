@@ -33,7 +33,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     }
     const token = localStorage.getItem('token');
     const size = 10;
-    const [types, setTypes] = useState([]);
+    const [types, setTypes] = useState<any[]>([]);
     const [isFetching, setIsFetching] = useState(true);
     const [hasNextPage, setHasNextPage] = useState(true);
     const [pages, setPages] = useState(0);

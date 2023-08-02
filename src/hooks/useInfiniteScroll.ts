@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-function useInfiniteScroll(setIsFetching:(isFetching: boolean) => void, bottom) {
-    const bottomObserver = useRef(null);
+function useInfiniteScroll(setIsFetching:(isFetching: boolean) => void, bottom:HTMLDivElement | null) {
+    const bottomObserver = useRef<IntersectionObserver | null>(null);
 
     useEffect(() => {
         const observerOptions = {
@@ -24,12 +24,12 @@ function useInfiniteScroll(setIsFetching:(isFetching: boolean) => void, bottom) 
     useEffect(() => {
         const observer = bottomObserver.current;
         if (bottom) {
-            observer.observe(bottom);
+            observer?.observe(bottom);
         }
 
         return () => {
             if (bottom) {
-                observer.unobserve(bottom);
+                observer?.unobserve(bottom);
             }
         };
     }, [bottom]);
