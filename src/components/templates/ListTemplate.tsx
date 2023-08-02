@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import ScrapListHeader from '../molcules/ScrapListHeader';
 import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
 import ExistListScrapContainer from '../organisms/ExistListScrapContainer';
@@ -29,13 +30,17 @@ interface ListTemplateProps {
         watchedCnt: string,
         dtype: string,
     }[],
+    isFetching: boolean,
+    setIsFetching: (isFetching: boolean) => void,
 }
 
-function ListTemplate({ lists }: ListTemplateProps) {
+function ListTemplate({ lists, isFetching, setIsFetching }: ListTemplateProps) {
+
+
     return (
         <>
             <ScrapListHeader type='전체' count={lists.length} />
-            {lists.length ? <ExistListScrapContainer contents={lists} /> : <EmptyScrapContainer />}
+            {lists.length ? <ExistListScrapContainer contents={lists} isFetching={isFetching} setIsFetching={setIsFetching} /> : <EmptyScrapContainer />}
         </>
     )
 }

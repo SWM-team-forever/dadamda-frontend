@@ -5,6 +5,7 @@ import OtherScrapCard from "../molcules/OtherScrapCard"
 import ProductScrapCard from "../molcules/ProductScrapCard"
 import VideoScrapCard from "../molcules/VideoScrapCard"
 import ArticleScrapCard from "../molcules/ArticleScrapCard"
+import { useEffect } from "react"
 
 interface ExistListScrapContainerProps {
     contents: {
@@ -32,10 +33,25 @@ interface ExistListScrapContainerProps {
         playTime: string,
         watchedCnt: string,
         dtype: string,
-    }[]
+    }[],
+    isFetching: boolean,
+    setIsFetching: (isFetching: boolean) => void,
 }
 
-function ExistListScrapContainer({ contents }: ExistListScrapContainerProps) {
+function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistListScrapContainerProps) {
+    useEffect(() => {
+        const handleScroll = () => {
+            const { scrollTop, offsetHeight, scrollHeight } = document.documentElement;
+            if (window.innerHeight + scrollTop >= offsetHeight) {
+                setIsFetching(true);
+            }
+        }
+
+        setIsFetching(true);
+        window.addEventListener('scroll', handleScroll, true);
+        return () => window.removeEventListener('scroll', handleScroll, true);
+    });
+
     return (
         <ScrapList>
             <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2} style={{ width: '100%' }}>

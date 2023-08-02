@@ -6,7 +6,7 @@ import theme from '../../assets/styles/theme';
 import OtherTemplate from './OtherTemplate';
 import IconButton from '../atoms/IconButton';
 import fab from '../../assets/icons/fab.png';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
 import ListTemplate from './ListTemplate';
 
@@ -24,10 +24,6 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         setIsScrapCreateModalVisible(false);
     }
 
-    const token = localStorage.getItem('token');
-    const page = 0;
-    const size = 20;
-
     const urlMatching: { [key: string]: string } = {
         'other': GET_OTHER_SCRAP_URL,
         'list': GET_LIST_SCRAP_URL,
@@ -35,11 +31,15 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         'product': GET_PRODUCT_SCRAP_URL,
         'video': GET_PRODUCT_SCRAP_URL,
     }
-
+    const token = localStorage.getItem('token');
+    const size = 10;
     const [types, setTypes] = useState([]);
+    const [isFetching, setIsFetching] = useState(true);
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const [pages, setPages] = useState(0);
 
-    useEffect(() => {
-        const url = urlMatching[type] + `?page=${page}&size=${size}`;
+    const fetchDatas = useCallback(async () => {
+        const url = urlMatching[type] + `?page=${pages}&size=${size}`;
         token &&
             fetch(url, {
                 method: "GET",
@@ -49,17 +49,31 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 },
             }).then((response) => response.json())
                 .then((data) => {
-                    setTypes(data.data.content);
+                    setTypes(...types, data.data.content);
+                    setPages(data.data.pageable.pageNumber + 1);
+                    setHasNextPage(!data.data.last);
+                    console.log(data);
                 })
                 .catch(err => console.error(err));
-    }, [type]);
+        setIsFetching(false);
+    }, [pages]);
+
+    useEffect(() => {
+        if (isFetching && hasNextPage) {
+            fetchDatas();
+        }
+        else if (!hasNextPage) {
+            setIsFetching(false);
+        }
+    }, []);
 
     return (
         <>
             <ScrapListContainer>
                 {type === 'other' && <OtherTemplate others={types} />}
-                {type === 'list' && <ListTemplate lists={types} />}
-                <IconButton src={fab}
+                {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} />}
+                <IconButton
+                    src={fab}
                     style={{
                         position: 'fixed',
                         bottom: '15px',
@@ -67,10 +81,13 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                         width: '48px',
                         height: '48px',
                     }}
-                    onClick={showScrapCreateModal} />
-                {isScrapCreateModalVisible && <Overlay>
-                    <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} />
-                </Overlay>}
+                    onClick={showScrapCreateModal}
+                />
+                {isScrapCreateModalVisible &&
+                    <Overlay>
+                        <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} />
+                    </Overlay>
+                }
             </ScrapListContainer>
         </>
     );
