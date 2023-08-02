@@ -7,6 +7,7 @@ import VideoScrapCard from "../molcules/VideoScrapCard"
 import ArticleScrapCard from "../molcules/ArticleScrapCard"
 import { useEffect, useRef, useState } from "react"
 import { CircularProgress } from "@mui/material"
+import useInfiniteScroll from "../../hooks/useInfiniteScroll"
 
 interface ExistListScrapContainerProps {
     contents: {
@@ -40,39 +41,8 @@ interface ExistListScrapContainerProps {
 }
 
 function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistListScrapContainerProps) {
-    const [bottom, setBottom] = useState(null);
-    const bottomObserver = useRef(null);
-
-    useEffect(() => {
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5,
-        }
-        const observer = new IntersectionObserver(
-            entries => {
-                if (entries[0].isIntersecting) {
-                    setIsFetching(true);
-                }
-            },
-            observerOptions,
-        );
-
-        bottomObserver.current = observer;
-    }, []);
-
-    useEffect(() => {
-        const observer = bottomObserver.current;
-        if (bottom) {
-            observer.observe(bottom);
-        }
-
-        return () => {
-            if (bottom) {
-                observer.unobserve(bottom);
-            }
-        };
-    }, [bottom]);
+    const [bottom, setBottom] = useState();
+    useInfiniteScroll(setIsFetching, bottom);
 
     return (
         <ScrapList>
