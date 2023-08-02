@@ -6,7 +6,7 @@ import Button from '../components/atoms/DefaultButton';
 import RowContainer from '../components/atoms/RowContainer';
 
 import theme from '../assets/styles/theme';
-import { GET_USER_INFORMATION_URL } from '../secret';
+import { DELETE_USER_URL, GET_USER_INFORMATION_URL } from '../secret';
 import defaultUserImage from '../assets/images/Avatar.png';
 
 function UserPage() {
@@ -40,6 +40,24 @@ function UserPage() {
         navigate('/main');
     };
 
+    const deleteUser = () => {
+        const token = localStorage.getItem('token');
+        const url = DELETE_USER_URL;
+        token && fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token,
+            },
+        }).then((response) => response.json())
+            .then(() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('profileImageURL');
+                navigate('/main');
+            })
+            .catch(err => console.error(err));
+    }
+
     return (
         <>
             <Wrapper>
@@ -67,7 +85,7 @@ function UserPage() {
                     </Content>
                     <RowContainer>
                         <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={logout} />
-                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} />
+                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={deleteUser} />
                     </RowContainer>
                     <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
