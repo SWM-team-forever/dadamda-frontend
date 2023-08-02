@@ -6,7 +6,7 @@ import theme from '../../assets/styles/theme';
 import OtherTemplate from './OtherTemplate';
 import IconButton from '../atoms/IconButton';
 import fab from '../../assets/icons/fab.png';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
 import ListTemplate from './ListTemplate';
 
@@ -38,6 +38,13 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     const [hasNextPage, setHasNextPage] = useState(true);
     const [pages, setPages] = useState(0);
 
+    const initiate = () => {
+        setTypes([]);
+        setIsFetching(true);
+        setHasNextPage(true);
+        setPages(0);
+    }
+
     const fetchDatas = useCallback(async () => {
         const url = urlMatching[type] + `?page=${pages}&size=${size}`;
         token &&
@@ -56,7 +63,11 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 })
                 .catch(err => console.error(err));
         setIsFetching(false);
-    }, [pages]);
+    }, [pages, types, type]);
+
+    useEffect(() => {
+        initiate();
+    }, [type]);
 
     useEffect(() => {
         if (isFetching && hasNextPage) {
@@ -66,6 +77,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
             setIsFetching(false);
         }
     }, [isFetching]);
+
 
     return (
         <>
