@@ -2,6 +2,9 @@ import styled from "styled-components"
 import { Masonry } from "@mui/lab"
 
 import OtherScrapCard from "../molcules/OtherScrapCard"
+import { useState } from "react";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
+import { CircularProgress } from "@mui/material";
 
 interface ExistOtherScrapContainerProps {
     contents: {
@@ -16,10 +19,15 @@ interface ExistOtherScrapContainerProps {
             memoImageURL?: string,
             memoText?: string,
         }],
-    }[]
+    }[],
+    isFetching: boolean,
+    setIsFetching: (isFetching: boolean) => void,
 }
 
-function ExistOtherScrapContainer({ contents }: ExistOtherScrapContainerProps) {
+function ExistOtherScrapContainer({ contents, isFetching, setIsFetching }: ExistOtherScrapContainerProps) {
+    const [bottom, setBottom] = useState();
+    useInfiniteScroll(setIsFetching, bottom);
+
     return (
         <ScrapList>
             <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2} style={{ width: '100%' }}>
@@ -28,6 +36,8 @@ function ExistOtherScrapContainer({ contents }: ExistOtherScrapContainerProps) {
                 }
                 )}
             </Masonry>
+            {isFetching && <CircularProgress />}
+            <span ref={setBottom}>더 이상 스크랩이 없습니다.</span>
         </ScrapList>
     )
 }
@@ -38,6 +48,8 @@ const ScrapList = styled.div`
     flex: 1;
     padding: 0 10px;
     box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
 `
 
 export default ExistOtherScrapContainer

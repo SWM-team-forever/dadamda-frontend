@@ -82,7 +82,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     return (
         <>
             <ScrapListContainer>
-                {type === 'other' && <OtherTemplate others={types} />}
+                {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} />}
                 {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} />}
                 <IconButton
                     src={fab}

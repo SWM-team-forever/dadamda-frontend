@@ -16,13 +16,15 @@ interface OtherTemplateProps {
             memoText?: string,
         }],
     }[],
+    isFetching: boolean,
+    setIsFetching: (isFetching: boolean) => void,
 }
 
-function OtherTemplate({ others }: OtherTemplateProps) {
+function OtherTemplate({ others, isFetching, setIsFetching }: OtherTemplateProps) {
     return (
         <>
             <ScrapListHeader type='기타' count={others.length} />
-            {others.length ? <ExistOtherScrapContainer contents={others} /> : <EmptyScrapContainer />}
+            {others.length ? <ExistOtherScrapContainer contents={others} isFetching={isFetching} setIsFetching={setIsFetching} /> : <EmptyScrapContainer />}
         </>
     )
 }
