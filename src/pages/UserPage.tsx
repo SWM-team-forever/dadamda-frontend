@@ -17,7 +17,7 @@ function UserPage() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const url = GET_USER_INFORMATION_URL;
-        fetch(url, {
+        token && fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

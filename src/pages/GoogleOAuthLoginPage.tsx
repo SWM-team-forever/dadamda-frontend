@@ -26,7 +26,7 @@ function GoogleOAuthLoginpage() {
         //     token: token,
         // });
         token && localStorage.setItem('token', token);
-        getUserProfileImage(token)
+        token && getUserProfileImage(token)
             .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage))
             .catch(error => console.log(error));
         navigate('/scrap/list');
