@@ -105,7 +105,7 @@ function Header() {
                 </HeaderPanel>
                 <LargeRightPanel>
                     {isLogin ?
-                        <ProfileImage source={USER.profile_url} size={24} onClick={showLoginTooltip} /> :
+                        <ProfileImage source={localStorage.getItem('profileImageURL')} size={24} onClick={showLoginTooltip} /> :
                         <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                     }
                 </LargeRightPanel>
