@@ -32,13 +32,14 @@ interface ListTemplateProps {
     }[],
     isFetching: boolean,
     setIsFetching: (isFetching: boolean) => void,
+    count: number,
 }
 
-function ListTemplate({ lists, isFetching, setIsFetching }: ListTemplateProps) {
+function ListTemplate({ lists, isFetching, setIsFetching, count }: ListTemplateProps) {
 
     return (
         <>
-            <ScrapListHeader type='전체' count={lists.length} />
+            <ScrapListHeader type='전체' count={count} />
             {lists.length ? <ExistListScrapContainer contents={lists} isFetching={isFetching} setIsFetching={setIsFetching} /> : <EmptyScrapContainer />}
         </>
     )

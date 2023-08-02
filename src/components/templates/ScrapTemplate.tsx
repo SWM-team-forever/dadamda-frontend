@@ -37,12 +37,14 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     const [isFetching, setIsFetching] = useState(true);
     const [hasNextPage, setHasNextPage] = useState(true);
     const [pages, setPages] = useState(0);
+    const [count, setCount] = useState(0);
 
     const initiate = () => {
         setTypes([]);
         setIsFetching(true);
         setHasNextPage(true);
         setPages(0);
+        setCount(0);
     }
 
     const fetchDatas = useCallback(async () => {
@@ -59,14 +61,30 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                     setTypes([...types, ...data.data.content]);
                     setPages(data.data.pageable.pageNumber + 1);
                     setHasNextPage(!data.data.last);
-                    console.log(data);
                 })
                 .catch(err => console.error(err));
         setIsFetching(false);
     }, [pages, types, type]);
 
+    const fetchScrapCount = () => {
+        const url = urlMatching[type] + `/count`;
+        token &&
+            fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+            }).then((response) => response.json())
+                .then((data) => {
+                    setCount(data.data.count);
+                })
+                .catch(err => console.error(err));
+    }
+
     useEffect(() => {
         initiate();
+        fetchScrapCount();
     }, [type]);
 
     useEffect(() => {
@@ -82,8 +100,8 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     return (
         <>
             <ScrapListContainer>
-                {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} />}
-                {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} />}
+                {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
+                {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 <IconButton
                     src={fab}
                     style={{
