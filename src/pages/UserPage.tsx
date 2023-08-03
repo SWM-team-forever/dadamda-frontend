@@ -10,6 +10,7 @@ import { DELETE_USER_URL, GET_USER_INFORMATION_URL } from '../secret';
 import defaultUserImage from '../assets/images/Avatar.png';
 import Overlay from '../components/atoms/Overlay';
 import UserDeleteModal from '../components/organisms/UserDeleteModal';
+import useWarningSnackbar from '../hooks/useWarningSnackbar';
 
 function UserPage() {
     const [userName, setUserName] = useState('');
@@ -93,7 +94,7 @@ function UserPage() {
                             ? <ProfileImage src={profileImageUrl} />
                             : <ProfileImage src={defaultUserImage} />
                         }
-                        <Button label='이미지 변경하기' buttonStyle='primary' isRound />
+                        <Button label='이미지 변경하기' buttonStyle='primary' isRound onClick={useWarningSnackbar} />
                     </ProfileContainer>
                     <Content>
                         {userPageMenu.map(menu => {
