@@ -80,7 +80,6 @@ function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistL
 
 const ScrapList = styled.div`
     display: flex;
-    justify-content: center;
     flex: 1;
     padding: 0 10px;
     box-sizing: border-box;
