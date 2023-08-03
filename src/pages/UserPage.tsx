@@ -70,6 +70,20 @@ function UserPage() {
         setIsUserDeleteModalVisible(false);
     }
 
+    const userPageMenu = [
+        {
+            name: '이름',
+            content: userName,
+        },
+        {
+            name: '이메일',
+            content: userEmail,
+        },
+        {
+            name: '연결된 소셜 계정',
+            content: `${accountProvider} 계정으로 가입되셨습니다.`
+        }];
+
     return (
         <>
             <Wrapper>
@@ -82,18 +96,14 @@ function UserPage() {
                         <Button label='이미지 변경하기' buttonStyle='primary' isRound />
                     </ProfileContainer>
                     <Content>
-                        <TextWrapper>
-                            <DefaultTypography><b>이름</b></DefaultTypography>
-                            <DefaultTypography>{userName}</DefaultTypography>
-                        </TextWrapper>
-                        <TextWrapper>
-                            <DefaultTypography><b>이메일</b></DefaultTypography>
-                            <DefaultTypography>{userEmail}</DefaultTypography>
-                        </TextWrapper>
-                        <TextWrapper>
-                            <DefaultTypography><b>연결된 소셜 계정</b></DefaultTypography>
-                            <DefaultTypography>{accountProvider} 계정으로 가입하셨습니다.</DefaultTypography>
-                        </TextWrapper>
+                        {userPageMenu.map(menu => {
+                            return (
+                                <TextWrapper>
+                                    <DefaultTypography><b>{menu.name}</b></DefaultTypography>
+                                    <DefaultTypography>{menu.content}</DefaultTypography>
+                                </TextWrapper>
+                            )
+                        })}
                     </Content>
                     <RowContainer>
                         <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={logout} />
