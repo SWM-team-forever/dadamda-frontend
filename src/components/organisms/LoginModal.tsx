@@ -44,11 +44,11 @@ function LoginModal({ hideLoginModal }: LoginModalProps) {
                         style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
                         onClick={oAuthHandler}
                     />
-                    <img src={kakaoLogo} />
+                    {/* <img src={kakaoLogo} />
                     <LoginButton
                         text={'네이버로 시작하기'}
                         iconSource={naverLogo}
-                        style={{ color: 'white', backgroundColor: '#03C75A' }} />
+                        style={{ color: 'white', backgroundColor: '#03C75A' }} /> */}
                 </ColumnContainer>
             </ButtonContainer>
         </ModalContainer>
