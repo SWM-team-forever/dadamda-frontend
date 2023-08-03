@@ -14,6 +14,7 @@ import { LoginProvider, RequireAuth } from './context/LoginContext.tsx';
 import ScrapTemplate from './components/templates/ScrapTemplate.tsx';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.tsx';
 import { SnackbarProvider } from 'notistack';
+import NotReadyTemplate from './components/templates/NotReadyTemplate.tsx';
 
 function App() {
   return (
@@ -33,9 +34,11 @@ function App() {
                 <Route path='video' element={<ScrapTemplate type={'video'} />}></Route>
                 <Route path='location' element={<ScrapTemplate type={'location'} />}></Route>
                 <Route path='other' element={<ScrapTemplate type={'other'} />}></Route>
-                <Route path='' element={<ScrapTemplate type={'list'} />}></Route>
+                <Route index element={<ScrapTemplate type={'list'} />}></Route>
               </Route>
-              <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}></Route>
+              <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}>
+                <Route index element={<NotReadyTemplate />} />
+              </Route>
               <Route path='/trending' element={<TrendingPage />}></Route>
               <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
               <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>

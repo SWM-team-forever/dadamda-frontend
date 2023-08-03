@@ -9,6 +9,7 @@ import fab from '../../assets/icons/fab.png';
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
 import ListTemplate from './ListTemplate';
+import NotReadyTemplate from './NotReadyTemplate';
 
 interface ScrapTemplateProps {
     type: string,
@@ -102,6 +103,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
             <ScrapListContainer>
                 {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
+                {(type === 'article' || 'product' || 'video' || 'location') && <NotReadyTemplate />}
                 <IconButton
                     src={fab}
                     style={{
