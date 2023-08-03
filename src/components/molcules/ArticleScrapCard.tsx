@@ -13,26 +13,27 @@ import Chip from '../atoms/Chip';
 import RowContainer from '../atoms/RowContainer';
 import ProfileImage from '../atoms/ProfileImage';
 import ColumnContainer from '../atoms/ColumnContainer';
+import defaultImage from '../../assets/images/Avatar.png';
 
 interface ArticleScrapCardProps {
     content: {
         scrapId: number,
-        description: string,
+        description?: string,
         pageUrl: string,
-        siteName: string,
+        siteName?: string,
         thumbnailUrl: string,
-        title: string,
-        memoList: [
+        title?: string,
+        memoList?: [
             {
                 memoId: number,
                 memoText?: string,
                 memoImageUrl?: string,
             }
         ],
-        author: string,
-        authorImageUrl: string,
-        blogName: string,
-        publishedDate: string,
+        author?: string,
+        authorImageUrl?: string,
+        blogName?: string,
+        publishedDate?: string,
     }
 }
 
@@ -91,21 +92,23 @@ function ArticleScrapCard({ content }: ArticleScrapCardProps) {
     return (
         <CardContainer>
             <CardWrapper>
-                <Chip>{content.siteName}</Chip>
-                <EmpasizedTypography>{content.title}</EmpasizedTypography>
+                {content.siteName && <Chip>{content.siteName}</Chip>}
+                {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
                 <CardImage src={content.thumbnailUrl} />
                 <RowContainer style={{ justifyContent: 'space-between' }}>
-                    <RowContainer style={{ gap: '10px' }}>
-                        <ProfileImage size={30} source={content.authorImageUrl} />
-                        <ColumnContainer>
-                            <EmpasizedTypography>{content.author}</EmpasizedTypography>
-                            <DefaultTypography>{content.blogName}</DefaultTypography>
-                        </ColumnContainer>
-                    </RowContainer>
-                    <DefaultTypography>{content.publishedDate}</DefaultTypography>
+                    {(content.author || content.blogName) &&
+                        <RowContainer style={{ gap: '10px', alignItems: 'center' }}>
+                            {content.authorImageUrl ? <ProfileImage size={30} source={content.authorImageUrl} /> : <ProfileImage size={30} source={defaultImage} />}
+                            <ColumnContainer>
+                                {content.author && <EmpasizedTypography>{content.author}</EmpasizedTypography>}
+                                {content.blogName && <DefaultTypography>{content.blogName}</DefaultTypography>}
+                            </ColumnContainer>
+                        </RowContainer>
+                    }
+                    {content.publishedDate && <DefaultTypography>{content.publishedDate}</DefaultTypography>}
                 </RowContainer>
-                <DefaultTypography>{content.description}</DefaultTypography>
-                {content.memoList.map(memo => {
+                {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+                {content.memoList?.map(memo => {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })}
                 <ButtonContainer>

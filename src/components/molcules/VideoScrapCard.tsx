@@ -13,26 +13,26 @@ import Chip from '../atoms/Chip';
 import RowContainer from '../atoms/RowContainer';
 import ProfileImage from '../atoms/ProfileImage';
 import ColumnContainer from '../atoms/ColumnContainer';
+import defaultImage from '../../assets/images/Avatar.png';
 
 interface VideoScrapCardProps {
     content: {
         scrapId: number,
-        description: string,
+        description?: string,
         pageUrl: string,
-        siteName: string,
+        siteName?: string,
         thumbnailUrl: string,
-        title: string,
-        memoList: [
+        title?: string,
+        memoList?: [
             {
                 memoId: number,
                 memoText?: string,
                 memoImageUrl?: string,
             }
         ],
-        channelImageUrl: string,
-        channelName: string,
+        channelImageUrl?: string,
+        channelName?: string,
         embedUrl: string,
-        genre: string,
         playTime: string,
         watchedCnt: string,
         publishedDate: string,
@@ -105,23 +105,32 @@ function VideoScrapCard({ content }: VideoScrapCardProps) {
     return (
         <CardContainer>
             <CardWrapper>
-                <Chip>{content.siteName}</Chip>
-                <EmpasizedTypography>{content.title}</EmpasizedTypography>
+                {content.siteName && <Chip>{content.siteName}</Chip>}
+                {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
                 <VideoPlayer src={content.embedUrl} />
-                <RowContainer style={{ alignItems: 'center', gap: '10px' }}>
-                    <ProfileImage size={24} source={content.channelImageUrl} />
-                    <DefaultTypography>{content.channelName}</DefaultTypography>
-                </RowContainer>
+                {
+                    content.channelName &&
+                    <RowContainer style={{ alignItems: 'center', gap: '5px' }}>
+                        {content.channelImageUrl ? <ProfileImage size={24} source={content.channelImageUrl} /> : <ProfileImage size={24} source={defaultImage} />}
+                        <DefaultTypography>{content.channelName}</DefaultTypography>
+                    </RowContainer>
+                }
                 <RowContainer style={{ justifyContent: 'space-between' }}>
                     {videoMenus.map(menu => {
-                        return (<ColumnContainer style={{ alignItems: 'center' }}>
-                            <EmpasizedTypography>{menu.content}</EmpasizedTypography>
-                            <DefaultTypography>{menu.title}</DefaultTypography>
-                        </ColumnContainer>)
+                        return (
+                            <>
+                                {menu.content &&
+                                    <ColumnContainer style={{ alignItems: 'center', flex: '1' }}>
+                                        <EmpasizedTypography>{menu.content}</EmpasizedTypography>
+                                        <DefaultTypography>{menu.title}</DefaultTypography>
+                                    </ColumnContainer>
+                                }
+                            </>
+                        )
                     })}
                 </RowContainer>
-                <DefaultTypography>{content.description}</DefaultTypography>
-                {content.memoList.map(memo => {
+                {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+                {content.memoList?.map(memo => {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })}
                 <ButtonContainer>

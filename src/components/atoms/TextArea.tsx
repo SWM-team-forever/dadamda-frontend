@@ -2,14 +2,21 @@ import styled from 'styled-components';
 import { TextareaAutosize } from '@mui/material';
 
 import theme from '../../assets/styles/theme';
+import { ChangeEvent } from 'react';
 
 interface TextAreaProps {
     labelText?: string,
     defaultValue?: string,
-    hideState: () => void,
+    setState: (value: string | null) => void,
+    isDeleteable: boolean,
 }
 
-function TextArea({ labelText, defaultValue, hideState }: TextAreaProps) {
+function TextArea({ labelText, defaultValue, setState, isDeleteable }: TextAreaProps) {
+    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        e.preventDefault();
+        setState(e.target.value);
+    }
+
     return (
         <TextAreaWrapper>
             <Label>{labelText}</Label>
@@ -26,10 +33,13 @@ function TextArea({ labelText, defaultValue, hideState }: TextAreaProps) {
                         padding: '10px',
                         fontFamily: "'NanumSquare', sans-serif",
                     }}
+                    onChange={e => handleSetValue(e)}
                 />
-                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={hideState}>
-                    <DeleteIcon />
-                </div>
+                {isDeleteable &&
+                    <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }} onClick={() => setState(null)}>
+                        <DeleteIcon />
+                    </div>
+                }
             </InputAreaWrapper>
         </TextAreaWrapper >
     );
