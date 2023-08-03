@@ -84,7 +84,12 @@ function ProductScrapCard({ content }: ProductScrapCardProps) {
 
     return (
         <CardContainer>
-            <CardWrapper>
+            <CardWrapper
+                style={{ cursor: 'pointer' }}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(`${content.pageUrl}`);
+                }}>
                 {content.siteName && <Chip>{content.siteName}</Chip>}
                 {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
                 <CardImage src={content.thumbnailUrl} />
@@ -94,8 +99,15 @@ function ProductScrapCard({ content }: ProductScrapCardProps) {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })}
                 <ButtonContainer>
-                    <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={showMemoCreateModal} />
-                    <MoreIconContainer src={MoreIcon} onClick={() => showTooltip()} />
+                    <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={(e) => {
+                        e.stopPropagation();
+                        showMemoCreateModal();
+                    }} />
+                    <MoreIconContainer src={MoreIcon} onClick={(e) => {
+                        e.stopPropagation();
+                        showTooltip();
+                    }
+                    } />
                 </ButtonContainer>
             </CardWrapper>
             {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
