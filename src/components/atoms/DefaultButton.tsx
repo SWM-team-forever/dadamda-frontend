@@ -9,7 +9,7 @@ interface ButtonProps {
     startIcon?: string;
     fullWidth?: boolean;
     size?: 'small' | 'medium' | 'large',
-    onClick?: () => void;
+    onClick?: (e?: any) => void;
 }
 
 function Button({ label, buttonStyle, isRound, fullWidth, onClick, startIcon, endIcon, size,
