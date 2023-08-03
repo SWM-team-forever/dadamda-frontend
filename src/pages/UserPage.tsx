@@ -1,36 +1,121 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/atoms/DefaultButton';
+import RowContainer from '../components/atoms/RowContainer';
 
 import theme from '../assets/styles/theme';
-import { USER } from '../config';
+import { DELETE_USER_URL, GET_USER_INFORMATION_URL } from '../secret';
+import defaultUserImage from '../assets/images/Avatar.png';
+import Overlay from '../components/atoms/Overlay';
+import UserDeleteModal from '../components/organisms/UserDeleteModal';
 
 function UserPage() {
+    const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [accountProvider, setAccountProvider] = useState('');
+    const [profileImageUrl, setProfileImageUrl] = useState('');
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const url = GET_USER_INFORMATION_URL;
+        token && fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token,
+            },
+        }).then((response) => response.json())
+            .then((data) => {
+                setUserName(data.data.name);
+                setUserEmail(data.data.email);
+                setAccountProvider(data.data.provider);
+                setProfileImageUrl(data.data.profileUrl);
+            });
+    }, []);
+
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        navigate('/main');
+    };
+
+    const deleteUser = () => {
+        const token = localStorage.getItem('token');
+        const url = DELETE_USER_URL;
+        token && fetch(url, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token,
+            },
+        }).then((response) => response.json())
+            .then(() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('profileImageURL');
+                navigate('/main');
+            })
+            .catch(err => console.error(err));
+    }
+
+    const [isUserDeleteModalVisible, setIsUserDeleteModalVisible] = useState(false);
+
+    const showUserDeleteModal = () => {
+        setIsUserDeleteModalVisible(true);
+    }
+
+    const hideUserDeleteModal = () => {
+        setIsUserDeleteModalVisible(false);
+    }
+
+    const userPageMenu = [
+        {
+            name: '이름',
+            content: userName,
+        },
+        {
+            name: '이메일',
+            content: userEmail,
+        },
+        {
+            name: '연결된 소셜 계정',
+            content: `${accountProvider} 계정으로 가입되셨습니다.`
+        }];
 
     return (
         <>
             <Wrapper>
                 <UserInfoWrapper>
                     <ProfileContainer>
-                        <ProfileImage src={USER.profile_url} />
+                        {profileImageUrl
+                            ? <ProfileImage src={profileImageUrl} />
+                            : <ProfileImage src={defaultUserImage} />
+                        }
                         <Button label='이미지 변경하기' buttonStyle='primary' isRound />
                     </ProfileContainer>
                     <Content>
-                        <TextWrapper>
-                            <DefaultTypography><b>이름</b></DefaultTypography>
-                            <DefaultTypography>영원한_제로</DefaultTypography>
-                        </TextWrapper>
-                        <TextWrapper>
-                            <DefaultTypography><b>이메일</b></DefaultTypography>
-                            <DefaultTypography>lukey0515@gmail.com</DefaultTypography>
-                        </TextWrapper>
-                        <TextWrapper>
-                            <DefaultTypography><b>연결된 소셜 계정</b></DefaultTypography>
-                            <DefaultTypography>구글 계정으로 가입하셨습니다.</DefaultTypography>
-                        </TextWrapper>
+                        {userPageMenu.map(menu => {
+                            return (
+                                <TextWrapper>
+                                    <DefaultTypography><b>{menu.name}</b></DefaultTypography>
+                                    <DefaultTypography>{menu.content}</DefaultTypography>
+                                </TextWrapper>
+                            )
+                        })}
                     </Content>
+                    <RowContainer>
+                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={logout} />
+                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={showUserDeleteModal} />
+                    </RowContainer>
                     <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
+                {isUserDeleteModalVisible &&
+                    <Overlay>
+                        <UserDeleteModal hideUserDeleteModal={hideUserDeleteModal} deleteUser={deleteUser} />
+                    </Overlay>
+                }
             </Wrapper>
         </>
     );

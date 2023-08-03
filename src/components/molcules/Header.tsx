@@ -11,8 +11,8 @@ import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
 import Tooltip from '../atoms/Tooltip';
-import { USER } from '../../config';
 import Overlay from '../atoms/Overlay';
+import defaultUserProfileImage from '../../assets/images/Avatar.png';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -62,7 +62,6 @@ function Header() {
         //     token: null,
         // });
         localStorage.removeItem('token');
-        localStorage.removeItem('profileImageURL');
         navigate('/main');
         hideLoginTooltip();
     }
@@ -93,6 +92,7 @@ function Header() {
     }
 
     const isLogin = localStorage.getItem('token') ? true : false;
+    const profileImageURL = localStorage.getItem('profileImageURL');
 
     return (
         <TooltipContainer>
@@ -106,7 +106,10 @@ function Header() {
                 </HeaderPanel>
                 <LargeRightPanel>
                     {isLogin ?
-                        <ProfileImage source={USER.profile_url} size={24} onClick={showLoginTooltip} /> :
+                        (profileImageURL ?
+                            <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
+                            : <ProfileImage source={defaultUserProfileImage} size={24} onClick={showLoginTooltip} />
+                        ) :
                         <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                     }
                 </LargeRightPanel>
