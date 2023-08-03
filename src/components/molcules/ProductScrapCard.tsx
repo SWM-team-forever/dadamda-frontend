@@ -106,8 +106,7 @@ function ProductScrapCard({ content }: ProductScrapCardProps) {
                     <MoreIconContainer src={MoreIcon} onClick={(e) => {
                         e.stopPropagation();
                         showTooltip();
-                    }
-                    } />
+                    }} />
                 </ButtonContainer>
             </CardWrapper>
             {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
