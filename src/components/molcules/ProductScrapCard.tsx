@@ -30,98 +30,36 @@ interface ProductScrapCardProps {
     }
 }
 
-function ProductScrapCard({ content }: ProductScrapCardProps) {
-    const scrapCardMenu = [{
-        name: '카드 수정하기',
-        onClick: () => {
-            hideTooltip();
-            showScrapEditModal();
-        },
-    }, {
-        name: '카드 삭제하기',
-        onClick: () => {
-            hideTooltip();
-            showScrapDeleteModal();
-        },
-    }];
-
-    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-    const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
-    const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
-    const [isMemoCreateModalVisible, setIsMemoCreateModalVisible] = useState(false);
-
-    function showTooltip() {
-        setIsTooltipVisible(true);
-    }
-
-    function hideTooltip() {
-        setIsTooltipVisible(false);
-    }
-
-    function showScrapEditModal() {
-        setIsScrapEditModalVisible(true);
-    }
-
-    function hideScrapEditModal() {
-        setIsScrapEditModalVisible(false);
-    }
-
-    function showScrapDeleteModal() {
-        setIsScrapDeleteModalVisible(true);
-    }
-
-    function hideScrapDeleteModal() {
-        setIsScrapDeleteModalVisible(false);
-    }
-
-    function showMemoCreateModal() {
-        setIsMemoCreateModalVisible(true);
-    }
-
-    function hideMemoCreateModal() {
-        setIsMemoCreateModalVisible(false);
-    }
+function ProductScrapCard({ content, showMemoCreateModal, showTooltip }: ProductScrapCardProps) {
 
     return (
-        <CardContainer>
-            <CardWrapper
-                style={{ cursor: 'pointer' }}
-                onClick={(e) => {
+        <CardWrapper
+            style={{ cursor: 'pointer' }}
+            onClick={(e) => {
+                e.stopPropagation();
+                window.open(`${content.pageUrl}`);
+            }}>
+            {content.siteName && <Chip>{content.siteName}</Chip>}
+            {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
+            <CardImage src={content.thumbnailUrl} />
+            {content.price && <ColoredTypography>{content.price}</ColoredTypography>}
+            {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+            {content.memoList?.map(memo => {
+                return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
+            })}
+            <ButtonContainer>
+                <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={(e) => {
                     e.stopPropagation();
-                    window.open(`${content.pageUrl}`);
-                }}>
-                {content.siteName && <Chip>{content.siteName}</Chip>}
-                {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-                <CardImage src={content.thumbnailUrl} />
-                {content.price && <ColoredTypography>{content.price}</ColoredTypography>}
-                {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
-                {content.memoList?.map(memo => {
-                    return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
-                })}
-                <ButtonContainer>
-                    <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={(e) => {
-                        e.stopPropagation();
-                        showMemoCreateModal();
-                    }} />
-                    <MoreIconContainer src={MoreIcon} onClick={(e) => {
-                        e.stopPropagation();
-                        showTooltip();
-                    }} />
-                </ButtonContainer>
-            </CardWrapper>
-            {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
-            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} />}
-            {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={content.scrapId} />}
-            {(isScrapEditModalVisible || isScrapDeleteModalVisible || isMemoCreateModalVisible) && <Overlay />}
-            {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} scrapId={content.scrapId} />}
-        </CardContainer>
+                    showMemoCreateModal();
+                }} />
+                <MoreIconContainer src={MoreIcon} onClick={(e) => {
+                    e.stopPropagation();
+                    showTooltip();
+                }} />
+            </ButtonContainer>
+        </CardWrapper>
     );
 }
-
-const CardContainer = styled.div`
-    position: relative;
-    border-radius: 4px;
-`
 
 const CardWrapper = styled.div`
     padding: 15px;
@@ -164,13 +102,4 @@ const MoreIconContainer = styled.img`
     cursor: pointer;
 `
 
-const Overlay = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.5);
-`
 export default ProductScrapCard;

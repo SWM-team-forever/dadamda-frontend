@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react"
 import { CircularProgress } from "@mui/material"
 import useInfiniteScroll from "../../hooks/useInfiniteScroll"
 import theme from "../../assets/styles/theme"
+import ScrapCard from "./ScrapCard"
 
 interface ExistListScrapContainerProps {
     contents: {
@@ -49,18 +50,7 @@ function ExistListScrapContainer({ contents, isFetching, setIsFetching }: ExistL
         <ScrapList>
             <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2} style={{ width: '100%' }}>
                 {contents.map(content => {
-                    switch (content.dtype) {
-                        case 'other':
-                            return <OtherScrapCard content={content} />;
-                        case 'product':
-                            return <ProductScrapCard content={content} />;
-                        case 'video':
-                            return <VideoScrapCard content={content} />;
-                        case 'article':
-                            return <ArticleScrapCard content={content} />;
-                        default:
-                            return <OtherScrapCard content={content} />;
-                    }
+                    return <ScrapCard content={content} />
                 }
                 )}
             </Masonry>
