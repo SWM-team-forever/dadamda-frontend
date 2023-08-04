@@ -10,6 +10,8 @@ import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
 import ListTemplate from './ListTemplate';
 import NotReadyTemplate from './NotReadyTemplate';
+import ErrorHandler from '../../utility/ErrorHandler';
+import ErrorDialogModal from '../organisms/ErrorDialogModal';
 
 interface ScrapTemplateProps {
     type: string,
@@ -67,6 +69,8 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         setIsFetching(false);
     }, [pages, types, type]);
 
+    const [error, setError] = useState(null);
+
     const fetchScrapCount = () => {
         const url = urlMatching[type] + `/count`;
         token &&
@@ -91,15 +95,14 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     useEffect(() => {
         if (isFetching && hasNextPage) {
             fetchDatas();
-        }
-        else if (!hasNextPage) {
+        } else if (!hasNextPage) {
             setIsFetching(false);
         }
     }, [isFetching]);
 
-
     return (
         <>
+            {error && <ErrorHandler error={error} setError={setError} />}
             <ScrapListContainer>
                 {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
@@ -117,7 +120,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 />
                 {isScrapCreateModalVisible &&
                     <Overlay>
-                        <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} />
+                        <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} setError={setError} />
                     </Overlay>
                 }
             </ScrapListContainer>
