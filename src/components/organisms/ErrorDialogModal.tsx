@@ -6,6 +6,11 @@ import Button from '../atoms/DefaultButton';
 import theme from '../../assets/styles/theme';
 import Overlay from '../atoms/Overlay';
 
+interface ErrorDialogModal {
+    error: string,
+    onClick: () => void,
+}
+
 function ErrorDialogModal({ error, onClick }) {
     const { title, content, action } = error;
     const [open, setOpen] = useState(true);
@@ -22,7 +27,10 @@ function ErrorDialogModal({ error, onClick }) {
                             <ModalTitleContainer>
                                 <EmphasizedTypography>{title}</EmphasizedTypography>
                             </ModalTitleContainer>
-                            <IconContainer onClick={handleClose} />
+                            <IconContainer onClick={() => {
+                                handleClose();
+                                onClick();
+                            }} />
                         </ModalHeader>
                         <DefaultTypography>{content}</DefaultTypography>
                         <ModalFooter>

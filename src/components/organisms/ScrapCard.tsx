@@ -9,6 +9,7 @@ import OtherScrapCard from '../molcules/OtherScrapCard';
 import ProductScrapCard from '../molcules/ProductScrapCard';
 import VideoScrapCard from '../molcules/VideoScrapCard';
 import ArticleScrapCard from '../molcules/ArticleScrapCard';
+import ErrorHandler from '../../utility/ErrorHandler';
 
 import theme from '../../assets/styles/theme';
 
@@ -31,6 +32,7 @@ function ScrapCard({ content }) {
     const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
     const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
     const [isMemoCreateModalVisible, setIsMemoCreateModalVisible] = useState(false);
+    const [error, setError] = useState(null);
 
     function showTooltip() {
         setIsTooltipVisible(true);
@@ -87,6 +89,7 @@ function ScrapCard({ content }) {
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={content.scrapId} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible || isMemoCreateModalVisible) && <Overlay />}
             {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} scrapId={content.scrapId} />}
+            {error && <ErrorHandler error={error} setError={setError} />}
         </CardContainer>
     )
 }

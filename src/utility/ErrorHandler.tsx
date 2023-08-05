@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ErrorDialogModal from '../components/organisms/ErrorDialogModal';
 import { useDefaultSnackbar } from '../hooks/useWarningSnackbar';
+import { Dispatch, SetStateAction } from 'react';
 
 interface ErrorHandleProps {
     error: string,
+    setError: Dispatch<SetStateAction<string | null>>,
 }
 
 function ErrorHandler({ error, setError }: ErrorHandleProps) {
@@ -18,6 +19,7 @@ function ErrorHandler({ error, setError }: ErrorHandleProps) {
                 action: '로그인하기',
             },
             onClick: () => {
+                setError(null);
                 localStorage.removeItem('token');
                 navigate('/main');
             }
@@ -34,7 +36,7 @@ function ErrorHandler({ error, setError }: ErrorHandleProps) {
                 action: '닫기',
             },
             onClick: () => {
-                console.error(error);
+                setError(null);
             }
         }
     };
@@ -47,9 +49,10 @@ function ErrorHandler({ error, setError }: ErrorHandleProps) {
         return false;
     }
 
-    useEffect(() => {
-        return setError(null);
-    }, []);
+    function ErrorToast(message: string) {
+        useDefaultSnackbar(message, 'error');
+        setError(null);
+    }
 
     return (
         <>
@@ -57,13 +60,11 @@ function ErrorHandler({ error, setError }: ErrorHandleProps) {
                 <ErrorDialogModal
                     error={errorMatching[error].message}
                     onClick={errorMatching[error].onClick} />
-                : ErrorToast(errorMatching[error])};
+                : ErrorToast(errorMatching[error])
+            }
         </>
     );
 }
 
-function ErrorToast(message: string) {
-    return useDefaultSnackbar(message, 'error');
-}
 
 export default ErrorHandler;

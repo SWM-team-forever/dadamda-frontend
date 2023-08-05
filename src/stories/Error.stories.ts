@@ -16,13 +16,13 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     error: {
-                title: '오류 발생',
-                content: '오류가 발생하였습니다. 다시 로그인해주세요.',
-                action: '로그인하기',
-            },
-            onClick: () => {
-                localStorage.removeItem('token');
-                // navigate('/main');
-            }
+      title: '오류 발생',
+      content: '오류가 발생하였습니다. 다시 로그인해주세요.',
+      action: '로그인하기',
+    },
+    onClick: () => {
+      localStorage.removeItem('token');
+      // navigate('/main');
+    }
   },
 };

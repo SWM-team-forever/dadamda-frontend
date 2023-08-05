@@ -15,6 +15,12 @@ import ScrapTemplate from './components/templates/ScrapTemplate.tsx';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.tsx';
 import { SnackbarProvider } from 'notistack';
 import NotReadyTemplate from './components/templates/NotReadyTemplate.tsx';
+import { worker } from './mocks/worker.ts';
+
+if (process.env.NODE_ENV === 'development') {
+  // develop 환경에서만 사용
+  worker.start();
+}
 
 function App() {
   return (

@@ -100,6 +100,8 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         }
     }, [isFetching]);
 
+    console.log('error setted', error);
+
     return (
         <>
             {error && <ErrorHandler error={error} setError={setError} />}
