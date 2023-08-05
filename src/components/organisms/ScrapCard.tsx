@@ -13,7 +13,36 @@ import ErrorHandler from '../../utility/ErrorHandler';
 
 import theme from '../../assets/styles/theme';
 
-function ScrapCard({ content }) {
+export interface contentProps {
+    content: {
+        pageUrl: string,
+        title?: string,
+        description?: string,
+        thumbnailUrl?: string,
+        scrapCreatedDate?: string,
+        scrapId: number,
+        memoList: [{
+            memoId: number,
+            memoImageUrl?: string,
+            memoText?: string,
+        }],
+        siteName?: string,
+        author?: string,
+        authorImageUrl?: string,
+        blogName?: string,
+        publishedDate?: string,
+        price?: string,
+        channelImageUrl?: string,
+        channelName?: string,
+        embedUrl?: string,
+        genre?: string,
+        playTime?: string,
+        watchedCnt?: string,
+        dtype: string,
+    }
+}
+
+function ScrapCard({ content }: contentProps) {
     const scrapCardMenu = [{
         name: '카드 수정하기',
         onClick: () => {
@@ -32,7 +61,7 @@ function ScrapCard({ content }) {
     const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
     const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
     const [isMemoCreateModalVisible, setIsMemoCreateModalVisible] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     function showTooltip() {
         setIsTooltipVisible(true);
@@ -66,7 +95,7 @@ function ScrapCard({ content }) {
         setIsMemoCreateModalVisible(false);
     }
 
-    function matchCardType(dtype) {
+    function matchCardType(dtype: string) {
         switch (dtype) {
             case 'other':
                 return <OtherScrapCard content={content} showMemoCreateModal={showMemoCreateModal} showTooltip={showTooltip} />;

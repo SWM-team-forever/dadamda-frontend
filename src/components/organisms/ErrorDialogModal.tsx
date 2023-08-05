@@ -7,11 +7,15 @@ import theme from '../../assets/styles/theme';
 import Overlay from '../atoms/Overlay';
 
 interface ErrorDialogModal {
-    error: string,
+    error: {
+        title: string,
+        content: string,
+        action: string,
+    },
     onClick: () => void,
 }
 
-function ErrorDialogModal({ error, onClick }) {
+function ErrorDialogModal({ error, onClick }: ErrorDialogModal) {
     const { title, content, action } = error;
     const [open, setOpen] = useState(true);
     const handleClose = () => {

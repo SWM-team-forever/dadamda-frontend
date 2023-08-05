@@ -1,40 +1,21 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 
-import Button from '../atoms/DefaultButton';
-import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
-import Tooltip from '../atoms/Tooltip';
-import theme from '../../assets/styles/theme';
-import ScrapEditModal from '../organisms/ScrapEditModal';
-import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
-import MemoCreateModal from '../organisms/MemoCreateModal';
+import { contentProps } from '../organisms/ScrapCard';
 import Memo from './Memo';
 import Chip from '../atoms/Chip';
+import Button from '../atoms/DefaultButton';
 import RowContainer from '../atoms/RowContainer';
 import ProfileImage from '../atoms/ProfileImage';
 import ColumnContainer from '../atoms/ColumnContainer';
+
 import defaultImage from '../../assets/images/Avatar.png';
+import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
+import theme from '../../assets/styles/theme';
 
 interface ArticleScrapCardProps {
-    content: {
-        scrapId: number,
-        description?: string,
-        pageUrl: string,
-        siteName?: string,
-        thumbnailUrl: string,
-        title?: string,
-        memoList?: [
-            {
-                memoId: number,
-                memoText?: string,
-                memoImageUrl?: string,
-            }
-        ],
-        author?: string,
-        authorImageUrl?: string,
-        blogName?: string,
-        publishedDate?: string,
-    }
+    content: contentProps['content'],
+    showMemoCreateModal: () => void,
+    showTooltip: () => void,
 }
 
 function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: ArticleScrapCardProps) {
@@ -104,10 +85,6 @@ const EmpasizedTypography = styled.span`
 const DefaultTypography = styled.span`
     font-size: 14px;
     color: ${theme.color.text_gray_color};
-`
-
-const ColoredTypography = styled(DefaultTypography)`
-    font-size: 16px;
 `
 
 const ButtonContainer = styled.div`

@@ -1,28 +1,16 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 
+import { contentProps } from '../organisms/ScrapCard';
+import Memo from './Memo';
 import Button from '../atoms/DefaultButton';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
-import Tooltip from '../atoms/Tooltip';
+
 import theme from '../../assets/styles/theme';
-import ScrapEditModal from '../organisms/ScrapEditModal';
-import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
-import MemoCreateModal from '../organisms/MemoCreateModal';
-import Memo from './Memo';
 
 interface OtherScrapCardProps {
-    content: {
-        pageUrl: string,
-        title?: string,
-        description?: string,
-        thumbnailUrl: string,
-        scrapId: number,
-        memoList?: [{
-            memoId: number,
-            memoImageURL?: string,
-            memoText?: string,
-        }],
-    }
+    content: contentProps['content'],
+    showMemoCreateModal: () => void,
+    showTooltip: () => void,
 }
 
 function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScrapCardProps) {
@@ -41,7 +29,7 @@ function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScra
                 {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
             </CardInfoWrapper>
             {content.memoList?.map(memo => {
-                return <Memo memoImageURL={memo.memoImageURL} memoText={memo.memoText} />
+                return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
             })}
             <ButtonContainer>
                 <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={(e) => {

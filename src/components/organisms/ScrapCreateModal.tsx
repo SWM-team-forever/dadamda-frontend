@@ -7,7 +7,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'reac
 
 interface ScrapCreateModalProps {
     hideScrapCreateModal: () => void,
-    setError: Dispatch<SetStateAction<null>>,
+    setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
 function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalProps) {

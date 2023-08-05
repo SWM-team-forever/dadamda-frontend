@@ -1,33 +1,17 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 
-import Button from '../atoms/DefaultButton';
-import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
-import Tooltip from '../atoms/Tooltip';
-import theme from '../../assets/styles/theme';
-import ScrapEditModal from '../organisms/ScrapEditModal';
-import ScrapDeleteModal from '../organisms/ScrapDeleteModal';
-import MemoCreateModal from '../organisms/MemoCreateModal';
+import { contentProps } from '../organisms/ScrapCard';
 import Memo from './Memo';
+import Button from '../atoms/DefaultButton';
 import Chip from '../atoms/Chip';
 
+import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
+import theme from '../../assets/styles/theme';
+
 interface ProductScrapCardProps {
-    content: {
-        scrapId: number,
-        description?: string,
-        pageUrl: string,
-        siteName?: string,
-        thumbnailUrl: string,
-        title?: string,
-        memoList?: [
-            {
-                memoId: number,
-                memoText?: string,
-                memoImageUrl?: string,
-            }
-        ],
-        price?: string,
-    }
+    content: contentProps['content'],
+    showMemoCreateModal: () => void,
+    showTooltip: () => void,
 }
 
 function ProductScrapCard({ content, showMemoCreateModal, showTooltip }: ProductScrapCardProps) {

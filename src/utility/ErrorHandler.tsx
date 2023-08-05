@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 interface ErrorHandleProps {
     error: string,
-    setError: Dispatch<SetStateAction<string | null>>,
+    setError: Dispatch<SetStateAction<Partial<string | null>>>
 }
 
 function ErrorHandler({ error, setError }: ErrorHandleProps) {
@@ -58,9 +58,9 @@ function ErrorHandler({ error, setError }: ErrorHandleProps) {
         <>
             {isModal(error) ?
                 <ErrorDialogModal
-                    error={errorMatching[error].message}
-                    onClick={errorMatching[error].onClick} />
-                : ErrorToast(errorMatching[error])
+                    error={errorMatching[error as keyof typeof errorMatching]['message' as keyof object]}
+                    onClick={errorMatching[error as keyof typeof errorMatching]['onClick' as keyof object]} />
+                : ErrorToast(errorMatching[error as keyof typeof errorMatching] as string)
             }
         </>
     );

@@ -1,17 +1,17 @@
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Overlay from '../atoms/Overlay';
-import ScrapCreateModal from '../organisms/ScrapCreateModal';
-import theme from '../../assets/styles/theme';
-import OtherTemplate from './OtherTemplate';
-import IconButton from '../atoms/IconButton';
-import fab from '../../assets/icons/fab.png';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
-import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
-import ListTemplate from './ListTemplate';
 import NotReadyTemplate from './NotReadyTemplate';
+import OtherTemplate from './OtherTemplate';
+import ListTemplate from './ListTemplate';
+import ScrapCreateModal from '../organisms/ScrapCreateModal';
+import Overlay from '../atoms/Overlay';
+import IconButton from '../atoms/IconButton';
+
 import ErrorHandler from '../../utility/ErrorHandler';
-import ErrorDialogModal from '../organisms/ErrorDialogModal';
+import fab from '../../assets/icons/fab.png';
+import theme from '../../assets/styles/theme';
+import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
 
 interface ScrapTemplateProps {
     type: string,
@@ -69,7 +69,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         setIsFetching(false);
     }, [pages, types, type]);
 
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchScrapCount = () => {
         const url = urlMatching[type] + `/count`;
@@ -99,8 +99,6 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
             setIsFetching(false);
         }
     }, [isFetching]);
-
-    console.log('error setted', error);
 
     return (
         <>
