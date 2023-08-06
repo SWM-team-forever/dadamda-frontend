@@ -29,7 +29,7 @@ function GoogleOAuthLoginpage() {
         token && getUserProfileImage(token)
             .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage))
             .catch(error => console.log(error));
-        navigate('/scrap/list');
+        return navigate('/scrap/list');
     }, [navigate])
     return (
         <RowContainer style={{
