@@ -12,7 +12,6 @@ import ErrorHandler from '../../utility/ErrorHandler';
 import fab from '../../assets/icons/fab.png';
 import theme from '../../assets/styles/theme';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
-import { getAccessTokenError } from '../../mocks/api';
 
 interface ScrapTemplateProps {
     type: string,

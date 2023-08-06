@@ -51,6 +51,7 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalPro
     );
 }
 
+
 const ModalWrapper = styled.div`
     display: flex;
     flex-direction: column;

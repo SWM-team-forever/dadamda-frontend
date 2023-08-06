@@ -15,11 +15,11 @@ import ScrapTemplate from './components/templates/ScrapTemplate.tsx';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage.tsx';
 import { SnackbarProvider } from 'notistack';
 import NotReadyTemplate from './components/templates/NotReadyTemplate.tsx';
+import { worker } from './mocks/worker.ts';
 
 if (process.env.NODE_ENV === 'development') {
-  const { server } = require('./mocks/server')
   // develop 환경에서만 사용
-  server.start();
+  worker.start();
 }
 
 function App() {
