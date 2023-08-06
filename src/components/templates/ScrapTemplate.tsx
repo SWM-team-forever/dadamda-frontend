@@ -59,13 +59,21 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                     "Content-Type": "application/json",
                     "X-AUTH-TOKEN": token,
                 },
-            }).then((response) => response.json())
+            }).then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
                 .then((data) => {
                     setTypes([...types, ...data.data.content]);
                     setPages(data.data.pageable.pageNumber + 1);
                     setHasNextPage(!data.data.last);
                 })
-                .catch(err => console.error(err));
+                .catch(err => setError(err.message));
         setIsFetching(false);
     }, [pages, types, type]);
 
@@ -80,11 +88,19 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                     "Content-Type": "application/json",
                     "X-AUTH-TOKEN": token,
                 },
-            }).then((response) => response.json())
+            }).then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
                 .then((data) => {
                     setCount(data.data.count);
                 })
-                .catch(err => console.error(err));
+                .catch(err => setError(err.message));
     }
 
     useEffect(() => {

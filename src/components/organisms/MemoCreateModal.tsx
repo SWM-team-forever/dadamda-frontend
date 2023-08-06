@@ -2,15 +2,16 @@ import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { POST_CREATE_MEMO_URL } from '../../secret';
 
 interface MemoCreateModalProps {
     hideMemoCreateModal: () => void,
     scrapId: number,
+    setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
-function MemoCreateModal({ hideMemoCreateModal, scrapId }: MemoCreateModalProps) {
+function MemoCreateModal({ hideMemoCreateModal, scrapId, setError }: MemoCreateModalProps) {
     const [textAreaValue, setTextAreaValue] = useState('');
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
@@ -34,11 +35,19 @@ function MemoCreateModal({ hideMemoCreateModal, scrapId }: MemoCreateModalProps)
                     scrapId: scrapId,
                     memoText: textAreaValue,
                 }),
-            }).then((response) => response.json())
+            }).then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
                 .then(() => {
                     hideMemoCreateModal();
                 })
-                .catch(err => console.error(err));
+                .catch(err => setError(err.message));
     }
 
     return (

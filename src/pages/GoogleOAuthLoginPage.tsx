@@ -1,10 +1,14 @@
 import RowContainer from "../components/atoms/RowContainer";
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { GET_USER_PROFILE_IMAGE } from "../secret";
 
-function GoogleOAuthLoginpage() {
+interface GoogleOAuthLoginPageProps {
+    setError: Dispatch<SetStateAction<Partial<null | string>>>,
+}
+
+function GoogleOAuthLoginpage({ setError }: GoogleOAuthLoginPageProps) {
     const navigate = useNavigate();
 
     function getUserProfileImage(token: string) {
@@ -14,8 +18,17 @@ function GoogleOAuthLoginpage() {
                 "Content-Type": "application/json",
                 "X-AUTH-TOKEN": token,
             },
-        }).then(response => response.json())
+        }).then((response) => {
+            return response.json().then(body => {
+                if (response.ok) {
+                    return body;
+                } else {
+                    throw new Error(body.resultCode);
+                }
+            })
+        })
             .then(data => (data.data.profileUrl))
+            .catch(err => setError(err.message));
     }
 
     useEffect(() => {
@@ -28,7 +41,7 @@ function GoogleOAuthLoginpage() {
         token && localStorage.setItem('token', token);
         token && getUserProfileImage(token)
             .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage))
-            .catch(error => console.log(error));
+            .catch(error => setError(error.message));
         return navigate('/scrap/list');
     }, [navigate])
     return (
