@@ -24,55 +24,33 @@ function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalPr
     };
 
 
-    // function createScrap() {
-    //     token &&
-    //         fetch(POST_CREATE_OTHER_SCRAP_URL, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 "X-AUTH-TOKEN": token,
-    //             },
-    //             body: JSON.stringify({
-    //                 pageUrl: textAreaValue,
-    //             }),
-    //         }).then((response) => {
-    //             return response.json().then(body => {
-    //                 if (response.ok) {
-    //                     return body;
-    //                 } else {
-    //                     throw new Error(body.resultCode);
-    //                 }
-    //             })
-    //         }).then(() => {
-    //             hideScrapCreateModal();
-    //         }).catch(err => {
-    //             setError(err.message);
-    //         }).then(() => {
-    //             hideScrapCreateModal();
-    //         })
-    // }
-
     function createScrap() {
-        fetch('/access_token_error').then(
-            (response) => {
+        token &&
+            fetch(POST_CREATE_OTHER_SCRAP_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+                body: JSON.stringify({
+                    pageUrl: textAreaValue,
+                }),
+            }).then((response) => {
                 return response.json().then(body => {
                     if (response.ok) {
                         return body;
                     } else {
                         throw new Error(body.resultCode);
                     }
-                }
-                )
-            }
-        ).then(() => {
-            console.log('not occured');
-        }).catch(err => {
-            setError(err.message);
-        }).then(() => {
-            hideScrapCreateModal();
-        })
+                })
+            }).then(() => {
+                hideScrapCreateModal();
+            }).catch(err => {
+                setError(err.message);
+            }).then(() => {
+                hideScrapCreateModal();
+            })
     }
-
 
     return (
         <ModalWrapper>
