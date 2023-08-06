@@ -4,6 +4,7 @@ import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
 import { POST_CREATE_OTHER_SCRAP_URL } from '../../secret';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { getAccessTokenError } from '../../mocks/api';
 
 interface ScrapCreateModalProps {
     hideScrapCreateModal: () => void,
@@ -52,27 +53,35 @@ function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalPr
     //         })
     // }
 
-    function createScrap() {
-        fetch('/access_token_error').then(
-            (response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                }
-                )
-            }
-        ).then(() => {
-            console.log('not occured');
-        }).catch(err => {
-            setError(err.message);
-        }).then(() => {
-            hideScrapCreateModal();
-        })
-    }
+    // function createScrap() {
+    //     fetch('/access_token_error').then(
+    //         (response) => {
+    //             return response.json().then(body => {
+    //                 if (response.ok) {
+    //                     return body;
+    //                 } else {
+    //                     throw new Error(body.resultCode);
+    //                 }
+    //             }
+    //             )
+    //         }
+    //     ).then(() => {
+    //         console.log('not occured');
+    //     }).catch(err => {
+    //         setError(err.message);
+    //     }).then(() => {
+    //         hideScrapCreateModal();
+    //     })
+    // }
 
+    function createScrap() {
+        async function getError() {
+            const error = await getAccessTokenError();
+            error && setError(error);
+        }
+        getError();
+        hideScrapCreateModal();
+    }
 
     return (
         <ModalWrapper>
