@@ -2,15 +2,16 @@ import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DELETE_SCRAP_URL } from '../../secret';
 
 interface ScrapDeleteModalProps {
     hideScrapDeleteModal: () => void,
     scrapId: number,
+    setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
-function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalProps) {
+function ScrapDeleteModal({ hideScrapDeleteModal, scrapId, setError }: ScrapDeleteModalProps) {
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
@@ -25,11 +26,19 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalPro
                     "Content-Type": "application/json",
                     "X-AUTH-TOKEN": token,
                 },
-            }).then((response) => response.json())
+            }).then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
                 .then(() => {
                     hideScrapDeleteModal();
                 })
-                .catch(err => console.error(err));
+                .catch(err => setError(err.message));
     }
 
     return (

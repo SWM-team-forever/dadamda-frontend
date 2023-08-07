@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import MemoTextArea from '../molcules/MemoTextArea';
 import { EDIT_sCRAP_URL } from '../../secret';
 
@@ -27,11 +27,12 @@ interface ScrapEditModalProps {
         }[],
         scrapId: number,
     },
+    setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
 let createdMemoCount = 0;
 
-function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
+function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModalProps) {
     const [title, setTitle] = useState<string | undefined | null>(content.title);
     const [description, setDescription] = useState<string | undefined | null>(content.description);
     const [siteName, setSiteName] = useState<string | undefined | null>(content.siteName);
@@ -169,11 +170,19 @@ function ScrapEditModal({ hideScrapEditModal, content }: ScrapEditModalProps) {
                     "X-AUTH-TOKEN": token,
                 },
                 body: JSON.stringify(content),
-            }).then((response) => response.json())
+            }).then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
                 .then(() => {
                     hideScrapEditModal();
                 })
-                .catch(err => console.error(err));
+                .catch(err => setError(err.message));
     }
 
     return (

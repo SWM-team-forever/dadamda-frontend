@@ -1,26 +1,14 @@
 import styled from "styled-components"
-import { Masonry } from "@mui/lab"
-
-import OtherScrapCard from "../molcules/OtherScrapCard"
 import { useState } from "react";
-import useInfiniteScroll from "../../hooks/useInfiniteScroll";
+import { Masonry } from "@mui/lab"
 import { CircularProgress } from "@mui/material";
+
+import ScrapCard, { contentProps } from "./ScrapCard";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import theme from "../../assets/styles/theme";
 
 interface ExistOtherScrapContainerProps {
-    contents: {
-        pageUrl: string,
-        title: string,
-        description: string,
-        thumbnailUrl: string,
-        scrapCreatedDate: string,
-        scrapId: number,
-        memoList: [{
-            memoId: number,
-            memoImageURL?: string,
-            memoText?: string,
-        }],
-    }[],
+    contents: contentProps["content"][],
     isFetching: boolean,
     setIsFetching: (isFetching: boolean) => void,
 }
@@ -33,7 +21,7 @@ function ExistOtherScrapContainer({ contents, isFetching, setIsFetching }: Exist
         <ScrapList>
             <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2} style={{ width: '100%' }}>
                 {contents.map(content => {
-                    return <OtherScrapCard content={content} />
+                    return <ScrapCard content={content} />
                 }
                 )}
             </Masonry>
@@ -52,7 +40,6 @@ function ExistOtherScrapContainer({ contents, isFetching, setIsFetching }: Exist
 
 const ScrapList = styled.div`
     display: flex;
-    justify-content: center;
     flex: 1;
     padding: 0 10px;
     box-sizing: border-box;

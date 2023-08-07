@@ -1,21 +1,10 @@
 import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
 import ScrapListHeader from '../molcules/ScrapListHeader';
 import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
+import { contentProps } from '../organisms/ScrapCard';
 
 interface OtherTemplateProps {
-    others: {
-        pageUrl: string,
-        title: string,
-        description: string,
-        thumbnailUrl: string,
-        scrapCreatedDate: string,
-        scrapId: number,
-        memoList: [{
-            memoId: number,
-            memoImageURL?: string,
-            memoText?: string,
-        }],
-    }[],
+    others: contentProps['content'][],
     isFetching: boolean,
     setIsFetching: (isFetching: boolean) => void,
     count: number,

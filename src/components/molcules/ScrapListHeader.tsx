@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import searchIcon from '../../assets/icons/SearchIcon.png';
 import theme from '../../assets/styles/theme';
+import useWarningSnackbar from '../../hooks/useWarningSnackbar';
 
 interface ScrapListHeaderProps {
     count: number,
@@ -17,7 +18,7 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
                 <EmpasizedTypography>{type} 스크랩</EmpasizedTypography>
                 <DefaultTypography>이 있습니다.</DefaultTypography>
             </ScarpCountWrapper>
-            <SearchBar>
+            <SearchBar onClick={useWarningSnackbar}>
                 <SearchIconWrapper src={searchIcon} />
                 <EmpasizedTypography>Search</EmpasizedTypography>
             </SearchBar>

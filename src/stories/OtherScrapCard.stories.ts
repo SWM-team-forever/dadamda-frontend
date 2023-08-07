@@ -22,6 +22,7 @@ export const Primary: Story = {
         memoId: 1,
         memoText: "안녕, 안녕"
     }],
+    dtype: 'other',
     }
   }
 };

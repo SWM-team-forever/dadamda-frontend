@@ -24,6 +24,7 @@ export const DefaultStyle: Story = {
     }],
     siteName: '쿠팡',
     price: '9800원',
+    dtype: 'product',
     }
   }
 };
