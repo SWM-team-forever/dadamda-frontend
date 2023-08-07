@@ -1,8 +1,15 @@
 import styled from 'styled-components';
 import theme from '../assets/styles/theme';
 import Button from '../components/atoms/DefaultButton';
+import ChannelService from '../../ChannelService';
+import { CHANNEL_SERVICE_PLUGIN_KEY } from '../secret';
 
 function MainPage() {
+  ChannelService.loadScript();
+  ChannelService.boot({
+    "pluginKey": CHANNEL_SERVICE_PLUGIN_KEY, // fill your plugin key
+  });
+
   return (
     <TopContainer>
       <BackgroundContainer>
