@@ -7,7 +7,7 @@ import { CHANNEL_SERVICE_PLUGIN_KEY } from '../secret';
 function MainPage() {
   ChannelService.loadScript();
   ChannelService.boot({
-    "pluginKey": CHANNEL_SERVICE_PLUGIN_KEY, // fill your plugin key
+    "pluginKey": CHANNEL_SERVICE_PLUGIN_KEY,
   });
 
   return (
