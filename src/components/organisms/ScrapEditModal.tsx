@@ -6,27 +6,11 @@ import Button from '../atoms/DefaultButton';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import MemoTextArea from '../molcules/MemoTextArea';
 import { EDIT_sCRAP_URL } from '../../secret';
+import { contentProps } from './ScrapCard';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
-    content: {
-        title?: string,
-        description?: string,
-        siteName?: string,
-        author?: string,
-        blogName?: string,
-        publishedDate?: string,
-        price?: string,
-        channelName?: string,
-        playTime?: string,
-        watchedCnt?: string,
-        memoList?: {
-            memoId: number,
-            memoImageURL?: string,
-            memoText?: string,
-        }[],
-        scrapId: number,
-    },
+    content: contentProps['content'],
     setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
@@ -49,16 +33,12 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
         memoText?: string,
     }[] | undefined>(content.memoList);
 
-    const [token, setToken] = useState<string | null>(null);
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
-
     const editalbeContent = [
         {
             name: 'title',
             label: '제목',
             isDeleteable: true,
+            isDeleted: false,
             state: title,
             showState: () => { setTitle(content.title) },
             setState: setTitle,
@@ -67,6 +47,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'description',
             label: '설명',
             isDeleteable: true,
+            isDeleted: false,
             state: description,
             showState: () => setDescription(content.description),
             setState: setDescription,
@@ -75,6 +56,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'siteName',
             label: '사이트명',
             isDeleteable: true,
+            isDeleted: false,
             state: siteName,
             showState: () => setSiteName(content.siteName),
             setState: setSiteName,
@@ -83,6 +65,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'author',
             label: '저자',
             isDeleteable: true,
+            isDeleted: false,
             state: author,
             showState: () => setAuthor(content.author),
             setState: setAuthor,
@@ -91,6 +74,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'blogName',
             label: '블로그명',
             isDeleteable: true,
+            isDeleted: false,
             state: blogName,
             showState: () => setBlogName(content.blogName),
             setState: setBlogName,
@@ -99,6 +83,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'publishedDate',
             label: '게시일',
             isDeleteable: true,
+            isDeleted: false,
             state: publishedDate,
             showState: () => setPublishedDate(content.publishedDate),
             setState: setPublishedDate,
@@ -107,6 +92,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'price',
             label: '가격',
             isDeleteable: true,
+            isDeleted: false,
             state: price,
             showState: () => setPrice(content.price),
             setState: setPrice,
@@ -115,6 +101,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'channelName',
             label: '채널명',
             isDeleteable: true,
+            isDeleted: false,
             state: channelName,
             showState: () => setChannelName(content.channelName),
             setState: setChannelName,
@@ -123,6 +110,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'playTime',
             label: '영상 길이',
             isDeleteable: true,
+            isDeleted: false,
             state: playTime,
             showState: () => setPlayTime(content.playTime),
             setState: setPlayTime,
@@ -131,11 +119,18 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             name: 'watchedCnt',
             label: '조회수',
             isDeleteable: true,
+            isDeleted: false,
             state: watchedCnt,
             showState: () => setWatchedCnt(content.watchedCnt),
             setState: setWatchedCnt,
         },
     ];
+
+    const [token, setToken] = useState<string | null>(null);
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+
+    }, []);
 
     const emptyMemoText = '메모를 입력하세요';
     const createMemo = () => {
@@ -159,7 +154,9 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
         //    console.log(memo.memoImageURL || (memo.memoText && memo.memoText.length > 0));
         // })
 
-        content = { ...content, memoList: memos }
+        if (memos) {
+            content = { ...content, memoList: memos }
+        }
 
         const url = EDIT_sCRAP_URL;
         token &&
