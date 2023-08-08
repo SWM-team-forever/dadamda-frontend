@@ -95,14 +95,14 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setBlogName(content.blogName),
             setState: setBlogName,
         },
-        // {
-        //     name: 'publishedDate',
-        //     label: '게시일',
-        //     isDeleteable: true,
-        //     state: publishedDate,
-        //     showState: () => setPublishedDate(content.publishedDate),
-        //     setState: setPublishedDate,
-        // },
+        {
+            name: 'publishedDate',
+            label: '게시일',
+            isDeleteable: true,
+            state: publishedDate,
+            showState: () => setPublishedDate(content.publishedDate),
+            setState: setPublishedDate,
+        },
         {
             name: 'price',
             label: '가격',
@@ -127,14 +127,14 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setPlayTime(content.playTime),
             setState: setPlayTime,
         },
-        // {
-        //     name: 'watchedCnt',
-        //     label: '조회수',
-        //     isDeleteable: true,
-        //     state: watchedCnt,
-        //     showState: () => setWatchedCnt(content.watchedCnt),
-        //     setState: setWatchedCnt,
-        // },
+        {
+            name: 'watchedCnt',
+            label: '조회수',
+            isDeleteable: true,
+            state: watchedCnt,
+            showState: () => setWatchedCnt(content.watchedCnt),
+            setState: setWatchedCnt,
+        },
     ];
 
     const emptyMemoText = '메모를 입력하세요';
