@@ -22,7 +22,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
     const [siteName, setSiteName] = useState<string | undefined | null>(content.siteName);
     const [author, setAuthor] = useState<string | undefined | null>(content.author);
     const [blogName, setBlogName] = useState<string | undefined | null>(content.blogName);
-    const [publishedDate, setPublishedDate] = useState<string | undefined | null>(content.publishedDate);
+    const [publishedDate, setPublishedDate] = useState<number | undefined | null>(content.publishedDate);
     const [price, setPrice] = useState<string | undefined | null>(content.price);
     const [channelName, setChannelName] = useState<string | undefined | null>(content.channelName);
     const [playTime, setPlayTime] = useState<string | undefined | null>(content.playTime);
