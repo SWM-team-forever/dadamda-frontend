@@ -125,14 +125,19 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             video: ['title', 'description', 'siteName', 'channelName', 'playTime', 'watchedCnt', 'publishedDate'],
         };
 
-        // defaultContentMenu[content.dtype as keyof typeof defaultContentMenu].map((name) => {
-        //     if (editalbeContent)
-        // })
+        defaultContentMenu[content.dtype as keyof typeof defaultContentMenu].map((name) => {
+            const element = editalbeContent[name as keyof typeof editalbeContent];
+            console.log('state', element.state);
+            if (!element.state) {
+                element.isDeleted = true;
+                console.log('not state', element.state);
+            }
+        });
     }
 
     useEffect(() => {
         setToken(localStorage.getItem('token'));
-
+        initiateEditableContent();
     }, []);
 
     const emptyMemoText = '메모를 입력하세요';
@@ -184,7 +189,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
         const renderingResult = [];
         for (const key in editalbeContent) {
             const element = editalbeContent[key as keyof typeof editalbeContent];
-            !element.isDeleted && renderingResult.push(
+            (!element.isDeleted && element.state) && renderingResult.push(
                 <div>
                     {
                         < TextArea
@@ -210,7 +215,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
                     {
                         <AddableElement
                             elementTitle={element.label}
-                            onClick={element.showState}
+                            onClick={() => element.isDeleted = false}
                         />
                     }
                 </div>
