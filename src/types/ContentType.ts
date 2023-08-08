@@ -15,7 +15,7 @@ export interface contentProps {
         author?: string,
         authorImageUrl?: string,
         blogName?: string,
-        publishedDate?: string,
+        publishedDate?: number,
         price?: string,
         channelImageUrl?: string,
         channelName?: string,

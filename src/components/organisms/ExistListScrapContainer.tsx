@@ -6,34 +6,10 @@ import { CircularProgress } from "@mui/material"
 import ScrapCard from "./ScrapCard"
 import useInfiniteScroll from "../../hooks/useInfiniteScroll"
 import theme from "../../assets/styles/theme"
+import { contentProps } from "../../types/ContentType"
 
 interface ExistListScrapContainerProps {
-    contents: {
-        pageUrl: string,
-        title: string,
-        description: string,
-        thumbnailUrl: string,
-        scrapCreatedDate: string,
-        scrapId: number,
-        memoList: [{
-            memoId: number,
-            memoImageURL?: string,
-            memoText?: string,
-        }],
-        siteName: string,
-        author: string,
-        authorImageUrl: string,
-        blogName: string,
-        publishedDate: string,
-        price: string,
-        channelImageUrl: string,
-        channelName: string,
-        embedUrl: string,
-        genre: string,
-        playTime: string,
-        watchedCnt: string,
-        dtype: string,
-    }[],
+    contents: contentProps['content'][]
     isFetching: boolean,
     setIsFetching: (isFetching: boolean) => void,
 }
