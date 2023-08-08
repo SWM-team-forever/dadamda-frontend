@@ -28,7 +28,7 @@ export const DefaultStyle: Story = {
     embedUrl: 'https://www.youtube.com/embed/Jyh8pVWQ8sU',
     playTime: '6:08',
     watchedCnt: '2.2천회',
-    publishedDate: '1년 전',
+    publishedDate: 1655555555,
     dtype: 'video',
     }
   }
