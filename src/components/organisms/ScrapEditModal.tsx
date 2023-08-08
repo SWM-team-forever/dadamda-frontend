@@ -33,9 +33,8 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
         memoText?: string,
     }[] | undefined>(content.memoList);
 
-    const editalbeContent = [
-        {
-            name: 'title',
+    const editalbeContent = {
+        'title': {
             label: '제목',
             isDeleteable: true,
             isDeleted: false,
@@ -43,8 +42,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => { setTitle(content.title) },
             setState: setTitle,
         },
-        {
-            name: 'description',
+        'description': {
             label: '설명',
             isDeleteable: true,
             isDeleted: false,
@@ -52,8 +50,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setDescription(content.description),
             setState: setDescription,
         },
-        {
-            name: 'siteName',
+        'siteName': {
             label: '사이트명',
             isDeleteable: true,
             isDeleted: false,
@@ -61,8 +58,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setSiteName(content.siteName),
             setState: setSiteName,
         },
-        {
-            name: 'author',
+        'author': {
             label: '저자',
             isDeleteable: true,
             isDeleted: false,
@@ -70,8 +66,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setAuthor(content.author),
             setState: setAuthor,
         },
-        {
-            name: 'blogName',
+        'blogName': {
             label: '블로그명',
             isDeleteable: true,
             isDeleted: false,
@@ -79,8 +74,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setBlogName(content.blogName),
             setState: setBlogName,
         },
-        {
-            name: 'publishedDate',
+        'publishedDate': {
             label: '게시일',
             isDeleteable: true,
             isDeleted: false,
@@ -88,8 +82,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setPublishedDate(content.publishedDate),
             setState: setPublishedDate,
         },
-        {
-            name: 'price',
+        'price': {
             label: '가격',
             isDeleteable: true,
             isDeleted: false,
@@ -97,8 +90,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setPrice(content.price),
             setState: setPrice,
         },
-        {
-            name: 'channelName',
+        'channelName': {
             label: '채널명',
             isDeleteable: true,
             isDeleted: false,
@@ -106,8 +98,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setChannelName(content.channelName),
             setState: setChannelName,
         },
-        {
-            name: 'playTime',
+        'playTime': {
             label: '영상 길이',
             isDeleteable: true,
             isDeleted: false,
@@ -115,8 +106,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setPlayTime(content.playTime),
             setState: setPlayTime,
         },
-        {
-            name: 'watchedCnt',
+        'watchedCnt': {
             label: '조회수',
             isDeleteable: true,
             isDeleted: false,
@@ -124,9 +114,22 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             showState: () => setWatchedCnt(content.watchedCnt),
             setState: setWatchedCnt,
         },
-    ];
+    };
 
     const [token, setToken] = useState<string | null>(null);
+    function initiateEditableContent() {
+        const defaultContentMenu = {
+            other: ['title', 'description'],
+            article: ['title', 'description', 'siteName', 'author', 'blogName', 'publishedDate'],
+            product: ['title', 'description', 'siteName', 'price'],
+            video: ['title', 'description', 'siteName', 'channelName', 'playTime', 'watchedCnt', 'publishedDate'],
+        };
+
+        // defaultContentMenu[content.dtype as keyof typeof defaultContentMenu].map((name) => {
+        //     if (editalbeContent)
+        // })
+    }
+
     useEffect(() => {
         setToken(localStorage.getItem('token'));
 
@@ -142,12 +145,12 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
     };
 
     const editScrap = () => {
-        editalbeContent.map((item) => {
+        for (const key in editalbeContent) {
             content = {
                 ...content,
-                [item.name]: item.state,
+                [key]: editalbeContent[key as keyof typeof editalbeContent].state,
             }
-        });
+        }
 
         if (memos) {
             content = { ...content, memoList: memos }
@@ -177,6 +180,46 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
                 .catch(err => setError(err.message));
     }
 
+    const contentRendering = () => {
+        const renderingResult = [];
+        for (const key in editalbeContent) {
+            const element = editalbeContent[key as keyof typeof editalbeContent];
+            !element.isDeleted && renderingResult.push(
+                <div>
+                    {
+                        < TextArea
+                            labelText={element.label}
+                            defaultValue={content[key as keyof typeof content] as string}
+                            setState={element.setState}
+                            key={element.label + content.scrapId}
+                            isDeleteable={element.isDeleteable}
+                        />
+                    }
+                </div>);
+        }
+
+        return renderingResult;
+    }
+
+    const deletedContentRendering = () => {
+        const renderingResult = [];
+        for (const key in editalbeContent) {
+            const element = editalbeContent[key as keyof typeof editalbeContent];
+            element.isDeleted && renderingResult.push(
+                <div>
+                    {
+                        <AddableElement
+                            elementTitle={element.label}
+                            onClick={element.showState}
+                        />
+                    }
+                </div>
+            );
+        }
+
+        return renderingResult;
+    }
+
     return (
         <ModalWrapper>
             <ModalHeader>
@@ -186,24 +229,13 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
                 <IconContainer hideScrapEditModal={hideScrapEditModal} />
             </ModalHeader>
             <ContentWrapper>
-                {editalbeContent.map(element => {
-                    return (content[element.name as keyof typeof content] && element.state !== null) &&
-                        <TextArea
-                            labelText={element.label}
-                            defaultValue={content[element.name as keyof typeof content] as string}
-                            setState={element.setState}
-                            key={element.label + content.scrapId}
-                            isDeleteable={element.isDeleteable}
-                        />
-                })}
+                {contentRendering()}
                 {memos &&
                     <MemoTextArea memos={memos} setMemos={setMemos} />
                 }
                 <ContentAddSection>
                     <DefaultTypography>추가하기</DefaultTypography>
-                    {editalbeContent.map(element => {
-                        return (content[element.name as keyof typeof content] && element.state === null) && <AddableElement elementTitle={element.label} onClick={element.showState} />
-                    })}
+                    {deletedContentRendering()}
                     <AddableElement elementTitle={'메모'} onClick={() => createMemo()} />
                 </ContentAddSection>
             </ContentWrapper>
