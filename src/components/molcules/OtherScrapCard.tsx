@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-import { contentProps } from '../organisms/ScrapCard';
 import Memo from './Memo';
 import Button from '../atoms/DefaultButton';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 
 import theme from '../../assets/styles/theme';
+import { contentProps } from '../../types/ContentType';
 
 interface OtherScrapCardProps {
     content: contentProps['content'],

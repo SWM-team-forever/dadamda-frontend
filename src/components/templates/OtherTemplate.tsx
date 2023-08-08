@@ -1,7 +1,7 @@
 import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
 import ScrapListHeader from '../molcules/ScrapListHeader';
 import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
-import { contentProps } from '../organisms/ScrapCard';
+import { contentProps } from '../../types/ContentType';
 
 interface OtherTemplateProps {
     others: contentProps['content'][],

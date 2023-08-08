@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Masonry } from "@mui/lab"
 import { CircularProgress } from "@mui/material";
 
-import ScrapCard, { contentProps } from "./ScrapCard";
+import ScrapCard from "./ScrapCard";
+import { contentProps } from '../../types/ContentType';
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import theme from "../../assets/styles/theme";
 

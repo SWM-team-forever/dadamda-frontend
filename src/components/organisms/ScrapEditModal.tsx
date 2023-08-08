@@ -6,7 +6,7 @@ import Button from '../atoms/DefaultButton';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import MemoTextArea from '../molcules/MemoTextArea';
 import { EDIT_sCRAP_URL } from '../../secret';
-import { contentProps } from './ScrapCard';
+import { contentProps } from '../../types/ContentType';
 
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,

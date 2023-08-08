@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { contentProps } from '../organisms/ScrapCard';
+import { contentProps } from '../../types/ContentType';
 import Memo from './Memo';
 import Chip from '../atoms/Chip';
 import Button from '../atoms/DefaultButton';
