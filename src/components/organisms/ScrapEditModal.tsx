@@ -127,18 +127,17 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
 
         defaultContentMenu[content.dtype as keyof typeof defaultContentMenu].map((name) => {
             const element = editalbeContent[name as keyof typeof editalbeContent];
-            console.log('state', element.state);
             if (!element.state) {
                 element.isDeleted = true;
-                console.log('not state', element.state);
             }
         });
     }
 
     useEffect(() => {
         setToken(localStorage.getItem('token'));
-        initiateEditableContent();
     }, []);
+
+    initiateEditableContent();
 
     const emptyMemoText = '메모를 입력하세요';
     const createMemo = () => {
@@ -189,18 +188,20 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
         const renderingResult = [];
         for (const key in editalbeContent) {
             const element = editalbeContent[key as keyof typeof editalbeContent];
-            (!element.isDeleted && element.state) && renderingResult.push(
-                <div>
-                    {
-                        < TextArea
-                            labelText={element.label}
-                            defaultValue={content[key as keyof typeof content] as string}
-                            setState={element.setState}
-                            key={element.label + content.scrapId}
-                            isDeleteable={element.isDeleteable}
-                        />
-                    }
-                </div>);
+            console.log('notDeleted', element.isDeleted);
+            (!element.isDeleted && element.state)
+                && renderingResult.push(
+                    <div>
+                        {
+                            < TextArea
+                                labelText={element.label}
+                                defaultValue={content[key as keyof typeof content] as string}
+                                setState={element.setState}
+                                key={element.label + content.scrapId}
+                                isDeleteable={element.isDeleteable}
+                            />
+                        }
+                    </div>);
         }
 
         return renderingResult;
@@ -210,16 +211,18 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
         const renderingResult = [];
         for (const key in editalbeContent) {
             const element = editalbeContent[key as keyof typeof editalbeContent];
-            element.isDeleted && renderingResult.push(
-                <div>
-                    {
-                        <AddableElement
-                            elementTitle={element.label}
-                            onClick={() => element.isDeleted = false}
-                        />
-                    }
-                </div>
-            );
+            console.log('deleted', element.isDeleted);
+            element.isDeleted
+                && renderingResult.push(
+                    <div>
+                        {
+                            <AddableElement
+                                elementTitle={element.label}
+                                onClick={() => element.isDeleted = false}
+                            />
+                        }
+                    </div>
+                );
         }
 
         return renderingResult;
