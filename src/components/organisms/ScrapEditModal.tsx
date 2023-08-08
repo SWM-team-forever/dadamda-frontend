@@ -149,11 +149,6 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             }
         });
 
-        // setMemos(memos?.filter(memo => memo.memoImageURL || (memo.memoText && memo.memoText.length > 0)));
-        // memos?.map(memo => {
-        //    console.log(memo.memoImageURL || (memo.memoText && memo.memoText.length > 0));
-        // })
-
         if (memos) {
             content = { ...content, memoList: memos }
         }
