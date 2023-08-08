@@ -29,6 +29,7 @@ export const DefaultStyle: Story = {
     playTime: '6:08',
     watchedCnt: '2.2천회',
     publishedDate: '1년 전',
+    dtype: 'video',
     }
   }
 };

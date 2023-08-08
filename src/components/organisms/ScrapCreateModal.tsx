@@ -3,15 +3,17 @@ import styled from 'styled-components';
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
 import { POST_CREATE_OTHER_SCRAP_URL } from '../../secret';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 interface ScrapCreateModalProps {
     hideScrapCreateModal: () => void,
+    setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
-function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
+function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalProps) {
     const [textAreaValue, setTextAreaValue] = useState('');
     const [token, setToken] = useState<string | null>(null);
+
     useEffect(() => {
         setToken(localStorage.getItem('token'));
     }, []);
@@ -19,7 +21,8 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
-    }
+    };
+
 
     function createScrap() {
         token &&
@@ -32,11 +35,21 @@ function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
                 body: JSON.stringify({
                     pageUrl: textAreaValue,
                 }),
-            }).then((response) => response.json())
-                .then(() => {
-                    hideScrapCreateModal();
+            }).then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
                 })
-                .catch(err => console.error(err));
+            }).then(() => {
+                hideScrapCreateModal();
+            }).catch(err => {
+                setError(err.message);
+            }).then(() => {
+                hideScrapCreateModal();
+            })
     }
 
     return (

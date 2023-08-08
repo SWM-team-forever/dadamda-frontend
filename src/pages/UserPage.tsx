@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/atoms/DefaultButton';
@@ -10,8 +10,13 @@ import { DELETE_USER_URL, GET_USER_INFORMATION_URL } from '../secret';
 import defaultUserImage from '../assets/images/Avatar.png';
 import Overlay from '../components/atoms/Overlay';
 import UserDeleteModal from '../components/organisms/UserDeleteModal';
+import useWarningSnackbar from '../hooks/useWarningSnackbar';
 
-function UserPage() {
+interface UserPageProps {
+    setError: Dispatch<SetStateAction<Partial<null | string>>>,
+}
+
+function UserPage({ setError }: UserPageProps) {
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [accountProvider, setAccountProvider] = useState('');
@@ -26,13 +31,22 @@ function UserPage() {
                 "Content-Type": "application/json",
                 "X-AUTH-TOKEN": token,
             },
-        }).then((response) => response.json())
+        })
+            .then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
             .then((data) => {
                 setUserName(data.data.name);
                 setUserEmail(data.data.email);
                 setAccountProvider(data.data.provider);
                 setProfileImageUrl(data.data.profileUrl);
-            });
+            }).catch(err => setError(err.message));
     }, []);
 
     const navigate = useNavigate();
@@ -51,13 +65,24 @@ function UserPage() {
                 "Content-Type": "application/json",
                 "X-AUTH-TOKEN": token,
             },
-        }).then((response) => response.json())
+        })
+            .then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
             .then(() => {
                 localStorage.removeItem('token');
                 localStorage.removeItem('profileImageURL');
                 navigate('/main');
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                setError(err.message)
+            });
     }
 
     const [isUserDeleteModalVisible, setIsUserDeleteModalVisible] = useState(false);
@@ -93,7 +118,7 @@ function UserPage() {
                             ? <ProfileImage src={profileImageUrl} />
                             : <ProfileImage src={defaultUserImage} />
                         }
-                        <Button label='이미지 변경하기' buttonStyle='primary' isRound />
+                        <Button label='이미지 변경하기' buttonStyle='primary' isRound onClick={useWarningSnackbar} />
                     </ProfileContainer>
                     <Content>
                         {userPageMenu.map(menu => {
