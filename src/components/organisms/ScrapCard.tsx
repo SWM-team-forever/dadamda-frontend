@@ -21,11 +21,11 @@ export interface contentProps {
         thumbnailUrl?: string,
         scrapCreatedDate?: string,
         scrapId: number,
-        memoList: [{
+        memoList: {
             memoId: number,
             memoImageUrl?: string,
             memoText?: string,
-        }],
+        }[],
         siteName?: string,
         author?: string,
         authorImageUrl?: string,
