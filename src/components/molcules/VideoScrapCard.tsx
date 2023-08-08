@@ -11,6 +11,7 @@ import ColumnContainer from '../atoms/ColumnContainer';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import defaultImage from '../../assets/images/Avatar.png';
+import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
 
 interface VideoScrapCardProps {
     content: contentProps['content'],
@@ -54,7 +55,9 @@ function VideoScrapCard({ content, showMemoCreateModal, showTooltip }: VideoScra
                         <>
                             {menu.content &&
                                 <ColumnContainer style={{ alignItems: 'center', flex: '1' }}>
-                                    <EmpasizedTypography>{menu.content}</EmpasizedTypography>
+                                    <EmpasizedTypography>{
+                                        typeof (menu.content) === 'number' ? getTimeDiff(menu.content) : menu.content
+                                    }</EmpasizedTypography>
                                     <DefaultTypography>{menu.title}</DefaultTypography>
                                 </ColumnContainer>
                             }

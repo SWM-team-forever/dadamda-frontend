@@ -11,6 +11,7 @@ import ColumnContainer from '../atoms/ColumnContainer';
 import defaultImage from '../../assets/images/Avatar.png';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
+import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
 
 interface ArticleScrapCardProps {
     content: contentProps['content'],
@@ -19,6 +20,8 @@ interface ArticleScrapCardProps {
 }
 
 function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: ArticleScrapCardProps) {
+    const articleContent = { ...content };
+
 
     return (
         <CardWrapper
@@ -41,7 +44,7 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
                         </ColumnContainer>
                     </RowContainer>
                 }
-                {content.publishedDate && <DefaultTypography>{content.publishedDate}</DefaultTypography>}
+                {content.publishedDate && <DefaultTypography>{getTimeDiff(content.publishedDate)}</DefaultTypography>}
             </RowContainer>
             {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
             {content.memoList?.map(memo => {
