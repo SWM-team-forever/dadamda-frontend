@@ -1,15 +1,11 @@
 import styled from "styled-components"
 import { Masonry } from "@mui/lab"
-
-import OtherScrapCard from "../molcules/OtherScrapCard"
-import ProductScrapCard from "../molcules/ProductScrapCard"
-import VideoScrapCard from "../molcules/VideoScrapCard"
-import ArticleScrapCard from "../molcules/ArticleScrapCard"
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { CircularProgress } from "@mui/material"
+
+import ScrapCard from "./ScrapCard"
 import useInfiniteScroll from "../../hooks/useInfiniteScroll"
 import theme from "../../assets/styles/theme"
-import ScrapCard from "./ScrapCard"
 
 interface ExistListScrapContainerProps {
     contents: {

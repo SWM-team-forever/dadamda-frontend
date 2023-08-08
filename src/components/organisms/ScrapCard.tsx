@@ -12,35 +12,7 @@ import ArticleScrapCard from '../molcules/ArticleScrapCard';
 import ErrorHandler from '../../utility/ErrorHandler';
 
 import theme from '../../assets/styles/theme';
-
-export interface contentProps {
-    content: {
-        pageUrl: string,
-        title?: string,
-        description?: string,
-        thumbnailUrl?: string,
-        scrapCreatedDate?: string,
-        scrapId: number,
-        memoList: [{
-            memoId: number,
-            memoImageUrl?: string,
-            memoText?: string,
-        }],
-        siteName?: string,
-        author?: string,
-        authorImageUrl?: string,
-        blogName?: string,
-        publishedDate?: string,
-        price?: string,
-        channelImageUrl?: string,
-        channelName?: string,
-        embedUrl?: string,
-        genre?: string,
-        playTime?: string,
-        watchedCnt?: string,
-        dtype: string,
-    }
-}
+import { contentProps } from '../../types/ContentType';
 
 function ScrapCard({ content }: contentProps) {
     const scrapCardMenu = [{

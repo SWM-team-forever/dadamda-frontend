@@ -25,10 +25,14 @@ export const defaultScrapEditModal:Story = {
             },
             {
                 memoId: 30,
-                memoImageURL: 'https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/dl/v2/6/4/9/6/6/1/hggNr/2066649661_148653812.jpg',
+                memoImageUrl: 'https://cdn.011st.com/11dims/resize/600x600/quality/75/11src/dl/v2/6/4/9/6/6/1/hggNr/2066649661_148653812.jpg',
             },
             ],
-            scrapId: 0
+            scrapId: 0,
+            pageUrl: 'www.naver.com',
+            thumbnailUrl: '',
+            dtype: 'product',
+
         }
     }
 }
