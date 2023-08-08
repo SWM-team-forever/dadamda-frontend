@@ -97,17 +97,17 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
                 editalbeContent.blogName.isDeleted = value;
             }
         },
-        'publishedDate': {
-            label: '게시일',
-            isDeleteable: true,
-            isDeleted: false,
-            state: publishedDate,
-            showState: () => setPublishedDate(content.publishedDate),
-            setState: setPublishedDate,
-            setIsDeleted(value: boolean) {
-                editalbeContent.publishedDate.isDeleted = value;
-            }
-        },
+        // 'publishedDate': {
+        //     label: '게시일',
+        //     isDeleteable: false,
+        //     isDeleted: false,
+        //     state: publishedDate,
+        //     showState: () => setPublishedDate(content.publishedDate),
+        //     setState: setPublishedDate,
+        //     setIsDeleted(value: boolean) {
+        //         editalbeContent.publishedDate.isDeleted = value;
+        //     }
+        // },
         'price': {
             label: '가격',
             isDeleteable: true,
@@ -141,17 +141,17 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
                 editalbeContent.playTime.isDeleted = value;
             }
         },
-        'watchedCnt': {
-            label: '조회수',
-            isDeleteable: true,
-            isDeleted: false,
-            state: watchedCnt,
-            showState: () => setWatchedCnt(content.watchedCnt),
-            setState: setWatchedCnt,
-            setIsDeleted(value: boolean) {
-                editalbeContent.watchedCnt.isDeleted = value;
-            }
-        },
+        // 'watchedCnt': {
+        //     label: '조회수',
+        //     isDeleteable: false,
+        //     isDeleted: false,
+        //     state: watchedCnt,
+        //     showState: () => setWatchedCnt(content.watchedCnt),
+        //     setState: setWatchedCnt,
+        //     setIsDeleted(value: boolean) {
+        //         editalbeContent.watchedCnt.isDeleted = value;
+        //     }
+        // },
     };
 
     const [token, setToken] = useState<string | null>(null);
