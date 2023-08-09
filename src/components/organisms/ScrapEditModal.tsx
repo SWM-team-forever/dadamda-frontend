@@ -158,9 +158,9 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
     function initiateEditableContent() {
         const defaultContentMenu = {
             other: ['title', 'description'],
-            article: ['title', 'description', 'siteName', 'author', 'blogName', 'publishedDate'],
+            article: ['title', 'description', 'siteName', 'author', 'blogName'],
             product: ['title', 'description', 'siteName', 'price'],
-            video: ['title', 'description', 'siteName', 'channelName', 'playTime', 'watchedCnt', 'publishedDate'],
+            video: ['title', 'description', 'siteName', 'channelName', 'playTime', 'watchedCnt'],
         };
 
         defaultContentMenu[content.dtype as keyof typeof defaultContentMenu].map((name) => {
