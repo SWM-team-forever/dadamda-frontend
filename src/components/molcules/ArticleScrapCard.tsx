@@ -22,7 +22,6 @@ interface ArticleScrapCardProps {
 function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: ArticleScrapCardProps) {
     const articleContent = { ...content };
 
-
     return (
         <CardWrapper
             style={{ cursor: 'pointer' }}

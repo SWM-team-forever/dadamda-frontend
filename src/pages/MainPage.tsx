@@ -3,11 +3,16 @@ import theme from '../assets/styles/theme';
 import Button from '../components/atoms/DefaultButton';
 import ChannelService from '../../ChannelService';
 import { CHANNEL_SERVICE_PLUGIN_KEY } from '../secret';
+import { useEffect } from 'react';
 
 function MainPage() {
-  ChannelService.loadScript();
-  ChannelService.boot({
-    "pluginKey": CHANNEL_SERVICE_PLUGIN_KEY,
+  useEffect(() => {
+    ChannelService.loadScript();
+    ChannelService.boot({
+      "pluginKey": CHANNEL_SERVICE_PLUGIN_KEY,
+    });
+
+    return () => ChannelService.hideChannelButton();
   });
 
   return (

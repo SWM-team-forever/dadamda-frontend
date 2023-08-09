@@ -8,12 +8,12 @@ import { ChangeEvent } from 'react';
 interface MemoTextAreaProps {
     memos: {
         memoId: number,
-        memoImageURL?: string,
+        memoImageUrl?: string,
         memoText?: string,
     }[] | undefined,
     setMemos: (changedMemos: {
         memoId: number,
-        memoImageURL?: string,
+        memoImageUrl?: string,
         memoText?: string,
     }[] | undefined) => void,
 }
@@ -34,40 +34,43 @@ function MemoTextArea({ memos, setMemos }: MemoTextAreaProps) {
         })
     }
 
+    console.log(memos);
+
     return (
         <TextAreaWrapper>
             {memos && memos.length > 0 && <Label>메모</Label>}
             {memos?.map(memo =>
-            (memo.memoText ? <InputAreaWrapper>
-                <TextareaAutosize
-                    key={'memo' + memo.memoText}
-                    defaultValue={memo.memoText}
-                    onChange={(e) => handleSetValue(e, memo.memoId)}
-                    style={{
-                        resize: 'none',
-                        background: theme.color.background_color,
-                        border: 'none',
-                        width: '100%',
-                        boxSizing: 'border-box',
-                        borderRadius: '4px',
-                        padding: '10px',
-                        fontFamily: "'NanumSquare', sans-serif",
-                    }}
-                />
-                <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }}
-                    onClick={() => hideMemo(memo.memoId)}>
-                    <DeleteIcon />
-                </div>
-            </InputAreaWrapper> :
-                (<InputAreaWrapper>
-                    <Memo memoImageURL={memo.memoImageURL} />
+            (memo.memoText
+                ? <InputAreaWrapper>
+                    <TextareaAutosize
+                        key={'memo' + memo.memoText}
+                        defaultValue={memo.memoText}
+                        onChange={(e) => handleSetValue(e, memo.memoId)}
+                        style={{
+                            resize: 'none',
+                            background: theme.color.background_color,
+                            border: 'none',
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            borderRadius: '4px',
+                            padding: '10px',
+                            fontFamily: "'NanumSquare', sans-serif",
+                        }}
+                    />
                     <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }}
                         onClick={() => hideMemo(memo.memoId)}>
                         <DeleteIcon />
                     </div>
-                </InputAreaWrapper>))
+                </InputAreaWrapper> :
+                <InputAreaWrapper>
+                    <Memo memoImageURL={memo.memoImageUrl} />
+                    <div style={{ position: 'absolute', top: '-12px', right: '-12px', cursor: 'pointer' }}
+                        onClick={() => hideMemo(memo.memoId)}>
+                        <DeleteIcon />
+                    </div>
+                </InputAreaWrapper>
+            )
             )}
-
         </TextAreaWrapper >
     );
 }

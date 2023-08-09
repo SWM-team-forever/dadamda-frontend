@@ -38,11 +38,21 @@ function ErrorHandler({ error, setError }: ErrorHandleProps) {
             onClick: () => {
                 setError(null);
             }
+        },
+        UNDEFINED_ERROR: {
+            message: {
+                title: '오류 발생',
+                content: '알 수 없는 오류가 발생하였습니다.',
+                action: '닫기',
+            },
+            onClick: () => {
+                setError(null);
+            }
         }
     };
 
     function isModal(error: string) {
-        if (error === 'BR001' || error === 'IS000') {
+        if (error === 'BR001' || error === 'IS000' || error === 'UNDEFINED_ERROR') {
             return true;
         }
 

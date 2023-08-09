@@ -17,10 +17,10 @@ import { worker } from './mocks/worker.ts';
 import ErrorHandler from './utility/ErrorHandler.tsx';
 import { useState } from 'react';
 
-if (process.env.NODE_ENV === 'development') {
-  // develop 환경에서만 사용
-  worker.start();
-}
+// if (process.env.NODE_ENV === 'development') {
+//   // develop 환경에서만 사용
+//   worker.start();
+// }
 
 function App() {
   const [error, setError] = useState<string | null>(null);
