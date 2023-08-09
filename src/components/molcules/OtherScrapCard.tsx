@@ -56,7 +56,6 @@ const CardWrapper = styled.div`
 
 const CardImage = styled.img`
     width: 100%;
-    height: 140px;
     border-radius: 4px;
 `
 
