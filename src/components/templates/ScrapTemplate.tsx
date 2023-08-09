@@ -81,6 +81,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
 
     const fetchScrapCount = () => {
         const url = urlMatching[type] + `/count`;
+        console.log('token', token);
         token &&
             fetch(url, {
                 method: "GET",
