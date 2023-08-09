@@ -9,8 +9,7 @@ interface MemoProps {
 function Memo({ memoImageURL, memoText }: MemoProps) {
     return (
         <MemoContainer>
-            {memoText}
-            {memoImageURL && <ImageMemo src={memoImageURL} />}
+            {memoText ? memoText : <ImageMemo src={memoImageURL} />}
         </MemoContainer>
     );
 }
