@@ -34,6 +34,8 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         'product': GET_PRODUCT_SCRAP_URL,
         'video': GET_PRODUCT_SCRAP_URL,
     }
+
+    // const definedErrors = ['BR001', 'BR002', 'NF000', 'NF001', 'NF002', 'NF003', 'IS000'];
     const token = localStorage.getItem('token');
     const size = 10;
     const [types, setTypes] = useState<any[]>([]);
@@ -60,6 +62,10 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                     "X-AUTH-TOKEN": token,
                 },
             }).then((response) => {
+                // if (response.json().body) {
+                //     throw new Error('UNDEFINED_ERROR');
+                // }
+                // console.log('body', response.json());
                 return response.json().then(body => {
                     if (response.ok) {
                         return body;
