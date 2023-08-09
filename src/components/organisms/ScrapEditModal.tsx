@@ -141,17 +141,17 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
                 editalbeContent.playTime.isDeleted = value;
             }
         },
-        // 'watchedCnt': {
-        //     label: '조회수',
-        //     isDeleteable: false,
-        //     isDeleted: false,
-        //     state: watchedCnt,
-        //     showState: () => setWatchedCnt(content.watchedCnt),
-        //     setState: setWatchedCnt,
-        //     setIsDeleted(value: boolean) {
-        //         editalbeContent.watchedCnt.isDeleted = value;
-        //     }
-        // },
+        'watchedCnt': {
+            label: '조회수',
+            isDeleteable: false,
+            isDeleted: false,
+            state: watchedCnt,
+            showState: () => setWatchedCnt(content.watchedCnt),
+            setState: setWatchedCnt,
+            setIsDeleted(value: boolean) {
+                editalbeContent.watchedCnt.isDeleted = value;
+            }
+        },
     };
 
     const [token, setToken] = useState<string | null>(null);
