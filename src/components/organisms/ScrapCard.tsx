@@ -98,6 +98,7 @@ function ScrapCard({ content }: contentProps) {
 const CardContainer = styled.div`
     position: relative;
     border-radius: 4px;
+    word-break: break-all;
 `
 
 const Overlay = styled.div`
