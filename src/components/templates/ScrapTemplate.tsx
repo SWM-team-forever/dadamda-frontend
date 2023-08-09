@@ -123,6 +123,8 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         }
     }, [isFetching]);
 
+    const providingTemplates = ['other', 'list', 'video'];
+
     return (
         <>
             {error && <ErrorHandler error={error} setError={setError} />}
@@ -130,7 +132,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'video' && <VideoTemplate videos={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
-                {(type !== 'other' && type !== 'list') && <NotReadyTemplate />}
+                {!providingTemplates.includes(type) && <NotReadyTemplate />}
                 <IconButton
                     src={fab}
                     style={{
