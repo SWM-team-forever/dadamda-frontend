@@ -25,7 +25,9 @@ function ProductScrapCard({ content, showMemoCreateModal, showTooltip }: Product
             }}>
             {content.siteName && <Chip>{content.siteName}</Chip>}
             {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            <CardImage src={content.thumbnailUrl} />
+            <CardImageWrapper>
+                <CardImage src={content.thumbnailUrl} />
+            </CardImageWrapper>
             {content.price && <ColoredTypography>{content.price}</ColoredTypography>}
             {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
             {content.memoList?.map(memo => {
@@ -54,9 +56,17 @@ const CardWrapper = styled.div`
     border-radius: 4px;
 `
 
-const CardImage = styled.img`
+const CardImageWrapper = styled.div`
     width: 100%;
     border-radius: 4px;
+    max-height: 300px;
+    overflow: hidden;
+`
+
+const CardImage = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `
 
 const EmpasizedTypography = styled.span`

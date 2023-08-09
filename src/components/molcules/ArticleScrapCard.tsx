@@ -32,7 +32,9 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
         >
             {content.siteName && <Chip>{content.siteName}</Chip>}
             {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            <CardImage src={content.thumbnailUrl} />
+            <CardImageWrapper>
+                <CardImage src={content.thumbnailUrl} />
+            </CardImageWrapper>
             <RowContainer style={{ justifyContent: 'space-between' }}>
                 {(content.author || content.blogName) &&
                     <RowContainer style={{ gap: '10px', alignItems: 'center' }}>
@@ -72,9 +74,17 @@ const CardWrapper = styled.div`
     border-radius: 4px;
 `
 
-const CardImage = styled.img`
+const CardImageWrapper = styled.div`
     width: 100%;
     border-radius: 4px;
+    max-height: 300px;
+    overflow: hidden;
+`
+
+const CardImage = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `
 
 const EmpasizedTypography = styled.span`

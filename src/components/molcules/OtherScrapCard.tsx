@@ -23,7 +23,9 @@ function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScra
                 window.open(`${content.pageUrl}`);
             }}
         >
-            <CardImage src={content.thumbnailUrl} />
+            <CardImageWrapper>
+                <CardImage src={content.thumbnailUrl} />
+            </CardImageWrapper>
             <CardInfoWrapper>
                 {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
                 {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
@@ -54,9 +56,17 @@ const CardWrapper = styled.div`
     border-radius: 4px;
 `
 
-const CardImage = styled.img`
+const CardImageWrapper = styled.div`
     width: 100%;
     border-radius: 4px;
+    max-height: 300px;
+    overflow: hidden;
+`
+
+const CardImage = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `
 
 const CardInfoWrapper = styled.div`
