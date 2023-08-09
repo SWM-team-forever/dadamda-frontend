@@ -177,7 +177,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
 
     initiateEditableContent();
 
-    const emptyMemoText = '메모를 입력하세요';
+    const emptyMemoText = '';
     const createMemo = () => {
         createdMemoCount += 1;
         setMemos([...(memos || []), {
