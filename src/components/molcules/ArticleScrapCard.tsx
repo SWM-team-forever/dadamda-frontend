@@ -12,6 +12,7 @@ import defaultImage from '../../assets/images/Avatar.png';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
+import ThumbnailImage from '../atoms/ThumbnailImage';
 
 interface ArticleScrapCardProps {
     content: contentProps['content'],
@@ -32,9 +33,7 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
         >
             {content.siteName && <Chip>{content.siteName}</Chip>}
             {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            <CardImageWrapper>
-                <CardImage src={content.thumbnailUrl} />
-            </CardImageWrapper>
+            {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             <RowContainer style={{ justifyContent: 'space-between' }}>
                 {(content.author || content.blogName) &&
                     <RowContainer style={{ gap: '10px', alignItems: 'center' }}>
@@ -72,19 +71,6 @@ const CardWrapper = styled.div`
     gap: 10px;
     background-color: white;
     border-radius: 4px;
-`
-
-const CardImageWrapper = styled.div`
-    width: 100%;
-    border-radius: 4px;
-    max-height: 300px;
-    overflow: hidden;
-`
-
-const CardImage = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 `
 
 const EmpasizedTypography = styled.span`

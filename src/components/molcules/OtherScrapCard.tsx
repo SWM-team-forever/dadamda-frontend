@@ -6,6 +6,7 @@ import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 
 import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
+import ThumbnailImage from '../atoms/ThumbnailImage';
 
 interface OtherScrapCardProps {
     content: contentProps['content'],
@@ -23,9 +24,7 @@ function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScra
                 window.open(`${content.pageUrl}`);
             }}
         >
-            <CardImageWrapper>
-                <CardImage src={content.thumbnailUrl} />
-            </CardImageWrapper>
+            {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             <CardInfoWrapper>
                 {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
                 {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
@@ -54,19 +53,6 @@ const CardWrapper = styled.div`
     gap: 15px;
     background-color: white;
     border-radius: 4px;
-`
-
-const CardImageWrapper = styled.div`
-    width: 100%;
-    border-radius: 4px;
-    max-height: 300px;
-    overflow: hidden;
-`
-
-const CardImage = styled.img`
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 `
 
 const CardInfoWrapper = styled.div`
