@@ -3,8 +3,7 @@ import RowContainer from '../atoms/RowContainer';
 import ColumnContainer from '../atoms/ColumnContainer';
 import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
-import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
-import ThumbnailImage from '../atoms/ThumbnailImage';
+import { Card } from '@mui/material';
 import { useSelectedCategoryItem } from './SelectedCategoryItem';
 import { useCallback, useEffect } from 'react';
 import SelectedCategoryItemProvider from './SelectedCategoryItem';
@@ -17,7 +16,7 @@ interface ExistVideoScrapContainerProps {
 }
 
 function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
-    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
+    const [, setSelectedContent] = useSelectedCategoryItem();
     const initiateSelectedContent = useCallback(() => {
         setSelectedContent(contents[0]);
     }, [contents]);
@@ -124,6 +123,5 @@ const VideoListWrapper = styled.div`
     flex-direction: column;
     gap: 10px;
     `
-
 
 export default ExistVideoScrapContainer
