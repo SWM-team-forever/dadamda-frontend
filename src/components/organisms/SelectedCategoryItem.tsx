@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { TextareaAutosize, Typography } from '@mui/material';
 import { createContext, useContext, useState } from 'react';
 import theme from '../../assets/styles/theme';
 import ColumnContainer from '../atoms/ColumnContainer';
@@ -6,6 +6,7 @@ import { ShortcutIcon, MoreIcon } from '../atoms/Icon';
 import RowContainer from '../atoms/RowContainer';
 import ProfileImage from '../atoms/ProfileImage';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
+import Memo from '../molcules/Memo';
 
 const SelectedCategoryItemContext = createContext(null);
 
@@ -149,10 +150,28 @@ function Description() {
     )
 }
 
+function MemoArea() {
+    const { selectedContent } = useSelectedCategoryItem();
+    const { memoList } = selectedContent;
+
+    return (
+        <>
+            {
+                memoList?.map(memo => {
+                    return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
+                })
+            }
+            {/* <EditText placeholder="메모를 입력해주세요." onChange={() => console.log('hi')} /> */}
+            <TextareaAutosize placeholder='메모를 입력해주세요.' />
+        </>
+    )
+}
+
 SelectedCategoryItem.Video = Video;
 SelectedCategoryItem.Header = Header;
 SelectedCategoryItem.Channel = Channel;
 SelectedCategoryItem.Infos = Infos;
 SelectedCategoryItem.Description = Description;
+SelectedCategoryItem.MemoArea = MemoArea;
 
 export default SelectedCategoryItem;

@@ -3,14 +3,8 @@ import RowContainer from '../atoms/RowContainer';
 import ColumnContainer from '../atoms/ColumnContainer';
 import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
-import { Autocomplete, Box, Card, CardActionArea, CardContent, CardMedia, TextareaAutosize, Typography } from '@mui/material';
+import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import ThumbnailImage from '../atoms/ThumbnailImage';
-import IconButton from '../atoms/IconButton';
-import { MoreIcon, ShortcutIcon } from '../atoms/Icon';
-import ProfileImage from '../atoms/ProfileImage';
-import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
-import Memo from '../molcules/Memo';
-import Button from '../atoms/DefaultButton';
 import SelectedCategoryItem from './SelectedCategoryItem';
 
 interface ExistVideoScrapContainerProps {
@@ -144,13 +138,9 @@ function MemoContainer({ focusedContent }) {
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-all',
             }}>
-            {
-                focusedContent.memoList?.map(memo => {
-                    return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
-                })
-            }
-            < EditText placeholder="메모를 입력해주세요." onChange={() => console.log('hi')} />
-            <TextareaAutosize placeholder='메모를 입력해주세요.' />
+            <SelectedCategoryItem defaultValue={focusedContent}>
+                <SelectedCategoryItem.MemoArea />
+            </SelectedCategoryItem>
         </ColumnContainer >
     )
 }
@@ -178,15 +168,6 @@ const VideoListWrapper = styled.div`
     flex-direction: column;
     gap: 10px;
 `
-const EditText = styled.textarea`
-    font-size: 12px;
-    border-radius: 4px;
-    padding: 15px;
-    background-color: ${theme.color.background_color};
-    border: none;
-    width: 100%;
-    box-sizing: border-box;
-    resize: none;
-`
+
 
 export default ExistVideoScrapContainer
