@@ -73,10 +73,6 @@ function FocusedVideoItem({ focusedContent }: contentProps['content']) {
     return (
         <SelectedCategoryItem defaultValue={focusedContent}>
             <SelectedCategoryItem.Video />
-            <SelectedCategoryItem.Header />
-            <SelectedCategoryItem.Channel />
-            <SelectedCategoryItem.Infos />
-            <SelectedCategoryItem.Description />
         </SelectedCategoryItem>
     );
 }
@@ -123,10 +119,12 @@ function FocusedVideoItemDetails({ focusedContent }) {
                 width: '100%',
                 background: 'white',
             }}>
-
-
-
-
+            <SelectedCategoryItem defaultValue={focusedContent}>
+                <SelectedCategoryItem.Header />
+                <SelectedCategoryItem.Channel />
+                <SelectedCategoryItem.Infos />
+                <SelectedCategoryItem.Description />
+            </SelectedCategoryItem>
         </ColumnContainer>
     )
 }
