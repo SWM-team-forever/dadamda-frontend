@@ -11,13 +11,13 @@ import ProfileImage from '../atoms/ProfileImage';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
 import Memo from '../molcules/Memo';
 import Button from '../atoms/DefaultButton';
+import SelectedCategoryItem from './SelectedCategoryItem';
 
 interface ExistVideoScrapContainerProps {
     contents: contentProps["content"][],
     isFetching: boolean,
     setIsFetching: (isFetching: boolean) => void,
 }
-
 
 function VideoItemSummary({ thumbnailUrl, title, channelName, focusedContent }) {
 
@@ -71,19 +71,9 @@ function VideoItemSummary({ thumbnailUrl, title, channelName, focusedContent }) 
 function FocusedVideoItem({ focusedContent }: contentProps['content']) {
 
     return (
-        <div
-            style={{
-                position: 'relative',
-                width: '100%',
-                paddingBottom: '56.25%',
-            }}>
-            <iframe src={focusedContent.embedUrl}
-                style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                }} />
-        </div>
+        <SelectedCategoryItem defaultValue={focusedContent}>
+            <SelectedCategoryItem.Video />
+        </SelectedCategoryItem>
     );
 }
 
@@ -112,8 +102,8 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
                 height: 'fit-content',
                 marginBottom: '20px',
             }}>
-                <FocusedVideoItem focusedContent={contents[1]} />
-                <FocusedVideoItemDetails focusedContent={contents[1]} />
+                <FocusedVideoItem focusedContent={contents[3]} />
+                <FocusedVideoItemDetails focusedContent={contents[3]} />
             </Card>
         </RowContainer >
     )
