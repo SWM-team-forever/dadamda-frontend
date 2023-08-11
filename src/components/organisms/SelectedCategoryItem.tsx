@@ -7,6 +7,7 @@ import RowContainer from '../atoms/RowContainer';
 import ProfileImage from '../atoms/ProfileImage';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
 import Memo from '../molcules/Memo';
+import styled from 'styled-components';
 
 const SelectedCategoryItemContext = createContext();
 
@@ -160,11 +161,27 @@ function MemoArea() {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })
             }
-            {/* <EditText placeholder="메모를 입력해주세요." onChange={() => console.log('hi')} /> */}
-            <TextareaAutosize placeholder='메모를 입력해주세요.' />
+            <div
+                style={{
+                    width: '100%',
+                }}>
+                <StyledTextArea placeholder='메모를 입력해주세요.' minRows={4} />
+            </div>
         </>
     )
 }
+
+const StyledTextArea = styled(TextareaAutosize)`
+    line-height: 1.2;
+    resize: none;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    background: ${theme.color.background_color};
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+`;
 
 SelectedCategoryItemProvider.Video = Video;
 SelectedCategoryItemProvider.Header = Header;

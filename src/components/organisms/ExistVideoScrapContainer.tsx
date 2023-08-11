@@ -92,8 +92,6 @@ function MemoContainer() {
                 width: '100%',
                 overflow: 'auto',
                 boxSizing: 'border-box',
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-all',
             }}>
             <SelectedCategoryItemProvider.MemoArea />
         </ColumnContainer >
