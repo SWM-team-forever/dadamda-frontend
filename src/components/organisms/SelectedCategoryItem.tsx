@@ -8,30 +8,29 @@ import ProfileImage from '../atoms/ProfileImage';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
 import Memo from '../molcules/Memo';
 
-const SelectedCategoryItemContext = createContext(null);
+const SelectedCategoryItemContext = createContext();
 
-const SelectedCategoryItem = ({ defaultValue, children }) => {
-    const [selectedContent, setSelectedContent] = useState(defaultValue);
-    const providerValue = { selectedContent, setSelectedContent };
+function SelectedCategoryItemProvider({ children }) {
+    const selectedContentState = useState({});
 
     return (
-        <SelectedCategoryItemContext.Provider value={providerValue}>
+        <SelectedCategoryItemContext.Provider value={selectedContentState}>
             {children}
         </SelectedCategoryItemContext.Provider>
     )
 }
 
-function useSelectedCategoryItem() {
+export function useSelectedCategoryItem() {
     const context = useContext(SelectedCategoryItemContext);
     if (context === undefined) {
-        throw new Error('useSelectedCategoryItem must be used within SelectedCategoryItem');
+        throw new Error('useSelectedCategoryItem must be used within SelectedCategoryItemContextProvider');
     }
 
     return context;
 }
 
 function Video() {
-    const { selectedContent } = useSelectedCategoryItem();
+    const [selectedContent] = useSelectedCategoryItem();
     const embedUrl = selectedContent.embedUrl;
 
     return (
@@ -52,7 +51,7 @@ function Video() {
 }
 
 function Header() {
-    const { selectedContent } = useSelectedCategoryItem();
+    const [selectedContent] = useSelectedCategoryItem();
     const { siteName, title } = selectedContent;
 
     return (
@@ -87,7 +86,7 @@ function Header() {
 }
 
 function Channel() {
-    const { selectedContent } = useSelectedCategoryItem();
+    const [selectedContent] = useSelectedCategoryItem();
     const { channelImageUrl, channelName } = selectedContent;
 
     return (
@@ -102,7 +101,7 @@ function Channel() {
 }
 
 function Infos() {
-    const { selectedContent } = useSelectedCategoryItem();
+    const [selectedContent] = useSelectedCategoryItem();
     const { publishedDate, watchedCnt, playTime } = selectedContent;
 
     const videoMenus = [{
@@ -136,7 +135,7 @@ function Infos() {
 }
 
 function Description() {
-    const { selectedContent } = useSelectedCategoryItem();
+    const [selectedContent] = useSelectedCategoryItem();
     const { description } = selectedContent;
 
     return (
@@ -151,7 +150,7 @@ function Description() {
 }
 
 function MemoArea() {
-    const { selectedContent } = useSelectedCategoryItem();
+    const [selectedContent] = useSelectedCategoryItem();
     const { memoList } = selectedContent;
 
     return (
@@ -167,11 +166,11 @@ function MemoArea() {
     )
 }
 
-SelectedCategoryItem.Video = Video;
-SelectedCategoryItem.Header = Header;
-SelectedCategoryItem.Channel = Channel;
-SelectedCategoryItem.Infos = Infos;
-SelectedCategoryItem.Description = Description;
-SelectedCategoryItem.MemoArea = MemoArea;
+SelectedCategoryItemProvider.Video = Video;
+SelectedCategoryItemProvider.Header = Header;
+SelectedCategoryItemProvider.Channel = Channel;
+SelectedCategoryItemProvider.Infos = Infos;
+SelectedCategoryItemProvider.Description = Description;
+SelectedCategoryItemProvider.MemoArea = MemoArea;
 
-export default SelectedCategoryItem;
+export default SelectedCategoryItemProvider;

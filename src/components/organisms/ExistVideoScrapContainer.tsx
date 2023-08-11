@@ -5,7 +5,9 @@ import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
 import { Box, Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import ThumbnailImage from '../atoms/ThumbnailImage';
-import SelectedCategoryItem from './SelectedCategoryItem';
+import { useSelectedCategoryItem } from './SelectedCategoryItem';
+import { useCallback, useEffect } from 'react';
+import SelectedCategoryItemProvider from './SelectedCategoryItem';
 
 interface ExistVideoScrapContainerProps {
     contents: contentProps["content"][],
@@ -13,7 +15,10 @@ interface ExistVideoScrapContainerProps {
     setIsFetching: (isFetching: boolean) => void,
 }
 
-function VideoItemSummary({ thumbnailUrl, title, channelName, focusedContent }) {
+
+function VideoItemSummary({ content }) {
+    const { thumbnailUrl, title, channelName } = content;
+    const [, setSelectedContent] = useSelectedCategoryItem();
 
     return (
         <div
@@ -22,7 +27,9 @@ function VideoItemSummary({ thumbnailUrl, title, channelName, focusedContent }) 
                 boxShadow: 'none',
                 borderRadius: '0',
                 display: 'block',
-            }}>
+            }}
+            onClick={() => setSelectedContent(content)}
+        >
             <CardActionArea
                 sx={{
                     display: 'flex',
@@ -57,21 +64,20 @@ function VideoItemSummary({ thumbnailUrl, title, channelName, focusedContent }) 
                     </Typography>
                 </CardContent>
             </CardActionArea>
-
         </div>
     )
 }
 
-function FocusedVideoItem({ focusedContent }: contentProps['content']) {
-
-    return (
-        <SelectedCategoryItem defaultValue={focusedContent}>
-            <SelectedCategoryItem.Video />
-        </SelectedCategoryItem>
-    );
-}
-
 function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
+    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
+    const initiateSelectedContent = useCallback(() => {
+        setSelectedContent(contents[0]);
+    }, [contents]);
+
+    useEffect(() => {
+        initiateSelectedContent();
+    }, []);
+
     return (
         <RowContainer
             style={{
@@ -85,25 +91,31 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
             <VideoListWrapper>
                 <VideoList>
                     {contents.map((content) => {
-                        const { thumbnailUrl, title, channelName } = content;
-                        return <VideoItemSummary thumbnailUrl={thumbnailUrl} title={title} channelName={channelName} focusedContent={contents[0]} />
+                        return <VideoItemSummary content={content} />
                     })}
                 </VideoList>
-                <MemoContainer focusedContent={contents[3]} />
+                <MemoContainer />
             </VideoListWrapper>
             <Card sx={{
                 width: '100%',
                 height: 'fit-content',
                 marginBottom: '20px',
             }}>
-                <FocusedVideoItem focusedContent={contents[3]} />
-                <FocusedVideoItemDetails focusedContent={contents[3]} />
+                <FocusedVideoItem />
+                <FocusedVideoItemDetails />
             </Card>
         </RowContainer >
     )
 }
 
-function FocusedVideoItemDetails({ focusedContent }) {
+function FocusedVideoItem() {
+
+    return (
+        <SelectedCategoryItemProvider.Video />
+    );
+}
+
+function FocusedVideoItemDetails() {
     return (
         <ColumnContainer
             style={{
@@ -113,17 +125,15 @@ function FocusedVideoItemDetails({ focusedContent }) {
                 width: '100%',
                 background: 'white',
             }}>
-            <SelectedCategoryItem defaultValue={focusedContent}>
-                <SelectedCategoryItem.Header />
-                <SelectedCategoryItem.Channel />
-                <SelectedCategoryItem.Infos />
-                <SelectedCategoryItem.Description />
-            </SelectedCategoryItem>
+            <SelectedCategoryItemProvider.Header />
+            <SelectedCategoryItemProvider.Channel />
+            <SelectedCategoryItemProvider.Infos />
+            <SelectedCategoryItemProvider.Description />
         </ColumnContainer>
     )
 }
 
-function MemoContainer({ focusedContent }) {
+function MemoContainer() {
     return (
         <ColumnContainer
             style={{
@@ -138,9 +148,7 @@ function MemoContainer({ focusedContent }) {
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-all',
             }}>
-            <SelectedCategoryItem defaultValue={focusedContent}>
-                <SelectedCategoryItem.MemoArea />
-            </SelectedCategoryItem>
+            <SelectedCategoryItemProvider.MemoArea />
         </ColumnContainer >
     )
 }
@@ -167,7 +175,7 @@ const VideoListWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-`
+    `
 
 
 export default ExistVideoScrapContainer

@@ -3,6 +3,7 @@ import ScrapListHeader from '../molcules/ScrapListHeader';
 import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
 import { contentProps } from '../../types/ContentType';
 import ExistVideoScrapContainer from '../organisms/ExistVideoScrapContainer';
+import SelectedCategoryItemProvider from '../organisms/SelectedCategoryItem';
 
 interface VideoTemplateProps {
     videos: contentProps['content'][],
@@ -15,7 +16,12 @@ function VideoTemplate({ videos, isFetching, setIsFetching, count }: VideoTempla
     return (
         <>
             <ScrapListHeader type='비디오' count={count} />
-            {videos.length ? <ExistVideoScrapContainer contents={videos} isFetching={isFetching} setIsFetching={setIsFetching} /> : <EmptyScrapContainer />}
+            {videos.length ?
+                <SelectedCategoryItemProvider>
+                    <ExistVideoScrapContainer contents={videos} isFetching={isFetching} setIsFetching={setIsFetching} />
+                </SelectedCategoryItemProvider>
+                : <EmptyScrapContainer />
+            }
         </>
     )
 }
