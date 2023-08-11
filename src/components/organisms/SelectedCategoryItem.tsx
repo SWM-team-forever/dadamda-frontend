@@ -8,6 +8,8 @@ import ProfileImage from '../atoms/ProfileImage';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
 import Memo from '../molcules/Memo';
 import styled from 'styled-components';
+import { POST_CREATE_MEMO_URL } from '../../secret';
+import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
 
 const SelectedCategoryItemContext = createContext();
 
@@ -152,7 +154,48 @@ function Description() {
 
 function MemoArea() {
     const [selectedContent] = useSelectedCategoryItem();
-    const { memoList } = selectedContent;
+    const { scrapId, memoList } = selectedContent;
+    const [textAreaValue, setTextAreaValue] = useState('');
+
+    const handleSetValue = (e) => {
+        e.preventDefault();
+        setTextAreaValue(e.target.value);
+    }
+
+    function onEnterPress(e) {
+        if (e.keyCode == 13 && e.shiftKey == false) {
+            e.preventDefault();
+            createMemo();
+        }
+    }
+
+    function createMemo() {
+        const token = localStorage.getItem('token');
+        token &&
+            fetch(POST_CREATE_MEMO_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-AUTH-TOKEN": token,
+                },
+                body: JSON.stringify({
+                    scrapId: scrapId,
+                    memoText: textAreaValue,
+                }),
+            }).then((response) => {
+                return response.json().then(body => {
+                    if (response.ok) {
+                        return body;
+                    } else {
+                        throw new Error(body.resultCode);
+                    }
+                })
+            })
+                .then(() => {
+                    useDefaultSnackbar('메모가 추가되었습니다.', 'success');
+                })
+        // .catch(err => setError(err.message));
+    }
 
     return (
         <>
@@ -165,7 +208,7 @@ function MemoArea() {
                 style={{
                     width: '100%',
                 }}>
-                <StyledTextArea placeholder='메모를 입력해주세요.' minRows={4} />
+                <StyledTextArea placeholder='메모를 입력해주세요.' minRows={4} onKeyDown={onEnterPress} onChange={e => handleSetValue(e)} />
             </div>
         </>
     )

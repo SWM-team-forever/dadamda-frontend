@@ -5,7 +5,7 @@ import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
 import { Card } from '@mui/material';
 import { useSelectedCategoryItem } from './SelectedCategoryItem';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import SelectedCategoryItemProvider from './SelectedCategoryItem';
 import CategoryItemHorizontal from './CategoryItemHorizontal';
 
@@ -20,6 +20,10 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
     const initiateSelectedContent = useCallback(() => {
         setSelectedContent(contents[0]);
     }, [contents]);
+    const [token, setToken] = useState<string | null>(null);
+    useEffect(() => {
+        setToken(localStorage.getItem('token'));
+    }, []);
 
     useEffect(() => {
         initiateSelectedContent();
@@ -120,6 +124,7 @@ const VideoListWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    `
+    top: 0;
+`
 
 export default ExistVideoScrapContainer
