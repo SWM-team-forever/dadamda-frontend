@@ -73,6 +73,10 @@ function FocusedVideoItem({ focusedContent }: contentProps['content']) {
     return (
         <SelectedCategoryItem defaultValue={focusedContent}>
             <SelectedCategoryItem.Video />
+            <SelectedCategoryItem.Header />
+            <SelectedCategoryItem.Channel />
+            <SelectedCategoryItem.Infos />
+            <SelectedCategoryItem.Description />
         </SelectedCategoryItem>
     );
 }
@@ -110,16 +114,6 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
 }
 
 function FocusedVideoItemDetails({ focusedContent }) {
-    const videoMenus = [{
-        title: '게시일',
-        content: focusedContent.publishedDate,
-    }, {
-        title: '조회수',
-        content: focusedContent.watchedCnt,
-    }, {
-        title: '영상 길이',
-        content: focusedContent.playTime,
-    },]
     return (
         <ColumnContainer
             style={{
@@ -129,63 +123,10 @@ function FocusedVideoItemDetails({ focusedContent }) {
                 width: '100%',
                 background: 'white',
             }}>
-            <RowContainer
-                style={{
-                    gap: '5px',
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    justifyContent: 'space-between',
-                }}>
-                <ColumnContainer>
-                    <Typography
-                        sx={{
-                            wordBreak: 'break-all',
-                        }}>
-                        {focusedContent.siteName}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            fontSize: '1.25rem',
-                            lineHeight: '120%',
-                        }}>
-                        {focusedContent.title}
-                    </Typography>
-                </ColumnContainer>
-                <RowContainer style={{ gap: '5px' }}>
-                    <ShortcutIcon size='24' fill={theme.color.icon_color} />
-                    <MoreIcon size='24' fill={theme.color.icon_color} />
-                </RowContainer>
-            </RowContainer>
-            <RowContainer
-                style={{
-                    gap: '10px',
-                }}>
-                <ProfileImage size={24} source={focusedContent.channelImageUrl} />
-                <Typography>{focusedContent.channelName}</Typography>
-            </RowContainer>
-            <RowContainer style={{ justifyContent: 'space-between' }}>
-                {videoMenus.map(menu => {
-                    return (
-                        <>
-                            {menu.content &&
-                                <ColumnContainer style={{ alignItems: 'center', flex: '1' }}>
-                                    <Typography>{
-                                        typeof (menu.content) === 'number' ? getTimeDiff(menu.content) : menu.content
-                                    }</Typography>
-                                    <Typography>{menu.title}</Typography>
-                                </ColumnContainer>
-                            }
-                        </>
-                    )
-                })}
-            </RowContainer>
-            <RowContainer
-                style={{
-                    width: '100%',
-                    whiteSpace: 'pre-wrap',
-                }}>
-                {focusedContent.description}
-            </RowContainer>
+
+
+
+
         </ColumnContainer>
     )
 }
