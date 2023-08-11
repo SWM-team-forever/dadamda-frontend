@@ -55,7 +55,7 @@ function Video() {
 
 function Header() {
     const [selectedContent] = useSelectedCategoryItem();
-    const { siteName, title } = selectedContent;
+    const { siteName, title, pageUrl } = selectedContent;
 
     return (
         <RowContainer
@@ -81,7 +81,12 @@ function Header() {
                 </Typography>
             </ColumnContainer>
             <RowContainer style={{ gap: '5px' }}>
-                <ShortcutIcon size='24' fill={theme.color.icon_color} />
+                <div onClick={(e) => {
+                    e.stopPropagation();
+                    window.open(`${pageUrl}`);
+                }}>
+                    <ShortcutIcon size='24' fill={theme.color.icon_color} />
+                </div>
                 <MoreIcon size='24' fill={theme.color.icon_color} />
             </RowContainer>
         </RowContainer>
