@@ -57,8 +57,4 @@ function CategoryItemHorizontal({ content }) {
     )
 }
 
-const HorizontalCardWrapper = styled.div`
-
-`;
-
 export default CategoryItemHorizontal;
