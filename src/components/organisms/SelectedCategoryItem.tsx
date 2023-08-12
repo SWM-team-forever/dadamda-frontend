@@ -10,6 +10,10 @@ import Memo from '../molcules/Memo';
 import styled from 'styled-components';
 import { POST_CREATE_MEMO_URL } from '../../secret';
 import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
+import Tooltip from '../atoms/Tooltip';
+import ScrapEditModal from './ScrapEditModal';
+import ScrapDeleteModal from './ScrapDeleteModal';
+import Overlay from '../atoms/Overlay';
 
 const SelectedCategoryItemContext = createContext();
 
@@ -57,39 +61,90 @@ function Header() {
     const [selectedContent] = useSelectedCategoryItem();
     const { siteName, title, pageUrl } = selectedContent;
 
+    const scrapCardMenu = [{
+        name: '카드 수정하기',
+        onClick: () => {
+            hideTooltip();
+            showScrapEditModal();
+        },
+    }, {
+        name: '카드 삭제하기',
+        onClick: () => {
+            hideTooltip();
+            showScrapDeleteModal();
+        },
+    }];
+
+    function showTooltip() {
+        setIsTooltipVisible(true);
+    }
+
+    function hideTooltip() {
+        setIsTooltipVisible(false);
+    }
+
+    function showScrapEditModal() {
+        setIsScrapEditModalVisible(true);
+    }
+
+    function hideScrapEditModal() {
+        setIsScrapEditModalVisible(false);
+    }
+
+    function showScrapDeleteModal() {
+        setIsScrapDeleteModalVisible(true);
+    }
+
+    function hideScrapDeleteModal() {
+        setIsScrapDeleteModalVisible(false);
+    }
+
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+    const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
+    const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
     return (
-        <RowContainer
-            style={{
-                gap: '5px',
-                width: '100%',
-                boxSizing: 'border-box',
-                justifyContent: 'space-between',
-            }}>
-            <ColumnContainer>
-                <Typography
-                    sx={{
-                        wordBreak: 'break-all',
-                    }}>
-                    {siteName}
-                </Typography>
-                <Typography
-                    sx={{
-                        fontSize: '1.25rem',
-                        lineHeight: '120%',
-                    }}>
-                    {title}
-                </Typography>
-            </ColumnContainer>
-            <RowContainer style={{ gap: '5px' }}>
-                <div onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(`${pageUrl}`);
+        <>
+            <RowContainer
+                style={{
+                    gap: '5px',
+                    width: '100%',
+                    boxSizing: 'border-box',
+                    justifyContent: 'space-between',
                 }}>
-                    <ShortcutIcon size='24' fill={theme.color.icon_color} />
-                </div>
-                <MoreIcon size='24' fill={theme.color.icon_color} />
+                <ColumnContainer>
+                    <Typography
+                        sx={{
+                            wordBreak: 'break-all',
+                        }}>
+                        {siteName}
+                    </Typography>
+                    <Typography
+                        sx={{
+                            fontSize: '1.25rem',
+                            lineHeight: '120%',
+                        }}>
+                        {title}
+                    </Typography>
+                </ColumnContainer>
+                <RowContainer style={{ gap: '5px' }}>
+                    <div onClick={(e) => {
+                        e.stopPropagation();
+                        window.open(`${pageUrl}`);
+                    }}>
+                        <ShortcutIcon size='24' fill={theme.color.icon_color} />
+                    </div>
+                    <div onClick={() => showTooltip()}>
+                        <MoreIcon size='24' fill={theme.color.icon_color} />
+                    </div>
+                </RowContainer>
             </RowContainer>
-        </RowContainer>
+            {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
+            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={selectedContent} setError={setError} />}
+            {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={selectedContent.scrapId} setError={setError} />}
+            {(isScrapEditModalVisible || isScrapDeleteModalVisible) && <Overlay />}
+        </>
     )
 }
 
