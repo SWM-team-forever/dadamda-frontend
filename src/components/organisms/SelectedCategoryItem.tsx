@@ -171,6 +171,7 @@ function MemoArea() {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
             createMemo();
+            e.target.value = '';
         }
     }
 
