@@ -8,6 +8,7 @@ import { useSelectedCategoryItem } from './SelectedCategoryItem';
 import { useCallback, useEffect, useState } from 'react';
 import SelectedCategoryItemProvider from './SelectedCategoryItem';
 import CategoryItemHorizontal from './CategoryItemHorizontal';
+import CategoryItemVertical from './CategoryItemVertical';
 
 interface ExistVideoScrapContainerProps {
     contents: contentProps["content"][],
@@ -30,32 +31,42 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
     }, []);
 
     return (
-        <RowContainer
-            style={{
-                padding: '0 20px',
-                gap: '10px',
-                boxSizing: 'border-box',
-                width: '100%',
-                height: '100%',
-            }}
-        >
-            <VideoListWrapper>
-                <VideoList>
-                    {contents.map((content) => {
-                        return <CategoryItemHorizontal content={content} />
+        <>
+            {/* Desktop */}
+
+            <Desktop>
+                <VideoListWrapper>
+                    <VideoList>
+                        {contents.map((content) => {
+                            return <CategoryItemHorizontal content={content} />
+                        })}
+                    </VideoList>
+                    <MemoContainer />
+                </VideoListWrapper>
+                <Card sx={{
+                    width: '100%',
+                    height: 'fit-content',
+                    marginBottom: '20px',
+                }}>
+                    <FocusedVideoItem />
+                    <FocusedVideoItemDetails />
+                </Card>
+            </Desktop >
+
+            {/* Mobile */}
+            <Mobile>
+                <ColumnContainer>
+                    <SelectedCategoryItemProvider.Video />
+                    <FocusedVideoItemDetails />
+                    <MemoContainer />
+                </ColumnContainer>
+                <ColumnContainer>
+                    {contents.map(content => {
+                        return <CategoryItemVertical content={content} />
                     })}
-                </VideoList>
-                <MemoContainer />
-            </VideoListWrapper>
-            <Card sx={{
-                width: '100%',
-                height: 'fit-content',
-                marginBottom: '20px',
-            }}>
-                <FocusedVideoItem />
-                <FocusedVideoItemDetails />
-            </Card>
-        </RowContainer >
+                </ColumnContainer>
+            </Mobile>
+        </>
     )
 }
 
@@ -125,6 +136,29 @@ const VideoListWrapper = styled.div`
     flex-direction: column;
     gap: 10px;
     top: 0;
+`
+
+const Desktop = styled.div`
+    padding: 0 20px
+    gap: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
+`
+
+const Mobile = styled.div`
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 600px) {
+        display: none;
+    }
 `
 
 export default ExistVideoScrapContainer
