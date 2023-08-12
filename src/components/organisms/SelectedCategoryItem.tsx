@@ -135,12 +135,18 @@ function Header() {
                     }}>
                         <ShortcutIcon size='24' fill={theme.color.icon_color} />
                     </div>
-                    <div onClick={() => showTooltip()}>
+                    <div
+                        onClick={() => showTooltip()}
+                        style={{
+                            position: 'relative',
+                            height: 'fit-content',
+                        }}
+                    >
                         <MoreIcon size='24' fill={theme.color.icon_color} />
+                        {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
                     </div>
                 </RowContainer>
             </RowContainer>
-            {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={selectedContent} setError={setError} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={selectedContent.scrapId} setError={setError} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible) && <Overlay />}
