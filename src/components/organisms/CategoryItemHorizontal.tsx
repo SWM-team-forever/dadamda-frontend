@@ -1,5 +1,4 @@
 import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
-import styled from "styled-components";
 import ThumbnailImage from "../atoms/ThumbnailImage";
 import { useSelectedCategoryItem } from "./SelectedCategoryItem";
 import theme from "../../assets/styles/theme";
