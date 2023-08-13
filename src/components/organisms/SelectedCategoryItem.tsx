@@ -1,5 +1,5 @@
 import { TextareaAutosize, Typography } from '@mui/material';
-import { createContext, useContext, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
 import theme from '../../assets/styles/theme';
 import ColumnContainer from '../atoms/ColumnContainer';
 import { ShortcutIcon, MoreIcon } from '../atoms/Icon';
@@ -14,11 +14,16 @@ import Tooltip from '../atoms/Tooltip';
 import ScrapEditModal from './ScrapEditModal';
 import ScrapDeleteModal from './ScrapDeleteModal';
 import Overlay from '../atoms/Overlay';
+import { contentProps } from '../../types/ContentType';
 
-const SelectedCategoryItemContext = createContext();
+const SelectedCategoryItemContext = createContext({} as [contentProps['content'], Dispatch<SetStateAction<contentProps['content']>>]);
 
-function SelectedCategoryItemProvider({ children }) {
-    const selectedContentState = useState({});
+interface SelectedCategoryItemContextProviderProps {
+    children?: React.ReactNode,
+}
+
+function SelectedCategoryItemProvider({ children }: SelectedCategoryItemContextProviderProps) {
+    const selectedContentState = useState({} as contentProps['content']);
 
     return (
         <SelectedCategoryItemContext.Provider value={selectedContentState}>
@@ -163,7 +168,7 @@ function Channel() {
             style={{
                 gap: '10px',
             }}>
-            <ProfileImage size={24} source={channelImageUrl} />
+            {channelImageUrl && <ProfileImage size={24} source={channelImageUrl} />}
             <Typography>{channelName}</Typography>
         </RowContainer>
     )
@@ -223,12 +228,12 @@ function MemoArea() {
     const { scrapId, memoList } = selectedContent;
     const [textAreaValue, setTextAreaValue] = useState('');
 
-    const handleSetValue = (e) => {
+    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
     }
 
-    function onEnterPress(e) {
+    function onEnterPress(e: any) {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
             createMemo();
@@ -267,7 +272,7 @@ function MemoArea() {
     return (
         <>
             {
-                memoList?.map(memo => {
+                memoList?.map((memo) => {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                 })
             }

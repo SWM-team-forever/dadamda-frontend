@@ -1,4 +1,4 @@
-import { CardActionArea, Box, CardContent, Typography, Tooltip } from "@mui/material";
+import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
 import ThumbnailImage from "../atoms/ThumbnailImage";
 import { useSelectedCategoryItem } from "./SelectedCategoryItem";
 import theme from "../../assets/styles/theme";
@@ -9,8 +9,14 @@ import { ShortcutIcon, MoreIcon } from "../atoms/Icon";
 import Overlay from "../atoms/Overlay";
 import ScrapDeleteModal from "./ScrapDeleteModal";
 import ScrapEditModal from "./ScrapEditModal";
+import { contentProps } from "../../types/ContentType";
+import Tooltip from "../atoms/Tooltip";
 
-function CategoryItemVertical({ content }) {
+interface CategoryItemHorizontal {
+    content: contentProps['content'],
+}
+
+function CategoryItemVertical({ content }: CategoryItemHorizontal) {
     const { thumbnailUrl } = content;
     const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
 
@@ -38,7 +44,7 @@ function CategoryItemVertical({ content }) {
                         width: '100%',
                     }}
                 >
-                    <ThumbnailImage thumbnailUrl={thumbnailUrl} />
+                    {thumbnailUrl && <ThumbnailImage thumbnailUrl={thumbnailUrl} />}
                 </Box>
                 <Header content={content} />
             </CardActionArea>
@@ -46,7 +52,7 @@ function CategoryItemVertical({ content }) {
     )
 }
 
-function Header({ content }) {
+function Header({ content }: CategoryItemHorizontal) {
     const { siteName, title, pageUrl, scrapId } = content;
 
     const scrapCardMenu = [{

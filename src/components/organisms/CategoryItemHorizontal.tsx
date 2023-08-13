@@ -2,8 +2,13 @@ import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
 import ThumbnailImage from "../atoms/ThumbnailImage";
 import { useSelectedCategoryItem } from "./SelectedCategoryItem";
 import theme from "../../assets/styles/theme";
+import { contentProps } from "../../types/ContentType";
 
-function CategoryItemHorizontal({ content }) {
+interface CategoryItemHorizontal {
+    content: contentProps['content'],
+}
+
+function CategoryItemHorizontal({ content }: CategoryItemHorizontal) {
     const { thumbnailUrl, title, channelName } = content;
     const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
 
@@ -30,7 +35,7 @@ function CategoryItemHorizontal({ content }) {
                     sx={{
                         width: '30%'
                     }}>
-                    <ThumbnailImage thumbnailUrl={thumbnailUrl} />
+                    {thumbnailUrl && <ThumbnailImage thumbnailUrl={thumbnailUrl} />}
                 </Box>
                 <CardContent sx={{
                     width: '70%',
