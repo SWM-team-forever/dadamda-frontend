@@ -217,6 +217,7 @@ function Description() {
             style={{
                 width: '100%',
                 whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
             }}>
             {description}
         </RowContainer>
