@@ -7,6 +7,7 @@ import Chip from '../atoms/Chip';
 
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
+import ThumbnailImage from '../atoms/ThumbnailImage';
 
 interface ProductScrapCardProps {
     content: contentProps['content'],
@@ -25,7 +26,7 @@ function ProductScrapCard({ content, showMemoCreateModal, showTooltip }: Product
             }}>
             {content.siteName && <Chip>{content.siteName}</Chip>}
             {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            <CardImage src={content.thumbnailUrl} />
+            {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             {content.price && <ColoredTypography>{content.price}</ColoredTypography>}
             {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
             {content.memoList?.map(memo => {
@@ -51,12 +52,6 @@ const CardWrapper = styled.div`
     flex-direction: column;
     gap: 10px;
     background-color: white;
-    border-radius: 4px;
-`
-
-const CardImage = styled.img`
-    width: 100%;
-    height: 140px;
     border-radius: 4px;
 `
 

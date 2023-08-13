@@ -34,8 +34,6 @@ function MemoTextArea({ memos, setMemos }: MemoTextAreaProps) {
         })
     }
 
-    console.log(memos);
-
     return (
         <TextAreaWrapper>
             {memos && memos.length > 0 && <Label>메모</Label>}

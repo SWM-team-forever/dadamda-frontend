@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface OverlayProps {
-    children: React.ReactNode,
+    children?: React.ReactNode,
 }
 
 function Overlay({ children }: OverlayProps) {

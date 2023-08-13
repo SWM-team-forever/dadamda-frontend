@@ -11,7 +11,8 @@ import IconButton from '../atoms/IconButton';
 import ErrorHandler from '../../utility/ErrorHandler';
 import fab from '../../assets/icons/fab.png';
 import theme from '../../assets/styles/theme';
-import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL } from '../../secret';
+import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
+import VideoTemplate from './VideoTemplate';
 
 interface ScrapTemplateProps {
     type: string,
@@ -32,7 +33,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         'list': GET_LIST_SCRAP_URL,
         'article': GET_ARTICLE_SCRAP_URL,
         'product': GET_PRODUCT_SCRAP_URL,
-        'video': GET_PRODUCT_SCRAP_URL,
+        'video': GET_VIDEO_SCRAP_URL,
     }
 
     // const definedErrors = ['BR001', 'BR002', 'NF000', 'NF001', 'NF002', 'NF003', 'IS000'];
@@ -122,13 +123,16 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         }
     }, [isFetching]);
 
+    const providingTemplates = ['other', 'list', 'video'];
+
     return (
         <>
             {error && <ErrorHandler error={error} setError={setError} />}
             <ScrapListContainer>
                 {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
-                {(type !== 'other' && type !== 'list') && <NotReadyTemplate />}
+                {type === 'video' && <VideoTemplate videos={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
+                {!providingTemplates.includes(type) && <NotReadyTemplate />}
                 <IconButton
                     src={fab}
                     style={{

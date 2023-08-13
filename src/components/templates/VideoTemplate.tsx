@@ -1,0 +1,29 @@
+import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
+import ScrapListHeader from '../molcules/ScrapListHeader';
+import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
+import { contentProps } from '../../types/ContentType';
+import ExistVideoScrapContainer from '../organisms/ExistVideoScrapContainer';
+import SelectedCategoryItemProvider from '../organisms/SelectedCategoryItem';
+
+interface VideoTemplateProps {
+    videos: contentProps['content'][],
+    isFetching: boolean,
+    setIsFetching: (isFetching: boolean) => void,
+    count: number,
+}
+
+function VideoTemplate({ videos, isFetching, setIsFetching, count }: VideoTemplateProps) {
+    return (
+        <>
+            <ScrapListHeader type='비디오' count={count} />
+            {videos.length ?
+                <SelectedCategoryItemProvider>
+                    <ExistVideoScrapContainer contents={videos} isFetching={isFetching} setIsFetching={setIsFetching} />
+                </SelectedCategoryItemProvider>
+                : <EmptyScrapContainer />
+            }
+        </>
+    )
+}
+
+export default VideoTemplate;

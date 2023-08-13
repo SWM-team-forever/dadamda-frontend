@@ -22,6 +22,8 @@ const MemoContainer = styled.div`
     box-sizing: border-box;
     font-size: 14px;
     color: ${theme.color.text_gray_color};
+    white-space: pre-wrap;
+    word-break: break-all;
 `
 
 const ImageMemo = styled.img<{ imageSource?: string }>`
