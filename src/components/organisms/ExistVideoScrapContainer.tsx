@@ -21,6 +21,7 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
     const initiateSelectedContent = useCallback(() => {
         setSelectedContent(contents[0]);
     }, [contents]);
+
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
@@ -57,15 +58,21 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
             <Mobile>
                 <ColumnContainer>
                     <SelectedCategoryItemProvider.Video />
-                    <FocusedVideoItemDetails />
-                    <MemoContainer />
+                    <div style={{
+                        height: 'calc(100% - 100vw * 9 / 16 - 116px)',
+                        width: '100%',
+                        overflow: 'auto',
+                        position: 'fixed',
+                        top: 'calc(100vw * 9 / 16 + 116px)',
+                    }}>
+                        <FocusedVideoItemDetails />
+                        <MobileMemoContainer />
+                        {contents.map(content => {
+                            return <CategoryItemVertical content={content} />
+                        })}
+                    </div>
                 </ColumnContainer>
-                <ColumnContainer>
-                    {contents.map(content => {
-                        return <CategoryItemVertical content={content} />
-                    })}
-                </ColumnContainer>
-            </Mobile>
+            </Mobile >
         </>
     )
 }
@@ -107,9 +114,27 @@ function MemoContainer() {
                 width: '100%',
                 overflow: 'auto',
                 boxSizing: 'border-box',
+                justifyContent: 'flex-end',
             }}>
             <SelectedCategoryItemProvider.MemoArea />
         </ColumnContainer >
+    )
+}
+
+function MobileMemoContainer() {
+    return (
+        <ColumnContainer
+            style={{
+                gap: '10px',
+                backgroundColor: 'white',
+                borderRadius: '4px',
+                padding: '10px',
+                width: '100%',
+                overflow: 'auto',
+                boxSizing: 'border-box',
+            }}>
+            <SelectedCategoryItemProvider.MemoArea />
+        </ColumnContainer>
     )
 }
 
