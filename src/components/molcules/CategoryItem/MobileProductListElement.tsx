@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CardActionArea, TextareaAutosize } from "@mui/material";
 import styled from "styled-components";
 
@@ -20,6 +21,7 @@ interface MobileProductListElementProps {
 function MobileProductListElement({ content }: MobileProductListElementProps) {
     const { thumbnailUrl, price, memoList, scrapId } = content;
     const varient = 'mobileProduct';
+    const [open, setOpen] = useState(false);
 
     function Info({ content }: MobileProductListElementProps) {
         const { siteName, title } = content;
@@ -50,6 +52,10 @@ function MobileProductListElement({ content }: MobileProductListElementProps) {
                 width: '100%',
                 backgroundColor: 'white',
             }}
+            onClick={(e) => {
+                e.stopPropagation();
+                setOpen(!open);
+            }}
         >
             <CardActionArea
                 sx={{
@@ -70,7 +76,7 @@ function MobileProductListElement({ content }: MobileProductListElementProps) {
                     }}
                 >
                     <PriceElement price={price} varient={varient} />
-                    <MemoAreaElement memoList={memoList} scrapId={scrapId} />
+                    {open && <MemoAreaElement memoList={memoList} scrapId={scrapId} />}
                 </ColumnContainer>
             </CardActionArea>
         </div>
