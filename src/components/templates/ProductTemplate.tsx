@@ -3,6 +3,7 @@ import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
 import { contentProps } from '../../types/ContentType';
 import ExistVideoScrapContainer from '../organisms/ExistVideoScrapContainer';
 import SelectedCategoryItemProvider from '../organisms/SelectedCategoryItem';
+import ExistProductScrapContainer from '../organisms/ExistProductScrapContainer';
 
 interface ProductTemplateProps {
     products: contentProps['content'][],
@@ -17,7 +18,7 @@ function ProductTemplate({ products, isFetching, setIsFetching, count }: Product
             <ScrapListHeader type='상품' count={count} />
             {products.length ?
                 <SelectedCategoryItemProvider>
-                    <ExistVideoScrapContainer contents={products} isFetching={isFetching} setIsFetching={setIsFetching} />
+                    <ExistProductScrapContainer contents={products} isFetching={isFetching} setIsFetching={setIsFetching} />
                 </SelectedCategoryItemProvider>
                 : <EmptyScrapContainer />
             }
