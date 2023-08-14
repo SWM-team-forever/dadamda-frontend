@@ -37,6 +37,7 @@ const siteNameStyles = {
     mobileVideo: mobileVideoStyle,
     desktopVideo: desktopVideoStyle,
 }
+
 export function SiteNameElement({ siteName, varient }) {
     return (
         <Typography sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>

@@ -1,15 +1,29 @@
 import { Typography } from "@mui/material";
-import ProfileImage from "../ProfileImage";
-import RowContainer from "../RowContainer";
+import theme from "../../../assets/styles/theme";
 
-export function ChannelElement({ channelImageUrl, channelName }) {
+const mobileVideoStyle = {
+
+}
+
+const desktopVideoItemStyle = {
+
+}
+
+const desktopVideoListStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '0.625rem',
+    fontWeight: '400',
+    lineHeight: '100%',
+}
+
+const siteNameStyles = {
+    mobileVideo: mobileVideoStyle,
+    desktopVideoItem: desktopVideoItemStyle,
+    desktopVideoList: desktopVideoListStyle,
+}
+
+export function ChannelElement({ channelName, varient }) {
     return (
-        <RowContainer
-            style={{
-                gap: '10px',
-            }}>
-            {channelImageUrl && <ProfileImage size={24} source={channelImageUrl} />}
-            <Typography>{channelName}</Typography>
-        </RowContainer>
-    )
+        <Typography sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>{channelName}</Typography>
+    );
 }

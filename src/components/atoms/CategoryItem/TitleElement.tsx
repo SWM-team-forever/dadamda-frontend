@@ -32,8 +32,21 @@ const mobileVideoStyle = {
 
 }
 
-const desktopVideoStyle = {
+const desktopVideoItemStyle = {
 
+}
+
+const desktopVideoListStyle = {
+    fontSize: '0.75rem',
+    lineHeight: '120%',
+    fontWeight: '400',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '2',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
+    color: theme.color.text_gray_color,
 }
 
 const siteNameStyles = {
@@ -41,7 +54,8 @@ const siteNameStyles = {
     desktopProductItem: desktopProductItemStyle,
     desktopProductList: desktopProductListStyle,
     mobileVideo: mobileVideoStyle,
-    desktopVideo: desktopVideoStyle,
+    desktopVideoList: desktopVideoListStyle,
+    desktopVideoItem: desktopVideoItemStyle,
 }
 
 
