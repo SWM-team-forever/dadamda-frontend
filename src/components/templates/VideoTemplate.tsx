@@ -4,6 +4,8 @@ import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
 import { contentProps } from '../../types/ContentType';
 import ExistVideoScrapContainer from '../organisms/ExistVideoScrapContainer';
 import SelectedCategoryItemProvider from '../organisms/SelectedCategoryItem';
+import CategoryItemSelectedProvider from '../../context/CategoryItemContext';
+import CategoryItemListProvider from '../../context/CategoryListContext';
 
 interface VideoTemplateProps {
     videos: contentProps['content'][],
@@ -17,9 +19,11 @@ function VideoTemplate({ videos, isFetching, setIsFetching, count }: VideoTempla
         <>
             <ScrapListHeader type='비디오' count={count} />
             {videos.length ?
-                <SelectedCategoryItemProvider>
-                    <ExistVideoScrapContainer contents={videos} isFetching={isFetching} setIsFetching={setIsFetching} />
-                </SelectedCategoryItemProvider>
+                <CategoryItemListProvider>
+                    <CategoryItemSelectedProvider>
+                        <ExistVideoScrapContainer contents={videos} isFetching={isFetching} setIsFetching={setIsFetching} />
+                    </CategoryItemSelectedProvider>
+                </CategoryItemListProvider>
                 : <EmptyScrapContainer />
             }
         </>

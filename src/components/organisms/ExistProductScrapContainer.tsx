@@ -1,15 +1,12 @@
 import styled from 'styled-components';
-import RowContainer from '../atoms/RowContainer';
 import ColumnContainer from '../atoms/ColumnContainer';
-import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
 import { Card } from '@mui/material';
-import { useSelectedCategoryItem } from './SelectedCategoryItem';
 import { useCallback, useEffect, useState } from 'react';
-import SelectedCategoryItemProvider from './SelectedCategoryItem';
-import CategoryItemHorizontal from './CategoryItemHorizontal';
-import CategoryItemVertical from './CategoryItemVertical';
 import AdvancedCarousel from '../molcules/AdvancedCarousel';
+import { useCategoryItemList } from '../../context/CategoryListContext';
+import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
+import MobileProductListElement from '../molcules/CategoryItem/MobileProductListElement';
 
 interface ExistProductScrapContainerProps {
     contents: contentProps["content"][],
@@ -18,9 +15,11 @@ interface ExistProductScrapContainerProps {
 }
 
 function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProps) {
-    const [, setSelectedContent] = useSelectedCategoryItem();
+    const [, setSelectedContent] = useCategoryItemSelected();
+    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const initiateSelectedContent = useCallback(() => {
         setSelectedContent(contents[0]);
+        setCategoryItemList(contents);
     }, [contents]);
 
     const [token, setToken] = useState<string | null>(null);
@@ -37,7 +36,7 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
             {/* Desktop */}
 
             <Desktop>
-                <AdvancedCarousel contents={contents} />
+                <AdvancedCarousel />
                 <Card sx={{
                     display: 'flex',
                 }}>
@@ -53,20 +52,9 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
             {/* Mobile */}
             <Mobile>
                 <ColumnContainer>
-                    <SelectedCategoryItemProvider.Video />
-                    <div style={{
-                        height: 'calc(100% - 100vw * 9 / 16 - 116px)',
-                        width: '100%',
-                        overflow: 'auto',
-                        position: 'fixed',
-                        top: 'calc(100vw * 9 / 16 + 116px)',
-                    }}>
-                        <FocusedProductItemDetails />
-                        <MobileMemoContainer />
-                        {contents.map(content => {
-                            return <CategoryItemVertical content={content} />
-                        })}
-                    </div>
+                    {contents.map(content => {
+                        return <MobileProductListElement content={content} />
+                    })}
                 </ColumnContainer>
             </Mobile >
         </>
@@ -80,7 +68,7 @@ function FocusedThumbnail() {
             width: '30%',
             padding: '10px',
         }}>
-            <SelectedCategoryItemProvider.Thumbnail />
+            <CategoryItemSelectedProvider.Thumbnail />
         </div>
     );
 }
@@ -95,10 +83,10 @@ function FocusedProductItemDetails() {
                 width: '100%',
                 background: 'white',
             }}>
-            <SelectedCategoryItemProvider.Header />
-            <SelectedCategoryItemProvider.Price />
-            <SelectedCategoryItemProvider.Description />
-            <SelectedCategoryItemProvider.MemoArea />
+            <CategoryItemSelectedProvider.Header />
+            <CategoryItemSelectedProvider.Price />
+            <CategoryItemSelectedProvider.Description />
+            <CategoryItemSelectedProvider.MemoArea />
         </ColumnContainer>
     )
 }
@@ -115,7 +103,7 @@ function MobileMemoContainer() {
                 overflow: 'auto',
                 boxSizing: 'border-box',
             }}>
-            <SelectedCategoryItemProvider.MemoArea />
+            <CategoryItemSelectedProvider.MemoArea />
         </ColumnContainer>
     )
 }
