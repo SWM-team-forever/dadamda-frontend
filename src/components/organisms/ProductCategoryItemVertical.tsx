@@ -66,8 +66,11 @@ function Info({ content }: ProductCategoryItemHorizontal) {
                     justifyContent: 'space-between',
                     padding: '10px',
                 }}>
-                <ColumnContainer>
-                    <Typography
+                <ColumnContainer
+                    style={{
+                        width: '100%',
+                    }}>
+                    <Typography noWrap
                         sx={{
                             fontSize: '0.9375rem',
                             lineHeight: '120%',
