@@ -5,14 +5,21 @@ const mobileProductStyle = {
     fontSize: '0.75rem',
     wordBreak: 'break-all',
     color: theme.color.text_gray_color,
+    fontWeight: '400',
 }
 
 const desktopProductListStyle = {
-
+    fontSize: '0.75rem',
+    wordBreak: 'break-all',
+    color: theme.color.text_gray_color,
+    fontWeight: '400',
 }
 
 const desktopProductItemStyle = {
-
+    fontSize: '0.75rem',
+    wordBreak: 'break-all',
+    color: theme.color.text_gray_color,
+    fontWeight: '400',
 }
 
 const mobileVideoStyle = {

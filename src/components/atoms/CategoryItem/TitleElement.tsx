@@ -6,6 +6,7 @@ const mobileProductStyle = {
     fontSize: '0.875rem',
     lineHeight: '120%',
     color: theme.color.text_gray_color,
+    fontWeight: '700',
 }
 
 const desktopProductItemStyle = {
