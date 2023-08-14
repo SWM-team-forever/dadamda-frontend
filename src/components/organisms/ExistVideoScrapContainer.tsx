@@ -36,7 +36,12 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
 
             <Desktop>
                 <VideoListWrapper>
-                    <CategoryItemListProvider.DesktopVideoList />
+                    <div style={{
+                        flex: '1',
+                        overflow: 'auto',
+                    }}>
+                        <CategoryItemListProvider.DesktopVideoList />
+                    </div>
                     <MemoContainer />
                 </VideoListWrapper>
                 <Card sx={{
@@ -81,7 +86,7 @@ function FocusedVideoItemDetails() {
                 background: 'white',
             }}>
             <CategoryItemSelectedProvider.Header />
-            <CategoryItemSelectedProvider.Channel />
+            <CategoryItemSelectedProvider.ChannelProfile />
             <CategoryItemSelectedProvider.Infos />
             <CategoryItemSelectedProvider.Description />
         </ColumnContainer>
@@ -96,7 +101,7 @@ function MemoContainer() {
                 backgroundColor: 'white',
                 borderRadius: '4px',
                 padding: '10px',
-                height: 'calc(50% - 5px)',
+                flex: '1',
                 width: '100%',
                 overflow: 'auto',
                 boxSizing: 'border-box',
@@ -110,13 +115,10 @@ const VideoListWrapper = styled.div`
     width: 400px;
     padding: 0 10px;
     height: calc(100% - 74px);
-    overflow: auto;
     box-sizing: border-box;
-    position: sticky;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    top: 0;
 `
 
 const Desktop = styled.div`
