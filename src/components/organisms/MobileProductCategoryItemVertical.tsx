@@ -49,8 +49,24 @@ function MobileProductCategoryItemVertical({ content }: MobileProductCategoryIte
                 >
                     {thumbnailUrl && <ThumbnailImage thumbnailUrl={thumbnailUrl} />}
                 </Box>
-                <ColumnContainer>
-                    {price}
+                <ColumnContainer
+                    style={{
+                        width: '100%',
+                        padding: '10px',
+                        boxSizing: 'border-box',
+                        gap: '5px',
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            fontSize: '0.875rem',
+                            color: theme.color.primary_color,
+                            fontWeight: '700',
+                            lineHeight: '160%',
+                        }}
+                    >
+                        {price}
+                    </Typography>
                     <MemoArea content={content} />
                 </ColumnContainer>
             </CardActionArea>
@@ -118,12 +134,13 @@ function Info({ content }: MobileProductCategoryItemHorizontal) {
                     <Typography
                         sx={{
                             wordBreak: 'break-all',
+                            fontSize: '0.75rem',
                         }}>
                         {siteName}
                     </Typography>
                     <Typography
                         sx={{
-                            fontSize: '1.25rem',
+                            fontSize: '0.875rem',
                             lineHeight: '120%',
                         }}>
                         {title}
