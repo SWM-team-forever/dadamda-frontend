@@ -85,4 +85,10 @@ const StyledTextArea = styled(TextareaAutosize)`
     border: none;
     border-radius: 4px;
     padding: 10px;
+    font-size: 14px;
+    color: ${theme.color.text_gray_color};
+    font-family: 'NanumSquare', sans-serif;
+    &::placeholder {
+        color: ${theme.color.text_gray_color};
+    }
 `;
