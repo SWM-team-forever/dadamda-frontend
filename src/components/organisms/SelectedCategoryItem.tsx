@@ -255,7 +255,7 @@ function Price() {
 }
 
 function MemoArea() {
-    const [selectedContent] = useSelectedCategoryItem();
+    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
     const { scrapId, memoList } = selectedContent;
     const [textAreaValue, setTextAreaValue] = useState('');
 
@@ -264,10 +264,18 @@ function MemoArea() {
         setTextAreaValue(e.target.value);
     }
 
+    let createdMemoCount = 0;
+
     function onEnterPress(e: any) {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
             createMemo();
+            createdMemoCount += 1;
+            const changedMemoList = [...selectedContent.memoList, {
+                memoId: -1 * createdMemoCount,
+                memoText: e.target.value,
+            }];
+            setSelectedContent({ ...selectedContent, memoList: changedMemoList });
             e.target.value = '';
         }
     }
