@@ -23,7 +23,10 @@ const desktopProductItemStyle = {
 }
 
 const mobileVideoStyle = {
-
+    color: theme.color.text_gray_color,
+    fontSize: '0.75rem',
+    fontWeight: '400',
+    lineHeight: '160%',
 }
 
 const desktopVideoStyle = {
