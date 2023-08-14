@@ -23,7 +23,8 @@ function ProductCategoryItemVertical({ content }: ProductCategoryItemHorizontal)
     return (
         <div
             style={{
-                minWidth: '196px',
+                maxWidth: '196px',
+                width: '100%',
                 boxShadow: 'none',
                 borderRadius: '0',
                 display: 'block',
