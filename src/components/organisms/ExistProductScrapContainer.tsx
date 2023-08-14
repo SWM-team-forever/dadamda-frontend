@@ -45,7 +45,7 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
                     <ColumnContainer style={{
                         flex: '1'
                     }}>
-                        <FocusedVideoItemDetails />
+                        <FocusedProductItemDetails />
                     </ColumnContainer>
                 </Card>
             </Desktop >
@@ -61,7 +61,7 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
                         position: 'fixed',
                         top: 'calc(100vw * 9 / 16 + 116px)',
                     }}>
-                        <FocusedVideoItemDetails />
+                        <FocusedProductItemDetails />
                         <MobileMemoContainer />
                         {contents.map(content => {
                             return <CategoryItemVertical content={content} />
@@ -85,7 +85,7 @@ function FocusedThumbnail() {
     );
 }
 
-function FocusedVideoItemDetails() {
+function FocusedProductItemDetails() {
     return (
         <ColumnContainer
             style={{
@@ -100,24 +100,6 @@ function FocusedVideoItemDetails() {
             <SelectedCategoryItemProvider.Description />
             <SelectedCategoryItemProvider.MemoArea />
         </ColumnContainer>
-    )
-}
-
-function MemoContainer() {
-    return (
-        <ColumnContainer
-            style={{
-                gap: '10px',
-                backgroundColor: 'white',
-                borderRadius: '4px',
-                padding: '10px',
-                height: 'calc(50% - 5px)',
-                width: '100%',
-                overflow: 'auto',
-                boxSizing: 'border-box',
-            }}>
-            <SelectedCategoryItemProvider.MemoArea />
-        </ColumnContainer >
     )
 }
 
@@ -137,30 +119,6 @@ function MobileMemoContainer() {
         </ColumnContainer>
     )
 }
-
-const VideoList = styled.section`
-    width: 100%;
-    height: calc(50% - 5px);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    box-shadow: ${theme.style.shadow};
-    border-radius: 4px;
-    overflow: auto;
-`
-
-const VideoListWrapper = styled.div`
-    width: 400px;
-    padding: 0 10px;
-    overflow: auto;
-    box-sizing: border-box;
-    position: sticky;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    top: 0;
-`
 
 const Desktop = styled.div`
     padding: 20px;
