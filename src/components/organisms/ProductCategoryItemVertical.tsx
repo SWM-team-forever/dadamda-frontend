@@ -60,13 +60,12 @@ function Info({ content }: ProductCategoryItemHorizontal) {
             style={{
                 boxSizing: 'border-box',
                 padding: '10px',
-                width: '100%',
+                width: '196px',
             }}>
             <Typography noWrap
                 sx={{
                     fontSize: '0.9375rem',
                     lineHeight: '120%',
-                    width: '196px',
                 }}>
                 {title}
             </Typography>
