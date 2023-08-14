@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import SelectedCategoryItemProvider from './SelectedCategoryItem';
 import CategoryItemHorizontal from './CategoryItemHorizontal';
 import CategoryItemVertical from './CategoryItemVertical';
+import AdvancedCarousel from '../molcules/AdvancedCarousel';
 
 interface ExistProductScrapContainerProps {
     contents: contentProps["content"][],
@@ -31,20 +32,12 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
         initiateSelectedContent();
     }, []);
 
-    console.log('contents', contents);
-
     return (
         <>
             {/* Desktop */}
 
             <Desktop>
-                <VideoListWrapper>
-                    <VideoList>
-                        {contents.map((content) => {
-                            return <CategoryItemHorizontal content={content} />
-                        })}
-                    </VideoList>
-                </VideoListWrapper>
+                <AdvancedCarousel contents={contents} />
                 <Card sx={{
                     display: 'flex',
                 }}>
