@@ -15,6 +15,7 @@ import ScrapEditModal from './ScrapEditModal';
 import ScrapDeleteModal from './ScrapDeleteModal';
 import Overlay from '../atoms/Overlay';
 import { contentProps } from '../../types/ContentType';
+import ThumbnailImage from '../atoms/ThumbnailImage';
 
 const SelectedCategoryItemContext = createContext({} as [contentProps['content'], Dispatch<SetStateAction<contentProps['content']>>]);
 
@@ -59,6 +60,17 @@ function Video() {
                     height: '100%',
                 }} />
         </div>
+    );
+}
+
+function Thumbnail() {
+    const [selectedContent] = useSelectedCategoryItem();
+    const thumbnailUrl = selectedContent.thumbnailUrl;
+
+    return (
+        <>
+            {thumbnailUrl && <ThumbnailImage thumbnailUrl={thumbnailUrl} />}
+        </>
     );
 }
 
@@ -224,6 +236,24 @@ function Description() {
     )
 }
 
+function Price() {
+    const [selectedContent] = useSelectedCategoryItem();
+    const { price } = selectedContent;
+
+    return (
+        <RowContainer
+            style={{
+                width: '100%',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-all',
+                color: theme.color.primary_color,
+                fontWeight: 'bold',
+            }}>
+            {price}
+        </RowContainer>
+    )
+}
+
 function MemoArea() {
     const [selectedContent] = useSelectedCategoryItem();
     const { scrapId, memoList } = selectedContent;
@@ -305,5 +335,7 @@ SelectedCategoryItemProvider.Channel = Channel;
 SelectedCategoryItemProvider.Infos = Infos;
 SelectedCategoryItemProvider.Description = Description;
 SelectedCategoryItemProvider.MemoArea = MemoArea;
+SelectedCategoryItemProvider.Thumbnail = Thumbnail;
+SelectedCategoryItemProvider.Price = Price;
 
 export default SelectedCategoryItemProvider;

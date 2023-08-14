@@ -31,6 +31,8 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
         initiateSelectedContent();
     }, []);
 
+    console.log('contents', contents);
+
     return (
         <>
             {/* Desktop */}
@@ -42,15 +44,16 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
                             return <CategoryItemHorizontal content={content} />
                         })}
                     </VideoList>
-                    <MemoContainer />
                 </VideoListWrapper>
                 <Card sx={{
-                    width: '100%',
-                    height: 'fit-content',
-                    marginBottom: '20px',
+                    display: 'flex',
                 }}>
-                    <FocusedVideoItem />
-                    <FocusedVideoItemDetails />
+                    <FocusedThumbnail />
+                    <ColumnContainer style={{
+                        flex: '1'
+                    }}>
+                        <FocusedVideoItemDetails />
+                    </ColumnContainer>
                 </Card>
             </Desktop >
 
@@ -77,10 +80,15 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
     )
 }
 
-function FocusedVideoItem() {
+function FocusedThumbnail() {
 
     return (
-        <SelectedCategoryItemProvider.Video />
+        <div style={{
+            width: '30%',
+            padding: '10px',
+        }}>
+            <SelectedCategoryItemProvider.Thumbnail />
+        </div>
     );
 }
 
@@ -95,9 +103,9 @@ function FocusedVideoItemDetails() {
                 background: 'white',
             }}>
             <SelectedCategoryItemProvider.Header />
-            <SelectedCategoryItemProvider.Channel />
-            <SelectedCategoryItemProvider.Infos />
+            <SelectedCategoryItemProvider.Price />
             <SelectedCategoryItemProvider.Description />
+            <SelectedCategoryItemProvider.MemoArea />
         </ColumnContainer>
     )
 }
@@ -152,7 +160,6 @@ const VideoList = styled.section`
 const VideoListWrapper = styled.div`
     width: 400px;
     padding: 0 10px;
-    height: calc(100% - 74px);
     overflow: auto;
     box-sizing: border-box;
     position: sticky;
@@ -163,12 +170,12 @@ const VideoListWrapper = styled.div`
 `
 
 const Desktop = styled.div`
-    padding: 0 20px
+    padding: 20px;
     gap: 10px;
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
     display: flex;
+    flex-direction: column;
     @media screen and (max-width: 600px) {
         display: none;
     }
