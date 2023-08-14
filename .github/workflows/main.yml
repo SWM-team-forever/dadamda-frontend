@@ -1,12 +1,12 @@
-name: CI/CD Workflow
+name: front dev deploy
 
 on:
   push:
-    branches: [main]
+    branches: [ develop ]
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
