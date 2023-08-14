@@ -23,11 +23,10 @@ function ProductCategoryItemVertical({ content }: ProductCategoryItemHorizontal)
     return (
         <div
             style={{
-                maxWidth: '196px',
-                width: '100%',
-                boxShadow: 'none',
-                borderRadius: '0',
-                display: 'block',
+                width: '196px',
+                boxShadow: theme.style.shadow,
+                margin: '10px',
+                boxSizing: 'border-box',
                 backgroundColor: `${selectedContent.scrapId === content.scrapId ? theme.color.background_color : 'white'}`,
             }}
             onClick={() => setSelectedContent(content)}
@@ -57,36 +56,28 @@ function Info({ content }: ProductCategoryItemHorizontal) {
     const { price, title, pageUrl, scrapId } = content;
 
     return (
-        <>
-            <RowContainer
-                style={{
-                    gap: '5px',
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    justifyContent: 'space-between',
-                    padding: '10px',
+        <ColumnContainer
+            style={{
+                boxSizing: 'border-box',
+                padding: '10px',
+                width: '100%',
+            }}>
+            <Typography noWrap
+                sx={{
+                    fontSize: '0.9375rem',
+                    lineHeight: '120%',
+                    width: '196px',
                 }}>
-                <ColumnContainer
-                    style={{
-                        width: '100%',
-                    }}>
-                    <Typography noWrap
-                        sx={{
-                            fontSize: '0.9375rem',
-                            lineHeight: '120%',
-                        }}>
-                        {title}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            fontSize: '0.9375rem',
-                            color: theme.color.primary_color,
-                        }}>
-                        {price}
-                    </Typography>
-                </ColumnContainer>
-            </RowContainer>
-        </>
+                {title}
+            </Typography>
+            <Typography
+                sx={{
+                    fontSize: '0.9375rem',
+                    color: theme.color.primary_color,
+                }}>
+                {price}
+            </Typography>
+        </ColumnContainer>
     )
 }
 

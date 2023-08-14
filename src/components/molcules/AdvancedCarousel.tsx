@@ -29,6 +29,7 @@ const AdvancedCarousel = ({ contents }) => {
                     scrollSnapType: 'x mandatory',
                     flex: '1',
                     padding: '0 10px',
+                    boxSizing: 'border-box',
                 }}
             >
                 {contents.map((content) => (
