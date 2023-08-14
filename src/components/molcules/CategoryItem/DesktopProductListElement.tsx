@@ -1,17 +1,35 @@
-import { CardActionArea, Box, Typography } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 import theme from "../../../assets/styles/theme";
 import { contentProps } from "../../../types/ContentType";
 import ColumnContainer from "../../atoms/ColumnContainer";
-import ThumbnailImage from "../../atoms/ThumbnailImage";
 import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
+import { ThumbnailElement } from "../../atoms/CategoryItem/ThumbnailElement";
+import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
+import { PriceElement } from "../../atoms/CategoryItem/PriceElement";
 
 interface DesktopProductListElementProps {
     content: contentProps['content'],
 }
 
 function DesktopProductListElement({ content }: DesktopProductListElementProps) {
-    const { thumbnailUrl } = content;
+    const { thumbnailUrl, price, title } = content;
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const varient = 'desktopProductList';
+
+    function Info() {
+
+        return (
+            <ColumnContainer
+                style={{
+                    boxSizing: 'border-box',
+                    padding: '10px',
+                    width: '196px',
+                }}>
+                <TitleElement title={title} varient={varient} />
+                <PriceElement price={price} varient={varient} />
+            </ColumnContainer>
+        )
+    }
 
     return (
         <div
@@ -32,45 +50,12 @@ function DesktopProductListElement({ content }: DesktopProductListElementProps) 
                     gap: '5px',
                 }}
             >
-                <Box
-                    sx={{
-                        width: '100%',
-                    }}
-                >
-                    {thumbnailUrl && <ThumbnailImage thumbnailUrl={thumbnailUrl} />}
-                </Box>
-                <Info content={content} />
+                <ThumbnailElement thumbnailUrl={thumbnailUrl} />
+                <Info />
             </CardActionArea>
         </div>
     )
 }
 
-function Info({ content }: DesktopProductListElementProps) {
-    const { price, title } = content;
-
-    return (
-        <ColumnContainer
-            style={{
-                boxSizing: 'border-box',
-                padding: '10px',
-                width: '196px',
-            }}>
-            <Typography noWrap
-                sx={{
-                    fontSize: '0.9375rem',
-                    lineHeight: '120%',
-                }}>
-                {title}
-            </Typography>
-            <Typography
-                sx={{
-                    fontSize: '0.9375rem',
-                    color: theme.color.primary_color,
-                }}>
-                {price}
-            </Typography>
-        </ColumnContainer>
-    )
-}
 
 export default DesktopProductListElement;

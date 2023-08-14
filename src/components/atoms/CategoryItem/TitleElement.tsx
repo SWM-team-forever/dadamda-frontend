@@ -8,8 +8,23 @@ const mobileProductStyle = {
     color: theme.color.text_gray_color,
 }
 
-const desktopProductStyle = {
+const desktopProductItemStyle = {
+    fontSize: '1.25rem',
+    lineHeight: '120%',
+    fontWeight: '700',
+    color: theme.color.text_gray_color,
+}
 
+const desktopProductListStyle = {
+    fontSize: '0.9375rem',
+    lineHeight: '120%',
+    fontWeight: '400',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '2',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
 }
 
 const mobileVideoStyle = {
@@ -22,7 +37,8 @@ const desktopVideoStyle = {
 
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
-    desktopProduct: desktopProductStyle,
+    desktopProductItem: desktopProductItemStyle,
+    desktopProductList: desktopProductListStyle,
     mobileVideo: mobileVideoStyle,
     desktopVideo: desktopVideoStyle,
 }

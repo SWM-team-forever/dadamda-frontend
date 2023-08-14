@@ -7,7 +7,11 @@ const mobileProductStyle = {
     color: theme.color.text_gray_color,
 }
 
-const desktopProductStyle = {
+const desktopProductListStyle = {
+
+}
+
+const desktopProductItemStyle = {
 
 }
 
@@ -21,11 +25,11 @@ const desktopVideoStyle = {
 
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
-    desktopProduct: desktopProductStyle,
+    desktopProductItem: desktopProductItemStyle,
+    desktopProductList: desktopProductListStyle,
     mobileVideo: mobileVideoStyle,
     desktopVideo: desktopVideoStyle,
 }
-
 export function SiteNameElement({ siteName, varient }) {
     return (
         <Typography sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>

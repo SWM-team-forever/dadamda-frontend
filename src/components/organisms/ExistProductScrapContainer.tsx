@@ -15,8 +15,8 @@ interface ExistProductScrapContainerProps {
 }
 
 function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProps) {
-    const [, setSelectedContent] = useCategoryItemSelected();
     const [categoryItemList, setCategoryItemList] = useCategoryItemList();
+    const [, setSelectedContent] = useCategoryItemSelected();
     const initiateSelectedContent = useCallback(() => {
         setSelectedContent(contents[0]);
         setCategoryItemList(contents);
@@ -31,6 +31,8 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
         initiateSelectedContent();
     }, []);
 
+    const varient = 'desktopProductItem';
+
     return (
         <>
             {/* Desktop */}
@@ -44,7 +46,7 @@ function ExistProductScrapContainer({ contents }: ExistProductScrapContainerProp
                     <ColumnContainer style={{
                         flex: '1'
                     }}>
-                        <FocusedProductItemDetails />
+                        <FocusedProductItemDetails varient={varient} />
                     </ColumnContainer>
                 </Card>
             </Desktop >
@@ -73,7 +75,7 @@ function FocusedThumbnail() {
     );
 }
 
-function FocusedProductItemDetails() {
+function FocusedProductItemDetails({ varient }) {
     return (
         <ColumnContainer
             style={{
@@ -83,26 +85,9 @@ function FocusedProductItemDetails() {
                 width: '100%',
                 background: 'white',
             }}>
-            <CategoryItemSelectedProvider.Header />
-            <CategoryItemSelectedProvider.Price />
+            <CategoryItemSelectedProvider.Header varient={varient} />
+            <CategoryItemSelectedProvider.Price varient={varient} />
             <CategoryItemSelectedProvider.Description />
-            <CategoryItemSelectedProvider.MemoArea />
-        </ColumnContainer>
-    )
-}
-
-function MobileMemoContainer() {
-    return (
-        <ColumnContainer
-            style={{
-                gap: '10px',
-                backgroundColor: 'white',
-                borderRadius: '4px',
-                padding: '10px',
-                width: '100%',
-                overflow: 'auto',
-                boxSizing: 'border-box',
-            }}>
             <CategoryItemSelectedProvider.MemoArea />
         </ColumnContainer>
     )

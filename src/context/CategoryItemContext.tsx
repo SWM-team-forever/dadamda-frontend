@@ -56,7 +56,7 @@ function Thumbnail() {
     );
 }
 
-function Header() {
+function Header({ varient }) {
     const [selectedContent] = useCategoryItemSelected();
     const { siteName, title } = selectedContent;
 
@@ -70,8 +70,8 @@ function Header() {
                     justifyContent: 'space-between',
                 }}>
                 <ColumnContainer>
-                    <SiteNameElement siteName={siteName} />
-                    <TitleElement title={title} />
+                    <SiteNameElement siteName={siteName} varient={varient} />
+                    <TitleElement title={title} varient={varient} />
                 </ColumnContainer>
                 <IconButtonListElement content={selectedContent} />
             </RowContainer>
@@ -106,12 +106,12 @@ function Description() {
     )
 }
 
-function Price() {
+function Price({ varient }) {
     const [selectedContent] = useCategoryItemSelected();
     const { price } = selectedContent;
 
     return (
-        <PriceElement price={price} />
+        <PriceElement price={price} varient={varient} />
     )
 }
 

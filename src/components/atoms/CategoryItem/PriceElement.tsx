@@ -9,13 +9,24 @@ const mobileProductStyle = {
     lineHeight: '160%',
 };
 
-const desktopProductStyle = {
+const desktopProductItemStyle = {
+    fontSize: '0.875rem',
+    color: theme.color.primary_color,
+    fontWeight: '700',
+    lineHeight: '160%',
+};
 
+const desktopProductListStyle = {
+    fontSize: '0.9375rem',
+    color: theme.color.primary_color,
+    fontWeight: '700',
+    lineHeight: '160%',
 };
 
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
-    desktopProduct: desktopProductStyle,
+    desktopProductItem: desktopProductItemStyle,
+    desktopProductList: desktopProductListStyle,
 };
 
 export function PriceElement({ price, varient }) {
