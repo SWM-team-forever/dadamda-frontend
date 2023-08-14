@@ -79,16 +79,7 @@ function MobileProductListElement({ content }: MobileProductListElementProps) {
                     <PriceElement price={price} varient={varient} />
                 </ColumnContainer>
             </CardActionArea>
-            {open
-                && <ColumnContainer
-                    style={{
-                        gap: '10px',
-                        padding: '10px',
-                        boxSizing: 'border-box',
-                    }}>
-                    <MemoAreaElement memoList={memoList} scrapId={scrapId} />
-                </ColumnContainer>
-            }
+            {open && <MemoAreaElement memoList={memoList} scrapId={scrapId} />}
         </div>
     )
 }

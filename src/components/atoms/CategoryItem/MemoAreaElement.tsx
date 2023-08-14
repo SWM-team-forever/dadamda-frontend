@@ -6,6 +6,7 @@ import { useDefaultSnackbar } from "../../../hooks/useWarningSnackbar";
 import { POST_CREATE_MEMO_URL } from "../../../secret";
 import Memo from "../../molcules/Memo";
 import { useCategoryItemList } from "../../../context/CategoryListContext";
+import ColumnContainer from "../ColumnContainer";
 
 export function MemoAreaElement(content) {
     const [categoryItemList, setCategoryItemList] = useCategoryItemList();
@@ -64,7 +65,12 @@ export function MemoAreaElement(content) {
     }
 
     return (
-        <>
+        <ColumnContainer
+            style={{
+                padding: '10px',
+                boxSizing: 'border-box',
+                gap: '10px',
+            }}>
             {
                 memoList?.map((memo) => {
                     return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
@@ -76,7 +82,7 @@ export function MemoAreaElement(content) {
                 }}>
                 <StyledTextArea placeholder='메모를 입력해주세요.' minRows={4} onKeyDown={onEnterPress} onChange={e => handleSetValue(e)} />
             </div>
-        </>
+        </ColumnContainer>
     )
 }
 

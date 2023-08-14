@@ -64,17 +64,10 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
                         overflow: 'auto',
                         position: 'fixed',
                         top: 'calc(100vw * 9 / 16 + 116px)',
+                        background: 'white',
                     }}>
                         <FocusedVideoItemDetails varient={'mobileVideo'} />
-                        <div style={{
-                            padding: '20px',
-                            boxSizing: 'border-box',
-                            width: '100%',
-                            background: 'white',
-                            borderRadius: '4px',
-                        }}>
-                            <CategoryItemSelectedProvider.MemoArea />
-                        </div>
+                        <CategoryItemSelectedProvider.MemoArea />
                         <CategoryItemListProvider.MobileVideoList />
                     </div>
                 </ColumnContainer>
@@ -105,14 +98,11 @@ function MemoContainer() {
     return (
         <ColumnContainer
             style={{
-                gap: '10px',
                 backgroundColor: 'white',
                 borderRadius: '4px',
-                padding: '10px',
                 flex: '1',
                 width: '100%',
                 overflow: 'auto',
-                boxSizing: 'border-box',
             }}>
             <CategoryItemSelectedProvider.MemoArea />
         </ColumnContainer >

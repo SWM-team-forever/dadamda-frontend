@@ -87,7 +87,7 @@ function FocusedProductItemDetails({ varient }) {
             }}>
             <CategoryItemSelectedProvider.Header varient={varient} />
             <CategoryItemSelectedProvider.Price varient={varient} />
-            <CategoryItemSelectedProvider.Description />
+            <CategoryItemSelectedProvider.Description varient={varient} />
             <CategoryItemSelectedProvider.MemoArea />
         </ColumnContainer>
     )
