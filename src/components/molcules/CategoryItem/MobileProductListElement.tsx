@@ -52,10 +52,7 @@ function MobileProductListElement({ content }: MobileProductListElementProps) {
                 width: '100%',
                 backgroundColor: 'white',
             }}
-            onClick={(e) => {
-                e.stopPropagation();
-                setOpen(!open);
-            }}
+
         >
             <CardActionArea
                 sx={{
@@ -63,6 +60,10 @@ function MobileProductListElement({ content }: MobileProductListElementProps) {
                     flexDirection: 'column',
                     width: '100%',
                     gap: '5px',
+                }}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen(!open);
                 }}
             >
                 <Info content={content} />
@@ -76,9 +77,18 @@ function MobileProductListElement({ content }: MobileProductListElementProps) {
                     }}
                 >
                     <PriceElement price={price} varient={varient} />
-                    {open && <MemoAreaElement memoList={memoList} scrapId={scrapId} />}
                 </ColumnContainer>
             </CardActionArea>
+            {open
+                && <ColumnContainer
+                    style={{
+                        gap: '10px',
+                        padding: '10px',
+                        boxSizing: 'border-box',
+                    }}>
+                    <MemoAreaElement memoList={memoList} scrapId={scrapId} />
+                </ColumnContainer>
+            }
         </div>
     )
 }
