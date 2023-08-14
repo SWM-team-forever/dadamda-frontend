@@ -16,6 +16,8 @@ import NotReadyTemplate from './components/templates/NotReadyTemplate.tsx';
 import { worker } from './mocks/worker.ts';
 import ErrorHandler from './utility/ErrorHandler.tsx';
 import { useState } from 'react';
+import { ThemeProvider } from '@mui/material';
+import theme from './assets/styles/themeMuiStyle.ts';
 
 // if (process.env.NODE_ENV === 'development') {
 //   // develop 환경에서만 사용
@@ -26,34 +28,36 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   return (
     <>
-      <SnackbarProvider maxSnack={3}>
-        <LoginProvider>
-          <BrowserRouter>
-            <Header />
-            {error && <ErrorHandler error={error} setError={setError} />}
-            <Routes>
-              <Route path='/' element={<MainPage />}></Route>
-              <Route path='/main' element={<MainPage />}></Route>
-              <Route path='/user' element={<RequireAuth><UserPage setError={setError} /></RequireAuth>}></Route>
-              <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
-                <Route path='list' element={<ScrapTemplate type={'list'} />}></Route>
-                <Route path='article' element={<ScrapTemplate type={'article'} />}></Route>
-                <Route path='product' element={<ScrapTemplate type={'product'} />}></Route>
-                <Route path='video' element={<ScrapTemplate type={'video'} />}></Route>
-                <Route path='location' element={<ScrapTemplate type={'location'} />}></Route>
-                <Route path='other' element={<ScrapTemplate type={'other'} />}></Route>
-                <Route index element={<ScrapTemplate type={'list'} />}></Route>
-              </Route>
-              <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}>
-                <Route index element={<NotReadyTemplate />} />
-              </Route>
-              <Route path='/trending' element={<TrendingPage />}></Route>
-              <Route path='/google-login' element={<GoogleOAuthLoginpage setError={setError} />}></Route>
-              <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
-            </Routes>
-          </BrowserRouter>
-        </LoginProvider>
-      </SnackbarProvider>
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={3}>
+          <LoginProvider>
+            <BrowserRouter>
+              <Header />
+              {error && <ErrorHandler error={error} setError={setError} />}
+              <Routes>
+                <Route path='/' element={<MainPage />}></Route>
+                <Route path='/main' element={<MainPage />}></Route>
+                <Route path='/user' element={<RequireAuth><UserPage setError={setError} /></RequireAuth>}></Route>
+                <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
+                  <Route path='list' element={<ScrapTemplate type={'list'} />}></Route>
+                  <Route path='article' element={<ScrapTemplate type={'article'} />}></Route>
+                  <Route path='product' element={<ScrapTemplate type={'product'} />}></Route>
+                  <Route path='video' element={<ScrapTemplate type={'video'} />}></Route>
+                  <Route path='location' element={<ScrapTemplate type={'location'} />}></Route>
+                  <Route path='other' element={<ScrapTemplate type={'other'} />}></Route>
+                  <Route index element={<ScrapTemplate type={'list'} />}></Route>
+                </Route>
+                <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}>
+                  <Route index element={<NotReadyTemplate />} />
+                </Route>
+                <Route path='/trending' element={<TrendingPage />}></Route>
+                <Route path='/google-login' element={<GoogleOAuthLoginpage setError={setError} />}></Route>
+                <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
+              </Routes>
+            </BrowserRouter>
+          </LoginProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
     </>
   )
 }
