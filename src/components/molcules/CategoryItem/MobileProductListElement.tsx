@@ -1,37 +1,34 @@
 import { CardActionArea, Box, Typography, TextareaAutosize } from "@mui/material";
-import ThumbnailImage from "../atoms/ThumbnailImage";
-import { useSelectedCategoryItem } from "./SelectedCategoryItem";
-import theme from "../../assets/styles/theme";
-import ColumnContainer from "../atoms/ColumnContainer";
-import { contentProps } from "../../types/ContentType";
-import { ChangeEvent, useState } from "react";
-import { ShortcutIcon, MoreIcon } from "../atoms/Icon";
-import Overlay from "../atoms/Overlay";
-import RowContainer from "../atoms/RowContainer";
-import ScrapDeleteModal from "./ScrapDeleteModal";
-import ScrapEditModal from "./ScrapEditModal";
-import Tooltip from "../atoms/Tooltip";
-import { useDefaultSnackbar } from "../../hooks/useWarningSnackbar";
-import { POST_CREATE_MEMO_URL } from "../../secret";
-import Memo from "../molcules/Memo";
+import { useState, ChangeEvent } from "react";
 import styled from "styled-components";
+import theme from "../../../assets/styles/theme";
+import { useDefaultSnackbar } from "../../../hooks/useWarningSnackbar";
+import { POST_CREATE_MEMO_URL } from "../../../secret";
+import { contentProps } from "../../../types/ContentType";
+import ColumnContainer from "../../atoms/ColumnContainer";
+import { ShortcutIcon, MoreIcon } from "../../atoms/Icon";
+import Overlay from "../../atoms/Overlay";
+import RowContainer from "../../atoms/RowContainer";
+import ThumbnailImage from "../../atoms/ThumbnailImage";
+import ScrapDeleteModal from "../../organisms/ScrapDeleteModal";
+import ScrapEditModal from "../../organisms/ScrapEditModal";
+import Memo from "../Memo";
+import Tooltip from "../../atoms/Tooltip";
 
-interface MobileProductCategoryItemHorizontal {
+interface MobileProductListElementProps {
     content: contentProps['content'],
 }
 
-function MobileProductCategoryItemVertical({ content }: MobileProductCategoryItemHorizontal) {
+function MobileProductListElement({ content }: MobileProductListElementProps) {
     const { thumbnailUrl, price } = content;
-    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
 
     return (
         <div
             style={{
                 width: '100%',
                 boxShadow: theme.style.shadow,
-                backgroundColor: `${selectedContent.scrapId === content.scrapId ? theme.color.background_color : 'white'}`,
+                backgroundColor: 'white',
             }}
-            onClick={() => setSelectedContent(content)}
         >
             <CardActionArea
                 sx={{
@@ -74,7 +71,7 @@ function MobileProductCategoryItemVertical({ content }: MobileProductCategoryIte
     )
 }
 
-function Info({ content }: MobileProductCategoryItemHorizontal) {
+function Info({ content }: MobileProductListElementProps) {
     const { siteName, title, pageUrl, scrapId } = content;
 
     const scrapCardMenu = [{
@@ -172,7 +169,7 @@ function Info({ content }: MobileProductCategoryItemHorizontal) {
     )
 }
 
-function MemoArea({ content }: MobileProductCategoryItemHorizontal) {
+function MemoArea({ content }: MobileProductListElementProps) {
     const { scrapId, memoList } = content;
     const [textAreaValue, setTextAreaValue] = useState('');
 
@@ -254,4 +251,4 @@ const StyledTextArea = styled(TextareaAutosize)`
     padding: 10px;
 `;
 
-export default MobileProductCategoryItemVertical;
+export default MobileProductListElement;

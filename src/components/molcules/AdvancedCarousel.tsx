@@ -1,13 +1,14 @@
 import { useSnapCarousel } from 'react-snap-carousel';
-import CategoryItemHorizontal from '../organisms/CategoryItemHorizontal';
-import ProductCategoryItemVertical from '../organisms/ProductCategoryItemVertical';
 import RowContainer from '../atoms/RowContainer';
 import { LeftArrowIcon, RightArrowIcon } from '../atoms/Icon';
 import theme from '../../assets/styles/theme';
+import DesktopProductListElement from './CategoryItem/DesktopProductListElement';
+import { useCategoryItemList } from '../../context/CategoryListContext';
 
-const AdvancedCarousel = ({ contents }) => {
-    const { scrollRef, pages, activePageIndex, next, prev, goTo } =
-        useSnapCarousel();
+const AdvancedCarousel = () => {
+    const { scrollRef, next, prev } = useSnapCarousel();
+    const [contents] = useCategoryItemList();
+
     return (
         <RowContainer
             style={{
@@ -33,7 +34,7 @@ const AdvancedCarousel = ({ contents }) => {
                 }}
             >
                 {contents.map((content) => (
-                    <ProductCategoryItemVertical content={content} />
+                    <DesktopProductListElement content={content} />
                 ))}
             </ul>
             <div

@@ -1,16 +1,16 @@
 import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
-import ThumbnailImage from "../atoms/ThumbnailImage";
-import { useSelectedCategoryItem } from "./SelectedCategoryItem";
-import theme from "../../assets/styles/theme";
-import { contentProps } from "../../types/ContentType";
+import theme from "../../../assets/styles/theme";
+import { contentProps } from "../../../types/ContentType";
+import ThumbnailImage from "../../atoms/ThumbnailImage";
+import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
 
-interface CategoryItemHorizontal {
+interface DesktopVideoListElementProps {
     content: contentProps['content'],
 }
 
-function CategoryItemHorizontal({ content }: CategoryItemHorizontal) {
+function DesktopVideoListElement({ content }: DesktopVideoListElementProps) {
     const { thumbnailUrl, title, channelName } = content;
-    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
     return (
         <div
@@ -61,4 +61,4 @@ function CategoryItemHorizontal({ content }: CategoryItemHorizontal) {
     )
 }
 
-export default CategoryItemHorizontal;
+export default DesktopVideoListElement;

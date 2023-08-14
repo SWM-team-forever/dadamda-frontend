@@ -1,24 +1,25 @@
-import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
-import ThumbnailImage from "../atoms/ThumbnailImage";
-import { useSelectedCategoryItem } from "./SelectedCategoryItem";
-import theme from "../../assets/styles/theme";
-import RowContainer from "../atoms/RowContainer";
+import { CardActionArea, Box, Typography } from "@mui/material";
+import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
 import { useState } from "react";
-import ColumnContainer from "../atoms/ColumnContainer";
-import { ShortcutIcon, MoreIcon } from "../atoms/Icon";
-import Overlay from "../atoms/Overlay";
-import ScrapDeleteModal from "./ScrapDeleteModal";
-import ScrapEditModal from "./ScrapEditModal";
-import { contentProps } from "../../types/ContentType";
-import Tooltip from "../atoms/Tooltip";
+import theme from "../../../assets/styles/theme";
+import { contentProps } from "../../../types/ContentType";
+import ColumnContainer from "../../atoms/ColumnContainer";
+import { ShortcutIcon, MoreIcon } from "../../atoms/Icon";
+import Overlay from "../../atoms/Overlay";
+import RowContainer from "../../atoms/RowContainer";
+import ThumbnailImage from "../../atoms/ThumbnailImage";
+import CategoryItemHorizontal from "../../organisms/CategoryItemHorizontal";
+import ScrapDeleteModal from "../../organisms/ScrapDeleteModal";
+import ScrapEditModal from "../../organisms/ScrapEditModal";
+import Tooltip from "../../atoms/Tooltip";
 
-interface CategoryItemHorizontal {
+interface MobileVideoListElementProps {
     content: contentProps['content'],
 }
 
-function CategoryItemVertical({ content }: CategoryItemHorizontal) {
+function MobileVideoListElement({ content }: MobileVideoListElementProps) {
     const { thumbnailUrl } = content;
-    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
     return (
         <div
@@ -149,4 +150,4 @@ function Header({ content }: CategoryItemHorizontal) {
     )
 }
 
-export default CategoryItemVertical;
+export default MobileVideoListElement;

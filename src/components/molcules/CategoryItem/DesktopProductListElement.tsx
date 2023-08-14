@@ -1,24 +1,17 @@
-import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
-import ThumbnailImage from "../atoms/ThumbnailImage";
-import { useSelectedCategoryItem } from "./SelectedCategoryItem";
-import theme from "../../assets/styles/theme";
-import RowContainer from "../atoms/RowContainer";
-import { useState } from "react";
-import ColumnContainer from "../atoms/ColumnContainer";
-import { ShortcutIcon, MoreIcon } from "../atoms/Icon";
-import Overlay from "../atoms/Overlay";
-import ScrapDeleteModal from "./ScrapDeleteModal";
-import ScrapEditModal from "./ScrapEditModal";
-import { contentProps } from "../../types/ContentType";
-import Tooltip from "../atoms/Tooltip";
+import { CardActionArea, Box, Typography } from "@mui/material";
+import theme from "../../../assets/styles/theme";
+import { contentProps } from "../../../types/ContentType";
+import ColumnContainer from "../../atoms/ColumnContainer";
+import ThumbnailImage from "../../atoms/ThumbnailImage";
+import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
 
-interface ProductCategoryItemHorizontal {
+interface DesktopProductListElementProps {
     content: contentProps['content'],
 }
 
-function ProductCategoryItemVertical({ content }: ProductCategoryItemHorizontal) {
+function DesktopProductListElement({ content }: DesktopProductListElementProps) {
     const { thumbnailUrl } = content;
-    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
     return (
         <div
@@ -52,8 +45,8 @@ function ProductCategoryItemVertical({ content }: ProductCategoryItemHorizontal)
     )
 }
 
-function Info({ content }: ProductCategoryItemHorizontal) {
-    const { price, title, pageUrl, scrapId } = content;
+function Info({ content }: DesktopProductListElementProps) {
+    const { price, title } = content;
 
     return (
         <ColumnContainer
@@ -80,4 +73,4 @@ function Info({ content }: ProductCategoryItemHorizontal) {
     )
 }
 
-export default ProductCategoryItemVertical;
+export default DesktopProductListElement;
