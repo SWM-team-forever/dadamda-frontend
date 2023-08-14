@@ -5,9 +5,12 @@ import theme from "../../../assets/styles/theme";
 import { useDefaultSnackbar } from "../../../hooks/useWarningSnackbar";
 import { POST_CREATE_MEMO_URL } from "../../../secret";
 import Memo from "../../molcules/Memo";
+import { useCategoryItemList } from "../../../context/CategoryListContext";
 
-export function MemoAreaElement({ memoList, scrapId, updateMemoList }) {
+export function MemoAreaElement(content) {
+    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const [textAreaValue, setTextAreaValue] = useState('');
+    const { memoList, scrapId } = content;
 
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
@@ -25,7 +28,9 @@ export function MemoAreaElement({ memoList, scrapId, updateMemoList }) {
                 memoId: -1 * createdMemoCount,
                 memoText: e.target.value,
             }];
-            updateMemoList(changedMemoList);
+
+            const changedContentList = categoryItemList.map(item => item.scrapId === scrapId ? { ...item, memoList: changedMemoList } : item);
+            setCategoryItemList(changedContentList);
             e.target.value = '';
         }
     }
