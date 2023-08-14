@@ -50,7 +50,7 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
                     marginBottom: '20px',
                 }}>
                     <CategoryItemSelectedProvider.Video />
-                    <FocusedVideoItemDetails />
+                    <FocusedVideoItemDetails varient={'desktopVideoItem'} />
                 </Card>
             </Desktop >
 
@@ -65,8 +65,16 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
                         position: 'fixed',
                         top: 'calc(100vw * 9 / 16 + 116px)',
                     }}>
-                        <FocusedVideoItemDetails />
-                        <MemoContainer />
+                        <FocusedVideoItemDetails varient={'mobileVideo'} />
+                        <div style={{
+                            padding: '20px',
+                            boxSizing: 'border-box',
+                            width: '100%',
+                            background: 'white',
+                            borderRadius: '4px',
+                        }}>
+                            <CategoryItemSelectedProvider.MemoArea />
+                        </div>
                         <CategoryItemListProvider.MobileVideoList />
                     </div>
                 </ColumnContainer>
@@ -75,20 +83,20 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
     )
 }
 
-function FocusedVideoItemDetails() {
+function FocusedVideoItemDetails({ varient }) {
     return (
         <ColumnContainer
             style={{
                 gap: '10px',
-                padding: '30px',
+                padding: '30px 30px 0 30px',
                 boxSizing: 'border-box',
                 width: '100%',
                 background: 'white',
             }}>
-            <CategoryItemSelectedProvider.Header />
-            <CategoryItemSelectedProvider.ChannelProfile />
-            <CategoryItemSelectedProvider.Infos />
-            <CategoryItemSelectedProvider.Description />
+            <CategoryItemSelectedProvider.Header varient={varient} />
+            <CategoryItemSelectedProvider.ChannelProfile varient={varient} />
+            <CategoryItemSelectedProvider.Infos varient={varient} />
+            <CategoryItemSelectedProvider.Description varient={varient} />
         </ColumnContainer>
     )
 }

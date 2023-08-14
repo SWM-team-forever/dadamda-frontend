@@ -4,7 +4,7 @@ import { VideoElement } from '../components/atoms/CategoryItem/VideoElement';
 import { ThumbnailElement } from '../components/atoms/CategoryItem/ThumbnailElement';
 import { IconButtonListElement } from '../components/atoms/CategoryItem/IconButtonListElement';
 import { TitleElement } from '../components/atoms/CategoryItem/TitleElement';
-import { ChannelElement } from '../components/atoms/CategoryItem/ChannelElement';
+import { ChannelElement, ChannelProfileElement } from '../components/atoms/CategoryItem/ChannelProfileElement';
 import { VideoInfosElement } from '../components/atoms/CategoryItem/VideoInfosElement';
 import { DescriptionElement } from '../components/atoms/CategoryItem/DescrptionElement';
 import { PriceElement } from '../components/atoms/CategoryItem/PriceElement';
@@ -79,30 +79,30 @@ function Header({ varient }) {
     )
 }
 
-function Channel() {
+function ChannelProfile({ varient }) {
     const [selectedContent] = useCategoryItemSelected();
     const { channelImageUrl, channelName } = selectedContent;
 
     return (
-        <ChannelElement channelImageUrl={channelImageUrl} channelName={channelName} />
+        <ChannelProfileElement channelImageUrl={channelImageUrl} channelName={channelName} varient={varient} />
     )
 }
 
-function Infos() {
+function Infos({ varient }) {
     const [selectedContent] = useCategoryItemSelected();
     const { publishedDate, watchedCnt, playTime } = selectedContent;
 
     return (
-        <VideoInfosElement publishedDate={publishedDate} watchedCnt={watchedCnt} playTime={playTime} />
+        <VideoInfosElement publishedDate={publishedDate} watchedCnt={watchedCnt} playTime={playTime} varient={varient} />
     )
 }
 
-function Description() {
+function Description({ varient }) {
     const [selectedContent] = useCategoryItemSelected();
     const { description } = selectedContent;
 
     return (
-        <DescriptionElement description={description} />
+        <DescriptionElement description={description} varient={varient} />
     )
 }
 
@@ -130,7 +130,7 @@ function MemoArea() {
 
 CategoryItemSelectedProvider.Video = Video;
 CategoryItemSelectedProvider.Header = Header;
-CategoryItemSelectedProvider.Channel = Channel;
+CategoryItemSelectedProvider.ChannelProfile = ChannelProfile;
 CategoryItemSelectedProvider.Infos = Infos;
 CategoryItemSelectedProvider.Description = Description;
 CategoryItemSelectedProvider.MemoArea = MemoArea;

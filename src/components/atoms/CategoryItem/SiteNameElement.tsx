@@ -29,8 +29,11 @@ const mobileVideoStyle = {
     lineHeight: '160%',
 }
 
-const desktopVideoStyle = {
-
+const desktopVideoItemStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '0.75rem',
+    fontWeight: '400',
+    fontHeight: '160%',
 }
 
 const siteNameStyles = {
@@ -38,7 +41,7 @@ const siteNameStyles = {
     desktopProductItem: desktopProductItemStyle,
     desktopProductList: desktopProductListStyle,
     mobileVideo: mobileVideoStyle,
-    desktopVideo: desktopVideoStyle,
+    desktopItemVideo: desktopVideoItemStyle,
 }
 
 export function SiteNameElement({ siteName, varient }) {

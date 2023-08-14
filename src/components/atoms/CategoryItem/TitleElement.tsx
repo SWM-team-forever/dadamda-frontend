@@ -42,7 +42,10 @@ const mobileVideoStyle = {
 }
 
 const desktopVideoItemStyle = {
-
+    color: theme.color.text_gray_color,
+    fontSize: '1.25rem',
+    fontWeight: '400',
+    lineHeight: '120%',
 }
 
 const desktopVideoListStyle = {
