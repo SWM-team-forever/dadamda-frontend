@@ -48,6 +48,7 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
                     width: '100%',
                     height: 'fit-content',
                     marginBottom: '20px',
+                    paddingBottom: '20px',
                 }}>
                     <CategoryItemSelectedProvider.Video />
                     <FocusedVideoItemDetails varient={'desktopVideoItem'} />
