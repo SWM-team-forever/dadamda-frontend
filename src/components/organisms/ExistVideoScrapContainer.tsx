@@ -51,7 +51,7 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
                     paddingBottom: '20px',
                 }}>
                     <CategoryItemSelectedProvider.Video />
-                    <FocusedVideoItemDetails varient={'desktopVideoItem'} />
+                    <FocusedVideoItemDetails varient={'desktopItemVideo'} />
                 </Card>
             </Desktop >
 
