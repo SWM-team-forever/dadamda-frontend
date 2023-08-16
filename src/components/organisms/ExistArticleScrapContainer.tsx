@@ -36,13 +36,7 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
 
             <Desktop>
                 <VideoListWrapper>
-                    <div style={{
-                        flex: '1',
-                        overflow: 'auto',
-                    }}>
-                        <CategoryItemListProvider.DesktopVideoList />
-                    </div>
-                    <MemoContainer />
+                    <CategoryItemListProvider.DesktopArticleList />
                 </VideoListWrapper>
                 <Card sx={{
                     width: '100%',
@@ -50,7 +44,6 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
                     marginBottom: '20px',
                     paddingBottom: '20px',
                 }}>
-                    <CategoryItemSelectedProvider.Video />
                     <FocusedVideoItemDetails varient={'desktopItemVideo'} />
                 </Card>
             </Desktop >

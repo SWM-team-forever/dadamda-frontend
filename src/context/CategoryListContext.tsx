@@ -4,6 +4,7 @@ import RowContainer from '../components/atoms/RowContainer';
 import ColumnContainer from '../components/atoms/ColumnContainer';
 import DesktopVideoListElement from '../components/molcules/CategoryItem/DesktopVideoListElement';
 import MobileVideoListElement from '../components/molcules/CategoryItem/MobileVideoListElement';
+import DesktopArticleElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 
@@ -54,7 +55,22 @@ function MobileVideoList() {
     )
 }
 
+function DesktopArticleList() {
+    const [categoryItemList] = useCategoryItemList();
+
+    return (
+        <ColumnContainer style={{
+            gap: '10px',
+        }}>
+            {categoryItemList.map(categoryItem =>
+                <DesktopArticleElement content={categoryItem} />
+            )}
+        </ColumnContainer>
+    )
+}
+
 CategoryItemListProvider.DesktopVideoList = DesktopVideoList;
 CategoryItemListProvider.MobileVideoList = MobileVideoList;
+CategoryItemListProvider.DesktopArticleList = DesktopArticleList;
 
 export default CategoryItemListProvider;
