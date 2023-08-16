@@ -1,25 +1,25 @@
 import ScrapListHeader from '../molcules/ScrapListHeader';
 import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
 import { contentProps } from '../../types/ContentType';
-import ExistVideoScrapContainer from '../organisms/ExistVideoScrapContainer';
+import ExistProductScrapContainer from '../organisms/ExistProductScrapContainer';
 import CategoryItemSelectedProvider from '../../context/CategoryItemContext';
 import CategoryItemListProvider from '../../context/CategoryListContext';
 
-interface VideoTemplateProps {
-    videos: contentProps['content'][],
+interface ProductTemplateProps {
+    products: contentProps['content'][],
     isFetching: boolean,
     setIsFetching: (isFetching: boolean) => void,
     count: number,
 }
 
-function VideoTemplate({ videos, isFetching, setIsFetching, count }: VideoTemplateProps) {
+function ProductTemplate({ count }: ProductTemplateProps) {
     return (
         <>
-            <ScrapListHeader type='비디오' count={count} />
-            {videos.length ?
+            <ScrapListHeader type='상품' count={count} />
+            {count > 0 ?
                 <CategoryItemListProvider>
                     <CategoryItemSelectedProvider>
-                        <ExistVideoScrapContainer contents={videos} isFetching={isFetching} setIsFetching={setIsFetching} />
+                        <ExistProductScrapContainer />
                     </CategoryItemSelectedProvider>
                 </CategoryItemListProvider>
                 : <EmptyScrapContainer />
@@ -28,4 +28,4 @@ function VideoTemplate({ videos, isFetching, setIsFetching, count }: VideoTempla
     )
 }
 
-export default VideoTemplate;
+export default ProductTemplate;

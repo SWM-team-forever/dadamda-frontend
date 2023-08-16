@@ -27,6 +27,7 @@
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.1",
     "react-scripts": "^5.0.1",
+    "react-snap-carousel": "^0.3.2",
     "react-social-login-buttons": "^3.9.1",
     "styled-components": "^5.3.1"
   },

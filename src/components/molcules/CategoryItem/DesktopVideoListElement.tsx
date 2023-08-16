@@ -1,16 +1,21 @@
 import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
-import ThumbnailImage from "../atoms/ThumbnailImage";
-import { useSelectedCategoryItem } from "./SelectedCategoryItem";
-import theme from "../../assets/styles/theme";
-import { contentProps } from "../../types/ContentType";
+import theme from "../../../assets/styles/theme";
+import { contentProps } from "../../../types/ContentType";
+import ThumbnailImage from "../../atoms/ThumbnailImage";
+import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
+import { ThumbnailElement } from "../../atoms/CategoryItem/ThumbnailElement";
+import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
+import { ChannelElement } from "../../atoms/CategoryItem/ChannelElement";
 
-interface CategoryItemHorizontal {
+interface DesktopVideoListElementProps {
     content: contentProps['content'],
 }
 
-function CategoryItemHorizontal({ content }: CategoryItemHorizontal) {
+function DesktopVideoListElement({ content }: DesktopVideoListElementProps) {
     const { thumbnailUrl, title, channelName } = content;
-    const [selectedContent, setSelectedContent] = useSelectedCategoryItem();
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+
+    const varient = 'desktopVideoList';
 
     return (
         <div
@@ -35,30 +40,22 @@ function CategoryItemHorizontal({ content }: CategoryItemHorizontal) {
                     sx={{
                         width: '30%'
                     }}>
-                    {thumbnailUrl && <ThumbnailImage thumbnailUrl={thumbnailUrl} />}
+                    <ThumbnailElement thumbnailUrl={thumbnailUrl} />
                 </Box>
                 <CardContent sx={{
                     width: '70%',
                     padding: '0',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '5px',
                 }}>
-                    <Typography gutterBottom component="div" color='text.primary' noWrap
-                        sx={{
-                            lineHeight: '120%',
-                            fontSize: '0.75rem',
-                        }}>
-                        {title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap
-                        sx={{
-                            fontSize: '0.625rem',
-                        }}
-                    >
-                        {channelName}
-                    </Typography>
+                    <TitleElement title={title} varient={varient} />
+                    <ChannelElement channelName={channelName} varient={varient} />
+
                 </CardContent>
             </CardActionArea>
         </div>
     )
 }
 
-export default CategoryItemHorizontal;
+export default DesktopVideoListElement;

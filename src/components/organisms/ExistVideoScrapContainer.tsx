@@ -1,14 +1,10 @@
 import styled from 'styled-components';
-import RowContainer from '../atoms/RowContainer';
 import ColumnContainer from '../atoms/ColumnContainer';
-import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
 import { Card } from '@mui/material';
-import { useSelectedCategoryItem } from './SelectedCategoryItem';
 import { useCallback, useEffect, useState } from 'react';
-import SelectedCategoryItemProvider from './SelectedCategoryItem';
-import CategoryItemHorizontal from './CategoryItemHorizontal';
-import CategoryItemVertical from './CategoryItemVertical';
+import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
+import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
 
 interface ExistVideoScrapContainerProps {
     contents: contentProps["content"][],
@@ -17,10 +13,13 @@ interface ExistVideoScrapContainerProps {
 }
 
 function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
-    const [, setSelectedContent] = useSelectedCategoryItem();
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
+
     const initiateSelectedContent = useCallback(() => {
         setSelectedContent(contents[0]);
-    }, [contents]);
+        setCategoryItemList(contents);
+    }, [contents, setCategoryItemList, setSelectedContent]);
 
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
@@ -37,39 +36,40 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
 
             <Desktop>
                 <VideoListWrapper>
-                    <VideoList>
-                        {contents.map((content) => {
-                            return <CategoryItemHorizontal content={content} />
-                        })}
-                    </VideoList>
+                    <div style={{
+                        flex: '1',
+                        overflow: 'auto',
+                    }}>
+                        <CategoryItemListProvider.DesktopVideoList />
+                    </div>
                     <MemoContainer />
                 </VideoListWrapper>
                 <Card sx={{
                     width: '100%',
                     height: 'fit-content',
                     marginBottom: '20px',
+                    paddingBottom: '20px',
                 }}>
-                    <FocusedVideoItem />
-                    <FocusedVideoItemDetails />
+                    <CategoryItemSelectedProvider.Video />
+                    <FocusedVideoItemDetails varient={'desktopItemVideo'} />
                 </Card>
             </Desktop >
 
             {/* Mobile */}
             <Mobile>
                 <ColumnContainer>
-                    <SelectedCategoryItemProvider.Video />
+                    <CategoryItemSelectedProvider.Video />
                     <div style={{
                         height: 'calc(100% - 100vw * 9 / 16 - 116px)',
                         width: '100%',
                         overflow: 'auto',
                         position: 'fixed',
                         top: 'calc(100vw * 9 / 16 + 116px)',
+                        background: 'white',
                     }}>
-                        <FocusedVideoItemDetails />
-                        <MobileMemoContainer />
-                        {contents.map(content => {
-                            return <CategoryItemVertical content={content} />
-                        })}
+                        <FocusedVideoItemDetails varient={'mobileVideo'} />
+                        <CategoryItemSelectedProvider.MemoArea />
+                        <CategoryItemListProvider.MobileVideoList />
                     </div>
                 </ColumnContainer>
             </Mobile >
@@ -77,27 +77,20 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
     )
 }
 
-function FocusedVideoItem() {
-
-    return (
-        <SelectedCategoryItemProvider.Video />
-    );
-}
-
-function FocusedVideoItemDetails() {
+function FocusedVideoItemDetails({ varient }: { varient: string }) {
     return (
         <ColumnContainer
             style={{
                 gap: '10px',
-                padding: '30px',
+                padding: '30px 30px 0 30px',
                 boxSizing: 'border-box',
                 width: '100%',
                 background: 'white',
             }}>
-            <SelectedCategoryItemProvider.Header />
-            <SelectedCategoryItemProvider.Channel />
-            <SelectedCategoryItemProvider.Infos />
-            <SelectedCategoryItemProvider.Description />
+            <CategoryItemSelectedProvider.Header varient={varient} />
+            <CategoryItemSelectedProvider.ChannelProfile varient={varient} />
+            <CategoryItemSelectedProvider.Infos varient={varient} />
+            <CategoryItemSelectedProvider.Description varient={varient} />
         </ColumnContainer>
     )
 }
@@ -106,60 +99,25 @@ function MemoContainer() {
     return (
         <ColumnContainer
             style={{
-                gap: '10px',
                 backgroundColor: 'white',
                 borderRadius: '4px',
-                padding: '10px',
-                height: 'calc(50% - 5px)',
+                flex: '1',
                 width: '100%',
                 overflow: 'auto',
-                boxSizing: 'border-box',
             }}>
-            <SelectedCategoryItemProvider.MemoArea />
+            <CategoryItemSelectedProvider.MemoArea />
         </ColumnContainer >
     )
 }
-
-function MobileMemoContainer() {
-    return (
-        <ColumnContainer
-            style={{
-                gap: '10px',
-                backgroundColor: 'white',
-                borderRadius: '4px',
-                padding: '10px',
-                width: '100%',
-                overflow: 'auto',
-                boxSizing: 'border-box',
-            }}>
-            <SelectedCategoryItemProvider.MemoArea />
-        </ColumnContainer>
-    )
-}
-
-const VideoList = styled.section`
-    width: 100%;
-    height: calc(50% - 5px);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    box-shadow: ${theme.style.shadow};
-    border-radius: 4px;
-    overflow: auto;
-`
 
 const VideoListWrapper = styled.div`
     width: 400px;
     padding: 0 10px;
     height: calc(100% - 74px);
-    overflow: auto;
     box-sizing: border-box;
-    position: sticky;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    top: 0;
 `
 
 const Desktop = styled.div`
@@ -185,4 +143,4 @@ const Mobile = styled.div`
     }
 `
 
-export default ExistVideoScrapContainer
+export default ExistVideoScrapContainer;
