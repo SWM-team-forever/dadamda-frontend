@@ -77,7 +77,7 @@ function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
     )
 }
 
-function FocusedVideoItemDetails({ varient }) {
+function FocusedVideoItemDetails({ varient }: { varient: string }) {
     return (
         <ColumnContainer
             style={{

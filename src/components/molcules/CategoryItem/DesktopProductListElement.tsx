@@ -6,14 +6,17 @@ import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
 import { ThumbnailElement } from "../../atoms/CategoryItem/ThumbnailElement";
 import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
 import { PriceElement } from "../../atoms/CategoryItem/PriceElement";
+import { useCategoryItemList } from "../../../context/CategoryListContext";
+import { useEffect } from "react";
 
 interface DesktopProductListElementProps {
     content: contentProps['content'],
 }
 
 function DesktopProductListElement({ content }: DesktopProductListElementProps) {
-    const { thumbnailUrl, price, title } = content;
+    const { thumbnailUrl, price, title, scrapId } = content;
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const varient = 'desktopProductList';
 
     function Info() {
@@ -38,7 +41,7 @@ function DesktopProductListElement({ content }: DesktopProductListElementProps) 
                 boxShadow: theme.style.shadow,
                 margin: '10px',
                 boxSizing: 'border-box',
-                backgroundColor: `${selectedContent.scrapId === content.scrapId ? theme.color.background_color : 'white'}`,
+                backgroundColor: `${selectedContent.scrapId === scrapId ? theme.color.background_color : 'white'}`,
             }}
             onClick={() => setSelectedContent(content)}
         >

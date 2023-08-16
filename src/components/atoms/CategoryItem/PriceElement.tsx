@@ -29,7 +29,7 @@ const siteNameStyles = {
     desktopProductList: desktopProductListStyle,
 };
 
-export function PriceElement({ price, varient }) {
+export function PriceElement({ price, varient }: any) {
     return (
         <RowContainer
             style={{

@@ -26,7 +26,7 @@ const siteNameStyles = {
     desktopItemVideo: desktopVideoItemStyle,
 }
 
-export function DescriptionElement({ description, varient }) {
+export function DescriptionElement({ description, varient }: any) {
     return (
         <RowContainer
             style={siteNameStyles[varient as keyof typeof siteNameStyles]}>

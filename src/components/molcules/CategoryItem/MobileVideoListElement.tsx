@@ -1,20 +1,13 @@
-import { CardActionArea, Box, Typography } from "@mui/material";
+import { CardActionArea, Box } from "@mui/material";
 import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
-import { useState } from "react";
 import theme from "../../../assets/styles/theme";
 import { contentProps } from "../../../types/ContentType";
 import ColumnContainer from "../../atoms/ColumnContainer";
-import { ShortcutIcon, MoreIcon } from "../../atoms/Icon";
-import Overlay from "../../atoms/Overlay";
 import RowContainer from "../../atoms/RowContainer";
 import ThumbnailImage from "../../atoms/ThumbnailImage";
-import CategoryItemHorizontal from "../../organisms/CategoryItemHorizontal";
-import ScrapDeleteModal from "../../organisms/ScrapDeleteModal";
-import ScrapEditModal from "../../organisms/ScrapEditModal";
-import Tooltip from "../../atoms/Tooltip";
 import { IconButtonListElement } from "../../atoms/CategoryItem/IconButtonListElement";
 import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
-import { SiteNameElement } from "../../atoms/CategoryItem/SitenameElement";
+import { SiteNameElement } from "../../atoms/CategoryItem/SiteNameElement";
 
 interface MobileVideoListElementProps {
     content: contentProps['content'],
@@ -74,7 +67,7 @@ function MobileVideoListElement({ content }: MobileVideoListElementProps) {
                 >
                     {thumbnailUrl && <ThumbnailImage thumbnailUrl={thumbnailUrl} />}
                 </Box>
-                <Header content={content} />
+                <Header />
             </CardActionArea>
         </div>
     )

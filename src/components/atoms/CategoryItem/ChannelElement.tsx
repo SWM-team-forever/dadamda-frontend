@@ -22,7 +22,7 @@ const siteNameStyles = {
     desktopVideoList: desktopVideoListStyle,
 }
 
-export function ChannelElement({ channelName, varient }) {
+export function ChannelElement({ channelName, varient }: any) {
     return (
         <Typography sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>{channelName}</Typography>
     );

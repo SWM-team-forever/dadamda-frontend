@@ -2,13 +2,17 @@ import { useState } from "react";
 import theme from "../../../assets/styles/theme";
 import ScrapDeleteModal from "../../organisms/ScrapDeleteModal";
 import ScrapEditModal from "../../organisms/ScrapEditModal";
-import { useSelectedCategoryItem } from "../../organisms/SelectedCategoryItem";
 import { ShortcutIcon, MoreIcon } from "../Icon";
 import Overlay from "../Overlay";
 import RowContainer from "../RowContainer";
 import Tooltip from "../Tooltip";
+import { contentProps } from "../../../types/ContentType";
 
-export function IconButtonListElement({ content }) {
+interface IconButtonListElementProps {
+    content: contentProps['content'],
+}
+
+export function IconButtonListElement({ content }: IconButtonListElementProps) {
     const { pageUrl, scrapId } = content;
 
     const scrapCardMenu = [{

@@ -44,7 +44,7 @@ const siteNameStyles = {
     desktopItemVideo: desktopVideoItemStyle,
 }
 
-export function SiteNameElement({ siteName, varient }) {
+export function SiteNameElement({ siteName, varient }: any) {
     return (
         <Typography sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>
             {siteName}

@@ -5,7 +5,6 @@ import styled from "styled-components";
 import ColumnContainer from "../../atoms/ColumnContainer";
 import RowContainer from "../../atoms/RowContainer";
 import { IconButtonListElement } from "../../atoms/CategoryItem/IconButtonListElement";
-import { SiteNameElement } from "../../atoms/CategoryItem/SitenameElement";
 import { ThumbnailElement } from "../../atoms/CategoryItem/ThumbnailElement";
 import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
 import { PriceElement } from "../../atoms/CategoryItem/PriceElement";
@@ -13,6 +12,7 @@ import { PriceElement } from "../../atoms/CategoryItem/PriceElement";
 import theme from "../../../assets/styles/theme";
 import { contentProps } from "../../../types/ContentType";
 import { MemoAreaElement } from "../../atoms/CategoryItem/MemoAreaElement";
+import { SiteNameElement } from "../../atoms/CategoryItem/SiteNameElement";
 
 interface MobileProductListElementProps {
     content: contentProps['content'],
@@ -79,7 +79,7 @@ function MobileProductListElement({ content }: MobileProductListElementProps) {
                     <PriceElement price={price} varient={varient} />
                 </ColumnContainer>
             </CardActionArea>
-            {open && <MemoAreaElement memoList={memoList} scrapId={scrapId} />}
+            {open && <MemoAreaElement content={content} />}
         </div>
     )
 }

@@ -71,7 +71,7 @@ const siteNameStyles = {
 }
 
 
-export function TitleElement({ title, varient }) {
+export function TitleElement({ title, varient }: any) {
     return (
         <Typography
             sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>

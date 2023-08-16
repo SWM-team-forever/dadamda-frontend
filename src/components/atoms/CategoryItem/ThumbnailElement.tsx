@@ -1,6 +1,6 @@
 import ThumbnailImage from "../ThumbnailImage";
 
-export function ThumbnailElement({ thumbnailUrl }) {
+export function ThumbnailElement({ thumbnailUrl }: any) {
 
     return (
         <>

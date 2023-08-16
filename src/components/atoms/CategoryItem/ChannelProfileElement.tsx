@@ -22,7 +22,7 @@ const siteNameStyles = {
     desktopItemVideo: desktopVideoItemStyle,
 }
 
-export function ChannelProfileElement({ channelImageUrl, channelName, varient }) {
+export function ChannelProfileElement({ channelImageUrl, channelName, varient }: any) {
     return (
         <RowContainer
             style={{

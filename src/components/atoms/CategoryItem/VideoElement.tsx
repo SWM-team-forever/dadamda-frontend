@@ -1,4 +1,4 @@
-export function VideoElement({ embedUrl }) {
+export function VideoElement({ embedUrl }: any) {
 
     return (
         <div

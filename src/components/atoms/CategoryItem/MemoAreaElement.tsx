@@ -7,8 +7,13 @@ import { POST_CREATE_MEMO_URL } from "../../../secret";
 import Memo from "../../molcules/Memo";
 import { useCategoryItemList } from "../../../context/CategoryListContext";
 import ColumnContainer from "../ColumnContainer";
+import { contentProps } from "../../../types/ContentType";
 
-export function MemoAreaElement(content) {
+interface MemoAreaElementProps {
+    content: contentProps['content'],
+}
+
+export function MemoAreaElement({ content }: MemoAreaElementProps) {
     const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const [textAreaValue, setTextAreaValue] = useState('');
     const { memoList, scrapId } = content;
@@ -32,6 +37,7 @@ export function MemoAreaElement(content) {
 
             const changedContentList = categoryItemList.map(item => item.scrapId === scrapId ? { ...item, memoList: changedMemoList } : item);
             setCategoryItemList(changedContentList);
+
             e.target.value = '';
         }
     }

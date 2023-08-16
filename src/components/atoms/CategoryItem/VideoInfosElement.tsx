@@ -23,7 +23,7 @@ const siteNameStyles = {
     desktopVideoItem: desktopVideoItemStyle,
 }
 
-export function VideoInfosElement({ publishedDate, watchedCnt, playTime, varient }) {
+export function VideoInfosElement({ publishedDate, watchedCnt, playTime, varient }: any) {
     const videoMenus = [{
         title: '게시일',
         content: publishedDate,

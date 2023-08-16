@@ -4,14 +4,14 @@ import { VideoElement } from '../components/atoms/CategoryItem/VideoElement';
 import { ThumbnailElement } from '../components/atoms/CategoryItem/ThumbnailElement';
 import { IconButtonListElement } from '../components/atoms/CategoryItem/IconButtonListElement';
 import { TitleElement } from '../components/atoms/CategoryItem/TitleElement';
-import { ChannelElement, ChannelProfileElement } from '../components/atoms/CategoryItem/ChannelProfileElement';
+import { ChannelProfileElement } from '../components/atoms/CategoryItem/ChannelProfileElement';
 import { VideoInfosElement } from '../components/atoms/CategoryItem/VideoInfosElement';
 import { DescriptionElement } from '../components/atoms/CategoryItem/DescrptionElement';
 import { PriceElement } from '../components/atoms/CategoryItem/PriceElement';
 import { MemoAreaElement } from '../components/atoms/CategoryItem/MemoAreaElement';
 import RowContainer from '../components/atoms/RowContainer';
-import { SiteNameElement } from '../components/atoms/CategoryItem/SitenameElement';
 import ColumnContainer from '../components/atoms/ColumnContainer';
+import { SiteNameElement } from '../components/atoms/CategoryItem/SiteNameElement';
 
 const CategoryItemSelectedContext = createContext({} as [contentProps['content'], Dispatch<SetStateAction<contentProps['content']>>]);
 
@@ -56,7 +56,7 @@ function Thumbnail() {
     );
 }
 
-function Header({ varient }) {
+function Header({ varient }: { varient: string }) {
     const [selectedContent] = useCategoryItemSelected();
     const { siteName, title } = selectedContent;
 
@@ -79,7 +79,7 @@ function Header({ varient }) {
     )
 }
 
-function ChannelProfile({ varient }) {
+function ChannelProfile({ varient }: { varient: string }) {
     const [selectedContent] = useCategoryItemSelected();
     const { channelImageUrl, channelName } = selectedContent;
 
@@ -88,7 +88,7 @@ function ChannelProfile({ varient }) {
     )
 }
 
-function Infos({ varient }) {
+function Infos({ varient }: { varient: string }) {
     const [selectedContent] = useCategoryItemSelected();
     const { publishedDate, watchedCnt, playTime } = selectedContent;
 
@@ -97,7 +97,7 @@ function Infos({ varient }) {
     )
 }
 
-function Description({ varient }) {
+function Description({ varient }: { varient: string }) {
     const [selectedContent] = useCategoryItemSelected();
     const { description } = selectedContent;
 
@@ -106,7 +106,7 @@ function Description({ varient }) {
     )
 }
 
-function Price({ varient }) {
+function Price({ varient }: { varient: string }) {
     const [selectedContent] = useCategoryItemSelected();
     const { price } = selectedContent;
 
@@ -117,14 +117,9 @@ function Price({ varient }) {
 
 function MemoArea() {
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
-    const { memoList, scrapId } = selectedContent;
-
-    function updateMemoList(changedMemoList) {
-        setSelectedContent({ ...selectedContent, memoList: changedMemoList });
-    }
 
     return (
-        <MemoAreaElement memoList={memoList} scrapId={scrapId} updateMemoList={updateMemoList} />
+        <MemoAreaElement content={selectedContent} />
     )
 }
 

@@ -1,9 +1,7 @@
-import ExistOtherScrapContainer from '../organisms/ExistOtherScrapContainer';
 import ScrapListHeader from '../molcules/ScrapListHeader';
 import EmptyScrapContainer from '../organisms/EmptyScrapContainer';
 import { contentProps } from '../../types/ContentType';
 import ExistVideoScrapContainer from '../organisms/ExistVideoScrapContainer';
-import SelectedCategoryItemProvider from '../organisms/SelectedCategoryItem';
 import CategoryItemSelectedProvider from '../../context/CategoryItemContext';
 import CategoryItemListProvider from '../../context/CategoryListContext';
 
