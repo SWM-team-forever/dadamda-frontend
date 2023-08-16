@@ -5,6 +5,7 @@ import { Card } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
 import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
+import RowContainer from '../atoms/RowContainer';
 
 interface ExistVideoScrapContainerProps {
     contents: contentProps["content"][],
@@ -44,7 +45,7 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
                     marginBottom: '20px',
                     paddingBottom: '20px',
                 }}>
-                    <FocusedVideoItemDetails varient={'desktopItemVideo'} />
+                    <FocusedArticleItemDetails varient={'desktopItemVideo'} />
                 </Card>
             </Desktop >
 
@@ -60,7 +61,7 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
                         top: 'calc(100vw * 9 / 16 + 116px)',
                         background: 'white',
                     }}>
-                        <FocusedVideoItemDetails varient={'mobileVideo'} />
+                        <FocusedArticleItemDetails varient={'mobileVideo'} />
                         <CategoryItemSelectedProvider.MemoArea />
                         <CategoryItemListProvider.MobileVideoList />
                     </div>
@@ -70,7 +71,7 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
     )
 }
 
-function FocusedVideoItemDetails({ varient }: { varient: string }) {
+function FocusedArticleItemDetails({ varient }: { varient: string }) {
     return (
         <ColumnContainer
             style={{
@@ -81,8 +82,14 @@ function FocusedVideoItemDetails({ varient }: { varient: string }) {
                 background: 'white',
             }}>
             <CategoryItemSelectedProvider.Header varient={varient} />
-            <CategoryItemSelectedProvider.ChannelProfile varient={varient} />
-            <CategoryItemSelectedProvider.Infos varient={varient} />
+            <CategoryItemSelectedProvider.Thumbnail varient={varient} />
+            <RowContainer>
+                <CategoryItemSelectedProvider.AuthorImage varient={varient} />
+                <ColumnContainer>
+                    <CategoryItemSelectedProvider.Author varient={varient} />
+                    <CategoryItemSelectedProvider.BlogName varient={varient} />
+                </ColumnContainer>
+            </RowContainer>
             <CategoryItemSelectedProvider.Description varient={varient} />
         </ColumnContainer>
     )
