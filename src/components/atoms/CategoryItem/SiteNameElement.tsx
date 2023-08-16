@@ -36,12 +36,28 @@ const desktopVideoItemStyle = {
     fontHeight: '160%',
 }
 
+const desktopArticleItemStyle = {
+    color: theme.color.primary_color,
+    fontSize: '0.625rem',
+    fontWeight: '400',
+    fontHeight: '160%',
+}
+
+const desktopArticleListStyle = {
+    color: theme.color.primary_color,
+    fontSize: '0.625rem',
+    fontWeight: '400',
+    fontHeight: '160%',
+}
+
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
     desktopProductItem: desktopProductItemStyle,
     desktopProductList: desktopProductListStyle,
     mobileVideo: mobileVideoStyle,
     desktopItemVideo: desktopVideoItemStyle,
+    desktopArticleItem: desktopArticleItemStyle,
+    desktopArticleList: desktopArticleListStyle,
 }
 
 export function SiteNameElement({ siteName, varient }: any) {

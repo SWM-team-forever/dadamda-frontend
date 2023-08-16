@@ -5,14 +5,24 @@ import RowContainer from "../RowContainer";
 import theme from "../../../assets/styles/theme";
 
 const desktopArticleListStyle = {
-    alignItems: 'center',
-    flex: '1',
-    fontHeight: '160%',
     color: theme.color.text_gray_color,
+    fontHeight: '160%',
+    fontSize: '0.75rem',
+    fontWeight: '400',
+    lineHeight: '160%',
 };
+
+const desktopArticleItemStyle = {
+    color: theme.color.text_gray_color,
+    fontHeight: '160%',
+    fontSize: '0.75rem',
+    fontWeight: '400',
+    lineHeight: '160%',
+}
 
 const siteNameStyles = {
     desktopArticleList: desktopArticleListStyle,
+    desktopArticleItem: desktopArticleItemStyle,
 }
 
 export function PublishedDateElement({ publishedDate, varient }: any) {

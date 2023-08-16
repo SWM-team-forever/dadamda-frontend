@@ -42,11 +42,9 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
                 <Card sx={{
                     flex: '1',
                     height: '100%',
-                    marginBottom: '20px',
-                    paddingBottom: '20px',
                     overflow: 'auto',
                 }}>
-                    <FocusedArticleItemDetails varient={'desktopItemVideo'} />
+                    <FocusedArticleItemDetails varient={'desktopArticleItem'} />
                 </Card>
                 <iframe src={selectedContent.pageUrl}
                     style={{
@@ -67,7 +65,7 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
                         top: 'calc(100vw * 9 / 16 + 116px)',
                         background: 'white',
                     }}>
-                        <FocusedArticleItemDetails varient={'mobileVideo'} />
+                        <FocusedArticleItemDetails varient={'mobileArticle'} />
                         <CategoryItemSelectedProvider.MemoArea />
                         <CategoryItemListProvider.MobileVideoList />
                     </div>
@@ -88,17 +86,25 @@ function FocusedArticleItemDetails({ varient }: { varient: string }) {
                 background: 'white',
             }}>
             <CategoryItemSelectedProvider.Header varient={varient} />
-            <CategoryItemSelectedProvider.Thumbnail varient={varient} />
-            <RowContainer>
-                <CategoryItemSelectedProvider.AuthorImage varient={varient} />
-                <ColumnContainer>
-                    <CategoryItemSelectedProvider.Author varient={varient} />
-                    <CategoryItemSelectedProvider.BlogName varient={varient} />
-                </ColumnContainer>
+            <CategoryItemSelectedProvider.Thumbnail />
+            <RowContainer
+                style={{
+                    justifyContent: 'space-between',
+                }}>
+                <RowContainer
+                    style={{
+                        gap: '5px',
+                    }}>
+                    <CategoryItemSelectedProvider.AuthorImage />
+                    <ColumnContainer>
+                        <CategoryItemSelectedProvider.Author varient={varient} />
+                        <CategoryItemSelectedProvider.BlogName varient={varient} />
+                    </ColumnContainer>
+                </RowContainer>
                 <CategoryItemSelectedProvider.PublishedDate varient={varient} />
             </RowContainer>
             <CategoryItemSelectedProvider.Description varient={varient} />
-            <CategoryItemSelectedProvider.MemoArea varient={varient} />
+            <CategoryItemSelectedProvider.MemoArea />
         </ColumnContainer>
     )
 }

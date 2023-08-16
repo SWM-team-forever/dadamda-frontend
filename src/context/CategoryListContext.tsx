@@ -5,6 +5,7 @@ import ColumnContainer from '../components/atoms/ColumnContainer';
 import DesktopVideoListElement from '../components/molcules/CategoryItem/DesktopVideoListElement';
 import MobileVideoListElement from '../components/molcules/CategoryItem/MobileVideoListElement';
 import DesktopArticleElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
+import DesktopArticleListElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 
@@ -63,7 +64,7 @@ function DesktopArticleList() {
             gap: '10px',
         }}>
             {categoryItemList.map(categoryItem =>
-                <DesktopArticleElement content={categoryItem} />
+                <DesktopArticleListElement content={categoryItem} />
             )}
         </ColumnContainer>
     )

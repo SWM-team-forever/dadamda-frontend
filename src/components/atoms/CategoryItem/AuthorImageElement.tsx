@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import theme from "../../../assets/styles/theme";
 import ProfileImage from "../ProfileImage";
+import avatar from '../../../assets/images/Avatar.png';
 
 const desktopArticleListStyle = {
     size: 30,
@@ -12,6 +13,8 @@ const siteNameStyles = {
 
 export function AuthorImageElement({ authorImage, varient }: any) {
     return (
-        <ProfileImage size={30} source={authorImage} />
+        <>
+            {authorImage ? <ProfileImage size={30} source={authorImage} /> : <ProfileImage size={30} source={avatar} />}
+        </>
     );
 }

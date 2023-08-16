@@ -12,12 +12,13 @@ import { AuthorImageElement } from "../../atoms/CategoryItem/AuthorImageElement"
 import { AuthorElement } from "../../atoms/CategoryItem/AuthorElement";
 import { SiteNameElement } from "../../atoms/CategoryItem/SiteNameElement";
 import { PublishedDateElement } from "../../atoms/CategoryItem/PublishedDateElement";
+import ColumnContainer from "../../atoms/ColumnContainer";
 
 interface DesktopArticleElementProps {
     content: contentProps['content'],
 }
 
-function DesktopArticleElement({ content }: DesktopArticleElementProps) {
+function DesktopArticleListElement({ content }: DesktopArticleElementProps) {
     const { thumbnailUrl, blogName, title, author, authorImageUrl, siteName, publishedDate } = content;
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
@@ -55,13 +56,23 @@ function DesktopArticleElement({ content }: DesktopArticleElementProps) {
                     flexDirection: 'column',
                     gap: '5px',
                 }}>
-                    <TitleElement title={title} />
-                    <SiteNameElement siteName={siteName} />
-                    <RowContainer>
-                        <AuthorImageElement authorImage={authorImageUrl} />
-                        <AuthorElement author={author} />
-                        <BlogNameElement blogName={blogName} />
-                        <PublishedDateElement publishedDate={publishedDate} />
+                    <SiteNameElement siteName={siteName} varient={varient} />
+                    <TitleElement title={title} varient={varient} />
+                    <RowContainer
+                        style={{
+                            justifyContent: 'space-between',
+                        }}>
+                        <RowContainer
+                            style={{
+                                gap: '5px',
+                            }}>
+                            <AuthorImageElement authorImage={authorImageUrl} />
+                            <ColumnContainer>
+                                <AuthorElement author={author} varient={varient} />
+                                <BlogNameElement blogName={blogName} varient={varient} />
+                            </ColumnContainer>
+                        </RowContainer>
+                        <PublishedDateElement publishedDate={publishedDate} varient={varient} />
                     </RowContainer>
                 </CardContent>
             </CardActionArea>
@@ -69,4 +80,4 @@ function DesktopArticleElement({ content }: DesktopArticleElementProps) {
     )
 }
 
-export default DesktopArticleElement;
+export default DesktopArticleListElement;

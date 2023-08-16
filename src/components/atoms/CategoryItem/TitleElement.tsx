@@ -61,6 +61,26 @@ const desktopVideoListStyle = {
     color: theme.color.text_gray_color,
 }
 
+const desktopArticleListStyle = {
+    fontSize: '0.9375rem',
+    color: theme.color.text_gray_color,
+    fontWeight: '400',
+    fontHeight: '120%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '2',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
+}
+
+const desktopArticleItemStyle = {
+    fontSize: '1.875rem',
+    fontWeight: '400',
+    fontHeight: '120%',
+    color: theme.color.text_gray_color,
+}
+
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
     desktopProductItem: desktopProductItemStyle,
@@ -68,6 +88,8 @@ const siteNameStyles = {
     mobileVideo: mobileVideoStyle,
     desktopVideoList: desktopVideoListStyle,
     desktopVideoItem: desktopVideoItemStyle,
+    desktopArticleList: desktopArticleListStyle,
+    desktopArticleItem: desktopArticleItemStyle,
 }
 
 

@@ -136,30 +136,30 @@ function AuthorImage() {
     )
 }
 
-function Author() {
+function Author({ varient }: { varient: string }) {
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
     const { author } = selectedContent;
 
     return (
-        <AuthorElement author={author} />
+        <AuthorElement author={author} varient={varient} />
     )
 }
 
-function BlogName() {
+function BlogName({ varient }: { varient: string }) {
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
     const { blogName } = selectedContent;
 
     return (
-        <BlogNameElement blogName={blogName} />
+        <BlogNameElement blogName={blogName} varient={varient} />
     )
 }
 
-function PublishedDate() {
+function PublishedDate({ varient }: { varient: string }) {
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
     const { publishedDate } = selectedContent;
 
     return (
-        <PublishedDateElement publishedDate={publishedDate} />
+        <PublishedDateElement publishedDate={publishedDate} varient={varient} />
     )
 }
 
