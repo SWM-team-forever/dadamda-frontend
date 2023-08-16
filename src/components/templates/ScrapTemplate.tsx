@@ -13,7 +13,7 @@ import fab from '../../assets/icons/fab.png';
 import theme from '../../assets/styles/theme';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
 import VideoTemplate from './VideoTemplate';
-import ArticleTemplate from '../scrap/ArticleTemplate';
+import ArticleTemplate from './ArticleTemplate';
 import ProductTemplate from './ProductTemplate';
 
 interface ScrapTemplateProps {
@@ -125,7 +125,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         }
     }, [isFetching]);
 
-    const providingTemplates = ['other', 'list', 'video', 'product'];
+    const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
 
     return (
         <>
@@ -135,6 +135,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'video' && <VideoTemplate videos={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'product' && <ProductTemplate products={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
+                {type === 'article' && <ArticleTemplate videos={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {!providingTemplates.includes(type) && <NotReadyTemplate />}
                 <IconButton
                     src={fab}
