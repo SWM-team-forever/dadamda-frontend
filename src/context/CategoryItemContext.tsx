@@ -15,6 +15,7 @@ import { SiteNameElement } from '../components/atoms/CategoryItem/SiteNameElemen
 import { AuthorImageElement } from '../components/atoms/CategoryItem/AuthorImageElement';
 import { AuthorElement } from '../components/atoms/CategoryItem/AuthorElement';
 import { BlogNameElement } from '../components/atoms/CategoryItem/BlogNameElement';
+import { PublishedDateElement } from '../components/atoms/CategoryItem/PublishedDateElement';
 
 const CategoryItemSelectedContext = createContext({} as [contentProps['content'], Dispatch<SetStateAction<contentProps['content']>>]);
 
@@ -153,6 +154,15 @@ function BlogName() {
     )
 }
 
+function PublishedDate() {
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const { publishedDate } = selectedContent;
+
+    return (
+        <PublishedDateElement publishedDate={publishedDate} />
+    )
+}
+
 CategoryItemSelectedProvider.Video = Video;
 CategoryItemSelectedProvider.Header = Header;
 CategoryItemSelectedProvider.ChannelProfile = ChannelProfile;
@@ -164,5 +174,6 @@ CategoryItemSelectedProvider.Price = Price;
 CategoryItemSelectedProvider.Author = Author;
 CategoryItemSelectedProvider.AuthorImage = AuthorImage;
 CategoryItemSelectedProvider.BlogName = BlogName;
+CategoryItemSelectedProvider.PublishedDate = PublishedDate;
 
 export default CategoryItemSelectedProvider;

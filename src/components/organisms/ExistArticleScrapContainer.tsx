@@ -95,6 +95,7 @@ function FocusedArticleItemDetails({ varient }: { varient: string }) {
                     <CategoryItemSelectedProvider.Author varient={varient} />
                     <CategoryItemSelectedProvider.BlogName varient={varient} />
                 </ColumnContainer>
+                <CategoryItemSelectedProvider.PublishedDate varient={varient} />
             </RowContainer>
             <CategoryItemSelectedProvider.Description varient={varient} />
             <CategoryItemSelectedProvider.MemoArea varient={varient} />

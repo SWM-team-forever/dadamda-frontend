@@ -11,13 +11,14 @@ import RowContainer from "../../atoms/RowContainer";
 import { AuthorImageElement } from "../../atoms/CategoryItem/AuthorImageElement";
 import { AuthorElement } from "../../atoms/CategoryItem/AuthorElement";
 import { SiteNameElement } from "../../atoms/CategoryItem/SiteNameElement";
+import { PublishedDateElement } from "../../atoms/CategoryItem/PublishedDateElement";
 
 interface DesktopArticleElementProps {
     content: contentProps['content'],
 }
 
 function DesktopArticleElement({ content }: DesktopArticleElementProps) {
-    const { thumbnailUrl, blogName, title, author, authorImageUrl, siteName } = content;
+    const { thumbnailUrl, blogName, title, author, authorImageUrl, siteName, publishedDate } = content;
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
     const varient = 'desktopArticleList';
@@ -60,6 +61,7 @@ function DesktopArticleElement({ content }: DesktopArticleElementProps) {
                         <AuthorImageElement authorImage={authorImageUrl} />
                         <AuthorElement author={author} />
                         <BlogNameElement blogName={blogName} />
+                        <PublishedDateElement publishedDate={publishedDate} />
                     </RowContainer>
                 </CardContent>
             </CardActionArea>
