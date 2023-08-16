@@ -33,6 +33,9 @@ function MobileArticleListElement({ content }: MobileProductListElementProps) {
             style={{
                 width: '100%',
                 backgroundColor: 'white',
+                boxShadow: theme.style.shadow,
+                boxSizing: 'border-box',
+                borderRadius: '4px',
             }}
 
         >
@@ -55,10 +58,11 @@ function MobileArticleListElement({ content }: MobileProductListElementProps) {
                 </Box>
                 <CardContent sx={{
                     width: '100%',
-                    padding: '0',
+                    padding: '0 10px 10px 10px',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '5px',
+                    boxSizing: 'border-box',
                 }}>
                     <SiteNameElement siteName={siteName} varient={varient} />
                     <TitleElement title={title} varient={varient} />
