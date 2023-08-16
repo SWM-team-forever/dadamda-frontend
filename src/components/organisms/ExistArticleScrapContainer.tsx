@@ -59,7 +59,7 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
             <Mobile>
                 <ColumnContainer>
                     {categoryItemList.map(content => {
-                        return <MobileProductListElement content={content} />
+                        return <MobileArticleListElement content={content} />
                     })}
                 </ColumnContainer>
             </Mobile >
