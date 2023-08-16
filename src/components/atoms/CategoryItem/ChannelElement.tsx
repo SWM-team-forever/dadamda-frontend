@@ -1,14 +1,6 @@
 import { Typography } from "@mui/material";
 import theme from "../../../assets/styles/theme";
 
-const mobileVideoStyle = {
-
-}
-
-const desktopVideoItemStyle = {
-
-}
-
 const desktopVideoListStyle = {
     color: theme.color.text_gray_color,
     fontSize: '0.625rem',
@@ -17,8 +9,6 @@ const desktopVideoListStyle = {
 }
 
 const siteNameStyles = {
-    mobileVideo: mobileVideoStyle,
-    desktopVideoItem: desktopVideoItemStyle,
     desktopVideoList: desktopVideoListStyle,
 }
 
