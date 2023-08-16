@@ -29,10 +29,21 @@ const desktopArticleItemStyle = {
     width: '100%',
 }
 
+const mobileArticleStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '0.875rem',
+    fontWeight: '400',
+    lineHeight: '160%',
+    width: '100%',
+    padding: '10px',
+    boxSizing: 'border-box',
+}
+
 const siteNameStyles = {
     mobileVideo: mobileVideoStyle,
     desktopItemVideo: desktopVideoItemStyle,
     desktopArticleItem: desktopArticleItemStyle,
+    mobileArticle: mobileArticleStyle,
 }
 
 export function DescriptionElement({ description, varient }: any) {

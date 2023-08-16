@@ -6,7 +6,6 @@ import theme from "../../../assets/styles/theme";
 
 const desktopArticleListStyle = {
     color: theme.color.text_gray_color,
-    fontHeight: '160%',
     fontSize: '0.75rem',
     fontWeight: '400',
     lineHeight: '160%',
@@ -14,7 +13,13 @@ const desktopArticleListStyle = {
 
 const desktopArticleItemStyle = {
     color: theme.color.text_gray_color,
-    fontHeight: '160%',
+    fontSize: '0.75rem',
+    fontWeight: '400',
+    lineHeight: '160%',
+}
+
+const mobileArticleStyle = {
+    color: theme.color.text_gray_color,
     fontSize: '0.75rem',
     fontWeight: '400',
     lineHeight: '160%',
@@ -23,6 +28,7 @@ const desktopArticleItemStyle = {
 const siteNameStyles = {
     desktopArticleList: desktopArticleListStyle,
     desktopArticleItem: desktopArticleItemStyle,
+    mobileArticle: mobileArticleStyle,
 }
 
 export function PublishedDateElement({ publishedDate, varient }: any) {

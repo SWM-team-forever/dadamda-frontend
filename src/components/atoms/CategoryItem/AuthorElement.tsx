@@ -13,12 +13,20 @@ const desktopArticleItemStyle = {
     color: theme.color.text_gray_color,
     fontSize: '1rem',
     fontWeight: '400',
-    fontHeight: '160%',
+    lineHeight: '160%',
+}
+
+const mobileArticleStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '1rem',
+    fontWeight: '400',
+    lineHeight: '160%',
 }
 
 const siteNameStyles = {
     desktopArticleList: desktopArticleListStyle,
     desktopArticleItem: desktopArticleItemStyle,
+    mobileArticle: mobileArticleStyle,
 }
 
 export function AuthorElement({ author, varient }: any) {

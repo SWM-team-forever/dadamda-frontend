@@ -81,6 +81,13 @@ const desktopArticleItemStyle = {
     color: theme.color.text_gray_color,
 }
 
+const mobileArticleStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '1.25rem',
+    fontWeight: '400',
+    lineHeight: '120%',
+}
+
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
     desktopProductItem: desktopProductItemStyle,
@@ -90,6 +97,7 @@ const siteNameStyles = {
     desktopVideoItem: desktopVideoItemStyle,
     desktopArticleList: desktopArticleListStyle,
     desktopArticleItem: desktopArticleItemStyle,
+    mobileArticle: mobileArticleStyle,
 }
 
 

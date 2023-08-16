@@ -50,6 +50,13 @@ const desktopArticleListStyle = {
     fontHeight: '160%',
 }
 
+const mobileArticleStyle = {
+    color: theme.color.primary_color,
+    fontSize: '0.625rem',
+    fontWeight: '400',
+    lineHeight: '160%',
+}
+
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
     desktopProductItem: desktopProductItemStyle,
@@ -58,6 +65,7 @@ const siteNameStyles = {
     desktopItemVideo: desktopVideoItemStyle,
     desktopArticleItem: desktopArticleItemStyle,
     desktopArticleList: desktopArticleListStyle,
+    mobileArticle: mobileArticleStyle,
 }
 
 export function SiteNameElement({ siteName, varient }: any) {

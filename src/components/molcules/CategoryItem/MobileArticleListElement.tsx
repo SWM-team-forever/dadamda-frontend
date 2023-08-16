@@ -86,7 +86,7 @@ function MobileArticleListElement({ content }: MobileProductListElementProps) {
             </CardActionArea>
             {open
                 && <ColumnContainer>
-                    <DescriptionElement description={description} />
+                    <DescriptionElement description={description} varient={varient} />
                     <MemoAreaElement content={content} />
                 </ColumnContainer>
             }
