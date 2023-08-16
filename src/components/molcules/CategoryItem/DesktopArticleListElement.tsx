@@ -26,8 +26,8 @@ function DesktopArticleElement({ content }: DesktopArticleElementProps) {
         <div
             style={{
                 width: '100%',
-                boxShadow: 'none',
-                borderRadius: '0',
+                boxShadow: theme.style.shadow,
+                borderRadius: '4px',
                 display: 'block',
                 backgroundColor: `${selectedContent.scrapId === content.scrapId ? theme.color.background_color : 'white'}`,
             }}
@@ -40,7 +40,6 @@ function DesktopArticleElement({ content }: DesktopArticleElementProps) {
                     width: '100%',
                     gap: '5px',
                     padding: '10px',
-                    boxShadow: theme.style.shadow,
                 }}
             >
                 <Box sx={{
@@ -49,7 +48,7 @@ function DesktopArticleElement({ content }: DesktopArticleElementProps) {
                     <ThumbnailElement thumbnailUrl={thumbnailUrl} />
                 </Box>
                 <CardContent sx={{
-                    width: '70%',
+                    width: '100%',
                     padding: '0',
                     display: 'flex',
                     flexDirection: 'column',
@@ -61,7 +60,6 @@ function DesktopArticleElement({ content }: DesktopArticleElementProps) {
                         <AuthorImageElement authorImage={authorImageUrl} />
                         <AuthorElement author={author} />
                         <BlogNameElement blogName={blogName} />
-
                     </RowContainer>
                 </CardContent>
             </CardActionArea>

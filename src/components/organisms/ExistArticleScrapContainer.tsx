@@ -40,13 +40,19 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
                     <CategoryItemListProvider.DesktopArticleList />
                 </VideoListWrapper>
                 <Card sx={{
-                    width: '100%',
-                    height: 'fit-content',
+                    flex: '1',
+                    height: '100%',
                     marginBottom: '20px',
                     paddingBottom: '20px',
+                    overflow: 'auto',
                 }}>
                     <FocusedArticleItemDetails varient={'desktopItemVideo'} />
                 </Card>
+                <iframe src={selectedContent.pageUrl}
+                    style={{
+                        flex: '1',
+                        height: '100%',
+                    }} />
             </Desktop >
 
             {/* Mobile */}
@@ -91,6 +97,7 @@ function FocusedArticleItemDetails({ varient }: { varient: string }) {
                 </ColumnContainer>
             </RowContainer>
             <CategoryItemSelectedProvider.Description varient={varient} />
+            <CategoryItemSelectedProvider.MemoArea varient={varient} />
         </ColumnContainer>
     )
 }
@@ -111,13 +118,14 @@ function MemoContainer() {
 }
 
 const VideoListWrapper = styled.div`
-    width: 400px;
+    width: 300px;
     padding: 0 10px;
-    height: calc(100% - 74px);
+    height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: auto;
 `
 
 const Desktop = styled.div`
@@ -125,7 +133,7 @@ const Desktop = styled.div`
     gap: 10px;
     box-sizing: border-box;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 64px);
     display: flex;
     @media screen and (max-width: 600px) {
         display: none;
