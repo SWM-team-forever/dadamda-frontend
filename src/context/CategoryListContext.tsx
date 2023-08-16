@@ -6,6 +6,7 @@ import DesktopVideoListElement from '../components/molcules/CategoryItem/Desktop
 import MobileVideoListElement from '../components/molcules/CategoryItem/MobileVideoListElement';
 import DesktopArticleElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
 import DesktopArticleListElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
+import MobileArticleListElement from '../components/molcules/CategoryItem/MobileArticleListElement';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 
@@ -65,6 +66,18 @@ function DesktopArticleList() {
         }}>
             {categoryItemList.map(categoryItem =>
                 <DesktopArticleListElement content={categoryItem} />
+            )}
+        </ColumnContainer>
+    )
+}
+
+function MobileArticleList() {
+    const [categoryItemList] = useCategoryItemList();
+
+    return (
+        <ColumnContainer>
+            {categoryItemList.map(categoryItem =>
+                <MobileArticleListElement content={categoryItem} />
             )}
         </ColumnContainer>
     )

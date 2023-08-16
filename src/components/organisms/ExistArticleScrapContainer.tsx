@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from 'react';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
 import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
 import RowContainer from '../atoms/RowContainer';
+import MobileArticleListElement from '../molcules/CategoryItem/MobileArticleListElement';
+import MobileProductListElement from '../molcules/CategoryItem/MobileProductListElement';
 
 interface ExistVideoScrapContainerProps {
     contents: contentProps["content"][],
@@ -56,19 +58,9 @@ function ExistArticleScrapContainer({ contents }: ExistVideoScrapContainerProps)
             {/* Mobile */}
             <Mobile>
                 <ColumnContainer>
-                    <CategoryItemSelectedProvider.Video />
-                    <div style={{
-                        height: 'calc(100% - 100vw * 9 / 16 - 116px)',
-                        width: '100%',
-                        overflow: 'auto',
-                        position: 'fixed',
-                        top: 'calc(100vw * 9 / 16 + 116px)',
-                        background: 'white',
-                    }}>
-                        <FocusedArticleItemDetails varient={'mobileArticle'} />
-                        <CategoryItemSelectedProvider.MemoArea />
-                        <CategoryItemListProvider.MobileVideoList />
-                    </div>
+                    {categoryItemList.map(content => {
+                        return <MobileProductListElement content={content} />
+                    })}
                 </ColumnContainer>
             </Mobile >
         </>
