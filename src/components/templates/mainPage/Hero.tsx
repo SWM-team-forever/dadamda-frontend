@@ -72,7 +72,7 @@ const Hero = () => {
                 <Grid item xs={12} md={7}>
                     <img src={heroImage} alt="My Team" style={{
                         width: '100%',
-                        boxShadow: theme.style.shadow,
+                        boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.1) 0px 4px 6px, rgba(0, 0, 0, 0.15) 0px 8px 30px',
                     }} />
                 </Grid>
                 {isLoginModalVisible &&
