@@ -31,7 +31,7 @@ jobs:
       # react 빌드한 /build를 s3로 업로드
       - name: Upload /build to S3
         env:
-          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
+          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_RELEASE_NAME}}
         run: |
           aws s3 cp --recursive --region ap-northeast-2 dist s3://$BUCKET_NAME
 
