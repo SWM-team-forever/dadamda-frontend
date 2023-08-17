@@ -4,6 +4,7 @@ import heroImage from '../../../assets/images/heroImage.png'
 import { useNavigate } from 'react-router-dom';
 import Overlay from '../../atoms/Overlay';
 import LoginModal from '../../organisms/LoginModal';
+import theme from '../../../assets/styles/theme';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -71,6 +72,7 @@ const Hero = () => {
                 <Grid item xs={12} md={7}>
                     <img src={heroImage} alt="My Team" style={{
                         width: '100%',
+                        boxShadow: theme.style.shadow,
                     }} />
                 </Grid>
                 {isLoginModalVisible &&
