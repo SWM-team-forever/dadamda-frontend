@@ -49,7 +49,7 @@ npm run dev
 |:---:|:---:|
 |![전체 스크랩 페이지](https://github.com/SWM-team-forever/dadamda-frontend/assets/83866983/7560a9a7-87ac-4648-a147-ab717d15c0da)|![상품 스크랩 페이지](https://github.com/SWM-team-forever/dadamda-frontend/assets/83866983/d974def5-f9f8-4cf9-9323-803a68ad3d0f)|
 
-|비디오 스크랩 페이지|아티 스크랩 페이지|
+|비디오 스크랩 페이지|아티클 스크랩 페이지|
 |:---:|:---:|
 |![비디오 스크랩 페이지](https://github.com/SWM-team-forever/dadamda-frontend/assets/83866983/3cae0d04-4588-471f-b7e8-b22304283f1c)|![아티클 스크랩 페이지](https://github.com/SWM-team-forever/dadamda-frontend/assets/83866983/81f108ff-1eae-477b-9723-1c45c39db33a)|
 
