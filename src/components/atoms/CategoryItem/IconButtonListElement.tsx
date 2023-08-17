@@ -68,7 +68,10 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
                     <ShortcutIcon size='24' fill={theme.color.icon_color} />
                 </div>
                 <div
-                    onClick={() => showTooltip()}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        showTooltip()
+                    }}
                     style={{
                         position: 'relative',
                         height: 'fit-content',
