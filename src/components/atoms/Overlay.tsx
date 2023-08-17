@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 interface OverlayProps {
-    children: React.ReactNode,
+    children?: React.ReactNode,
+    onClick?: (e: React.MouseEvent) => void,
 }
 
-function Overlay({ children }: OverlayProps) {
+function Overlay({ children, onClick }: OverlayProps) {
     return (
-        <OverlayWrapper>
+        <OverlayWrapper onClick={onClick}>
             {children}
         </OverlayWrapper>
     );

@@ -4,7 +4,7 @@ import theme from "../../assets/styles/theme";
 
 interface TooltipProps {
     contents: {
-        onClick: () => void,
+        onClick: (e: React.MouseEvent) => void,
         name: string,
     }[];
     color: string;
@@ -25,8 +25,8 @@ const TooltipWrapper = styled.div<{ color: string }>`
     flex-direction: column;
     position: absolute;
     right: 0;
-    top: 102%;
-    width: fit-content;
+    top: 100%;
+    width: max-content;
     padding: 10px 20px;
     border-radius: 4px;
     background: ${props => props.color};

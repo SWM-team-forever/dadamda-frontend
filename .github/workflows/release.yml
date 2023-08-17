@@ -1,8 +1,8 @@
-name: front dev deploy
+name: front release deploy
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -31,13 +31,13 @@ jobs:
       # react 빌드한 /build를 s3로 업로드
       - name: Upload /build to S3
         env:
-          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME}}
+          BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_RELEASE_NAME}}
         run: |
           aws s3 cp --recursive --region ap-northeast-2 dist s3://$BUCKET_NAME
 
       # cloudfront 캐시 삭제
       - name: Invalidate CloudFront cache
         env:
-          DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+          DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_RELEASE_ID }}
         run: |
           aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"

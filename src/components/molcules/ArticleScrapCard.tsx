@@ -12,6 +12,7 @@ import defaultImage from '../../assets/images/Avatar.png';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
+import ThumbnailImage from '../atoms/ThumbnailImage';
 
 interface ArticleScrapCardProps {
     content: contentProps['content'],
@@ -32,7 +33,7 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
         >
             {content.siteName && <Chip>{content.siteName}</Chip>}
             {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            <CardImage src={content.thumbnailUrl} />
+            {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             <RowContainer style={{ justifyContent: 'space-between' }}>
                 {(content.author || content.blogName) &&
                     <RowContainer style={{ gap: '10px', alignItems: 'center' }}>
@@ -69,12 +70,6 @@ const CardWrapper = styled.div`
     flex-direction: column;
     gap: 10px;
     background-color: white;
-    border-radius: 4px;
-`
-
-const CardImage = styled.img`
-    width: 100%;
-    height: 140px;
     border-radius: 4px;
 `
 

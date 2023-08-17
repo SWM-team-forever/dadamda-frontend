@@ -130,28 +130,28 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
                 editalbeContent.channelName.isDeleted = value;
             }
         },
-        'playTime': {
-            label: '영상 길이',
-            isDeleteable: true,
-            isDeleted: false,
-            state: playTime,
-            showState: () => setPlayTime(content.playTime),
-            setState: setPlayTime,
-            setIsDeleted(value: boolean) {
-                editalbeContent.playTime.isDeleted = value;
-            }
-        },
-        'watchedCnt': {
-            label: '조회수',
-            isDeleteable: false,
-            isDeleted: false,
-            state: watchedCnt,
-            showState: () => setWatchedCnt(content.watchedCnt),
-            setState: setWatchedCnt,
-            setIsDeleted(value: boolean) {
-                editalbeContent.watchedCnt.isDeleted = value;
-            }
-        },
+        // 'playTime': {
+        //     label: '영상 길이',
+        //     isDeleteable: true,
+        //     isDeleted: false,
+        //     state: playTime,
+        //     showState: () => setPlayTime(content.playTime),
+        //     setState: setPlayTime,
+        //     setIsDeleted(value: boolean) {
+        //         editalbeContent.playTime.isDeleted = value;
+        //     }
+        // },
+        // 'watchedCnt': {
+        //     label: '조회수',
+        //     isDeleteable: false,
+        //     isDeleted: false,
+        //     state: watchedCnt,
+        //     showState: () => setWatchedCnt(content.watchedCnt),
+        //     setState: setWatchedCnt,
+        //     setIsDeleted(value: boolean) {
+        //         editalbeContent.watchedCnt.isDeleted = value;
+        //     }
+        // },
     };
 
     const [token, setToken] = useState<string | null>(null);
@@ -160,7 +160,7 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             other: ['title', 'description'],
             article: ['title', 'description', 'siteName', 'author', 'blogName'],
             product: ['title', 'description', 'siteName', 'price'],
-            video: ['title', 'description', 'siteName', 'channelName', 'playTime', 'watchedCnt'],
+            video: ['title', 'description', 'siteName', 'channelName'],
         };
 
         defaultContentMenu[content.dtype as keyof typeof defaultContentMenu].map((name) => {
