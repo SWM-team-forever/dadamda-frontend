@@ -109,7 +109,13 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
             </RowContainer>
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} setError={setError} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={scrapId} setError={setError} />}
-            {(isScrapEditModalVisible || isScrapDeleteModalVisible) && <Overlay />}
+            {(isScrapEditModalVisible || isScrapDeleteModalVisible)
+                && <Overlay onClick={
+                    (e) => {
+                        e.stopPropagation();
+                        hideScrapDeleteModal();
+                        hideScrapEditModal();
+                    }} />}
         </>
     )
 }
