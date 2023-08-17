@@ -4,6 +4,10 @@ import RowContainer from '../components/atoms/RowContainer';
 import ColumnContainer from '../components/atoms/ColumnContainer';
 import DesktopVideoListElement from '../components/molcules/CategoryItem/DesktopVideoListElement';
 import MobileVideoListElement from '../components/molcules/CategoryItem/MobileVideoListElement';
+import DesktopArticleElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
+import DesktopArticleListElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
+import MobileArticleListElement from '../components/molcules/CategoryItem/MobileArticleListElement';
+import MobileProductListElement from '../components/molcules/CategoryItem/MobileProductListElement';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 
@@ -54,7 +58,47 @@ function MobileVideoList() {
     )
 }
 
+function DesktopArticleList() {
+    const [categoryItemList] = useCategoryItemList();
+
+    return (
+        <ColumnContainer style={{
+            gap: '10px',
+        }}>
+            {categoryItemList.map(categoryItem =>
+                <DesktopArticleListElement content={categoryItem} />
+            )}
+        </ColumnContainer>
+    )
+}
+
+function MobileArticleList() {
+    const [categoryItemList] = useCategoryItemList();
+
+    return (
+        <ColumnContainer>
+            {categoryItemList.map(categoryItem =>
+                <MobileArticleListElement content={categoryItem} />
+            )}
+        </ColumnContainer>
+    )
+}
+
+function MobileProductList() {
+    const [categoryItemList] = useCategoryItemList();
+
+    return (
+        <ColumnContainer>
+            {categoryItemList.map(categoryItemList =>
+                <MobileProductListElement content={categoryItemList} />
+            )}
+        </ColumnContainer>
+    )
+}
+
 CategoryItemListProvider.DesktopVideoList = DesktopVideoList;
 CategoryItemListProvider.MobileVideoList = MobileVideoList;
+CategoryItemListProvider.DesktopArticleList = DesktopArticleList;
+CategoryItemListProvider.MobileProductList = MobileProductList;
 
 export default CategoryItemListProvider;

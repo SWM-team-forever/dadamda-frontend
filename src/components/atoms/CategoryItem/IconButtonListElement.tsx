@@ -17,13 +17,15 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
 
     const scrapCardMenu = [{
         name: '카드 수정하기',
-        onClick: () => {
+        onClick: (e: React.MouseEvent) => {
+            e.stopPropagation();
             hideTooltip();
             showScrapEditModal();
         },
     }, {
         name: '카드 삭제하기',
-        onClick: () => {
+        onClick: (e: React.MouseEvent) => {
+            e.stopPropagation();
             hideTooltip();
             showScrapDeleteModal();
         },
@@ -58,6 +60,25 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
     const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    function TooltipOverlay() {
+        return (
+            <div style={{
+                width: '100vw',
+                height: '100vh',
+                background: 'transparent',
+                position: 'fixed',
+                top: '0',
+                left: '0',
+            }
+            }
+                onClick={(e) => {
+                    e.stopPropagation();
+                    hideTooltip();
+                }}>
+            </div >
+        )
+    }
+
     return (
         <>
             <RowContainer style={{ gap: '5px' }}>
@@ -68,19 +89,33 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
                     <ShortcutIcon size='24' fill={theme.color.icon_color} />
                 </div>
                 <div
-                    onClick={() => showTooltip()}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        showTooltip()
+                    }}
                     style={{
                         position: 'relative',
                         height: 'fit-content',
                     }}
                 >
                     <MoreIcon size='24' fill={theme.color.icon_color} />
-                    {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
+                    {isTooltipVisible &&
+                        <>
+                            <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />
+                            <TooltipOverlay />
+                        </>
+                    }
                 </div>
             </RowContainer>
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} setError={setError} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={scrapId} setError={setError} />}
-            {(isScrapEditModalVisible || isScrapDeleteModalVisible) && <Overlay />}
+            {(isScrapEditModalVisible || isScrapDeleteModalVisible)
+                && <Overlay onClick={
+                    (e) => {
+                        e.stopPropagation();
+                        hideScrapDeleteModal();
+                        hideScrapEditModal();
+                    }} />}
         </>
     )
 }

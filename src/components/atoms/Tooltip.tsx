@@ -4,7 +4,7 @@ import theme from "../../assets/styles/theme";
 
 interface TooltipProps {
     contents: {
-        onClick: () => void,
+        onClick: (e: React.MouseEvent) => void,
         name: string,
     }[];
     color: string;

@@ -12,6 +12,10 @@ import { MemoAreaElement } from '../components/atoms/CategoryItem/MemoAreaElemen
 import RowContainer from '../components/atoms/RowContainer';
 import ColumnContainer from '../components/atoms/ColumnContainer';
 import { SiteNameElement } from '../components/atoms/CategoryItem/SiteNameElement';
+import { AuthorImageElement } from '../components/atoms/CategoryItem/AuthorImageElement';
+import { AuthorElement } from '../components/atoms/CategoryItem/AuthorElement';
+import { BlogNameElement } from '../components/atoms/CategoryItem/BlogNameElement';
+import { PublishedDateElement } from '../components/atoms/CategoryItem/PublishedDateElement';
 
 const CategoryItemSelectedContext = createContext({} as [contentProps['content'], Dispatch<SetStateAction<contentProps['content']>>]);
 
@@ -123,6 +127,42 @@ function MemoArea() {
     )
 }
 
+function AuthorImage() {
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const { authorImageUrl } = selectedContent;
+
+    return (
+        <AuthorImageElement authorImage={authorImageUrl} />
+    )
+}
+
+function Author({ varient }: { varient: string }) {
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const { author } = selectedContent;
+
+    return (
+        <AuthorElement author={author} varient={varient} />
+    )
+}
+
+function BlogName({ varient }: { varient: string }) {
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const { blogName } = selectedContent;
+
+    return (
+        <BlogNameElement blogName={blogName} varient={varient} />
+    )
+}
+
+function PublishedDate({ varient }: { varient: string }) {
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const { publishedDate } = selectedContent;
+
+    return (
+        <PublishedDateElement publishedDate={publishedDate} varient={varient} />
+    )
+}
+
 CategoryItemSelectedProvider.Video = Video;
 CategoryItemSelectedProvider.Header = Header;
 CategoryItemSelectedProvider.ChannelProfile = ChannelProfile;
@@ -131,5 +171,9 @@ CategoryItemSelectedProvider.Description = Description;
 CategoryItemSelectedProvider.MemoArea = MemoArea;
 CategoryItemSelectedProvider.Thumbnail = Thumbnail;
 CategoryItemSelectedProvider.Price = Price;
+CategoryItemSelectedProvider.Author = Author;
+CategoryItemSelectedProvider.AuthorImage = AuthorImage;
+CategoryItemSelectedProvider.BlogName = BlogName;
+CategoryItemSelectedProvider.PublishedDate = PublishedDate;
 
 export default CategoryItemSelectedProvider;
