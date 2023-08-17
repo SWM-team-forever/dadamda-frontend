@@ -8,6 +8,7 @@ import { Typography } from '@mui/material';
 import Hero from '../components/templates/mainPage/Hero';
 import Section from '../components/templates/mainPage/Section';
 import Howto from '../components/templates/mainPage/Howto';
+import Footer from '../components/templates/mainPage/Footer';
 
 function MainPage() {
   useEffect(() => {
@@ -24,17 +25,7 @@ function MainPage() {
       <Hero />
       <Section />
       <Howto />
-      <LastContainer>
-        <EmpasizedTypography><strong>세상 모든 컨텐츠를 다담다</strong></EmpasizedTypography>
-        <TypographyGroup>
-          <DefaultTypography>다담다 서비스는 사용자의 편의를 위해 크롬 익스텐션을 제공하고 있습니다.</DefaultTypography>
-          <DefaultTypography>크롬 익스텐션을 설치하시겠습니까?</DefaultTypography>
-        </TypographyGroup>
-        <ButtonContainer>
-          <Button label='크롬익스텐션 설치하기' fullWidth isRound buttonStyle='primary' />
-          <Button label='웹으로 서비스 시작하기' fullWidth isRound buttonStyle='primary' />
-        </ButtonContainer>
-      </LastContainer>
+      <Footer />
     </>
   )
 }
