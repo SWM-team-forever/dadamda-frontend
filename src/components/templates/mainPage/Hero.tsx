@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import heroImage from '../../../assets/images/heroImage.png'
+import { useNavigate } from 'react-router-dom';
+import Overlay from '../../atoms/Overlay';
+import LoginModal from '../../organisms/LoginModal';
 
 const Hero = () => {
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+
+    const showLoginModal = () => {
+        setIsLoginModalVisible(true);
+    }
+
+    const hideLoginModal = () => {
+        setIsLoginModalVisible(false);
+    }
+
+
+    const startButtonHandler = () => {
+        if (token) {
+            navigate('/scrap');
+        }
+
+        showLoginModal();
+    }
 
     return (
         <Box sx={{
@@ -40,6 +63,7 @@ const Hero = () => {
                         variant="contained"
                         color="primary"
                         sx={{ width: '200px', fontSize: '16px' }}
+                        onClick={startButtonHandler}
                     >
                         서비스 시작하기
                     </Button>
@@ -49,6 +73,10 @@ const Hero = () => {
                         width: '100%',
                     }} />
                 </Grid>
+                {isLoginModalVisible &&
+                    <Overlay>
+                        <LoginModal hideLoginModal={hideLoginModal} />
+                    </Overlay>}
             </Grid>
         </Box>
     );
