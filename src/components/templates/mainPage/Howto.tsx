@@ -35,16 +35,19 @@ const Howto = () => {
                         opacity: '0.7',
                         paddingBottom: '30px',
                         fontSize: '18px',
+                        wordBreak: 'keep-all',
                     }}>
-                        Your business needs to be in safe hands at all times. We ensure you
-                        never run out of customers and not run at loss. We are trusted by
-                        over 500+ companies to deliver quality marketing campaigns using
-                        Digital marketing & Offline marketing channels.
+                        사용자의 편의를 위해 크롬 익스텐션이 개발되었습니다. 이제는 스크랩 추가를
+                        원하는 페이지에서 버튼 클릭 한 번만으로 쉽게 추가할 수 있습니다.
+                        크롬 익스텐션 설치를 원하시면 하단 버튼을 클릭해주세요.
                     </Typography>
                     <Button
                         variant="contained"
                         color="primary"
                         sx={{ width: '200px', fontSize: '16px' }}
+                        onClick={() =>
+                            location.href = 'https://chrome.google.com/webstore/detail/dadamda/kgaiabolccidmgihificdfaimdlfmcfj?hl=ko'
+                        }
                     >
                         크롬 익스텐션 다운로드
                     </Button>
