@@ -26,7 +26,7 @@ const Howto = () => {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <Typography variant="h3" fontWeight={700} sx={{
+                    <Typography variant="h5" fontWeight={700} sx={{
                         paddingBottom: '15px',
                     }}>
                         클릭만 하면 자동 저장
