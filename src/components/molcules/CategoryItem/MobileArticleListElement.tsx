@@ -64,8 +64,20 @@ function MobileArticleListElement({ content }: MobileProductListElementProps) {
                     gap: '5px',
                     boxSizing: 'border-box',
                 }}>
-                    <SiteNameElement siteName={siteName} varient={varient} />
-                    <TitleElement title={title} varient={varient} />
+                    <RowContainer
+                        style={{
+                            gap: '5px',
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            justifyContent: 'space-between',
+                            padding: '10px',
+                        }}>
+                        <ColumnContainer>
+                            <SiteNameElement siteName={siteName} varient={varient} />
+                            <TitleElement title={title} varient={varient} />
+                        </ColumnContainer>
+                        <IconButtonListElement content={content} />
+                    </RowContainer>
                     <RowContainer
                         style={{
                             justifyContent: 'space-between',
