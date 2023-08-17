@@ -58,6 +58,25 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
     const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    function TooltipOverlay() {
+        return (
+            <div style={{
+                width: '100vw',
+                height: '100vh',
+                background: 'transparent',
+                position: 'fixed',
+                top: '0',
+                left: '0',
+            }
+            }
+                onClick={(e) => {
+                    e.stopPropagation();
+                    hideTooltip();
+                }}>
+            </div >
+        )
+    }
+
     return (
         <>
             <RowContainer style={{ gap: '5px' }}>
@@ -78,7 +97,12 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
                     }}
                 >
                     <MoreIcon size='24' fill={theme.color.icon_color} />
-                    {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
+                    {isTooltipVisible &&
+                        <>
+                            <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />
+                            <TooltipOverlay />
+                        </>
+                    }
                 </div>
             </RowContainer>
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} setError={setError} />}
