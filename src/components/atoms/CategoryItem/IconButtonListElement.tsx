@@ -17,14 +17,14 @@ export function IconButtonListElement({ content }: IconButtonListElementProps) {
 
     const scrapCardMenu = [{
         name: '카드 수정하기',
-        onClick: (e) => {
+        onClick: (e: React.MouseEvent) => {
             e.stopPropagation();
             hideTooltip();
             showScrapEditModal();
         },
     }, {
         name: '카드 삭제하기',
-        onClick: (e) => {
+        onClick: (e: React.MouseEvent) => {
             e.stopPropagation();
             hideTooltip();
             showScrapDeleteModal();
