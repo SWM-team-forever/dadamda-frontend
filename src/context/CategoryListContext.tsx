@@ -7,6 +7,7 @@ import MobileVideoListElement from '../components/molcules/CategoryItem/MobileVi
 import DesktopArticleElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
 import DesktopArticleListElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
 import MobileArticleListElement from '../components/molcules/CategoryItem/MobileArticleListElement';
+import MobileProductListElement from '../components/molcules/CategoryItem/MobileProductListElement';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 
@@ -83,8 +84,21 @@ function MobileArticleList() {
     )
 }
 
+function MobileProductList() {
+    const [categoryItemList] = useCategoryItemList();
+
+    return (
+        <ColumnContainer>
+            {categoryItemList.map(categoryItemList =>
+                <MobileProductListElement content={categoryItemList} />
+            )}
+        </ColumnContainer>
+    )
+}
+
 CategoryItemListProvider.DesktopVideoList = DesktopVideoList;
 CategoryItemListProvider.MobileVideoList = MobileVideoList;
 CategoryItemListProvider.DesktopArticleList = DesktopArticleList;
+CategoryItemListProvider.MobileProductList = MobileProductList;
 
 export default CategoryItemListProvider;

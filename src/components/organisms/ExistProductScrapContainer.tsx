@@ -4,7 +4,7 @@ import { contentProps } from '../../types/ContentType';
 import { Card } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import AdvancedCarousel from '../molcules/AdvancedCarousel';
-import { useCategoryItemList } from '../../context/CategoryListContext';
+import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
 import MobileProductListElement from '../molcules/CategoryItem/MobileProductListElement';
 import { GET_PRODUCT_SCRAP_URL } from '../../secret';
@@ -100,11 +100,7 @@ function ExistProductScrapContainer() {
 
             {/* Mobile */}
             <Mobile>
-                <ColumnContainer>
-                    {types.map(content => {
-                        return <MobileProductListElement content={content} />
-                    })}
-                </ColumnContainer>
+                <CategoryItemListProvider.MobileProductList />
             </Mobile >
         </>
     )
