@@ -10,19 +10,19 @@ const Section = () => {
     const sectionItems = [
         {
             id: 1,
-            icon: <BookmarksIcon sx={{ fontSize: 100, color: 'white' }} />,
+            icon: <BookmarksIcon sx={{ fontSize: 100, color: theme.color.text_gray_color }} />,
             sentence:
                 '링크를 저장하면 해당 콘텐츠에 적합한 형태로 정보를 보여줍니다.',
         },
         {
             id: 2,
-            icon: <AutoAwesomeMosaicIcon sx={{ fontSize: 100, color: 'white' }} />,
+            icon: <AutoAwesomeMosaicIcon sx={{ fontSize: 100, color: theme.color.text_gray_color }} />,
             sentence:
                 '저장한 북마크는 사용자의 취향에 맞추어 보드에 정리할 수 있습니다.',
         },
         {
             id: 3,
-            icon: <AutoAwesomeIcon sx={{ fontSize: 100, color: 'white' }} />,
+            icon: <AutoAwesomeIcon sx={{ fontSize: 100, color: theme.color.text_gray_color }} />,
             sentence: '다른 사람의 보드를 구경하며 인사이트를 얻어보세요!',
         },
     ];
@@ -44,14 +44,14 @@ const Section = () => {
                         minHeight={300}
                         key={item.id}
                         sx={{
-                            backgroundColor: theme.color.primary_color,
+                            backgroundColor: 'white',
                             textAlign: 'center',
                             padding: '50px',
                             width: '200px',
                             borderRadius: '10px',
                             margin: '10px !important',
-                            boxShadow: theme.style.shadow,
-                            color: 'white',
+                            border: `1px solid ${theme.color.text_gray_color}`,
+                            color: theme.color.text_gray_color,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
