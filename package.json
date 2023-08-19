@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=chpt_e873d38e5684887"
+    "chromatic": "npx chromatic --project-token=chpt_e873d38e5684887",
+    "test": "jest"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -39,6 +40,7 @@
     "@storybook/react": "^7.0.27",
     "@storybook/react-vite": "^7.0.27",
     "@storybook/testing-library": "^0.0.14-next.2",
+    "@types/jest": "^29.5.3",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
