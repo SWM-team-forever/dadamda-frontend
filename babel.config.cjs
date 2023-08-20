@@ -8,5 +8,22 @@ module.exports = {
         },
       },
     ],
+    [
+      "@babel/preset-react",
+      {
+        targets: {
+          node: "current",
+        },
+        'runtime': 'automatic',
+      }
+    ],
+    [
+      "@babel/preset-typescript",
+      {
+        targets: {
+          node: "current",
+        }
+      }
+    ]
   ],
 };
