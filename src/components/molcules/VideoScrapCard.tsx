@@ -65,7 +65,7 @@ function VideoScrapCard({ content, showMemoCreateModal, showTooltip }: VideoScra
                     )
                 })}
             </RowContainer>
-            {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+            {content.description && <DescriptionTypography>{content.description}</DescriptionTypography>}
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
             })}
@@ -97,20 +97,35 @@ const VideoPlayer = styled.iframe`
             `
 
 const EmpasizedTypography = styled.span`
-            font-size: 20px;
-            font-weight: bold;
-            color: ${theme.color.text_gray_color};
-            `
+    font-size: 20px;
+    font-weight: bold;
+    color: ${theme.color.text_gray_color};
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
+`
 
 const DefaultTypography = styled.span`
-            font-size: 14px;
-            color: ${theme.color.text_gray_color};
-            `
+font-size: 14px;
+color: ${theme.color.text_gray_color};
+`
+
+const DescriptionTypography = styled(DefaultTypography)`
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
+`
 
 const ButtonContainer = styled.div`
-            display: flex;
-            align-items: center;
-            `
+display: flex;
+align-items: center;
+`
 
 const MoreIconContainer = styled.img`
             width: 24px;
