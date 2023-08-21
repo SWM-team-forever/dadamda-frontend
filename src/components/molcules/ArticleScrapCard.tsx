@@ -32,7 +32,7 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
             }}
         >
             {content.siteName && <Chip>{content.siteName}</Chip>}
-            {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
+            {content.title && <TitleTypography>{content.title}</TitleTypography>}
             {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             <RowContainer style={{ justifyContent: 'space-between' }}>
                 {(content.author || content.blogName) &&
@@ -46,7 +46,7 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
                 }
                 {content.publishedDate && <DefaultTypography>{getTimeDiff(content.publishedDate)}</DefaultTypography>}
             </RowContainer>
-            {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+            {content.description && <DescriptionTypography>{content.description}</DescriptionTypography>}
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
             })}
@@ -82,6 +82,24 @@ const EmpasizedTypography = styled.span`
 const DefaultTypography = styled.span`
     font-size: 14px;
     color: ${theme.color.text_gray_color};
+`
+
+const DescriptionTypography = styled(DefaultTypography)`
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
+`
+
+const TitleTypography = styled(EmpasizedTypography)`
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
 `
 
 const ButtonContainer = styled.div`
