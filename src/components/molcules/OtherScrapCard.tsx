@@ -65,11 +65,23 @@ const EmpasizedTypography = styled.span`
     font-size: 20px;
     font-weight: bold;
     color: ${theme.color.text_gray_color};
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
 `
 
 const DefaultTypography = styled.span`
     font-size: 14px;
     color: ${theme.color.text_gray_color};
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
 `
 
 const ButtonContainer = styled.div`
