@@ -5,6 +5,8 @@ import Button from '../atoms/DefaultButton';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DELETE_SCRAP_URL } from '../../secret';
 
+import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
+
 interface ScrapDeleteModalProps {
     hideScrapDeleteModal: () => void,
     scrapId: number,
@@ -36,6 +38,7 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId, setError }: ScrapDele
                 })
             })
                 .then(() => {
+                    useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
                     hideScrapDeleteModal();
                 })
                 .catch(err => setError(err.message));

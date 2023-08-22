@@ -5,6 +5,8 @@ import Button from '../atoms/DefaultButton';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { POST_CREATE_MEMO_URL } from '../../secret';
 
+import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
+
 interface MemoCreateModalProps {
     hideMemoCreateModal: () => void,
     scrapId: number,
@@ -46,8 +48,12 @@ function MemoCreateModal({ hideMemoCreateModal, scrapId, setError }: MemoCreateM
             })
                 .then(() => {
                     hideMemoCreateModal();
+                    useDefaultSnackbar('메모가 추가되었습니다.', 'success');
                 })
-                .catch(err => setError(err.message));
+                .catch(err => setError(err.message))
+                .then(() => {
+                    hideMemoCreateModal();
+                })
     }
 
     return (
