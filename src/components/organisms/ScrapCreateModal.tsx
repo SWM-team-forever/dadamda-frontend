@@ -5,6 +5,8 @@ import Button from '../atoms/DefaultButton';
 import { POST_CREATE_OTHER_SCRAP_URL } from '../../secret';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 
+import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
+
 interface ScrapCreateModalProps {
     hideScrapCreateModal: () => void,
     setError: Dispatch<SetStateAction<Partial<null | string>>>,
@@ -22,7 +24,6 @@ function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalPr
         e.preventDefault();
         setTextAreaValue(e.target.value);
     };
-
 
     function createScrap() {
         token &&
@@ -45,6 +46,7 @@ function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalPr
                 })
             }).then(() => {
                 hideScrapCreateModal();
+                useDefaultSnackbar('스크랩이 추가되었습니다.', 'success');
             }).catch(err => {
                 setError(err.message);
             }).then(() => {
