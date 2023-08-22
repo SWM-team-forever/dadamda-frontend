@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import theme from "../../../assets/styles/theme";
 
+import { decode } from 'html-entities';
 
 const mobileProductStyle = {
     fontSize: '0.875rem',
@@ -102,6 +103,8 @@ const siteNameStyles = {
 
 
 export function TitleElement({ title, varient }: any) {
+    title = decode(title, { level: 'html5' });
+
     return (
         <Typography
             sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>

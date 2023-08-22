@@ -1,6 +1,8 @@
 import theme from "../../../assets/styles/theme";
 import RowContainer from "../RowContainer";
 
+import { decode } from 'html-entities';
+
 const mobileVideoStyle = {
     width: '100%',
     whiteSpace: 'pre-wrap',
@@ -47,6 +49,7 @@ const siteNameStyles = {
 }
 
 export function DescriptionElement({ description, varient }: any) {
+    description = decode(description, { level: 'html5' });
     return (
         <RowContainer
             style={siteNameStyles[varient as keyof typeof siteNameStyles]}>

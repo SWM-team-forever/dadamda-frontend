@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { decode } from 'html-entities';
 
 import Tooltip from '../atoms/Tooltip';
 import ScrapEditModal from './ScrapEditModal';
@@ -65,6 +66,12 @@ function ScrapCard({ content }: contentProps) {
 
     function hideMemoCreateModal() {
         setIsMemoCreateModalVisible(false);
+    }
+
+    content = {
+        ...content,
+        title: decode(content.title, { level: 'html5' }),
+        description: decode(content.description, { level: 'html5' })
     }
 
     function matchCardType(dtype: string) {
