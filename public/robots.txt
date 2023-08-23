@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /
-Allow : /main
+Allow: /$
+Allow: /dadamda-logo128.png
