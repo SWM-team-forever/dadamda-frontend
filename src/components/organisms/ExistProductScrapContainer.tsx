@@ -8,6 +8,7 @@ import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../con
 import { GET_PRODUCT_SCRAP_URL } from '../../secret';
 import { useQuery } from '@tanstack/react-query';
 import CircularProgress from '@mui/material/CircularProgress';
+import { uesGetProductScrap } from '../../api/scrap';
 
 function ExistProductScrapContainer() {
     const [, setCategoryItemList] = useCategoryItemList();
@@ -17,26 +18,6 @@ function ExistProductScrapContainer() {
     const size = 10;
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
-
-    const fetchDatas = async ({ url, pages, size, token }) => {
-        const response = await fetch(url + `?page=${pages}&size=${size}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "X-AUTH-TOKEN": token,
-            },
-        }).then((response) => {
-            return response.json().then(body => {
-                if (response.ok) {
-                    return body;
-                } else {
-                    throw new Error(body.resultCode);
-                }
-            })
-        });
-
-        return response;
-    };
 
     const onSuccess = useCallback((data) => {
         setCategoryItemList(data);
@@ -49,7 +30,7 @@ function ExistProductScrapContainer() {
 
     const { isLoading, error, data } = useQuery(
         ['productScrap'],
-        () => fetchDatas({ url: GET_PRODUCT_SCRAP_URL, pages: pages, size: size, token: token }),
+        () => uesGetProductScrap({ pages: pages, size: size, token: token }),
         {
             onSuccess,
             onError,
