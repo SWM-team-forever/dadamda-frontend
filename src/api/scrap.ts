@@ -1,4 +1,4 @@
-import { GET_PRODUCT_SCRAP_URL } from "../secret";
+import { GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from "../secret";
 
 const fetchDatas = async ({ url, pages, size, token }) => {
     const response = await fetch(url + `?page=${pages}&size=${size}`, {
@@ -23,4 +23,9 @@ const fetchDatas = async ({ url, pages, size, token }) => {
 export const uesGetProductScrap = async({pages, size, token}) => {
     const scraps = await fetchDatas({url: GET_PRODUCT_SCRAP_URL, pages: pages, size: size, token: token});
     return scraps;
-}
+};
+
+export const useGetVideoScrap = async({pages, size, token}) => {
+    const scraps = await fetchDatas({url: GET_VIDEO_SCRAP_URL, pages: pages, size: size, token: token});
+    return scraps;
+};
