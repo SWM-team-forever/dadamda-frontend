@@ -1,25 +1,17 @@
 import styled from 'styled-components';
 import ColumnContainer from '../atoms/ColumnContainer';
-import { contentProps } from '../../types/ContentType';
 import { Card } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import AdvancedCarousel from '../molcules/AdvancedCarousel';
 import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
-import MobileProductListElement from '../molcules/CategoryItem/MobileProductListElement';
 import { GET_PRODUCT_SCRAP_URL } from '../../secret';
 import { useQuery } from '@tanstack/react-query';
 import CircularProgress from '@mui/material/CircularProgress';
 
-interface ExistProductScrapContainerProps {
-    contents: contentProps["content"][],
-    isFetching: boolean,
-    setIsFetching: (isFetching: boolean) => void,
-}
-
 function ExistProductScrapContainer() {
-    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
-    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
+    const [, setCategoryItemList] = useCategoryItemList();
+    const [, setSelectedContent] = useCategoryItemSelected();
 
     const token = localStorage.getItem('token');
     const size = 10;
@@ -48,7 +40,6 @@ function ExistProductScrapContainer() {
     };
 
     const onSuccess = useCallback((data) => {
-        console.log('data', data);
         setCategoryItemList(data);
         setSelectedContent(data[0]);
     }, []);
@@ -71,12 +62,13 @@ function ExistProductScrapContainer() {
     );
 
     if (isLoading) {
-        return <CircularProgress sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-        }} />;
+        return <CircularProgress
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+            }} />;
     }
 
     const varient = 'desktopProductItem';
