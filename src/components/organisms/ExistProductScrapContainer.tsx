@@ -18,9 +18,8 @@ function ExistProductScrapContainer() {
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
 
-    const fetchDatas = async () => {
-        const url = GET_PRODUCT_SCRAP_URL + `?page=${pages}&size=${size}`;
-        const response = await fetch(url, {
+    const fetchDatas = async ({ url, pages, size, token }) => {
+        const response = await fetch(url + `?page=${pages}&size=${size}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -50,12 +49,12 @@ function ExistProductScrapContainer() {
 
     const { isLoading, error, data } = useQuery(
         ['productScrap'],
-        () => fetchDatas(),
+        () => fetchDatas({ url: GET_PRODUCT_SCRAP_URL, pages: pages, size: size, token: token }),
         {
             onSuccess,
             onError,
             select(data) {
-                return data.data.content;
+                return data?.data?.content;
             },
             refetchOnWindowFocus: false,
         }
