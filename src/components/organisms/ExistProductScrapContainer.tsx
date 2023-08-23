@@ -8,6 +8,8 @@ import CategoryItemListProvider, { useCategoryItemList } from '../../context/Cat
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
 import MobileProductListElement from '../molcules/CategoryItem/MobileProductListElement';
 import { GET_PRODUCT_SCRAP_URL } from '../../secret';
+import { useQuery } from '@tanstack/react-query';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface ExistProductScrapContainerProps {
     contents: contentProps["content"][],
@@ -20,63 +22,62 @@ function ExistProductScrapContainer() {
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
     const token = localStorage.getItem('token');
-    const [types, setTypes] = useState<any[]>([]);
     const size = 10;
-    const [isFetching, setIsFetching] = useState(true);
-    const [hasNextPage, setHasNextPage] = useState(true);
     const [pages, setPages] = useState(0);
-    const [error, setError] = useState<string | null>(null);
+    const [, setError] = useState<string | null>(null);
 
-    const initiate = () => {
-        setTypes([]);
-        setIsFetching(true);
-        setHasNextPage(true);
-        setPages(0);
-    }
-
-    const fetchDatas = useCallback(async () => {
+    const fetchDatas = async () => {
         const url = GET_PRODUCT_SCRAP_URL + `?page=${pages}&size=${size}`;
-        token &&
-            fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-            }).then((response) => {
-                // if (response.json().body) {
-                //     throw new Error('UNDEFINED_ERROR');
-                // }
-                // console.log('body', response.json());
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token,
+            },
+        }).then((response) => {
+            return response.json().then(body => {
+                if (response.ok) {
+                    return body;
+                } else {
+                    throw new Error(body.resultCode);
+                }
             })
-                .then((data) => {
-                    setTypes([...types, ...data.data.content]);
-                    setPages(data.data.pageable.pageNumber + 1);
-                    setHasNextPage(!data.data.last);
-                })
-                .catch(err => setError(err.message));
-        setIsFetching(false);
-    }, [pages, setCategoryItemList, token, types]);
+        });
 
-    useEffect(() => {
-        if (isFetching && hasNextPage) {
-            fetchDatas();
-        } else if (!hasNextPage) {
-            setIsFetching(false);
+        return response;
+    };
+
+    const onSuccess = useCallback((data) => {
+        console.log('data', data);
+        setCategoryItemList(data);
+        setSelectedContent(data[0]);
+    }, []);
+
+    const onError = useCallback((err) => {
+        setError(err.message);
+    }, []);
+
+    const { isLoading, error, data } = useQuery(
+        ['productScrap'],
+        () => fetchDatas(),
+        {
+            onSuccess,
+            onError,
+            select(data) {
+                return data.data.content;
+            },
+            refetchOnWindowFocus: false,
         }
-    }, [fetchDatas, hasNextPage, isFetching]);
+    );
 
-    useEffect(() => {
-        setCategoryItemList(types);
-        // setSelectedContent(types[0]);
-    });
+    if (isLoading) {
+        return <CircularProgress sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+        }} />;
+    }
 
     const varient = 'desktopProductItem';
 
