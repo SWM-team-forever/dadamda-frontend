@@ -48,10 +48,6 @@ export function MemoAreaElement({ content }: MemoAreaElementProps) {
             }} />;
     }
 
-    if (isSuccess) {
-        useSnackbar('메모가 생성되었습니다', 'success');
-    }
-
     if (isError) {
         useSnackbar('메모 생성에 실패하였습니다.', 'error');
     }

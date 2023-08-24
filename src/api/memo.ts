@@ -1,5 +1,6 @@
 import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import { POST_CREATE_MEMO_URL } from "../secret";
+import { useDefaultSnackbar } from "../hooks/useWarningSnackbar";
 
 const fetchPostCreateMemo = async({token, scrapId, textAreaValue}) => {
     return await fetch(POST_CREATE_MEMO_URL, {
@@ -28,6 +29,7 @@ export const usePostCreateMemo = () => {
     return useMutation(fetchPostCreateMemo, {
         onSuccess: () => {
             queryClient.invalidateQueries('scraps');
+            useDefaultSnackbar('메모가 생성되었습니다', 'success');
         }
     });
 }
