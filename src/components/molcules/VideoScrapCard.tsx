@@ -12,6 +12,12 @@ import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import defaultImage from '../../assets/images/Avatar.png';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
+import { SiteNameElement } from '../atoms/CategoryItem/SiteNameElement';
+import { TitleElement } from '../atoms/CategoryItem/TitleElement';
+import { VideoElement } from '../atoms/CategoryItem/VideoElement';
+import { VideoInfosElement } from '../atoms/CategoryItem/VideoInfosElement';
+import { ChannelProfileElement } from '../atoms/CategoryItem/ChannelProfileElement';
+import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
 
 interface VideoScrapCardProps {
     content: contentProps['content'],
@@ -20,17 +26,7 @@ interface VideoScrapCardProps {
 }
 
 function VideoScrapCard({ content, showMemoCreateModal, showTooltip }: VideoScrapCardProps) {
-
-    const videoMenus = [{
-        title: '게시일',
-        content: content.publishedDate,
-    }, {
-        title: '조회수',
-        content: content.watchedCnt,
-    }, {
-        title: '영상 길이',
-        content: content.playTime,
-    },]
+    const varient = 'scrapCard';
 
     return (
         <CardWrapper
@@ -39,33 +35,12 @@ function VideoScrapCard({ content, showMemoCreateModal, showTooltip }: VideoScra
                 e.stopPropagation();
                 window.open(`${content.pageUrl}`);
             }}>
-            {content.siteName && <Chip>{content.siteName}</Chip>}
-            {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            <VideoPlayer src={content.embedUrl} />
-            {
-                content.channelName &&
-                <RowContainer style={{ alignItems: 'center', gap: '5px' }}>
-                    {content.channelImageUrl ? <ProfileImage size={24} source={content.channelImageUrl} /> : <ProfileImage size={24} source={defaultImage} />}
-                    <DefaultTypography>{content.channelName}</DefaultTypography>
-                </RowContainer>
-            }
-            <RowContainer style={{ justifyContent: 'space-between' }}>
-                {videoMenus.map(menu => {
-                    return (
-                        <>
-                            {menu.content &&
-                                <ColumnContainer style={{ alignItems: 'center', flex: '1' }}>
-                                    <EmpasizedTypography>{
-                                        typeof (menu.content) === 'number' ? getTimeDiff(menu.content) : menu.content
-                                    }</EmpasizedTypography>
-                                    <DefaultTypography>{menu.title}</DefaultTypography>
-                                </ColumnContainer>
-                            }
-                        </>
-                    )
-                })}
-            </RowContainer>
-            {content.description && <DescriptionTypography>{content.description}</DescriptionTypography>}
+            {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
+            {content.title && <TitleElement title={content.title} varient={varient} />}
+            <VideoElement embedUrl={content.embedUrl} />
+            <ChannelProfileElement channelImageUrl={content.channelImageUrl} channelName={content.channelName} varient={varient} />
+            <VideoInfosElement publishedDate={content.publishedDate} watchedCnt={content.watchedCnt} playTime={content.playTime} varient={varient} />
+            {content.description && <DescriptionElement description={content.description} varient={varient} />}
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
             })}
