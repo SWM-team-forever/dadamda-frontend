@@ -29,7 +29,7 @@ function ExistArticleScrapContainer() {
     }, []);
 
     const { isLoading, error, data } = useQuery(
-        ['articleScrap'],
+        ['scraps'],
         () => useGetArticleScrap({ pages: pages, size: size, token: token }),
         {
             onSuccess,

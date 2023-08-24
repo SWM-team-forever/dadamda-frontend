@@ -29,7 +29,7 @@ function ExistProductScrapContainer() {
     }, []);
 
     const { isLoading, error, data } = useQuery(
-        ['productScrap'],
+        ['scraps'],
         () => uesGetProductScrap({ pages: pages, size: size, token: token }),
         {
             onSuccess,

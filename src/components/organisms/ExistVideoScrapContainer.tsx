@@ -27,7 +27,7 @@ function ExistVideoScrapContainer() {
     }, []);
 
     const { isLoading, error, data } = useQuery(
-        ['videoScrap'],
+        ['scraps'],
         () => useGetVideoScrap({ pages: pages, size: size, token: token }),
         {
             onSuccess,
