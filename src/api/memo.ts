@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import { POST_CREATE_MEMO_URL } from "../secret";
 
 const fetchPostCreateMemo = async({token, scrapId, textAreaValue}) => {
@@ -24,5 +24,10 @@ const fetchPostCreateMemo = async({token, scrapId, textAreaValue}) => {
 }
 
 export const usePostCreateMemo = () => {
-    return useMutation(fetchPostCreateMemo);
+    const queryClient = useQueryClient();
+    return useMutation(fetchPostCreateMemo, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('scraps');
+        }
+    });
 }
