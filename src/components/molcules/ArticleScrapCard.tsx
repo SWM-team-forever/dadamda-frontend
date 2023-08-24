@@ -53,7 +53,7 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
                     <AuthorImageElement authorImage={content.authorImageUrl} varient={varient} />
                     <ColumnContainer>
                         <AuthorElement author={content.author} varient={varient} />
-                        <BlogNameElement blogname={content.blogName} varient={varient} />
+                        <BlogNameElement blogName={content.blogName} varient={varient} />
                     </ColumnContainer>
                 </RowContainer>
                 <PublishedDateElement publishedDate={content.publishedDate} varient={varient} />
