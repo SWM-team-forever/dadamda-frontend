@@ -1,5 +1,5 @@
-import { TextareaAutosize } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { CircularProgress, TextareaAutosize } from "@mui/material";
+import { ChangeEvent, useCallback, useState } from "react";
 import styled from 'styled-components';
 import theme from "../../../assets/styles/theme";
 import { useDefaultSnackbar } from "../../../hooks/useWarningSnackbar";
@@ -8,6 +8,10 @@ import Memo from "../../molcules/Memo";
 import { useCategoryItemList } from "../../../context/CategoryListContext";
 import ColumnContainer from "../ColumnContainer";
 import { contentProps } from "../../../types/ContentType";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useGetArticleScrap } from "../../../api/scrap";
+import { useSnackbar } from "notistack";
+import { usePostCreateMemo } from "../../../api/memo";
 
 interface MemoAreaElementProps {
     content: contentProps['content'],
@@ -17,57 +21,39 @@ export function MemoAreaElement({ content }: MemoAreaElementProps) {
     const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const [textAreaValue, setTextAreaValue] = useState('');
     const { memoList, scrapId } = content;
+    const token = localStorage.getItem('token');
 
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
-    }
+    };
 
-    let createdMemoCount = 0;
+    const { mutate, isLoading, isSuccess, isError, error } = usePostCreateMemo({ token, scrapId, textAreaValue });
 
     function onEnterPress(e: any) {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
-            createMemo();
-            createdMemoCount += 1;
-            const changedMemoList = [...memoList, {
-                memoId: -1 * createdMemoCount,
-                memoText: e.target.value,
-            }];
-
-            const changedContentList = categoryItemList.map(item => item.scrapId === scrapId ? { ...item, memoList: changedMemoList } : item);
-            setCategoryItemList(changedContentList);
-
+            mutate({ token, scrapId, textAreaValue });
             e.target.value = '';
         }
     }
 
-    function createMemo() {
-        const token = localStorage.getItem('token');
-        token &&
-            fetch(POST_CREATE_MEMO_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-                body: JSON.stringify({
-                    scrapId: scrapId,
-                    memoText: textAreaValue,
-                }),
-            }).then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-                .then(() => {
-                    useDefaultSnackbar('메모가 추가되었습니다.', 'success');
-                })
-        // .catch(err => setError(err.message));
+    if (isLoading) {
+        return <CircularProgress
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+            }} />;
+    }
+
+    if (isSuccess) {
+        useSnackbar('메모가 생성되었습니다', 'success');
+    }
+
+    if (isError) {
+        useSnackbar('메모 생성에 실패하였습니다.', 'error');
     }
 
     return (
