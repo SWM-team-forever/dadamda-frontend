@@ -13,6 +13,14 @@ import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
 import ThumbnailImage from '../atoms/ThumbnailImage';
+import { SiteNameElement } from '../atoms/CategoryItem/SiteNameElement';
+import { TitleElement } from '../atoms/CategoryItem/TitleElement';
+import { ThumbnailElement } from '../atoms/CategoryItem/ThumbnailElement';
+import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
+import { AuthorImageElement } from '../atoms/CategoryItem/AuthorImageElement';
+import { AuthorElement } from '../atoms/CategoryItem/AuthorElement';
+import { BlogNameElement } from '../atoms/CategoryItem/BlogNameElement';
+import { PublishedDateElement } from '../atoms/CategoryItem/PublishedDateElement';
 
 interface ArticleScrapCardProps {
     content: contentProps['content'],
@@ -21,7 +29,7 @@ interface ArticleScrapCardProps {
 }
 
 function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: ArticleScrapCardProps) {
-    const articleContent = { ...content };
+    const varient = 'scrapCard';
 
     return (
         <CardWrapper
@@ -31,22 +39,26 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
                 window.open(`${content.pageUrl}`);
             }}
         >
-            {content.siteName && <Chip>{content.siteName}</Chip>}
-            {content.title && <TitleTypography>{content.title}</TitleTypography>}
-            {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
-            <RowContainer style={{ justifyContent: 'space-between' }}>
-                {(content.author || content.blogName) &&
-                    <RowContainer style={{ gap: '10px', alignItems: 'center' }}>
-                        {content.authorImageUrl ? <ProfileImage size={30} source={content.authorImageUrl} /> : <ProfileImage size={30} source={defaultImage} />}
-                        <ColumnContainer>
-                            {content.author && <EmpasizedTypography>{content.author}</EmpasizedTypography>}
-                            {content.blogName && <DefaultTypography>{content.blogName}</DefaultTypography>}
-                        </ColumnContainer>
-                    </RowContainer>
-                }
-                {content.publishedDate && <DefaultTypography>{getTimeDiff(content.publishedDate)}</DefaultTypography>}
+            {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
+            {content.title && <TitleElement title={content.title} varient={varient} />}
+            {content.thumbnailUrl && <ThumbnailElement thumbnailUrl={content.thumbnailUrl} varient={varient} />}
+            <RowContainer
+                style={{
+                    justifyContent: 'space-between',
+                }}>
+                <RowContainer
+                    style={{
+                        gap: '5px',
+                    }}>
+                    <AuthorImageElement authorImage={content.authorImageUrl} varient={varient} />
+                    <ColumnContainer>
+                        <AuthorElement author={content.author} varient={varient} />
+                        <BlogNameElement blogname={content.blogName} varient={varient} />
+                    </ColumnContainer>
+                </RowContainer>
+                <PublishedDateElement publishedDate={content.publishedDate} varient={varient} />
             </RowContainer>
-            {content.description && <DescriptionTypography>{content.description}</DescriptionTypography>}
+            {content.description && <DescriptionElement description={content.description} varient={varient} />}
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
             })}

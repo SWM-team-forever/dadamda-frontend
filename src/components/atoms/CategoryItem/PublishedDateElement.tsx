@@ -25,10 +25,18 @@ const mobileArticleStyle = {
     lineHeight: '160%',
 }
 
+const scrapCardStyle = {
+    color: theme.color.secondary_text_gray_color,
+    fontSize: '0.75rem',
+    fontWeight: '400',
+    lineHeight: '160%',
+}
+
 const siteNameStyles = {
     desktopArticleList: desktopArticleListStyle,
     desktopArticleItem: desktopArticleItemStyle,
     mobileArticle: mobileArticleStyle,
+    scrapCard: scrapCardStyle,
 }
 
 export function PublishedDateElement({ publishedDate, varient }: any) {
