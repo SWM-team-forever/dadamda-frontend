@@ -18,6 +18,7 @@ import { VideoElement } from '../atoms/CategoryItem/VideoElement';
 import { VideoInfosElement } from '../atoms/CategoryItem/VideoInfosElement';
 import { ChannelProfileElement } from '../atoms/CategoryItem/ChannelProfileElement';
 import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
+import { ThumbnailElement } from '../atoms/CategoryItem/ThumbnailElement';
 
 interface VideoScrapCardProps {
     content: contentProps['content'],
@@ -37,7 +38,7 @@ function VideoScrapCard({ content, showMemoCreateModal, showTooltip }: VideoScra
             }}>
             {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
             {content.title && <TitleElement title={content.title} varient={varient} />}
-            <VideoElement embedUrl={content.embedUrl} />
+            <ThumbnailElement thumbnailUrl={content.thumbnailUrl} />
             <ChannelProfileElement channelImageUrl={content.channelImageUrl} channelName={content.channelName} varient={varient} />
             <VideoInfosElement publishedDate={content.publishedDate} watchedCnt={content.watchedCnt} playTime={content.playTime} varient={varient} />
             {content.description && <DescriptionElement description={content.description} varient={varient} />}
