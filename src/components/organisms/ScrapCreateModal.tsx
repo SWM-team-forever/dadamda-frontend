@@ -6,13 +6,15 @@ import { POST_CREATE_OTHER_SCRAP_URL } from '../../secret';
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
+import { CircularProgress } from '@mui/material';
+import { usePostCreateScrap } from '../../api/scrap';
 
 interface ScrapCreateModalProps {
     hideScrapCreateModal: () => void,
     setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
-function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalProps) {
+function ScrapCreateModal({ hideScrapCreateModal }: ScrapCreateModalProps) {
     const [textAreaValue, setTextAreaValue] = useState('');
     const [token, setToken] = useState<string | null>(null);
 
@@ -25,33 +27,26 @@ function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalPr
         setTextAreaValue(e.target.value);
     };
 
-    function createScrap() {
-        token &&
-            fetch(POST_CREATE_OTHER_SCRAP_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-                body: JSON.stringify({
-                    pageUrl: textAreaValue,
-                }),
-            }).then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            }).then(() => {
-                hideScrapCreateModal();
-                useDefaultSnackbar('스크랩이 추가되었습니다.', 'success');
-            }).catch(err => {
-                setError(err.message);
-            }).then(() => {
-                hideScrapCreateModal();
-            })
+    const { mutate, isLoading, isSuccess, isError } = usePostCreateScrap();
+
+    if (isLoading) {
+        return <CircularProgress
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+            }} />;
+    }
+
+    if (isSuccess) {
+        hideScrapCreateModal();
+        useDefaultSnackbar('스크랩 생성에 성공하였습니다.', 'success');
+    }
+
+    if (isError) {
+        hideScrapCreateModal();
+        useDefaultSnackbar('스크랩 생성에 실패하였습니다.', 'error');
     }
 
     return (
@@ -67,7 +62,7 @@ function ScrapCreateModal({ hideScrapCreateModal, setError }: ScrapCreateModalPr
             <ModalFooter>
                 <ButtonContainer>
                     <Button buttonStyle={'gray'} label={'취소하기'} isRound onClick={hideScrapCreateModal} />
-                    <Button buttonStyle={'secondary'} label={'추가하기'} isRound onClick={createScrap} />
+                    <Button buttonStyle={'secondary'} label={'추가하기'} isRound onClick={() => token && mutate({ token, textAreaValue })} />
                 </ButtonContainer>
             </ModalFooter>
         </ModalWrapper>

@@ -17,9 +17,17 @@ const desktopVideoItemStyle = {
     fontHeight: '160%',
 }
 
+const scrapCardStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '0.875rem',
+    fontWeight: '400',
+    fontHeight: '160%',
+}
+
 const siteNameStyles = {
     mobileVideo: mobileVideoStyle,
     desktopItemVideo: desktopVideoItemStyle,
+    scrapCard: scrapCardStyle,
 }
 
 export function ChannelProfileElement({ channelImageUrl, channelName, varient }: any) {

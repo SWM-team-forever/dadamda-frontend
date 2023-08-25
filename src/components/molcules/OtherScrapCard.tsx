@@ -7,6 +7,8 @@ import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
 import ThumbnailImage from '../atoms/ThumbnailImage';
+import { TitleElement } from '../atoms/CategoryItem/TitleElement';
+import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
 
 interface OtherScrapCardProps {
     content: contentProps['content'],
@@ -15,6 +17,7 @@ interface OtherScrapCardProps {
 }
 
 function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScrapCardProps) {
+    const varient = 'scrapCard';
 
     return (
         <CardWrapper
@@ -26,8 +29,8 @@ function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScra
         >
             {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             <CardInfoWrapper>
-                {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-                {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+                {content.title && <TitleElement title={content.title} varient={varient} />}
+                {content.description && <DescriptionElement description={content.description} varient={varient} />}
             </CardInfoWrapper>
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />

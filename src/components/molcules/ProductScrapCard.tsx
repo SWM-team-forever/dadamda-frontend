@@ -8,6 +8,10 @@ import Chip from '../atoms/Chip';
 import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import ThumbnailImage from '../atoms/ThumbnailImage';
+import { SiteNameElement } from '../atoms/CategoryItem/SiteNameElement';
+import { TitleElement } from '../atoms/CategoryItem/TitleElement';
+import { ThumbnailElement } from '../atoms/CategoryItem/ThumbnailElement';
+import { PriceElement } from '../atoms/CategoryItem/PriceElement';
 
 interface ProductScrapCardProps {
     content: contentProps['content'],
@@ -17,6 +21,8 @@ interface ProductScrapCardProps {
 
 function ProductScrapCard({ content, showMemoCreateModal, showTooltip }: ProductScrapCardProps) {
 
+    const varient = 'scrapCard';
+
     return (
         <CardWrapper
             style={{ cursor: 'pointer' }}
@@ -24,10 +30,10 @@ function ProductScrapCard({ content, showMemoCreateModal, showTooltip }: Product
                 e.stopPropagation();
                 window.open(`${content.pageUrl}`);
             }}>
-            {content.siteName && <Chip>{content.siteName}</Chip>}
-            {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
-            {content.price && <ColoredTypography>{content.price}</ColoredTypography>}
+            {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
+            {content.title && <TitleElement title={content.title} varient={varient} />}
+            {content.thumbnailUrl && <ThumbnailElement thumbnailUrl={content.thumbnailUrl} />}
+            {content.price && <PriceElement price={content.price} varient={varient} />}
             {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />

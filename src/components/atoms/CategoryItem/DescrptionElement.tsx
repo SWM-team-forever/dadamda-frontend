@@ -41,11 +41,25 @@ const mobileArticleStyle = {
     boxSizing: 'border-box',
 }
 
+const scrapCardStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '0.75rem',
+    fontWeight: '500',
+    lineHeight: '160%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '3',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
+}
+
 const siteNameStyles = {
     mobileVideo: mobileVideoStyle,
     desktopItemVideo: desktopVideoItemStyle,
     desktopArticleItem: desktopArticleItemStyle,
     mobileArticle: mobileArticleStyle,
+    scrapCard: scrapCardStyle,
 }
 
 export function DescriptionElement({ description, varient }: any) {

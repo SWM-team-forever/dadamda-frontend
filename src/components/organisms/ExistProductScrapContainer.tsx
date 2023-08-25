@@ -1,85 +1,66 @@
 import styled from 'styled-components';
 import ColumnContainer from '../atoms/ColumnContainer';
-import { contentProps } from '../../types/ContentType';
 import { Card } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import AdvancedCarousel from '../molcules/AdvancedCarousel';
 import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
-import MobileProductListElement from '../molcules/CategoryItem/MobileProductListElement';
 import { GET_PRODUCT_SCRAP_URL } from '../../secret';
-
-interface ExistProductScrapContainerProps {
-    contents: contentProps["content"][],
-    isFetching: boolean,
-    setIsFetching: (isFetching: boolean) => void,
-}
+import { useQuery } from '@tanstack/react-query';
+import CircularProgress from '@mui/material/CircularProgress';
+import { uesGetProductScrap } from '../../api/scrap';
+import _ from 'lodash';
 
 function ExistProductScrapContainer() {
     const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
     const token = localStorage.getItem('token');
-    const [types, setTypes] = useState<any[]>([]);
+    const [isSelected, setIsSelected] = useState(false);
     const size = 10;
-    const [isFetching, setIsFetching] = useState(true);
-    const [hasNextPage, setHasNextPage] = useState(true);
     const [pages, setPages] = useState(0);
-    const [error, setError] = useState<string | null>(null);
+    const [, setError] = useState<string | null>(null);
 
-    const initiate = () => {
-        setTypes([]);
-        setIsFetching(true);
-        setHasNextPage(true);
-        setPages(0);
-    }
-
-    const fetchDatas = useCallback(async () => {
-        const url = GET_PRODUCT_SCRAP_URL + `?page=${pages}&size=${size}`;
-        token &&
-            fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-            }).then((response) => {
-                // if (response.json().body) {
-                //     throw new Error('UNDEFINED_ERROR');
-                // }
-                // console.log('body', response.json());
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-                .then((data) => {
-                    setTypes([...types, ...data.data.content]);
-                    setPages(data.data.pageable.pageNumber + 1);
-                    setHasNextPage(!data.data.last);
-                })
-                .catch(err => setError(err.message));
-        setIsFetching(false);
-    }, [pages, setCategoryItemList, token, types]);
-
-    useEffect(() => {
-        if (isFetching && hasNextPage) {
-            fetchDatas();
-        } else if (!hasNextPage) {
-            setIsFetching(false);
+    const onSuccess = useCallback((data: any) => {
+        setCategoryItemList(data);
+        if (!isSelected) {
+            setSelectedContent(data[0]);
+            setIsSelected(true);
         }
-    }, [fetchDatas, hasNextPage, isFetching]);
+    }, []);
 
-    useEffect(() => {
-        setCategoryItemList(types);
-        // setSelectedContent(types[0]);
-    });
+    const onError = useCallback((err: Error) => {
+        setError(err.message);
+    }, []);
+
+    const { isLoading, error, data } = useQuery(
+        ['scraps'],
+        () => token && uesGetProductScrap({ pages: pages, size: size, token: token }),
+        {
+            onSuccess,
+            onError,
+            select(data) {
+                return data?.data?.content;
+            },
+            refetchOnWindowFocus: false,
+        }
+    );
+
+    if (isLoading) {
+        return <CircularProgress
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+            }} />;
+    }
 
     const varient = 'desktopProductItem';
 
+    // if (JSON.stringify(selectedContent) === JSON.stringify({})) {
+    //     setSelectedContent(categoryItemList[0]);
+    // }
     return (
         <>
             {/* Desktop */}

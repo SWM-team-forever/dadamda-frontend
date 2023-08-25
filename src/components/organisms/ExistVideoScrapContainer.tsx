@@ -1,34 +1,53 @@
 import styled from 'styled-components';
 import ColumnContainer from '../atoms/ColumnContainer';
 import { contentProps } from '../../types/ContentType';
-import { Card } from '@mui/material';
+import { Card, CircularProgress } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
 import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
+import { useQuery } from '@tanstack/react-query';
+import { uesGetProductScrap, useGetVideoScrap } from '../../api/scrap';
 
-interface ExistVideoScrapContainerProps {
-    contents: contentProps["content"][],
-    isFetching: boolean,
-    setIsFetching: (isFetching: boolean) => void,
-}
+function ExistVideoScrapContainer() {
+    const [, setSelectedContent] = useCategoryItemSelected();
+    const [, setCategoryItemList] = useCategoryItemList();
 
-function ExistVideoScrapContainer({ contents }: ExistVideoScrapContainerProps) {
-    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
-    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
+    const token = localStorage.getItem('token');
+    const size = 10;
+    const [pages, setPages] = useState(0);
+    const [, setError] = useState<string | null>(null);
 
-    const initiateSelectedContent = useCallback(() => {
-        setSelectedContent(contents[0]);
-        setCategoryItemList(contents);
-    }, [contents, setCategoryItemList, setSelectedContent]);
-
-    const [token, setToken] = useState<string | null>(null);
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
+    const onSuccess = useCallback((data: any) => {
+        setCategoryItemList(data);
+        setSelectedContent(data[0]);
     }, []);
 
-    useEffect(() => {
-        initiateSelectedContent();
+    const onError = useCallback((err: Error) => {
+        setError(err.message);
     }, []);
+
+    const { isLoading, error, data } = useQuery(
+        ['scraps'],
+        () => token && useGetVideoScrap({ pages: pages, size: size, token: token }),
+        {
+            onSuccess,
+            onError,
+            select(data) {
+                return data?.data?.content;
+            },
+            refetchOnWindowFocus: false,
+        }
+    );
+
+    if (isLoading) {
+        return <CircularProgress
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+            }} />;
+    }
 
     return (
         <>
