@@ -13,7 +13,7 @@ function ExistVideoScrapContainer() {
     const [, setCategoryItemList] = useCategoryItemList();
 
     const token = localStorage.getItem('token');
-    const size = 10;
+    const size = 30;
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
 

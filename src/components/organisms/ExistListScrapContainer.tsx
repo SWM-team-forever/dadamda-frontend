@@ -10,7 +10,7 @@ import { contentProps } from "../../types/ContentType"
 
 function ExistListScrapContainer() {
     const token = localStorage.getItem('token');
-    const size = 10;
+    const size = 30;
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
 

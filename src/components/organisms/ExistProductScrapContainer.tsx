@@ -17,7 +17,7 @@ function ExistProductScrapContainer() {
 
     const token = localStorage.getItem('token');
     const [isSelected, setIsSelected] = useState(false);
-    const size = 10;
+    const size = 30;
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
 
