@@ -7,7 +7,7 @@ export function VideoElement({ embedUrl }: any) {
                 width: '100%',
                 paddingBottom: '56.25%',
             }}>
-            <iframe src={embedUrl}
+            <iframe src={embedUrl} rel='prefetch'
                 style={{
                     position: 'absolute',
                     width: '100%',
