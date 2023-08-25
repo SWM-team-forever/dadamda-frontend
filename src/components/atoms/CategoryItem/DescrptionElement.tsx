@@ -44,7 +44,7 @@ const mobileArticleStyle = {
 const scrapCardStyle = {
     color: theme.color.text_gray_color,
     fontSize: '0.75rem',
-    fontWeight: '300',
+    fontWeight: '500',
     lineHeight: '160%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
