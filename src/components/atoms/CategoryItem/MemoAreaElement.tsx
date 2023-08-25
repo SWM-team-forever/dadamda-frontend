@@ -18,7 +18,6 @@ interface MemoAreaElementProps {
 }
 
 export function MemoAreaElement({ content }: MemoAreaElementProps) {
-    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const [textAreaValue, setTextAreaValue] = useState('');
     const { memoList, scrapId } = content;
     const token = localStorage.getItem('token');
@@ -28,12 +27,12 @@ export function MemoAreaElement({ content }: MemoAreaElementProps) {
         setTextAreaValue(e.target.value);
     };
 
-    const { mutate, isLoading, isSuccess, isError, error } = usePostCreateMemo({ token, scrapId, textAreaValue });
+    const { mutate, isLoading, isError } = usePostCreateMemo();
 
     function onEnterPress(e: any) {
         if (e.keyCode == 13 && e.shiftKey == false) {
             e.preventDefault();
-            mutate({ token, scrapId, textAreaValue });
+            token && mutate({ token, scrapId, textAreaValue });
             e.target.value = '';
         }
     }
@@ -49,7 +48,7 @@ export function MemoAreaElement({ content }: MemoAreaElementProps) {
     }
 
     if (isError) {
-        useSnackbar('메모 생성에 실패하였습니다.', 'error');
+        useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
     }
 
     return (

@@ -19,18 +19,18 @@ function ExistArticleScrapContainer() {
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
 
-    const onSuccess = useCallback((data) => {
+    const onSuccess = useCallback((data: any) => {
         setCategoryItemList(data);
         setSelectedContent(data[0]);
     }, []);
 
-    const onError = useCallback((err) => {
+    const onError = useCallback((err: Error) => {
         setError(err.message);
     }, []);
 
     const { isLoading, error, data } = useQuery(
         ['scraps'],
-        () => useGetArticleScrap({ pages: pages, size: size, token: token }),
+        () => token && useGetArticleScrap({ pages: pages, size: size, token: token }),
         {
             onSuccess,
             onError,

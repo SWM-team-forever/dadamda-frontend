@@ -9,28 +9,33 @@ import { GET_PRODUCT_SCRAP_URL } from '../../secret';
 import { useQuery } from '@tanstack/react-query';
 import CircularProgress from '@mui/material/CircularProgress';
 import { uesGetProductScrap } from '../../api/scrap';
+import _ from 'lodash';
 
 function ExistProductScrapContainer() {
-    const [, setCategoryItemList] = useCategoryItemList();
-    const [, setSelectedContent] = useCategoryItemSelected();
+    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
+    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
 
     const token = localStorage.getItem('token');
+    const [isSelected, setIsSelected] = useState(false);
     const size = 10;
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
 
-    const onSuccess = useCallback((data) => {
+    const onSuccess = useCallback((data: any) => {
         setCategoryItemList(data);
-        setSelectedContent(data[0]);
+        if (!isSelected) {
+            setSelectedContent(data[0]);
+            setIsSelected(true);
+        }
     }, []);
 
-    const onError = useCallback((err) => {
+    const onError = useCallback((err: Error) => {
         setError(err.message);
     }, []);
 
     const { isLoading, error, data } = useQuery(
         ['scraps'],
-        () => uesGetProductScrap({ pages: pages, size: size, token: token }),
+        () => token && uesGetProductScrap({ pages: pages, size: size, token: token }),
         {
             onSuccess,
             onError,
@@ -53,6 +58,9 @@ function ExistProductScrapContainer() {
 
     const varient = 'desktopProductItem';
 
+    // if (JSON.stringify(selectedContent) === JSON.stringify({})) {
+    //     setSelectedContent(categoryItemList[0]);
+    // }
     return (
         <>
             {/* Desktop */}

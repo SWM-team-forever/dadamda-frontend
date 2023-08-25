@@ -4,11 +4,9 @@ import { useCallback, useState } from "react"
 import { CircularProgress } from "@mui/material"
 
 import ScrapCard from "./ScrapCard"
-import useInfiniteScroll from "../../hooks/useInfiniteScroll"
-import theme from "../../assets/styles/theme"
-import { contentProps } from "../../types/ContentType"
 import { useQuery } from "@tanstack/react-query"
-import { uesGetProductScrap, useGetListScrap } from "../../api/scrap"
+import { useGetListScrap } from "../../api/scrap"
+import { contentProps } from "../../types/ContentType"
 
 function ExistListScrapContainer() {
     const token = localStorage.getItem('token');
@@ -16,13 +14,13 @@ function ExistListScrapContainer() {
     const [pages, setPages] = useState(0);
     const [, setError] = useState<string | null>(null);
 
-    const onError = useCallback((err) => {
+    const onError = useCallback((err: Error) => {
         setError(err.message);
     }, []);
 
     const { isLoading, data } = useQuery(
         ['scraps'],
-        () => useGetListScrap({ pages: pages, size: size, token: token }),
+        () => token && useGetListScrap({ pages: pages, size: size, token: token }),
         {
             onError,
             select(data) {
@@ -45,7 +43,7 @@ function ExistListScrapContainer() {
     return (
         <ScrapList>
             <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4 }} spacing={2} style={{ width: '100%' }}>
-                {data.map(content => {
+                {data.map((content: contentProps['content']) => {
                     return <ScrapCard content={content} />
                 }
                 )}
