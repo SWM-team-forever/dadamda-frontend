@@ -6,6 +6,8 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DELETE_SCRAP_URL } from '../../secret';
 
 import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
+import { CircularProgress } from '@mui/material';
+import { useDeleteScrap, usePostCreateScrap } from '../../api/scrap';
 
 interface ScrapDeleteModalProps {
     hideScrapDeleteModal: () => void,
@@ -19,29 +21,51 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId, setError }: ScrapDele
         setToken(localStorage.getItem('token'));
     }, []);
 
-    function deleteScrap() {
-        const url = DELETE_SCRAP_URL + `/${scrapId}`;
-        token &&
-            fetch(url, {
-                method: "DELETE",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-            }).then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-                .then(() => {
-                    useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
-                    hideScrapDeleteModal();
-                })
-                .catch(err => setError(err.message));
+    // function deleteScrap() {
+    //     const url = DELETE_SCRAP_URL + `/${scrapId}`;
+    //     token &&
+    //         fetch(url, {
+    //             method: "DELETE",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "X-AUTH-TOKEN": token,
+    //             },
+    //         }).then((response) => {
+    //             return response.json().then(body => {
+    //                 if (response.ok) {
+    //                     return body;
+    //                 } else {
+    //                     throw new Error(body.resultCode);
+    //                 }
+    //             })
+    //         })
+    //             .then(() => {
+    //                 useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
+    //                 hideScrapDeleteModal();
+    //             })
+    //             .catch(err => setError(err.message));
+    // }
+
+    const { mutate, isLoading, isSuccess, isError } = useDeleteScrap();
+
+    if (isLoading) {
+        return <CircularProgress
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+            }} />;
+    }
+
+    if (isSuccess) {
+        hideScrapDeleteModal();
+        useDefaultSnackbar('스크랩 삭제에 성공하였습니다.', 'success');
+    }
+
+    if (isError) {
+        hideScrapDeleteModal();
+        useDefaultSnackbar('스크랩 삭제에 실패하였습니다.', 'error');
     }
 
     return (
@@ -55,7 +79,7 @@ function ScrapDeleteModal({ hideScrapDeleteModal, scrapId, setError }: ScrapDele
             <DefaultTypography>한 번 삭제된 스크랩은 다시 복구되지 않습니다.<br />정말 삭제하시겠습니까?</DefaultTypography>
             <ModalFooter>
                 <ButtonContainer>
-                    <Button buttonStyle={'gray'} label={'삭제하기'} isRound onClick={deleteScrap} />
+                    <Button buttonStyle={'gray'} label={'삭제하기'} isRound onClick={() => token && mutate({ scrapId, token })} />
                     <Button buttonStyle={'secondary'} label={'취소하기'} isRound onClick={() => hideScrapDeleteModal()} />
                 </ButtonContainer>
             </ModalFooter>

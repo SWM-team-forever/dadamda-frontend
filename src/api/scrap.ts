@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
+import { DELETE_SCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
 
 interface fetchDatasProps {
     url?: string,
@@ -77,6 +77,38 @@ const fetchPostCreateScrap = async({token, textAreaValue}: fetchPostCreateScrapP
 export const usePostCreateScrap = () => {
     const queryClient = useQueryClient();
     return useMutation(fetchPostCreateScrap, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['scraps']);
+        }
+    });
+}
+
+interface fetchDeleteScrapProps {
+    scrapId: number,
+    token: string,
+}
+
+const fetchDeleteScrap = async({scrapId, token}: fetchDeleteScrapProps) => {
+    return await fetch(DELETE_SCRAP_URL + `/${scrapId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+}
+
+export const useDeleteScrap = () => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchDeleteScrap, {
         onSuccess: () => {
             queryClient.invalidateQueries(['scraps']);
         }
