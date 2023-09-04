@@ -12,39 +12,13 @@ import { useDeleteScrap, usePostCreateScrap } from '../../api/scrap';
 interface ScrapDeleteModalProps {
     hideScrapDeleteModal: () => void,
     scrapId: number,
-    setError: Dispatch<SetStateAction<Partial<null | string>>>,
 }
 
-function ScrapDeleteModal({ hideScrapDeleteModal, scrapId, setError }: ScrapDeleteModalProps) {
+function ScrapDeleteModal({ hideScrapDeleteModal, scrapId }: ScrapDeleteModalProps) {
     const [token, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
     }, []);
-
-    // function deleteScrap() {
-    //     const url = DELETE_SCRAP_URL + `/${scrapId}`;
-    //     token &&
-    //         fetch(url, {
-    //             method: "DELETE",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 "X-AUTH-TOKEN": token,
-    //             },
-    //         }).then((response) => {
-    //             return response.json().then(body => {
-    //                 if (response.ok) {
-    //                     return body;
-    //                 } else {
-    //                     throw new Error(body.resultCode);
-    //                 }
-    //             })
-    //         })
-    //             .then(() => {
-    //                 useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
-    //                 hideScrapDeleteModal();
-    //             })
-    //             .catch(err => setError(err.message));
-    // }
 
     const { mutate, isLoading, isSuccess, isError } = useDeleteScrap();
 
