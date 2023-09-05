@@ -12,14 +12,14 @@ interface VideoTemplateProps {
     count: number,
 }
 
-function VideoTemplate({ videos, isFetching, setIsFetching, count }: VideoTemplateProps) {
+function VideoTemplate({ videos, count }: VideoTemplateProps) {
     return (
         <>
             <ScrapListHeader type='비디오' count={count} />
             {videos.length ?
                 <CategoryItemListProvider>
                     <CategoryItemSelectedProvider>
-                        <ExistVideoScrapContainer contents={videos} isFetching={isFetching} setIsFetching={setIsFetching} />
+                        <ExistVideoScrapContainer />
                     </CategoryItemSelectedProvider>
                 </CategoryItemListProvider>
                 : <EmptyScrapContainer />

@@ -8,6 +8,8 @@ import MemoTextArea from '../molcules/MemoTextArea';
 import { EDIT_sCRAP_URL } from '../../secret';
 import { contentProps } from '../../types/ContentType';
 
+import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
+
 interface ScrapEditModalProps {
     hideScrapEditModal: () => void,
     content: contentProps['content'],
@@ -218,8 +220,12 @@ function ScrapEditModal({ hideScrapEditModal, content, setError }: ScrapEditModa
             })
                 .then(() => {
                     hideScrapEditModal();
+                    useDefaultSnackbar('스크랩이 변경되었습니다.', 'success');
                 })
-                .catch(err => setError(err.message));
+                .catch(err => setError(err.message))
+                .then(() => {
+                    hideScrapEditModal();
+                })
     }
 
 

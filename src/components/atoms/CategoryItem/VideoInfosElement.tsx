@@ -18,9 +18,17 @@ const desktopVideoItemStyle = {
     color: theme.color.text_gray_color,
 };
 
+const scrapCardStyle = {
+    alignItems: 'center',
+    flex: '1',
+    fontHeight: '160%',
+    color: theme.color.text_gray_color,
+}
+
 const siteNameStyles = {
     mobileVideo: mobileVideoStyle,
     desktopVideoItem: desktopVideoItemStyle,
+    scrapCard: scrapCardStyle,
 }
 
 export function VideoInfosElement({ publishedDate, watchedCnt, playTime, varient }: any) {

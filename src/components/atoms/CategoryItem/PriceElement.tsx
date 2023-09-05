@@ -23,10 +23,18 @@ const desktopProductListStyle = {
     lineHeight: '160%',
 };
 
+const scrapCardStyle = {
+    color: theme.color.primary_color,
+    fontSize: '0.875rem',
+    fontWeight: '700',
+    lineHeight: '160%',
+}
+
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
     desktopProductItem: desktopProductItemStyle,
     desktopProductList: desktopProductListStyle,
+    scrapCard: scrapCardStyle,
 };
 
 export function PriceElement({ price, varient }: any) {

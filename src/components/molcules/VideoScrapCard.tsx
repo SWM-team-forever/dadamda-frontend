@@ -12,6 +12,13 @@ import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import defaultImage from '../../assets/images/Avatar.png';
 import { getTimeDiff } from '../../hooks/useCalculateDateDiff';
+import { SiteNameElement } from '../atoms/CategoryItem/SiteNameElement';
+import { TitleElement } from '../atoms/CategoryItem/TitleElement';
+import { VideoElement } from '../atoms/CategoryItem/VideoElement';
+import { VideoInfosElement } from '../atoms/CategoryItem/VideoInfosElement';
+import { ChannelProfileElement } from '../atoms/CategoryItem/ChannelProfileElement';
+import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
+import { ThumbnailElement } from '../atoms/CategoryItem/ThumbnailElement';
 
 interface VideoScrapCardProps {
     content: contentProps['content'],
@@ -20,17 +27,7 @@ interface VideoScrapCardProps {
 }
 
 function VideoScrapCard({ content, showMemoCreateModal, showTooltip }: VideoScrapCardProps) {
-
-    const videoMenus = [{
-        title: '게시일',
-        content: content.publishedDate,
-    }, {
-        title: '조회수',
-        content: content.watchedCnt,
-    }, {
-        title: '영상 길이',
-        content: content.playTime,
-    },]
+    const varient = 'scrapCard';
 
     return (
         <CardWrapper
@@ -39,33 +36,12 @@ function VideoScrapCard({ content, showMemoCreateModal, showTooltip }: VideoScra
                 e.stopPropagation();
                 window.open(`${content.pageUrl}`);
             }}>
-            {content.siteName && <Chip>{content.siteName}</Chip>}
-            {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-            <VideoPlayer src={content.embedUrl} />
-            {
-                content.channelName &&
-                <RowContainer style={{ alignItems: 'center', gap: '5px' }}>
-                    {content.channelImageUrl ? <ProfileImage size={24} source={content.channelImageUrl} /> : <ProfileImage size={24} source={defaultImage} />}
-                    <DefaultTypography>{content.channelName}</DefaultTypography>
-                </RowContainer>
-            }
-            <RowContainer style={{ justifyContent: 'space-between' }}>
-                {videoMenus.map(menu => {
-                    return (
-                        <>
-                            {menu.content &&
-                                <ColumnContainer style={{ alignItems: 'center', flex: '1' }}>
-                                    <EmpasizedTypography>{
-                                        typeof (menu.content) === 'number' ? getTimeDiff(menu.content) : menu.content
-                                    }</EmpasizedTypography>
-                                    <DefaultTypography>{menu.title}</DefaultTypography>
-                                </ColumnContainer>
-                            }
-                        </>
-                    )
-                })}
-            </RowContainer>
-            {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+            {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
+            {content.title && <TitleElement title={content.title} varient={varient} />}
+            <ThumbnailElement thumbnailUrl={content.thumbnailUrl} />
+            <ChannelProfileElement channelImageUrl={content.channelImageUrl} channelName={content.channelName} varient={varient} />
+            <VideoInfosElement publishedDate={content.publishedDate} watchedCnt={content.watchedCnt} playTime={content.playTime} varient={varient} />
+            {content.description && <DescriptionElement description={content.description} varient={varient} />}
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
             })}
@@ -97,20 +73,35 @@ const VideoPlayer = styled.iframe`
             `
 
 const EmpasizedTypography = styled.span`
-            font-size: 20px;
-            font-weight: bold;
-            color: ${theme.color.text_gray_color};
-            `
+    font-size: 20px;
+    font-weight: bold;
+    color: ${theme.color.text_gray_color};
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
+`
 
 const DefaultTypography = styled.span`
-            font-size: 14px;
-            color: ${theme.color.text_gray_color};
-            `
+font-size: 14px;
+color: ${theme.color.text_gray_color};
+`
+
+const DescriptionTypography = styled(DefaultTypography)`
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
+`
 
 const ButtonContainer = styled.div`
-            display: flex;
-            align-items: center;
-            `
+display: flex;
+align-items: center;
+`
 
 const MoreIconContainer = styled.img`
             width: 24px;

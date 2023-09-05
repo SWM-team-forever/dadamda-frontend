@@ -7,6 +7,8 @@ import MoreIcon from '../../assets/icons/MoreVerticalIcon.png';
 import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
 import ThumbnailImage from '../atoms/ThumbnailImage';
+import { TitleElement } from '../atoms/CategoryItem/TitleElement';
+import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
 
 interface OtherScrapCardProps {
     content: contentProps['content'],
@@ -15,6 +17,7 @@ interface OtherScrapCardProps {
 }
 
 function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScrapCardProps) {
+    const varient = 'scrapCard';
 
     return (
         <CardWrapper
@@ -26,8 +29,8 @@ function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScra
         >
             {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             <CardInfoWrapper>
-                {content.title && <EmpasizedTypography>{content.title}</EmpasizedTypography>}
-                {content.description && <DefaultTypography>{content.description}</DefaultTypography>}
+                {content.title && <TitleElement title={content.title} varient={varient} />}
+                {content.description && <DescriptionElement description={content.description} varient={varient} />}
             </CardInfoWrapper>
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
@@ -65,11 +68,23 @@ const EmpasizedTypography = styled.span`
     font-size: 20px;
     font-weight: bold;
     color: ${theme.color.text_gray_color};
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
 `
 
 const DefaultTypography = styled.span`
     font-size: 14px;
     color: ${theme.color.text_gray_color};
+    overflow: hidden;
+    textOverflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    wordWrap: break-word;
 `
 
 const ButtonContainer = styled.div`

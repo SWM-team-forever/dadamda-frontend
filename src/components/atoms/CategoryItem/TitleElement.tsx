@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import theme from "../../../assets/styles/theme";
 
+import { decode } from 'html-entities';
 
 const mobileProductStyle = {
     fontSize: '0.875rem',
@@ -88,6 +89,19 @@ const mobileArticleStyle = {
     lineHeight: '120%',
 }
 
+const scrapCardStyle = {
+    color: theme.color.text_gray_color,
+    fontSize: '0.875rem',
+    fontWeight: '700',
+    lineHeight: '120%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '2',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
+}
+
 const siteNameStyles = {
     mobileProduct: mobileProductStyle,
     desktopProductItem: desktopProductItemStyle,
@@ -98,10 +112,13 @@ const siteNameStyles = {
     desktopArticleList: desktopArticleListStyle,
     desktopArticleItem: desktopArticleItemStyle,
     mobileArticle: mobileArticleStyle,
+    scrapCard: scrapCardStyle,
 }
 
 
 export function TitleElement({ title, varient }: any) {
+    title = decode(title, { level: 'html5' });
+
     return (
         <Typography
             sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>
