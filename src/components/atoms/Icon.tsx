@@ -1,6 +1,6 @@
 interface IconProps {
     size?: string,
-    fill: string,
+    fill?: string,
     color?: string,
     secondaryColor?: string,
     width?: string,
@@ -104,9 +104,9 @@ export function LocationIcon({ width, height, fill, color, secondaryColor }: Ico
     )
 }
 
-export function ProfileIcon() {
+export function ProfileIcon({ size }: IconProps) {
     return (
-        <svg width="76" height="75" viewBox="0 0 76 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={size} height={size} viewBox="0 0 76 75" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g filter="url(#filter0_d_1_10203)">
                 <g clip-path="url(#clip0_1_10203)">
                     <circle cx="38" cy="32" r="30.6667" fill="#AAC6F4" stroke="#155EEF" stroke-width="2.66667" />
