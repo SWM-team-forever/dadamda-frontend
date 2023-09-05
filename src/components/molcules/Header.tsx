@@ -33,7 +33,6 @@ const headerPanelMenus = [{
 }];
 
 function Header() {
-    // const [userInformation, setUserInformation] = useContext(LoginContext);
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
@@ -57,10 +56,6 @@ function Header() {
     }
 
     const logout = () => {
-        // setUserInformation({
-        //     profileImageURL: null,
-        //     token: null,
-        // });
         localStorage.removeItem('token');
         navigate('/main');
         hideLoginTooltip();
