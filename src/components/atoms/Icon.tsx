@@ -103,3 +103,46 @@ export function LocationIcon({ width, height, fill, color, secondaryColor }: Ico
         </svg>
     )
 }
+
+export function ProfileIcon() {
+    return (
+        <svg width="76" height="75" viewBox="0 0 76 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_d_1_10203)">
+                <g clip-path="url(#clip0_1_10203)">
+                    <circle cx="38" cy="32" r="30.6667" fill="#AAC6F4" stroke="#155EEF" stroke-width="2.66667" />
+                    <path d="M66.7806 64.0002H9.21939C8.76719 64.0001 8.32007 63.8975 7.90715 63.699C7.49423 63.5005 7.12478 63.2105 6.82285 62.848C6.52091 62.4855 6.29328 62.0586 6.15477 61.5951C6.01625 61.1316 5.96997 60.6418 6.01893 60.1577C6.89326 51.6825 10.6391 43.8522 16.5397 38.165C22.4402 32.4779 30.0811 29.3335 38 29.3335C45.9189 29.3335 53.5598 32.4779 59.4603 38.165C65.3609 43.8522 69.1067 51.6825 69.9811 60.1577C70.03 60.6418 69.9838 61.1316 69.8452 61.5951C69.7067 62.0586 69.4791 62.4855 69.1772 62.848C68.8752 63.2105 68.5058 63.5005 68.0928 63.699C67.6799 63.8975 67.2328 64.0001 66.7806 64.0002Z" fill="#155EEF" />
+                    <g filter="url(#filter1_d_1_10203)">
+                        <path d="M38 37.3334C35.3629 37.3334 32.7851 36.5514 30.5924 35.0863C28.3998 33.6213 26.6908 31.5389 25.6816 29.1025C24.6725 26.6662 24.4084 23.9853 24.9229 21.3989C25.4374 18.8125 26.7072 16.4367 28.5719 14.572C30.4366 12.7073 32.8124 11.4374 35.3988 10.923C37.9852 10.4085 40.6661 10.6725 43.1025 11.6817C45.5388 12.6909 47.6212 14.3998 49.0863 16.5925C50.5514 18.7851 51.3334 21.363 51.3334 24.0001C51.3295 27.5351 49.9235 30.9243 47.4239 33.4239C44.9242 35.9236 41.5351 37.3296 38 37.3334Z" fill="#F5F7FA" />
+                    </g>
+                    <path d="M31.3333 18.6667L31.3333 21.3334" stroke="#202C3F" stroke-width="2.66667" stroke-linecap="round" />
+                    <path d="M39.3333 18.6667L39.3333 21.3334" stroke="#202C3F" stroke-width="2.66667" stroke-linecap="round" />
+                </g>
+            </g>
+            <defs>
+                <filter id="filter0_d_1_10203" x="0.666667" y="0" width="74.6667" height="74.6667" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                    <feOffset dy="5.33333" />
+                    <feGaussianBlur stdDeviation="2.66667" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_10203" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_10203" result="shape" />
+                </filter>
+                <filter id="filter1_d_1_10203" x="14" y="10.6667" width="48" height="48.0001" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                    <feOffset dy="10.6667" />
+                    <feGaussianBlur stdDeviation="5.33333" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0" />
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_10203" />
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_10203" result="shape" />
+                </filter>
+                <clipPath id="clip0_1_10203">
+                    <rect x="6" width="64" height="64" rx="32" fill="white" />
+                </clipPath>
+            </defs>
+        </svg>
+    )
+}
