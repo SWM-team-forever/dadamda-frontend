@@ -12,9 +12,27 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { ProfileIcon } from '../atoms/Icon';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const headerPanelMenus = [{
+    isVisibleWithoutLogin: true,
+    name: '사이트 소개',
+    link: '/main',
+}, {
+    isVisibleWithoutLogin: true,
+    name: '트렌딩',
+    link: '/trending',
+}, {
+    isVisibleWithoutLogin: false,
+    name: '보드',
+    link: '/board',
+}, {
+    isVisibleWithoutLogin: false,
+    name: '스크랩북',
+    link: '/scrap/list',
+}];
+
+const settings = ['프로필 정보', '로그아웃'];
 
 function MuiHeader() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -87,9 +105,9 @@ function MuiHeader() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            {headerPanelMenus.map((page) => (
+                                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                                    <Typography textAlign="center">{page.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -114,13 +132,13 @@ function MuiHeader() {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {headerPanelMenus.map((page) => (
                             <Button
-                                key={page}
+                                key={page.name}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                {page.name}
                             </Button>
                         ))}
                     </Box>
@@ -128,7 +146,7 @@ function MuiHeader() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <ProfileIcon size='24' />
                             </IconButton>
                         </Tooltip>
                         <Menu
