@@ -1,4 +1,5 @@
 body {
   margin: 0;
-  font-family: 'NanumSquare', sans-serif;
 }
+
+* {font-family: Pretendard,'Noto Sans KR', sans-serif;}
