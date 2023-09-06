@@ -21,12 +21,10 @@ interface MobileNavbarProps {
 
 function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
-    isMenuOpen ? setMenuIcon(ChervronUpIcon) : setMenuIcon(ChervronDownIcon);
   };
 
   const showLoginModal = () => {
@@ -83,26 +81,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
       toggleMobileNavbar();
     },
   }];
-
-  const scrapMenu = [{
-    name: '전체',
-    link: '/scrap/list',
-  }, {
-    name: '아티클',
-    link: '/scrap/article',
-  }, {
-    name: '상품',
-    link: '/scrap/product',
-  }, {
-    name: '비디오',
-    link: '/scrap/video',
-  }, {
-    name: '장소',
-    link: '/scrap/location',
-  }, {
-    name: '기타',
-    link: '/scrap/other',
-  }]
 
   const isLogin = localStorage.getItem('token') ? true : false;
   const profileImageURL = localStorage.getItem('profileImageURL');
@@ -170,7 +148,12 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
                       </Typography>
                     </div>
                     {menu.isMenuOpen &&
-                      <div onClick={toggleMenu}>
+                      <div
+                        onClick={toggleMenu}
+                        style={{
+                          transform: isMenuOpen ? 'rotate(180deg)' : '',
+                        }}
+                      >
                         <DownArrowIcon width='24' height='24' fill={theme.color.Gray_090} />
                       </div>}
                   </ItemContainer>
