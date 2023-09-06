@@ -93,7 +93,7 @@ function Header() {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     return (
         <HeaderContainer>
-            <LogoContainer>
+            <LogoContainer onClick={() => navigate('/main')}>
                 <img src={logo} alt='logo' width='32px' height='30px' />
                 <LogoTextIcon width='49.185px' height='16px' />
             </LogoContainer>
@@ -184,7 +184,7 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 6px;
-    
+    cursor: pointer;
 `
 const LogoContainer = styled.div`
     display: inline-flex;
