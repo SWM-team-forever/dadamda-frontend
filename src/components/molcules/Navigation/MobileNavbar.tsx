@@ -13,6 +13,7 @@ import { CloseIcon, DownArrowIcon, ProfileIcon } from '../../atoms/Icon';
 import { Box, Typography } from '@mui/material';
 import ProfileImage from '../../atoms/ProfileImage';
 import ScrapNaviagtion from './ScrapNaviagtion';
+import ColumnContainer from '../../atoms/ColumnContainer';
 
 interface MobileNavbarProps {
   toggleMobileNavbar: () => void;
@@ -112,7 +113,9 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
         onClick={toggleMobileNavbar}
         style={{
           width: '100%',
-          padding: '15px 0 7px 15px',
+          position: 'absolute',
+          top: '15px',
+          left: '15px',
         }}
       >
         <CloseIcon width='24' height='24' fill={theme.color.Gray_090} />
@@ -147,25 +150,52 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
           const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen && isLogin;
           return (
             <>
-              {isMenuVisible &&
-                <ItemContainer>
-                  <div onClick={menu.onclick}>
-                    <EmpasizedTypography>{menu.name}</EmpasizedTypography>
-                  </div>
-                  {menu.isMenuOpen &&
-                    <div onClick={toggleMenu}>
-                      <DownArrowIcon width='24' height='24' fill={theme.color.Gray_090} />
-                    </div>}
-                </ItemContainer>}
               {
-                isMenuHasMenuAndOpen && <MenuContainer>
-                  <ScrapNaviagtion />
-                </MenuContainer>
+                isMenuVisible &&
+                <ColumnContainer
+                  style={{
+                    gap: '16px',
+                  }}
+                >
+                  <ItemContainer>
+                    <div onClick={menu.onclick}>
+                      <Typography
+                        variant='h3'
+                        color={theme.color.Gray_090}
+                        sx={{
+                          fontWeight: '600',
+                        }}
+                      >
+                        {menu.name}
+                      </Typography>
+                    </div>
+                    {menu.isMenuOpen &&
+                      <div onClick={toggleMenu}>
+                        <DownArrowIcon width='24' height='24' fill={theme.color.Gray_090} />
+                      </div>}
+                  </ItemContainer>
+                  {
+                    isMenuHasMenuAndOpen &&
+                    <MenuContainer>
+                      <ScrapNaviagtion />
+                    </MenuContainer>
+                  }
+                </ColumnContainer>
               }
             </>
           )
         })}
-        {isLogin ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
+        <Typography
+          variant='h3'
+          color={theme.color.Gray_090}
+          sx={{
+            fontWeight: '600',
+            cursor: 'pointer',
+          }}
+          onClick={isLogin ? logout : login}
+        >
+          {isLogin ? '로그아웃' : '로그인/회원가입'}
+        </Typography>
       </NavbarMenu>
       {isLoginModalVisible &&
         <Overlay>
@@ -177,34 +207,29 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
 }
 
 const NavbarContainer = styled.div`
-    width: 250px;
-    height: 100vh;
-    background-color: white;
-    position: fixed;
-    top: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    box-shadow: ${theme.style.shadow};
-    z-index: 100;
-`
-
-const EmpasizedTypography = styled.span`
-  font-size: 20px;
-  flex: 1;
+  width: 285px;
+  height: 100%;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  padding: 49px 32px;
+  box-sizing: border-box;
 `
 
 const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
 `
 
 const NavbarMenu = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin: 100px 20px;
+  gap: 26px;
+  margin-top: 34px;
 `
 
 const ItemContainer = styled.div`
