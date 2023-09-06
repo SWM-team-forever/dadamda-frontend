@@ -149,7 +149,7 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
             <>
               {isMenuVisible &&
                 <ItemContainer>
-                  <div style={{ flex: '1' }} onClick={menu.onclick}>
+                  <div onClick={menu.onclick}>
                     <EmpasizedTypography>{menu.name}</EmpasizedTypography>
                   </div>
                   {menu.isMenuOpen &&
@@ -194,30 +194,10 @@ const EmpasizedTypography = styled.span`
   flex: 1;
 `
 
-const DefaultTypography = styled.span`
-  font-size: 14px;
-  color: ${theme.color.secondary_text_gray_color};
-`
-
 const MenuContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-`
-
-const IconContainer = styled.img`
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-  position: absolute;
-  top: 15px;
-  right: 20px;
-`
-
-const IconImg = styled.img`
-  width: 24px;
-    height: 24px;
-    cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `
 
 const NavbarMenu = styled.div`
@@ -229,7 +209,7 @@ const NavbarMenu = styled.div`
 
 const ItemContainer = styled.div`
   display: flex;
-    justify-content: space-between;
+  justify-content: space-between;
 `
 
 export default MobileNavbar;
