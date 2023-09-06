@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Header from '../components/molcules/Header';
+import Header from '../components/molcules/Navigation/Header';
 
 const meta = {
   title: 'Molcules/Header',
