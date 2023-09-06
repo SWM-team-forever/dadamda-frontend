@@ -175,8 +175,8 @@ function Header() {
                         variant='h5'
                         color={theme.color.Gray_080}
                         sx={{
-                            display: { xs: 'none', md: 'block' },
-                            cursor: 'pointer'
+                            display: { xs: 'none', sm: 'block' },
+                            cursor: 'pointer',
                         }}
                         onClick={showLoginModal}>
                         로그인/회원가입
