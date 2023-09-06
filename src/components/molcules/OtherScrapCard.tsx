@@ -87,15 +87,4 @@ const CardInfoWrapper = styled.div`
     gap: 10px;
 `
 
-const ButtonContainer = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-const MoreIconContainer = styled.img`
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-`
-
 export default OtherScrapCard;
