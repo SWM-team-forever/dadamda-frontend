@@ -105,62 +105,37 @@ function Header() {
             </HeaderPanel>
             <LargeRightPanel>
                 {isLogin ?
-                    (profileImageURL ?
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton sx={{ p: 0 }}>
-                                    <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElNav)}
-                            >
-                                {userPopOverMenus.map((setting) => (
-                                    <MenuItem key={setting.name}>
-                                        <Typography textAlign="center">{setting.name}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-                        : <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton sx={{ p: 0 }}>
-                                    <ProfileIcon size='24' />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElNav)}
-                            >
-                                {userPopOverMenus.map((setting) => (
-                                    <MenuItem key={setting.name}>
-                                        <Typography textAlign="center">{setting.name}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-                    ) :
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <IconButton sx={{ p: 0 }}>
+                                {profileImageURL
+                                    ? <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
+                                    : <ProfileIcon size='24' />
+                                }
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElNav)}
+                        >
+                            {userPopOverMenus.map((setting) => (
+                                <MenuItem key={setting.name}>
+                                    <Typography textAlign="center">{setting.name}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                    :
                     <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
                 }
             </LargeRightPanel>
