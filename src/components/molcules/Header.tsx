@@ -10,9 +10,11 @@ import MobileNavbar from './MobileNavbar';
 import logo from '../../assets/images/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
-import Tooltip from '../atoms/Tooltip';
 import Overlay from '../atoms/Overlay';
 import defaultUserProfileImage from '../../assets/images/Avatar.png';
+import { LogoTextIcon, ProfileIcon } from '../atoms/Icon';
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip/Tooltip';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -88,40 +90,63 @@ function Header() {
 
     const isLogin = localStorage.getItem('token') ? true : false;
     const profileImageURL = localStorage.getItem('profileImageURL');
-
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     return (
-        <TooltipContainer>
-            <HeaderContainer>
-                <LogoContainer src={logo} />
-                <HeaderPanel>
-                    {headerPanelMenus.map(menu => {
-                        const isVisible = isLogin || menu.isVisibleWithoutLogin;
-                        return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
-                    })}
-                </HeaderPanel>
-                <LargeRightPanel>
-                    {isLogin ?
-                        (profileImageURL ?
-                            <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
-                            : <ProfileImage source={defaultUserProfileImage} size={24} onClick={showLoginTooltip} />
-                        ) :
-                        <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
-                    }
-                </LargeRightPanel>
-                {!isClicked && <IconContainer onClick={toggleMobileNavbar} src={MenuIcon} />}
-                {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
-                {isLoginModalVisible && <Overlay>
-                    <LoginModal hideLoginModal={hideLoginModal} />
-                </Overlay>}
-            </HeaderContainer>
-            {isLoginTooltipVisible && <Tooltip contents={userPopOverMenus} color={'#FFFFFF'} />}
-        </TooltipContainer>
+        <HeaderContainer>
+            <LogoContainer>
+                <img src={logo} alt='logo' width='32px' height='30px' />
+                <LogoTextIcon width='49.185px' height='16px' />
+            </LogoContainer>
+            <HeaderPanel>
+                {headerPanelMenus.map(menu => {
+                    const isVisible = isLogin || menu.isVisibleWithoutLogin;
+                    return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
+                })}
+            </HeaderPanel>
+            <LargeRightPanel>
+                {isLogin ?
+                    (profileImageURL ?
+                        <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
+                        : <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton sx={{ p: 0 }}>
+                                    <ProfileIcon size='24' />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElNav)}
+                            >
+                                {userPopOverMenus.map((setting) => (
+                                    <MenuItem key={setting.name}>
+                                        <Typography textAlign="center">{setting.name}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                    ) :
+                    <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
+                }
+            </LargeRightPanel>
+            {!isClicked && <IconContainer onClick={toggleMobileNavbar} src={MenuIcon} />}
+            {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
+            {isLoginModalVisible && <Overlay>
+                <LoginModal hideLoginModal={hideLoginModal} />
+            </Overlay>}
+        </HeaderContainer>
     );
 }
-
-const TooltipContainer = styled.div`
-    position: relative;
-`
 
 const HeaderContainer = styled.div`
     height: 50px;
@@ -136,10 +161,10 @@ const HeaderContainer = styled.div`
     gap: 6px;
     
 `
-const LogoContainer = styled.img`
-    height: 24px;
-    width: auto;
-    cursor: pointer;
+const LogoContainer = styled.div`
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
 `
 
 const HeaderPanel = styled.div`
