@@ -7,11 +7,11 @@ import LoginModal from '../organisms/LoginModal';
 import MobileNavbar from './MobileNavbar';
 import ProfileImage from '../atoms/ProfileImage';
 import { LogoTextIcon, ProfileIcon } from '../atoms/Icon';
+import { MenuIcon } from '../atoms/Icon';
 import Overlay from '../atoms/Overlay';
 
 import logo from '../../assets/icons/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
-import MenuIcon from '../../assets/icons/MenuIcon.png';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -173,7 +173,7 @@ function Header() {
                     </Typography>
                 }
             </LargeRightPanel>
-            {!isClicked && <IconContainer onClick={toggleMobileNavbar} src={MenuIcon} />}
+            {!isClicked && <div onClick={toggleMobileNavbar}><MenuIcon width='20' height='14' fill='#202C3F' /></div>}
             {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
             {isLoginModalVisible && <Overlay>
                 <LoginModal hideLoginModal={hideLoginModal} />
