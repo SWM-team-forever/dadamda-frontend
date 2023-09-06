@@ -98,93 +98,101 @@ function Header() {
     }
 
     return (
-        <HeaderContainer>
-            <LogoContainer onClick={() => navigate('/main')}>
-                <img src={logo} alt='logo' width='32px' height='30px' />
-                <LogoTextIcon width='49.185px' height='16px' />
-            </LogoContainer>
-            <HeaderPanel>
-                {headerPanelMenus.map(menu => {
-                    const isVisible = isLogin || menu.isVisibleWithoutLogin;
-                    return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
-                })}
-            </HeaderPanel>
-            <LargeRightPanel>
-                {isLogin ?
-                    <Box sx={{ flexGrow: 0 }}>
-                        <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
-                            {profileImageURL
-                                ? <ProfileImage source={profileImageURL} size={24} />
-                                : <ProfileIcon size='24' />
-                            }
-                        </IconButton>
-                        <Menu
+        <>
+            <HeaderContainer>
+                <LogoContainer onClick={() => navigate('/main')}>
+                    <img src={logo} alt='logo' width='32px' height='30px' />
+                    <LogoTextIcon width='49.185px' height='16px' />
+                </LogoContainer>
+                <HeaderPanel>
+                    {headerPanelMenus.map(menu => {
+                        const isVisible = isLogin || menu.isVisibleWithoutLogin;
+                        return isVisible && <ActiveLink to={menu.link}>{menu.name}</ActiveLink>
+                    })}
+                </HeaderPanel>
+                <LargeRightPanel>
+                    {isLogin ?
+                        <Box sx={{ flexGrow: 0 }}>
+                            <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
+                                {profileImageURL
+                                    ? <ProfileImage source={profileImageURL} size={24} />
+                                    : <ProfileIcon size='24' />
+                                }
+                            </IconButton>
+                            <Menu
+                                sx={{
+                                    '& .MuiPaper-root': {
+                                        boxShadow: 'none',
+                                        padding: '6px',
+                                    },
+                                    '& .MuiList-root': {
+                                        padding: '0px',
+                                    },
+                                    mt: '45px',
+                                    fill: '#FFF',
+                                    filter: 'drop-shadow(0px 2px 16px rgba(19, 48, 74, 0.08))',
+                                }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {userPopOverMenus.map((setting) => (
+                                    <MenuItem
+                                        key={setting.name}
+                                        onClick={setting.onClick}
+                                        sx={{
+                                            '&:hover': {
+                                                backgroundColor: '#F3F7FE',
+                                            },
+                                            padding: '6px 8px',
+                                            color: theme.color.Blue_dry,
+                                        }}>
+                                        <Typography textAlign="center" variant='h5'>{setting.name}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                        : <Typography
+                            variant='h5'
+                            color={theme.color.Gray_080}
                             sx={{
-                                '& .MuiPaper-root': {
-                                    boxShadow: 'none',
-                                    padding: '6px',
-                                },
-                                '& .MuiList-root': {
-                                    padding: '0px',
-                                },
-                                mt: '45px',
-                                fill: '#FFF',
-                                filter: 'drop-shadow(0px 2px 16px rgba(19, 48, 74, 0.08))',
+                                display: { xs: 'none', sm: 'block' },
+                                cursor: 'pointer',
                             }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {userPopOverMenus.map((setting) => (
-                                <MenuItem
-                                    key={setting.name}
-                                    onClick={setting.onClick}
-                                    sx={{
-                                        '&:hover': {
-                                            backgroundColor: '#F3F7FE',
-                                        },
-                                        padding: '6px 8px',
-                                        color: theme.color.Blue_dry,
-                                    }}>
-                                    <Typography textAlign="center" variant='h5'>{setting.name}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                    : <Typography
-                        variant='h5'
-                        color={theme.color.Gray_080}
-                        sx={{
-                            display: { xs: 'none', sm: 'block' },
-                            cursor: 'pointer',
-                        }}
-                        onClick={showLoginModal}>
-                        로그인/회원가입
-                    </Typography>
-                }
-            </LargeRightPanel>
-            {!isClicked &&
-                <Box sx={{
-                    display: { xs: 'block', sm: 'none' },
-                }}
-                    onClick={toggleMobileNavbar}>
-                    <MenuIcon width='20' height='14' fill='#202C3F' />
-                </Box>}
-            {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
-            {isLoginModalVisible && <Overlay>
-                <LoginModal hideLoginModal={hideLoginModal} />
-            </Overlay>}
-        </HeaderContainer>
+                            onClick={showLoginModal}>
+                            로그인/회원가입
+                        </Typography>
+                    }
+                </LargeRightPanel>
+                {!isClicked &&
+                    <Box sx={{
+                        display: { xs: 'block', sm: 'none' },
+                    }}
+                        onClick={toggleMobileNavbar}>
+                        <MenuIcon width='20' height='14' fill='#202C3F' />
+                    </Box>}
+                {isClicked &&
+                    <Box sx={{
+                        display: { xs: 'block', sm: 'none' },
+                    }}>
+                        <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />
+                    </Box>}
+            </HeaderContainer>
+            {isLoginModalVisible &&
+                <Overlay>
+                    <LoginModal hideLoginModal={hideLoginModal} />
+                </Overlay>}
+        </>
     );
 }
 
