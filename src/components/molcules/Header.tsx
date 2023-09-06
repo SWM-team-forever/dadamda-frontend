@@ -7,14 +7,12 @@ import Button from '../atoms/DefaultButton';
 import ProfileImage from '../atoms/ProfileImage';
 import MobileNavbar from './MobileNavbar';
 
-import logo from '../../assets/images/dadamda-logo128.png';
+import logo from '../../assets/icons/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
 import Overlay from '../atoms/Overlay';
-import defaultUserProfileImage from '../../assets/images/Avatar.png';
 import { LogoTextIcon, ProfileIcon } from '../atoms/Icon';
-import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import Tooltip from '@mui/material/Tooltip/Tooltip';
+import { Box, Tooltip, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -152,7 +150,6 @@ const HeaderContainer = styled.div`
     height: 56px;
     width: 100%;
     padding: 13px 24px;
-    box-shadow: ${theme.style.shadow};
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.40);
     backdrop-filter: blur(4px);
