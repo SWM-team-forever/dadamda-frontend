@@ -1,18 +1,17 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { NavLink, NavLinkProps, useNavigate } from 'react-router-dom';
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 
 import LoginModal from '../organisms/LoginModal';
-import Button from '../atoms/DefaultButton';
-import ProfileImage from '../atoms/ProfileImage';
 import MobileNavbar from './MobileNavbar';
+import ProfileImage from '../atoms/ProfileImage';
+import { LogoTextIcon, ProfileIcon } from '../atoms/Icon';
+import Overlay from '../atoms/Overlay';
 
 import logo from '../../assets/icons/dadamda-logo128.png';
 import theme from '../../assets/styles/theme';
 import MenuIcon from '../../assets/icons/MenuIcon.png';
-import Overlay from '../atoms/Overlay';
-import { LogoTextIcon, ProfileIcon } from '../atoms/Icon';
-import { Box, Tooltip, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -56,7 +55,6 @@ function Header() {
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-    const [isLoginTooltipVisible, setIsLoginTooltipVisible] = useState(false);
     const navigate = useNavigate();
 
     const showLoginModal = () => {
@@ -65,14 +63,6 @@ function Header() {
 
     const hideLoginModal = () => {
         setIsLoginModalVisible(false);
-    }
-
-    const showLoginTooltip = () => {
-        setIsLoginTooltipVisible(true);
-    }
-
-    const hideLoginTooltip = () => {
-        setIsLoginTooltipVisible(false);
     }
 
     const logout = () => {
