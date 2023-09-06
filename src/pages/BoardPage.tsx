@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 
-import Navbar from '../components/molcules/Navbar';
+import Navbar from '../components/molcules/Navigation/Navbar';
 import theme from '../assets/styles/theme';
 
 function BoardPage() {

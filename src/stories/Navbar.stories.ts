@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import Navbar from '../components/molcules/Navbar';
+import Navbar from '../components/molcules/Navigation/Navbar';
 
 const meta: Meta<typeof Navbar> = {
   title: 'Molcules/Navbar',

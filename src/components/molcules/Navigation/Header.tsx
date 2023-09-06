@@ -3,15 +3,15 @@ import { useState } from 'react';
 import { NavLink, NavLinkProps, useNavigate } from 'react-router-dom';
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 
-import LoginModal from '../organisms/LoginModal';
+import LoginModal from '../../organisms/LoginModal';
 import MobileNavbar from './MobileNavbar';
-import ProfileImage from '../atoms/ProfileImage';
-import { LogoTextIcon, ProfileIcon } from '../atoms/Icon';
-import { MenuIcon } from '../atoms/Icon';
-import Overlay from '../atoms/Overlay';
+import ProfileImage from '../../atoms/ProfileImage';
+import { LogoTextIcon, ProfileIcon } from '../../atoms/Icon';
+import { MenuIcon } from '../../atoms/Icon';
+import Overlay from '../../atoms/Overlay';
 
-import logo from '../../assets/icons/dadamda-logo128.png';
-import theme from '../../assets/styles/theme';
+import logo from '../../../assets/icons/dadamda-logo128.png';
+import theme from '../../../assets/styles/theme';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,

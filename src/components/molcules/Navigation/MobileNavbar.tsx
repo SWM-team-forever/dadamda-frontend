@@ -2,18 +2,16 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Button from '../atoms/DefaultButton';
+import Button from '../../atoms/DefaultButton';
 
-import ChervronDownIcon from '../../assets/icons/ChevronDownIcon.png';
-import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
-import logo from '../../assets/images/dadamda-logo128.png';
-import CrossIcon from '../../assets/icons/CrossIcon.png';
-import theme from '../../assets/styles/theme';
-import LoginModal from '../organisms/LoginModal';
-import Overlay from '../atoms/Overlay';
-import { CloseIcon, ProfileIcon } from '../atoms/Icon';
+import ChervronDownIcon from '../../../assets/icons/ChevronDownIcon.png';
+import ChervronUpIcon from '../../../assets/icons/ChevronUpIcon.png';
+import theme from '../../../assets/styles/theme';
+import LoginModal from '../../organisms/LoginModal';
+import Overlay from '../../atoms/Overlay';
+import { CloseIcon, ProfileIcon } from '../../atoms/Icon';
 import { Box, Typography } from '@mui/material';
-import ProfileImage from '../atoms/ProfileImage';
+import ProfileImage from '../../atoms/ProfileImage';
 
 interface MobileNavbarProps {
   toggleMobileNavbar: () => void;

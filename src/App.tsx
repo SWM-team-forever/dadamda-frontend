@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.css'
 import ScrapPage from './pages/ScrapPage';
-import Header from './components/molcules/Header';
+import Header from './components/molcules/Navigation/Header.tsx';
 import MainPage from './pages/MainPage';
 import UserPage from './pages/UserPage';
 import TrendingPage from './pages/TrendingPage';

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-import theme from '../../assets/styles/theme';
+import theme from '../../../assets/styles/theme';
 import { Link, useLocation } from 'react-router-dom';
 import { Box, MenuItem, Typography } from '@mui/material';
 
-import { BoardIcon, TotalIcon, ArticleIcon, ProductIcon, VideoIcon, LocationIcon, EtcIcon } from '../atoms/Icon';
+import { BoardIcon, TotalIcon, ArticleIcon, ProductIcon, VideoIcon, LocationIcon, EtcIcon } from '../../atoms/Icon';
 
 const NavbarMenus = [{
     title: '보드',
