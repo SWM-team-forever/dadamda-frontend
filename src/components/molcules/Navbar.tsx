@@ -9,6 +9,7 @@ import listIcon from '../../assets/icons/ListIcon.png';
 import articleIcon from '../../assets/icons/PageIcon.png';
 import boardIcon from '../../assets/icons/SwitcherIcon.png';
 import videoIcon from '../../assets/icons/VideoIcon.png';
+import { Typography } from '@mui/material';
 
 const NavbarMenus = [{
     title: '보드',
@@ -50,15 +51,33 @@ function Navbar() {
     return (
         <NavbarContainer>
             {NavbarMenus.map(list => {
-                return <ListContainer>
-                    <ListTitleTypography>{list.title}</ListTitleTypography>
-                    {list.items.map(item => {
-                        return <ItemContainer to={item.link}>
-                            <ItemIcon src={item.icon} />
-                            {item.name}
-                        </ItemContainer>;
-                    })}
-                </ListContainer>;
+                return (
+                    <ListContainer>
+                        <Typography
+                            variant='h5'
+                            color={theme.color.Gray_080}
+                            sx={{
+                                fontWeight: '600',
+                            }}>
+                            {list.title}
+                        </Typography>
+                        {list.items.map(item => {
+                            return (
+                                <ItemContainer to={item.link}>
+                                    <ItemIcon src={item.icon} />
+                                    <Typography
+                                        variant='h4'
+                                        color={theme.color.Gray_090}
+                                        sx={{
+                                            fontWeight: '600',
+                                        }}>
+                                        {item.name}
+                                    </Typography>
+                                </ItemContainer>
+                            )
+                        })}
+                    </ListContainer>
+                )
             })}
         </NavbarContainer >
     );
