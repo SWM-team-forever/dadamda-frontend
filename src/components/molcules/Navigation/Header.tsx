@@ -186,12 +186,15 @@ function Header() {
                 <Box sx={{
                     display: { xs: 'block', sm: 'none' },
                 }}>
+                    <Overlay />
                     <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />
-                </Box>}
+                </Box>
+            }
             {isLoginModalVisible &&
                 <Overlay>
                     <LoginModal hideLoginModal={hideLoginModal} />
-                </Overlay>}
+                </Overlay>
+            }
         </>
     );
 }
