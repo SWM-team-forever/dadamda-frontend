@@ -181,13 +181,13 @@ function Header() {
                         onClick={toggleMobileNavbar}>
                         <MenuIcon width='20' height='14' fill='#202C3F' />
                     </Box>}
-                {isClicked &&
-                    <Box sx={{
-                        display: { xs: 'block', sm: 'none' },
-                    }}>
-                        <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />
-                    </Box>}
             </HeaderContainer>
+            {isClicked &&
+                <Box sx={{
+                    display: { xs: 'block', sm: 'none' },
+                }}>
+                    <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />
+                </Box>}
             {isLoginModalVisible &&
                 <Overlay>
                     <LoginModal hideLoginModal={hideLoginModal} />
