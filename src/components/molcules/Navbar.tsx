@@ -2,47 +2,43 @@ import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
 import { NavLink } from 'react-router-dom';
-import otherIcon from '../../assets/icons/AddIcon.png';
-import mapIcon from '../../assets/icons/DiscoverIcon.png';
-import productIcon from '../../assets/icons/LabelIcon.png';
-import listIcon from '../../assets/icons/ListIcon.png';
-import articleIcon from '../../assets/icons/PageIcon.png';
-import boardIcon from '../../assets/icons/SwitcherIcon.png';
-import videoIcon from '../../assets/icons/VideoIcon.png';
 import { Typography } from '@mui/material';
+
+import { BoardIcon, TotalIcon, ArticleIcon, ProductIcon, VideoIcon, LocationIcon, EtcIcon } from '../atoms/Icon';
 
 const NavbarMenus = [{
     title: '보드',
     items: [{
         name: '보드',
-        icon: boardIcon,
+        icon: <BoardIcon size='24' fill={theme.color.Gray_090} color='#B8C2CC' />,
         link: '/board',
     }],
 }, {
     title: '스크랩',
     items: [{
         name: '전체',
-        icon: listIcon,
+        icon: <TotalIcon size='24' fill={theme.color.Gray_060} />,
+        activeIcon: <TotalIcon size='24' fill={theme.color.Blue_080} />,
         link: '/scrap/list',
     }, {
         name: '아티클',
-        icon: articleIcon,
+        icon: <ArticleIcon width='24' height='24' fill={theme.color.Gray_060} color={theme.color.Gray_090} />,
         link: '/scrap/article',
     }, {
         name: '상품',
-        icon: productIcon,
+        icon: <ProductIcon size='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />,
         link: '/scrap/product',
     }, {
         name: '비디오',
-        icon: videoIcon,
+        icon: <VideoIcon size='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />,
         link: '/scrap/video',
     }, {
         name: '장소',
-        icon: mapIcon,
+        icon: <LocationIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} secondaryColor={theme.color.Gray_020} />,
         link: '/scrap/location',
     }, {
         name: '기타',
-        icon: otherIcon,
+        icon: <EtcIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />,
         link: '/scrap/other',
     }]
 }]
@@ -64,12 +60,15 @@ function Navbar() {
                         {list.items.map(item => {
                             return (
                                 <ItemContainer to={item.link}>
-                                    <ItemIcon src={item.icon} />
+                                    {item.icon}
                                     <Typography
                                         variant='h4'
                                         color={theme.color.Gray_090}
                                         sx={{
                                             fontWeight: '600',
+                                            '&.active': {
+                                                color: theme.color.Blue_080,
+                                            }
                                         }}>
                                         {item.name}
                                     </Typography>
@@ -105,12 +104,6 @@ const ListContainer = styled.div`
     gap: 5px;
 `
 
-const ListTitleTypography = styled.span`
-    color: ${theme.color.text_gray_color};
-    font-size: 12px;
-    padding: 0 5px;
-`
-
 const ItemContainer = styled(NavLink)`
     display: flex;
     color: ${theme.color.text_gray_color};
@@ -121,7 +114,8 @@ const ItemContainer = styled(NavLink)`
     padding: 10px;
     border-radius: 4px;
     &.active{
-        background-color: ${theme.color.background_color};
+        border-radius: 8px;
+        background: ${theme.color.Blue_060};
     }
 `
 
