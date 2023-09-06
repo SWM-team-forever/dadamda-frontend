@@ -33,6 +33,26 @@ const headerPanelMenus = [{
 }];
 
 function Header() {
+    const isLogin = localStorage.getItem('token') ? true : false;
+    const profileImageURL = localStorage.getItem('profileImageURL');
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
     const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
@@ -58,14 +78,14 @@ function Header() {
     const logout = () => {
         localStorage.removeItem('token');
         navigate('/main');
-        hideLoginTooltip();
+        handleCloseUserMenu();
     }
 
     const userPopOverMenus = [{
         name: '프로필 정보',
         onClick: () => {
             navigate('/user');
-            hideLoginTooltip();
+            handleCloseUserMenu();
         },
     }, {
         name: '로그아웃',
@@ -87,10 +107,6 @@ function Header() {
         />
     }
 
-    const isLogin = localStorage.getItem('token') ? true : false;
-    const profileImageURL = localStorage.getItem('profileImageURL');
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     return (
         <HeaderContainer>
             <LogoContainer onClick={() => navigate('/main')}>
@@ -106,17 +122,27 @@ function Header() {
             <LargeRightPanel>
                 {isLogin ?
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton sx={{ p: 0 }}>
-                                {profileImageURL
-                                    ? <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
-                                    : <ProfileIcon size='24' />
-                                }
-                            </IconButton>
-                        </Tooltip>
+                        <IconButton sx={{ p: 0 }} onClick={handleOpenUserMenu}>
+                            {profileImageURL
+                                ? <ProfileImage source={profileImageURL} size={24} />
+                                : <ProfileIcon size='24' />
+                            }
+                        </IconButton>
                         <Menu
-                            sx={{ mt: '45px' }}
+                            sx={{
+                                '& .MuiPaper-root': {
+                                    boxShadow: 'none',
+                                    padding: '6px',
+                                },
+                                '& .MuiList-root': {
+                                    padding: '0px',
+                                },
+                                mt: '45px',
+                                fill: '#FFF',
+                                filter: 'drop-shadow(0px 2px 16px rgba(19, 48, 74, 0.08))',
+                            }}
                             id="menu-appbar"
+                            anchorEl={anchorElUser}
                             anchorOrigin={{
                                 vertical: 'top',
                                 horizontal: 'right',
@@ -126,17 +152,35 @@ function Header() {
                                 vertical: 'top',
                                 horizontal: 'right',
                             }}
-                            open={Boolean(anchorElNav)}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
                         >
                             {userPopOverMenus.map((setting) => (
-                                <MenuItem key={setting.name}>
-                                    <Typography textAlign="center">{setting.name}</Typography>
+                                <MenuItem
+                                    key={setting.name}
+                                    onClick={setting.onClick}
+                                    sx={{
+                                        '&:hover': {
+                                            backgroundColor: '#F3F7FE',
+                                        },
+                                        padding: '6px 8px',
+                                        color: theme.color.Blue_dry,
+                                    }}>
+                                    <Typography textAlign="center" variant='h5'>{setting.name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    :
-                    <Button buttonStyle='text-only' label={"로그인/회원가입"} onClick={showLoginModal} />
+                    : <Typography
+                        variant='h5'
+                        color={theme.color.Gray_080}
+                        sx={{
+                            display: { xs: 'none', md: 'block' },
+                            cursor: 'pointer'
+                        }}
+                        onClick={showLoginModal}>
+                        로그인/회원가입
+                    </Typography>
                 }
             </LargeRightPanel>
             {!isClicked && <IconContainer onClick={toggleMobileNavbar} src={MenuIcon} />}
