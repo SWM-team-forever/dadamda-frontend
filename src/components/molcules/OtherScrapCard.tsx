@@ -9,6 +9,9 @@ import { contentProps } from '../../types/ContentType';
 import ThumbnailImage from '../atoms/ThumbnailImage';
 import { TitleElement } from '../atoms/CategoryItem/TitleElement';
 import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
+import MemoCreateButton from '../atoms/CategoryItem/MemoCreateButton';
+import { Box } from '@mui/material';
+import { ScrapCardSeeMoreIcon } from '../atoms/Icon';
 
 interface OtherScrapCardProps {
     content: contentProps['content'],
@@ -27,6 +30,21 @@ function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScra
                 window.open(`${content.pageUrl}`);
             }}
         >
+            <Box
+                component='div'
+                onClick={
+                    (e) => {
+                        e.stopPropagation();
+                        showTooltip();
+                    }}
+                sx={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                }}
+            >
+                <ScrapCardSeeMoreIcon width='16' height='16' fill='#24292E' />
+            </Box>
             {content.thumbnailUrl && <ThumbnailImage thumbnailUrl={content.thumbnailUrl} />}
             <CardInfoWrapper>
                 {content.title && <TitleElement title={content.title} varient={varient} />}
@@ -35,16 +53,20 @@ function OtherScrapCard({ content, showMemoCreateModal, showTooltip }: OtherScra
             {content.memoList?.map(memo => {
                 return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
             })}
-            <ButtonContainer>
-                <Button buttonStyle={'gray'} label={'메모 추가하기'} fullWidth isRound onClick={(e) => {
-                    e.stopPropagation();
-                    showMemoCreateModal();
-                }} />
-                <MoreIconContainer src={MoreIcon} onClick={(e) => {
-                    e.stopPropagation();
-                    showTooltip();
-                }} />
-            </ButtonContainer>
+            <Box
+                component='div'
+                onClick={
+                    (e) => {
+                        e.stopPropagation();
+                    }}
+                sx={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                }}
+            >
+                <MemoCreateButton showMemoCreateModal={showMemoCreateModal} />
+            </Box>
         </CardWrapper>
     );
 }
@@ -53,49 +75,16 @@ const CardWrapper = styled.div`
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    background-color: white;
-    border-radius: 4px;
+    gap: 16px;
+    background: ${theme.color.Gray_020};
+    border-radius: 8px;
+    box-shadow: 0px 2px 16px 0px rgba(19, 48, 74, 0.08);
 `
 
 const CardInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-`
-
-const EmpasizedTypography = styled.span`
-    font-size: 20px;
-    font-weight: bold;
-    color: ${theme.color.text_gray_color};
-    overflow: hidden;
-    textOverflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    wordWrap: break-word;
-`
-
-const DefaultTypography = styled.span`
-    font-size: 14px;
-    color: ${theme.color.text_gray_color};
-    overflow: hidden;
-    textOverflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    wordWrap: break-word;
-`
-
-const ButtonContainer = styled.div`
-    display: flex;
-    align-items: center;
-`
-
-const MoreIconContainer = styled.img`
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
 `
 
 export default OtherScrapCard;

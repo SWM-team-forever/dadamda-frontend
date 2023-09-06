@@ -17,6 +17,7 @@ const CardImageWrapper = styled.div`
    aspect-ratio: 16 / 9;
    overflow: hidden;
    position: relative;
+   border-radius: 8px;
 `
 
 const CardImage = styled.img`

@@ -4,52 +4,64 @@ import RowContainer from "../RowContainer";
 import { decode } from 'html-entities';
 
 const mobileVideoStyle = {
-    width: '100%',
-    whiteSpace: 'pre-wrap',
-    wordBreak: 'break-all',
-    color: theme.color.text_gray_color,
-    fontSize: '0.875rem',
+    color: theme.color.Gray_080,
+    fontSize: '11px',
     fontWeight: '400',
     lineHeight: '160%',
+    overflow: 'hidden',
 }
 
 const desktopVideoItemStyle = {
-    width: '100%',
-    whiteSpace: 'pre-wrap',
-    wordBreak: 'break-all',
-    color: theme.color.text_gray_color,
-    fontSize: '0.875rem',
+    color: theme.color.Gray_080,
+    fontSize: '11px',
     fontWeight: '400',
     lineHeight: '160%',
+    overflow: 'hidden',
 }
 
 const desktopArticleItemStyle = {
-    color: theme.color.text_gray_color,
-    fontSize: '0.875rem',
+    color: theme.color.Gray_080,
+    fontSize: '11px',
     fontWeight: '400',
     lineHeight: '160%',
-    width: '100%',
+    overflow: 'hidden',
+}
+
+const desktopArticleListStyle = {
+    color: theme.color.Gray_090,
+    fontSize: '14px',
+    fontWeight: '400',
+    lineHeight: '150%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '2',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
 }
 
 const mobileArticleStyle = {
-    color: theme.color.text_gray_color,
-    fontSize: '0.875rem',
+    color: theme.color.Gray_090,
+    fontSize: '14px',
     fontWeight: '400',
-    lineHeight: '160%',
-    width: '100%',
-    padding: '10px',
-    boxSizing: 'border-box',
-}
-
-const scrapCardStyle = {
-    color: theme.color.text_gray_color,
-    fontSize: '0.75rem',
-    fontWeight: '500',
     lineHeight: '160%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     display: '-webkit-box',
-    '-webkit-line-clamp': '3',
+    '-webkit-line-clamp': '2',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
+}
+
+const scrapCardStyle = {
+    color: theme.color.Gray_090,
+    fontSize: '14px',
+    fontWeight: '400',
+    lineHeight: '150%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '2',
     '-webkit-box-orient': 'vertical',
     wordWrap: 'break-word',
 }
@@ -58,6 +70,7 @@ const siteNameStyles = {
     mobileVideo: mobileVideoStyle,
     desktopItemVideo: desktopVideoItemStyle,
     desktopArticleItem: desktopArticleItemStyle,
+    desktopArticleList: desktopArticleListStyle,
     mobileArticle: mobileArticleStyle,
     scrapCard: scrapCardStyle,
 }
