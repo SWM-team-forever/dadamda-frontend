@@ -173,7 +173,13 @@ function Header() {
                     </Typography>
                 }
             </LargeRightPanel>
-            {!isClicked && <div onClick={toggleMobileNavbar}><MenuIcon width='20' height='14' fill='#202C3F' /></div>}
+            {!isClicked &&
+                <Box sx={{
+                    display: { xs: 'block', sm: 'none' },
+                }}
+                    onClick={toggleMobileNavbar}>
+                    <MenuIcon width='20' height='14' fill='#202C3F' />
+                </Box>}
             {isClicked && <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />}
             {isLoginModalVisible && <Overlay>
                 <LoginModal hideLoginModal={hideLoginModal} />
@@ -194,6 +200,7 @@ const HeaderContainer = styled.div`
     align-items: center;
     gap: 6px;
     cursor: pointer;
+    position: static;
 `
 const LogoContainer = styled.div`
     display: inline-flex;
