@@ -149,12 +149,13 @@ function Header() {
 }
 
 const HeaderContainer = styled.div`
-    height: 50px;
-    width: 100vw;
-    padding: 0 15px;
+    height: 56px;
+    width: 100%;
+    padding: 13px 24px;
     box-shadow: ${theme.style.shadow};
     box-sizing: border-box;
-    background-color: white;
+    background: rgba(255, 255, 255, 0.40);
+    backdrop-filter: blur(4px);
     display: flex;
     justify-content: space-between;
     align-items: center;

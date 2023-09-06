@@ -1,5 +1,8 @@
 body {
   margin: 0;
+  background: linear-gradient(114deg, #EBEEF3 12.12%, #D6DEEA 100%);
 }
 
-* {font-family: Pretendard,'Noto Sans KR', sans-serif;}
+* {
+  font-family: Pretendard,'Noto Sans KR', sans-serif;
+}
