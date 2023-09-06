@@ -12,6 +12,7 @@ import Overlay from '../../atoms/Overlay';
 import { CloseIcon, ProfileIcon } from '../../atoms/Icon';
 import { Box, Typography } from '@mui/material';
 import ProfileImage from '../../atoms/ProfileImage';
+import ScrapNaviagtion from './ScrapNaviagtion';
 
 interface MobileNavbarProps {
   toggleMobileNavbar: () => void;
@@ -140,13 +141,7 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
             </ItemContainer>}
             {
               isMenuHasMenuAndOpen && <MenuContainer>
-                {scrapMenu.map(menu => {
-                  return (
-                    <Link to={menu.link} style={{ textDecoration: 'inherit', color: 'inherit' }} onClick={toggleMobileNavbar}>
-                      <DefaultTypography>{menu.name}</DefaultTypography>
-                    </Link>
-                  )
-                })}
+                <ScrapNaviagtion />
               </MenuContainer>
             }</>
         })}
