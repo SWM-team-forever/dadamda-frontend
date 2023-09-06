@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+import { Box, MenuItem, Typography } from '@mui/material';
 
 import { BoardIcon, TotalIcon, ArticleIcon, ProductIcon, VideoIcon, LocationIcon, EtcIcon } from '../atoms/Icon';
-import { useState } from 'react';
 
 const NavbarMenus = [{
     title: '보드',
@@ -58,95 +57,76 @@ const NavbarMenus = [{
 }]
 
 function Navbar() {
-    const [selectedIndex, setSelectedIndex] = useState<number>(1);
-
-    const handleListItemClick = (
-        index: number,
-    ) => {
-        setSelectedIndex(index);
-    };
-
-    const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     return (
-        <NavbarContainer>
-            {NavbarMenus.map(list => {
-                return (
-                    <ListContainer>
-                        <Typography
-                            variant='h5'
-                            color={theme.color.Gray_080}
-                            sx={{
-                                fontWeight: '600',
-                                mb: '8px',
-                            }}>
-                            {list.title}
-                        </Typography>
-                        {list.items.map(item => {
-                            const isSelected = selectedIndex === item.index;
-                            return (
-                                <ItemContainer
-                                    onClick={() => {
-                                        navigate(item.link);
-                                        handleListItemClick(item.index);
-                                    }}
-                                    style={{
-                                        cursor: 'pointer',
-                                        borderRadius: '8px',
-                                        background: isSelected ? theme.color.Blue_060 : 'transparent',
-                                    }}
-                                >
-                                    {isSelected ? item.selectedIcon : item.icon}
-                                    <Typography
-                                        variant='h4'
-                                        color={isSelected ? theme.color.Blue_080 : theme.color.Gray_090}
+        <Box sx={{
+            flexDirection: 'column',
+            padding: '24px',
+            width: '209px',
+            height: '100%',
+            gap: '32px',
+            boxSizing: 'border-box',
+            position: 'fixed',
+            backdropFilter: 'blur(4px)',
+            display: {
+                xs: 'none',
+                sm: 'flex',
+            }
+        }}>
+            {
+                NavbarMenus.map(list => {
+                    return (
+                        <ListContainer>
+                            <Typography
+                                variant='h5'
+                                color={theme.color.Gray_080}
+                                sx={{
+                                    fontWeight: '600',
+                                    mb: '8px',
+                                }}>
+                                {list.title}
+                            </Typography>
+                            {list.items.map(item => {
+                                const isActive = pathname === item.link;
+
+                                return (
+                                    <MenuItem
+                                        component={Link}
+                                        to={item.link}
                                         sx={{
-                                            fontWeight: '600',
-                                        }}>
-                                        {item.name}
-                                    </Typography>
-                                </ItemContainer>
-                            )
-                        })}
-                    </ListContainer >
-                )
-            })}
-        </NavbarContainer >
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            textDecoration: 'none',
+                                            gap: '10px',
+                                            padding: '9px 8px',
+                                            borderRadius: isActive ? '8px' : '',
+                                            background: isActive ? theme.color.Blue_060 : '',
+                                        }}
+                                    >
+                                        {isActive ? item.selectedIcon : item.icon}
+                                        <Typography
+                                            variant='h4'
+                                            color={isActive ? theme.color.Blue_080 : theme.color.Gray_090}
+                                            sx={{
+                                                fontWeight: '600',
+                                            }}>
+                                            {item.name}
+                                        </Typography>
+                                    </MenuItem>
+                                )
+                            })}
+                        </ListContainer >
+                    )
+                })
+            }
+        </Box >
     );
 }
-
-const NavbarContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-    box-shadow: ${theme.style.shadow};
-    width: 209px;
-    height: 100%;
-    @media screen and (max-width: 600px) {
-      display: none;
-    }
-    gap: 32px;
-    box-sizing: border-box;
-    position: fixed;
-    backdrop-filter: blur(4px);
-`
 
 const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
-`
-
-const ItemContainer = styled.div`
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    gap: 10px;
-    padding: 9px 8px;
-    border-radius: 4px;
-    &.active{
-        border-radius: 8px;
-        background: ${theme.color.Blue_060};
-    }
 `
 
 export default Navbar;
