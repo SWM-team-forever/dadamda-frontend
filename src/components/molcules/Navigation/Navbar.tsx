@@ -13,7 +13,6 @@ const NavbarMenus = [{
         icon: <BoardIcon size='24' fill={theme.color.Gray_090} color='#B8C2CC' />,
         selectedIcon: <BoardIcon size='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} />,
         link: '/board',
-        index: 0,
     }],
 }, {
     title: '스크랩',
@@ -22,37 +21,31 @@ const NavbarMenus = [{
         icon: <TotalIcon size='24' fill={theme.color.Gray_060} />,
         selectedIcon: <TotalIcon size='24' fill={theme.color.Blue_080} />,
         link: '/scrap/list',
-        index: 1,
     }, {
         name: '아티클',
         icon: <ArticleIcon width='24' height='24' fill={theme.color.Gray_060} color={theme.color.Gray_090} />,
         selectedIcon: <ArticleIcon width='24' height='24' fill={theme.color.Blue_070} color={theme.color.Blue_080} />,
         link: '/scrap/article',
-        index: 2,
     }, {
         name: '상품',
         icon: <ProductIcon size='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />,
         selectedIcon: <ProductIcon size='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} />,
         link: '/scrap/product',
-        index: 3,
     }, {
         name: '비디오',
         icon: <VideoIcon size='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />,
         selectedIcon: <VideoIcon size='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} />,
         link: '/scrap/video',
-        index: 4,
     }, {
         name: '장소',
         icon: <LocationIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} secondaryColor={theme.color.Gray_020} />,
         selectedIcon: <LocationIcon width='24' height='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} secondaryColor={theme.color.Gray_020} />,
         link: '/scrap/location',
-        index: 5,
     }, {
         name: '기타',
         icon: <EtcIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />,
         selectedIcon: <EtcIcon width='24' height='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} />,
         link: '/scrap/other',
-        index: 6,
     }]
 }]
 
