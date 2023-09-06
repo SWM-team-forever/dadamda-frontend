@@ -1,12 +1,17 @@
 import { Typography } from "@mui/material";
 import theme from "../../../assets/styles/theme";
-import ProfileImage from "../ProfileImage";
 
 const desktopArticleListStyle = {
-    color: theme.color.text_gray_color,
-    fontSize: '1rem',
-    fontWeight: '400',
-    fontHeight: '160%',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '160%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '1',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
 }
 
 const desktopArticleItemStyle = {
@@ -17,16 +22,22 @@ const desktopArticleItemStyle = {
 }
 
 const mobileArticleStyle = {
-    color: theme.color.text_gray_color,
-    fontSize: '1rem',
-    fontWeight: '400',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
     lineHeight: '160%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': '1',
+    '-webkit-box-orient': 'vertical',
+    wordWrap: 'break-word',
 }
 
 const scrapCardStyle = {
-    color: theme.color.text_gray_color,
-    fontSize: '1rem',
-    fontWeight: '400',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
     lineHeight: '160%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
