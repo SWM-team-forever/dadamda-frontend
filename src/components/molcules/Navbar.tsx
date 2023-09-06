@@ -54,6 +54,7 @@ function Navbar() {
                             color={theme.color.Gray_080}
                             sx={{
                                 fontWeight: '600',
+                                mb: '8px',
                             }}>
                             {list.title}
                         </Typography>
@@ -85,14 +86,14 @@ function Navbar() {
 const NavbarContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px 10px;
+    padding: 24px;
     box-shadow: ${theme.style.shadow};
-    width: 200px;
+    width: 209px;
     height: 100%;
     @media screen and (max-width: 600px) {
       display: none;
     }
-    gap: 30px;
+    gap: 32px;
     box-sizing: border-box;
     position: fixed;
     backdrop-filter: blur(4px);
@@ -101,7 +102,6 @@ const NavbarContainer = styled.div`
 const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 5px;
 `
 
 const ItemContainer = styled(NavLink)`
@@ -111,7 +111,7 @@ const ItemContainer = styled(NavLink)`
     align-items: center;
     text-decoration: none;
     gap: 10px;
-    padding: 10px;
+    padding: 9px 8px;
     border-radius: 4px;
     &.active{
         border-radius: 8px;
