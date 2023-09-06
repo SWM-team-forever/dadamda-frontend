@@ -20,42 +20,42 @@ const theme = createTheme({
                 {
                     props: {variant: 'h1'},
                     style: {
-                        fontSize: '22pt',
+                        fontSize: '22px',
                         lineHeight: '160%',
                     }
                 },
                 {
                     props: {variant: 'h2'},
                     style: {
-                        fontSize: '18pt',
+                        fontSize: '18px',
                         lineHeight: '160%',
                     }
                 },
                 {
                     props: {variant: 'h3'},
                     style: {
-                        fontSize: '16pt',
+                        fontSize: '16px',
                         lineHeight: '150%',
                     }
                 },
                 {
                     props: {variant: 'h4'},
                     style: {
-                        fontSize: '14pt',
+                        fontSize: '14px',
                         lineHeihgt: '150%',
                     }
                 },
                 {
                     props: {variant: 'h5'},
                     style: {
-                        fontSize: '13pt',
+                        fontSize: '13px',
                         lineHeihgt: '150%',
                     }
                 },
                  {
                     props: {variant: 'h6'},
                     style: {
-                        fontSize: '12pt',
+                        fontSize: '12px',
                         lineHeihgt: '150%',
                     }
                 }

@@ -79,7 +79,8 @@ function Header() {
                     padding: '5px 12px',
                     textDecoration: 'none',
                     lineHeight: '100px',
-                    color: isActive ? theme.color.primary_color : theme.color.text_gray_color,
+                    color: isActive ? theme.color.Blue_080 : theme.color.Gray_080,
+                    fontSize: '13px',
                 }
             }}
             {...props}
@@ -105,7 +106,33 @@ function Header() {
             <LargeRightPanel>
                 {isLogin ?
                     (profileImageURL ?
-                        <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton sx={{ p: 0 }}>
+                                    <ProfileImage source={profileImageURL} size={24} onClick={showLoginTooltip} />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElNav)}
+                            >
+                                {userPopOverMenus.map((setting) => (
+                                    <MenuItem key={setting.name}>
+                                        <Typography textAlign="center">{setting.name}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
                         : <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton sx={{ p: 0 }}>
