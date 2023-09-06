@@ -53,38 +53,16 @@ const CardWrapper = styled.div`
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    background-color: white;
-    border-radius: 4px;
+    gap: 16px;
+    background: ${theme.color.Gray_020};
+    border-radius: 8px;
+    box-shadow: 0px 2px 16px 0px rgba(19, 48, 74, 0.08);
 `
 
 const CardInfoWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-`
-
-const EmpasizedTypography = styled.span`
-    font-size: 20px;
-    font-weight: bold;
-    color: ${theme.color.text_gray_color};
-    overflow: hidden;
-    textOverflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    wordWrap: break-word;
-`
-
-const DefaultTypography = styled.span`
-    font-size: 14px;
-    color: ${theme.color.text_gray_color};
-    overflow: hidden;
-    textOverflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    wordWrap: break-word;
 `
 
 const ButtonContainer = styled.div`
