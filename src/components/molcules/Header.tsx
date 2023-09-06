@@ -217,13 +217,4 @@ const LargeRightPanel = styled.div`
   }
 `
 
-const IconContainer = styled.img`
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    @media screen and (min-width: 600px) {
-      display: none;
-  }
-`
-
 export default Header;
