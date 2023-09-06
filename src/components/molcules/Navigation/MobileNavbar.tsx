@@ -9,7 +9,7 @@ import ChervronUpIcon from '../../../assets/icons/ChevronUpIcon.png';
 import theme from '../../../assets/styles/theme';
 import LoginModal from '../../organisms/LoginModal';
 import Overlay from '../../atoms/Overlay';
-import { CloseIcon, ProfileIcon } from '../../atoms/Icon';
+import { CloseIcon, DownArrowIcon, ProfileIcon } from '../../atoms/Icon';
 import { Box, Typography } from '@mui/material';
 import ProfileImage from '../../atoms/ProfileImage';
 import ScrapNaviagtion from './ScrapNaviagtion';
@@ -137,7 +137,10 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
               <div style={{ flex: '1' }} onClick={menu.onclick}>
                 <EmpasizedTypography>{menu.name}</EmpasizedTypography>
               </div>
-              {menu.isMenuOpen && <IconImg src={menuIcon} onClick={toggleMenu} />}
+              {menu.isMenuOpen &&
+                <div onClick={toggleMenu}>
+                  <DownArrowIcon width='24' height='24' fill={theme.color.Gray_090} />
+                </div>}
             </ItemContainer>}
             {
               isMenuHasMenuAndOpen && <MenuContainer>
