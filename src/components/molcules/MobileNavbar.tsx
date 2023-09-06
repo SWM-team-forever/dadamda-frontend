@@ -9,16 +9,17 @@ import ChervronUpIcon from '../../assets/icons/ChevronUpIcon.png';
 import logo from '../../assets/images/dadamda-logo128.png';
 import CrossIcon from '../../assets/icons/CrossIcon.png';
 import theme from '../../assets/styles/theme';
-import { googleLoginURL } from '../../secret';
 import LoginModal from '../organisms/LoginModal';
 import Overlay from '../atoms/Overlay';
+import { CloseIcon, ProfileIcon } from '../atoms/Icon';
+import { Box, Typography } from '@mui/material';
+import ProfileImage from '../atoms/ProfileImage';
 
 interface MobileNavbarProps {
   toggleMobileNavbar: () => void;
 }
 
 function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
-  // const [userInformation, setUserInformation] = useContext(LoginContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [menuIcon, setMenuIcon] = useState(ChervronDownIcon);
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
@@ -104,10 +105,30 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   }]
 
   const isLogin = localStorage.getItem('token') ? true : false;
+  const profileImageURL = localStorage.getItem('profileImageURL');
 
   return (
     <NavbarContainer>
-      <IconContainer src={CrossIcon} onClick={toggleMobileNavbar} />
+      <div
+        onClick={toggleMobileNavbar}
+        style={{
+          width: '100%',
+          padding: '15px 0 7px 15px',
+        }}
+      >
+        <CloseIcon width='24' height='24' fill={theme.color.Gray_090} />
+      </div>
+
+      <Box>
+        {profileImageURL
+          ? <ProfileImage source={profileImageURL} size={64} />
+          : <ProfileIcon size='64' />
+        }
+        <Typography color={theme.color.Gray_090} variant='h2'>
+          { }
+        </Typography>
+      </Box>
+
       <NavbarMenu>
         {navbarMenus.map(menu => {
           const isMenuVisible = menu.isVisibleWithoutLogin || isLogin;
@@ -132,7 +153,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
             }</>
         })}
         {isLogin ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
-        <IconImg src={logo} style={{ width: "36px", height: "36px", position: "absolute", bottom: "20px", right: "20px" }} />
       </NavbarMenu>
       {isLoginModalVisible &&
         <Overlay>
