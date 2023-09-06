@@ -75,9 +75,9 @@ const NavbarContainer = styled.div`
       display: none;
     }
     gap: 30px;
-    background: white;
     box-sizing: border-box;
     position: fixed;
+    backdrop-filter: blur(4px);
 `
 
 const ListContainer = styled.div`
