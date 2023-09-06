@@ -118,13 +118,26 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
         <CloseIcon width='24' height='24' fill={theme.color.Gray_090} />
       </div>
 
-      <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '12px',
+        }}
+      >
         {profileImageURL
           ? <ProfileImage source={profileImageURL} size={64} />
           : <ProfileIcon size='64' />
         }
-        <Typography color={theme.color.Gray_090} variant='h2'>
-          { }
+        <Typography
+          color={theme.color.Gray_090}
+          variant='h2'
+          sx={{
+            fontWeight: '600',
+          }}
+        >
+          {isLogin ? '유저 닉네임' : '로그인 해주세요.'}
         </Typography>
       </Box>
 
@@ -132,21 +145,25 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
         {navbarMenus.map(menu => {
           const isMenuVisible = menu.isVisibleWithoutLogin || isLogin;
           const isMenuHasMenuAndOpen = menu.isMenuOpen && isMenuOpen && isLogin;
-          return <>{isMenuVisible &&
-            <ItemContainer>
-              <div style={{ flex: '1' }} onClick={menu.onclick}>
-                <EmpasizedTypography>{menu.name}</EmpasizedTypography>
-              </div>
-              {menu.isMenuOpen &&
-                <div onClick={toggleMenu}>
-                  <DownArrowIcon width='24' height='24' fill={theme.color.Gray_090} />
-                </div>}
-            </ItemContainer>}
-            {
-              isMenuHasMenuAndOpen && <MenuContainer>
-                <ScrapNaviagtion />
-              </MenuContainer>
-            }</>
+          return (
+            <>
+              {isMenuVisible &&
+                <ItemContainer>
+                  <div style={{ flex: '1' }} onClick={menu.onclick}>
+                    <EmpasizedTypography>{menu.name}</EmpasizedTypography>
+                  </div>
+                  {menu.isMenuOpen &&
+                    <div onClick={toggleMenu}>
+                      <DownArrowIcon width='24' height='24' fill={theme.color.Gray_090} />
+                    </div>}
+                </ItemContainer>}
+              {
+                isMenuHasMenuAndOpen && <MenuContainer>
+                  <ScrapNaviagtion />
+                </MenuContainer>
+              }
+            </>
+          )
         })}
         {isLogin ? <Button label='로그아웃' buttonStyle='primary' onClick={logout} /> : <Button label='로그인/회원가입' buttonStyle='primary' onClick={login} />}
       </NavbarMenu>
