@@ -188,8 +188,9 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
 }
 
 const NavbarContainer = styled.div`
-  width: 285px;
+  min-width: 285px;
   height: 100%;
+  overflow-y: scroll;
   background-color: white;
   position: fixed;
   top: 0;
