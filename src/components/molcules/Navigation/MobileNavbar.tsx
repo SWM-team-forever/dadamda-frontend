@@ -191,6 +191,7 @@ const NavbarContainer = styled.div`
   min-width: 285px;
   height: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
   background-color: white;
   position: fixed;
   top: 0;
