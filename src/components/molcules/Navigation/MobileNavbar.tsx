@@ -109,15 +109,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
           ? <ProfileImage source={profileImageURL} size={64} />
           : <ProfileIcon size='64' />
         }
-        <Typography
-          color={theme.color.Gray_090}
-          variant='h2'
-          sx={{
-            fontWeight: '600',
-          }}
-        >
-          {isLogin ? '유저 닉네임' : '로그인 해주세요.'}
-        </Typography>
       </Box>
 
       <NavbarMenu>
