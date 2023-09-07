@@ -15,6 +15,7 @@ import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
 import { AuthorElement } from '../atoms/CategoryItem/AuthorElement';
 import { ScrapCardSeeMoreIcon } from '../atoms/Icon';
 import MemoCreateButton from '../atoms/CategoryItem/MemoCreateButton';
+import ProfileImage from '../atoms/ProfileImage';
 
 interface ArticleScrapCardProps {
     content: contentProps['content'],
@@ -50,10 +51,17 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
                 <ScrapCardSeeMoreIcon width='16' height='16' fill='#24292E' />
             </Box>
             {content.thumbnailUrl && <ThumbnailElement thumbnailUrl={content.thumbnailUrl} varient={varient} />}
-            <RowContainer>
-                <AuthorElement author={content.author} varient={varient} />
-                {' • '}
-                <PublishedDateElement publishedDate={content.publishedDate} varient={varient} />
+            <RowContainer
+                style={{
+                    gap: '8px',
+                }}
+            >
+                {content.authorImageUrl && <ProfileImage source={content.authorImageUrl} size={20} />}
+                <RowContainer>
+                    <AuthorElement author={content.author} varient={varient} />
+                    {' • '}
+                    <PublishedDateElement publishedDate={content.publishedDate} varient={varient} />
+                </RowContainer>
             </RowContainer>
             {content.title && <TitleElement title={content.title} varient={varient} />}
             {content.description && <DescriptionElement description={content.description} varient={varient} />}
