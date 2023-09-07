@@ -60,6 +60,8 @@ function ArticleScrapCard({ content, showMemoCreateModal, showTooltip }: Article
                 <RowContainer>
                     <AuthorElement author={content.author} varient={varient} />
                     {' • '}
+                    <AuthorElement author={content.blogName} varient={varient} />
+                    {' • '}
                     <PublishedDateElement publishedDate={content.publishedDate} varient={varient} />
                 </RowContainer>
             </RowContainer>
