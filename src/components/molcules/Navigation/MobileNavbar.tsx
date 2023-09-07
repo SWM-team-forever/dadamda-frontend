@@ -109,15 +109,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
           ? <ProfileImage source={profileImageURL} size={64} />
           : <ProfileIcon size='64' />
         }
-        <Typography
-          color={theme.color.Gray_090}
-          variant='h2'
-          sx={{
-            fontWeight: '600',
-          }}
-        >
-          {isLogin ? '유저 닉네임' : '로그인 해주세요.'}
-        </Typography>
       </Box>
 
       <NavbarMenu>
@@ -188,8 +179,10 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
 }
 
 const NavbarContainer = styled.div`
-  width: 285px;
+  min-width: 285px;
   height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
   background-color: white;
   position: fixed;
   top: 0;
