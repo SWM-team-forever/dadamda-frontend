@@ -1,9 +1,6 @@
-import styled from 'styled-components';
-
-import searchIcon from '../../assets/icons/SearchIcon.png';
-import theme from '../../assets/styles/theme';
-import useWarningSnackbar from '../../hooks/useWarningSnackbar';
 import { Box, Button, Typography } from '@mui/material';
+
+import theme from '../../assets/styles/theme';
 
 interface ScrapListHeaderProps {
     count: number,
