@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 
-import theme from '../../assets/styles/theme';
-import { contentProps } from '../../types/ContentType';
-
 import { Box } from '@mui/material';
 
-import Memo from './Memo';
-import { PublishedDateElement } from '../atoms/CategoryItem/PublishedDateElement';
-import RowContainer from '../atoms/RowContainer';
-import { SiteNameElement } from '../atoms/CategoryItem/SiteNameElement';
-import { TitleElement } from '../atoms/CategoryItem/TitleElement';
-import { ThumbnailElement } from '../atoms/CategoryItem/ThumbnailElement';
-import { DescriptionElement } from '../atoms/CategoryItem/DescrptionElement';
-import { AuthorElement } from '../atoms/CategoryItem/AuthorElement';
-import { ScrapCardSeeMoreIcon } from '../atoms/Icon';
-import MemoCreateButton from '../atoms/CategoryItem/MemoCreateButton';
-import ProfileImage from '../atoms/ProfileImage';
+import theme from '@/assets/styles/theme';
+import { contentProps } from '@/types/ContentType';
+import { AuthorElement } from '@/components/atoms/CategoryItem/AuthorElement';
+import { DescriptionElement } from '@/components/atoms/CategoryItem/DescrptionElement';
+import MemoCreateButton from '@/components/atoms/CategoryItem/MemoCreateButton';
+import { PublishedDateElement } from '@/components/atoms/CategoryItem/PublishedDateElement';
+import { SiteNameElement } from '@/components/atoms/CategoryItem/SiteNameElement';
+import { ThumbnailElement } from '@/components/atoms/CategoryItem/ThumbnailElement';
+import { TitleElement } from '@/components/atoms/CategoryItem/TitleElement';
+import { ScrapCardSeeMoreIcon } from '@/components/atoms/Icon';
+import ProfileImage from '@/components/atoms/ProfileImage';
+import RowContainer from '@/components/atoms/RowContainer';
+import Memo from '@/components/molcules/Memo';
+
 
 interface ArticleScrapCardProps {
     content: contentProps['content'],

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { CircularProgress, Card } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useGetArticleScrap } from 'api/scrap';
@@ -6,6 +7,16 @@ import RowContainer from 'components/atoms/RowContainer';
 import MobileArticleListElement from 'components/molcules/CategoryItem/ScrapList/MobileArticleListElement';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from 'context/CategoryItemContext';
 import CategoryItemListProvider, { useCategoryItemList } from 'context/CategoryListContext';
+=======
+import { useGetArticleScrap } from '@/api/scrap';
+import ColumnContainer from '@/components/atoms/ColumnContainer';
+import RowContainer from '@/components/atoms/RowContainer';
+import MobileArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileArticleListElement';
+import CategoryItemSelectedProvider, { useCategoryItemSelected } from '@/context/CategoryItemContext';
+import CategoryItemListProvider, { useCategoryItemList } from '@/context/CategoryListContext';
+import { CircularProgress, Card } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+>>>>>>> Stashed changes
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 
