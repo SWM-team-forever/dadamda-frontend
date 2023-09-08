@@ -16,20 +16,6 @@ import theme from '../../assets/styles/theme';
 import { contentProps } from '../../types/ContentType';
 
 function ScrapCard({ content }: contentProps) {
-    const scrapCardMenu = [{
-        name: '카드 수정하기',
-        onClick: () => {
-            hideTooltip();
-            showScrapEditModal();
-        },
-    }, {
-        name: '카드 삭제하기',
-        onClick: () => {
-            hideTooltip();
-            showScrapDeleteModal();
-        },
-    }];
-
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
     const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
     const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
@@ -92,7 +78,6 @@ function ScrapCard({ content }: contentProps) {
     return (
         <CardContainer>
             {matchCardType(content.dtype)}
-            {isTooltipVisible && <Tooltip contents={scrapCardMenu} color={theme.color.background_color} />}
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} setError={setError} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={content.scrapId} />}
             {(isScrapEditModalVisible || isScrapDeleteModalVisible || isMemoCreateModalVisible) && <Overlay />}
