@@ -1,11 +1,13 @@
+import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
+
+import { contentProps } from '@/types/ContentType';
+
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import DesktopArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopArticleListElement';
 import DesktopVideoListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopVideoListElement';
 import MobileArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileArticleListElement';
 import MobileProductListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileProductListElement';
 import MobileVideoListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileVideoListElement';
-import { contentProps } from '@/types/ContentType';
-import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 

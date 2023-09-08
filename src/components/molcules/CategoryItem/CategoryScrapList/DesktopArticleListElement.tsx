@@ -1,4 +1,9 @@
+import { CardActionArea, Box, CardContent } from "@mui/material";
+
 import theme from "@/assets/styles/theme";
+import { useCategoryItemSelected } from "@/context/CategoryItemContext";
+import { contentProps } from "@/types/ContentType";
+
 import { AuthorElement } from "@/components/atoms/CategoryItem/AuthorElement";
 import { AuthorImageElement } from "@/components/atoms/CategoryItem/AuthorImageElement";
 import { BlogNameElement } from "@/components/atoms/CategoryItem/BlogNameElement";
@@ -8,9 +13,6 @@ import { ThumbnailElement } from "@/components/atoms/CategoryItem/ThumbnailEleme
 import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
 import ColumnContainer from "@/components/atoms/ColumnContainer";
 import RowContainer from "@/components/atoms/RowContainer";
-import { useCategoryItemSelected } from "@/context/CategoryItemContext";
-import { contentProps } from "@/types/ContentType";
-import { CardActionArea, Box, CardContent } from "@mui/material";
 
 interface DesktopArticleElementProps {
     content: contentProps['content'],

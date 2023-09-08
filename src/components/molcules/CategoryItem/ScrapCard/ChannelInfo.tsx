@@ -1,10 +1,12 @@
+import { Box, Typography } from "@mui/material";
+import { JSX } from "react/jsx-runtime";
+
 import theme from "@/assets/styles/theme";
+import { contentProps } from "@/types/ContentType";
+
 import { ChannelElement } from "@/components/atoms/CategoryItem/ChannelElement";
 import { PublishedDateElement } from "@/components/atoms/CategoryItem/PublishedDateElement";
 import ProfileImage from "@/components/atoms/ProfileImage";
-import { contentProps } from "@/types/ContentType";
-import { Box, Typography } from "@mui/material";
-import { JSX } from "react/jsx-runtime";
 
 function ChannelInfo({ content }: { content: contentProps['content'] }) {
     const { channelImageUrl, channelName, publishedDate, author, blogName, authorImageUrl } = content;

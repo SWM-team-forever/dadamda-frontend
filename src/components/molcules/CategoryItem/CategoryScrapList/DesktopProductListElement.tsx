@@ -1,13 +1,13 @@
+import { CardActionArea } from "@mui/material"
+
 import theme from "@/assets/styles/theme";
+import { contentProps } from "@/types/ContentType";
+
+import { useCategoryItemSelected } from "@/context/CategoryItemContext";
 import { PriceElement } from "@/components/atoms/CategoryItem/PriceElement";
 import { ThumbnailElement } from "@/components/atoms/CategoryItem/ThumbnailElement";
 import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
 import ColumnContainer from "@/components/atoms/ColumnContainer";
-import { useCategoryItemSelected } from "@/context/CategoryItemContext";
-import { useCategoryItemList } from "@/context/CategoryListContext";
-import { contentProps } from "@/types/ContentType";
-import { CardActionArea } from "@mui/material";
-import { useEffect } from "react";
 
 interface DesktopProductListElementProps {
     content: contentProps['content'],
@@ -16,7 +16,6 @@ interface DesktopProductListElementProps {
 function DesktopProductListElement({ content }: DesktopProductListElementProps) {
     const { thumbnailUrl, price, title, scrapId } = content;
     const [selectedContent, setSelectedContent] = useCategoryItemSelected();
-    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
     const varient = 'desktopProductList';
 
     function Info() {

@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Box, CardActionArea, CardContent, TextareaAutosize } from "@mui/material";
-import styled from "styled-components";
+import { Box, CardActionArea, CardContent } from "@mui/material";
+
 import theme from "@/assets/styles/theme";
+import { contentProps } from "@/types/ContentType";
+
 import { AuthorElement } from "@/components/atoms/CategoryItem/AuthorElement";
 import { AuthorImageElement } from "@/components/atoms/CategoryItem/AuthorImageElement";
 import { BlogNameElement } from "@/components/atoms/CategoryItem/BlogNameElement";
@@ -14,7 +16,6 @@ import { ThumbnailElement } from "@/components/atoms/CategoryItem/ThumbnailEleme
 import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
 import ColumnContainer from "@/components/atoms/ColumnContainer";
 import RowContainer from "@/components/atoms/RowContainer";
-import { contentProps } from "@/types/ContentType";
 
 interface MobileProductListElementProps {
     content: contentProps['content'],

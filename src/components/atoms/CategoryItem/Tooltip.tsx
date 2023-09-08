@@ -1,9 +1,10 @@
-import { styled, alpha } from '@mui/material/styles';
-import Menu, { MenuProps } from '@mui/material/Menu';
+import { useState } from 'react';
+
+import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Box, Typography } from '@mui/material';
+
 import { ScrapCardSeeMoreIcon } from '../Icon';
-import { useState } from 'react';
 import theme from '../../../assets/styles/theme';
 
 export default function CustomizedMenus() {

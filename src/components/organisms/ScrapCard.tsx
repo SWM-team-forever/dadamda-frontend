@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { decode } from 'html-entities';
+import { Box, Typography } from '@mui/material';
 
-import ScrapEditModal from './ScrapEditModal';
-import ScrapDeleteModal from './ScrapDeleteModal';
-import MemoCreateModal from './MemoCreateModal';
-import ErrorHandler from '../../utility/ErrorHandler';
+import theme from '@/assets/styles/theme';
+import { contentProps } from '@/types/ContentType';
+import ErrorHandler from '@/utility/ErrorHandler';
 
-import theme from '../../assets/styles/theme';
-import { contentProps } from '../../types/ContentType';
 import { DescriptionElement } from '@/components/atoms/CategoryItem/DescrptionElement';
 import MemoCreateButton from '@/components/atoms/CategoryItem/MemoCreateButton';
 import { SiteNameElement } from '@/components/atoms/CategoryItem/SiteNameElement';
@@ -18,8 +16,10 @@ import ColumnContainer from '@/components/atoms/ColumnContainer';
 import RowContainer from '@/components/atoms/RowContainer';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
 import Memo from '@/components/molcules/Memo';
-import { Box, Typography } from '@mui/material';
 import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
+import MemoCreateModal from '@/components/organisms/MemoCreateModal';
+import ScrapDeleteModal from '@/components/organisms/ScrapDeleteModal';
+import ScrapEditModal from '@/components/organisms/ScrapEditModal';
 
 function ScrapCard({ content }: contentProps) {
     const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);

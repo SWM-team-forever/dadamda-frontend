@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { CardActionArea, TextareaAutosize } from "@mui/material";
 import styled from "styled-components";
+
 import theme from "@/assets/styles/theme";
+import { contentProps } from "@/types/ContentType";
+
 import { IconButtonListElement } from "@/components/atoms/CategoryItem/IconButtonListElement";
 import { MemoAreaElement } from "@/components/atoms/CategoryItem/MemoAreaElement";
 import { PriceElement } from "@/components/atoms/CategoryItem/PriceElement";
@@ -10,7 +13,6 @@ import { ThumbnailElement } from "@/components/atoms/CategoryItem/ThumbnailEleme
 import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
 import ColumnContainer from "@/components/atoms/ColumnContainer";
 import RowContainer from "@/components/atoms/RowContainer";
-import { contentProps } from "@/types/ContentType";
 
 
 interface MobileProductListElementProps {
