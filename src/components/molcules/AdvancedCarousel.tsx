@@ -1,9 +1,9 @@
 import theme from '@/assets/styles/theme';
 import { useCategoryItemList } from '@/context/CategoryListContext';
 import { useSnapCarousel } from 'react-snap-carousel';
-import DesktopProductListElement from './CategoryItem/ScrapList/DesktopProductListElement';
 import { LeftArrowIcon, RightArrowIcon } from '@/components/atoms/Icon';
 import RowContainer from '@/components/atoms/RowContainer';
+import DesktopProductListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopProductListElement';
 
 const AdvancedCarousel = () => {
     const { scrollRef, next, prev } = useSnapCarousel();
