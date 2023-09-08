@@ -1,20 +1,3 @@
-<<<<<<<< Updated upstream:src/components/molcules/CategoryItem/ScrapList/DesktopArticleListElement.tsx
-import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
-import theme from "../../../../assets/styles/theme";
-import { contentProps } from "../../../../types/ContentType";
-import ThumbnailImage from "../../../atoms/ThumbnailImage";
-import { useCategoryItemSelected } from "../../../../context/CategoryItemContext";
-import { ThumbnailElement } from "../../../atoms/CategoryItem/ThumbnailElement";
-import { TitleElement } from "../../../atoms/CategoryItem/TitleElement";
-import { ChannelElement } from "../../../atoms/CategoryItem/ChannelElement";
-import { BlogNameElement } from "../../../atoms/CategoryItem/BlogNameElement";
-import RowContainer from "../../../atoms/RowContainer";
-import { AuthorImageElement } from "../../../atoms/CategoryItem/AuthorImageElement";
-import { AuthorElement } from "../../../atoms/CategoryItem/AuthorElement";
-import { SiteNameElement } from "../../../atoms/CategoryItem/SiteNameElement";
-import { PublishedDateElement } from "../../../atoms/CategoryItem/PublishedDateElement";
-import ColumnContainer from "../../../atoms/ColumnContainer";
-========
 import theme from "@/assets/styles/theme";
 import { AuthorElement } from "@/components/atoms/CategoryItem/AuthorElement";
 import { AuthorImageElement } from "@/components/atoms/CategoryItem/AuthorImageElement";
@@ -28,7 +11,6 @@ import RowContainer from "@/components/atoms/RowContainer";
 import { useCategoryItemSelected } from "@/context/CategoryItemContext";
 import { contentProps } from "@/types/ContentType";
 import { CardActionArea, Box, CardContent } from "@mui/material";
->>>>>>>> Stashed changes:src/components/molcules/CategoryItem/CategoryScrapList/DesktopArticleListElement.tsx
 
 interface DesktopArticleElementProps {
     content: contentProps['content'],

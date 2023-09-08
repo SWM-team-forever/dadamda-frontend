@@ -6,16 +6,6 @@ import MobileProductListElement from '@/components/molcules/CategoryItem/Categor
 import MobileVideoListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileVideoListElement';
 import { contentProps } from '@/types/ContentType';
 import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
-<<<<<<< Updated upstream
-import { contentProps } from '../types/ContentType';
-import ColumnContainer from 'components/atoms/ColumnContainer';
-import DesktopArticleListElement from 'components/molcules/CategoryItem/ScrapList/DesktopArticleListElement';
-import DesktopVideoListElement from 'components/molcules/CategoryItem/ScrapList/DesktopVideoListElement';
-import MobileArticleListElement from 'components/molcules/CategoryItem/ScrapList/MobileArticleListElement';
-import MobileProductListElement from 'components/molcules/CategoryItem/ScrapList/MobileProductListElement';
-import MobileVideoListElement from 'components/molcules/CategoryItem/ScrapList/MobileVideoListElement';
-=======
->>>>>>> Stashed changes
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 
