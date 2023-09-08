@@ -44,7 +44,12 @@ function ChannelInfo({ content }: { content: contentProps['content'] }) {
         });
 
         return (
-            <>
+            <Box
+                sx={{
+                    display: 'flex',
+                    gap: '2px',
+                }}
+            >
                 {channelInfoTextArray.map((element, index) => {
                     return (
                         <>
@@ -53,7 +58,7 @@ function ChannelInfo({ content }: { content: contentProps['content'] }) {
                         </>
                     )
                 })}
-            </>
+            </Box>
         )
     }
 
