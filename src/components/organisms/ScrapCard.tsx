@@ -5,7 +5,6 @@ import { decode } from 'html-entities';
 import ScrapEditModal from './ScrapEditModal';
 import ScrapDeleteModal from './ScrapDeleteModal';
 import MemoCreateModal from './MemoCreateModal';
-import VideoScrapCard from '../molcules/VideoScrapCard';
 import ErrorHandler from '../../utility/ErrorHandler';
 
 import theme from '../../assets/styles/theme';
