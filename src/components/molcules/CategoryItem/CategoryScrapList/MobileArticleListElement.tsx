@@ -1,23 +1,21 @@
 import { useState } from "react";
-import { Box, CardActionArea, CardContent, TextareaAutosize } from "@mui/material";
-import styled from "styled-components";
+import { Box, CardActionArea, CardContent } from "@mui/material";
 
-import ColumnContainer from "../../atoms/ColumnContainer";
-import RowContainer from "../../atoms/RowContainer";
-import { IconButtonListElement } from "../../atoms/CategoryItem/IconButtonListElement";
-import { ThumbnailElement } from "../../atoms/CategoryItem/ThumbnailElement";
-import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
-import { PriceElement } from "../../atoms/CategoryItem/PriceElement";
+import theme from "@/assets/styles/theme";
+import { contentProps } from "@/types/ContentType";
 
-import theme from "../../../assets/styles/theme";
-import { contentProps } from "../../../types/ContentType";
-import { MemoAreaElement } from "../../atoms/CategoryItem/MemoAreaElement";
-import { SiteNameElement } from "../../atoms/CategoryItem/SiteNameElement";
-import { AuthorElement } from "../../atoms/CategoryItem/AuthorElement";
-import { AuthorImageElement } from "../../atoms/CategoryItem/AuthorImageElement";
-import { BlogNameElement } from "../../atoms/CategoryItem/BlogNameElement";
-import { PublishedDateElement } from "../../atoms/CategoryItem/PublishedDateElement";
-import { DescriptionElement } from "../../atoms/CategoryItem/DescrptionElement";
+import { AuthorElement } from "@/components/atoms/CategoryItem/AuthorElement";
+import { AuthorImageElement } from "@/components/atoms/CategoryItem/AuthorImageElement";
+import { BlogNameElement } from "@/components/atoms/CategoryItem/BlogNameElement";
+import { DescriptionElement } from "@/components/atoms/CategoryItem/DescrptionElement";
+import { IconButtonListElement } from "@/components/atoms/CategoryItem/IconButtonListElement";
+import { MemoAreaElement } from "@/components/atoms/CategoryItem/MemoAreaElement";
+import { PublishedDateElement } from "@/components/atoms/CategoryItem/PublishedDateElement";
+import { SiteNameElement } from "@/components/atoms/CategoryItem/SiteNameElement";
+import { ThumbnailElement } from "@/components/atoms/CategoryItem/ThumbnailElement";
+import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
+import ColumnContainer from "@/components/atoms/ColumnContainer";
+import RowContainer from "@/components/atoms/RowContainer";
 
 interface MobileProductListElementProps {
     content: contentProps['content'],

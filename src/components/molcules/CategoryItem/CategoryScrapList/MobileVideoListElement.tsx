@@ -1,13 +1,16 @@
+import theme from "@/assets/styles/theme";
 import { CardActionArea, Box } from "@mui/material";
-import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
-import theme from "../../../assets/styles/theme";
-import { contentProps } from "../../../types/ContentType";
-import ColumnContainer from "../../atoms/ColumnContainer";
-import RowContainer from "../../atoms/RowContainer";
-import ThumbnailImage from "../../atoms/ThumbnailImage";
-import { IconButtonListElement } from "../../atoms/CategoryItem/IconButtonListElement";
-import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
-import { SiteNameElement } from "../../atoms/CategoryItem/SiteNameElement";
+
+import { useCategoryItemSelected } from "@/context/CategoryItemContext";
+import { contentProps } from "@/types/ContentType";
+
+import { IconButtonListElement } from "@/components/atoms/CategoryItem/IconButtonListElement";
+import { SiteNameElement } from "@/components/atoms/CategoryItem/SiteNameElement";
+import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
+import ColumnContainer from "@/components/atoms/ColumnContainer";
+import RowContainer from "@/components/atoms/RowContainer";
+import ThumbnailImage from "@/components/atoms/ThumbnailImage";
+
 
 interface MobileVideoListElementProps {
     content: contentProps['content'],

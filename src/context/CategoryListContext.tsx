@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
-import { contentProps } from '../types/ContentType';
-import RowContainer from '../components/atoms/RowContainer';
-import ColumnContainer from '../components/atoms/ColumnContainer';
-import DesktopVideoListElement from '../components/molcules/CategoryItem/DesktopVideoListElement';
-import MobileVideoListElement from '../components/molcules/CategoryItem/MobileVideoListElement';
-import DesktopArticleElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
-import DesktopArticleListElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
-import MobileArticleListElement from '../components/molcules/CategoryItem/MobileArticleListElement';
-import MobileProductListElement from '../components/molcules/CategoryItem/MobileProductListElement';
+
+import { contentProps } from '@/types/ContentType';
+
+import ColumnContainer from '@/components/atoms/ColumnContainer';
+import DesktopArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopArticleListElement';
+import DesktopVideoListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopVideoListElement';
+import MobileArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileArticleListElement';
+import MobileProductListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileProductListElement';
+import MobileVideoListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileVideoListElement';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 

@@ -2,17 +2,18 @@ import { useState } from "react";
 import { CardActionArea, TextareaAutosize } from "@mui/material";
 import styled from "styled-components";
 
-import ColumnContainer from "../../atoms/ColumnContainer";
-import RowContainer from "../../atoms/RowContainer";
-import { IconButtonListElement } from "../../atoms/CategoryItem/IconButtonListElement";
-import { ThumbnailElement } from "../../atoms/CategoryItem/ThumbnailElement";
-import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
-import { PriceElement } from "../../atoms/CategoryItem/PriceElement";
+import theme from "@/assets/styles/theme";
+import { contentProps } from "@/types/ContentType";
 
-import theme from "../../../assets/styles/theme";
-import { contentProps } from "../../../types/ContentType";
-import { MemoAreaElement } from "../../atoms/CategoryItem/MemoAreaElement";
-import { SiteNameElement } from "../../atoms/CategoryItem/SiteNameElement";
+import { IconButtonListElement } from "@/components/atoms/CategoryItem/IconButtonListElement";
+import { MemoAreaElement } from "@/components/atoms/CategoryItem/MemoAreaElement";
+import { PriceElement } from "@/components/atoms/CategoryItem/PriceElement";
+import { SiteNameElement } from "@/components/atoms/CategoryItem/SiteNameElement";
+import { ThumbnailElement } from "@/components/atoms/CategoryItem/ThumbnailElement";
+import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
+import ColumnContainer from "@/components/atoms/ColumnContainer";
+import RowContainer from "@/components/atoms/RowContainer";
+
 
 interface MobileProductListElementProps {
     content: contentProps['content'],

@@ -1,11 +1,12 @@
-import { CardActionArea, Box, CardContent, Typography } from "@mui/material";
-import theme from "../../../assets/styles/theme";
-import { contentProps } from "../../../types/ContentType";
-import ThumbnailImage from "../../atoms/ThumbnailImage";
-import { useCategoryItemSelected } from "../../../context/CategoryItemContext";
-import { ThumbnailElement } from "../../atoms/CategoryItem/ThumbnailElement";
-import { TitleElement } from "../../atoms/CategoryItem/TitleElement";
-import { ChannelElement } from "../../atoms/CategoryItem/ChannelElement";
+import { CardActionArea, Box, CardContent } from "@mui/material";
+
+import theme from "@/assets/styles/theme";
+import { useCategoryItemSelected } from "@/context/CategoryItemContext";
+import { contentProps } from "@/types/ContentType";
+
+import { ChannelElement } from "@/components/atoms/CategoryItem/ChannelElement";
+import { ThumbnailElement } from "@/components/atoms/CategoryItem/ThumbnailElement";
+import { TitleElement } from "@/components/atoms/CategoryItem/TitleElement";
 
 interface DesktopVideoListElementProps {
     content: contentProps['content'],
