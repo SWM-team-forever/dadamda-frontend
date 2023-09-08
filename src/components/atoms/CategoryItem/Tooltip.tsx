@@ -12,7 +12,8 @@ export default function CustomizedMenus() {
     const handleOpenScrapEditOrDeleteMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleCloseScrapEditOrDeleteMenu = () => {
+    const handleCloseScrapEditOrDeleteMenu = (e) => {
+        e.stopPropagation();
         setAnchorEl(null);
     };
 
@@ -20,15 +21,13 @@ export default function CustomizedMenus() {
         {
             title: '스크랩 수정',
             clickAction: (e) => {
-                e.stopPropagation();
-                handleCloseScrapEditOrDeleteMenu();
+                handleCloseScrapEditOrDeleteMenu(e);
             }
         },
         {
             title: '스크랩 삭제',
             clickAction: (e) => {
-                e.stopPropagation();
-                handleCloseScrapEditOrDeleteMenu();
+                handleCloseScrapEditOrDeleteMenu(e);
             }
         }
     ]
