@@ -1,14 +1,13 @@
-import styled from 'styled-components';
-import ColumnContainer from '../atoms/ColumnContainer';
-import { contentProps } from '../../types/ContentType';
-import { Card, CircularProgress } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
-import CategoryItemSelectedProvider, { useCategoryItemSelected } from '../../context/CategoryItemContext';
-import CategoryItemListProvider, { useCategoryItemList } from '../../context/CategoryListContext';
-import RowContainer from '../atoms/RowContainer';
-import MobileArticleListElement from '../molcules/CategoryItem/MobileArticleListElement';
+import { CircularProgress, Card } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { uesGetProductScrap, useGetArticleScrap } from '../../api/scrap';
+import { useGetArticleScrap } from 'api/scrap';
+import ColumnContainer from 'components/atoms/ColumnContainer';
+import RowContainer from 'components/atoms/RowContainer';
+import MobileArticleListElement from 'components/molcules/CategoryItem/ScrapList/MobileArticleListElement';
+import CategoryItemSelectedProvider, { useCategoryItemSelected } from 'context/CategoryItemContext';
+import CategoryItemListProvider, { useCategoryItemList } from 'context/CategoryListContext';
+import { useState, useCallback } from 'react';
+import styled from 'styled-components';
 
 function ExistArticleScrapContainer() {
     const [categoryItemList, setCategoryItemList] = useCategoryItemList();

@@ -1,13 +1,11 @@
 import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
 import { contentProps } from '../types/ContentType';
-import RowContainer from '../components/atoms/RowContainer';
-import ColumnContainer from '../components/atoms/ColumnContainer';
-import DesktopVideoListElement from '../components/molcules/CategoryItem/DesktopVideoListElement';
-import MobileVideoListElement from '../components/molcules/CategoryItem/MobileVideoListElement';
-import DesktopArticleElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
-import DesktopArticleListElement from '../components/molcules/CategoryItem/DesktopArticleListElement';
-import MobileArticleListElement from '../components/molcules/CategoryItem/MobileArticleListElement';
-import MobileProductListElement from '../components/molcules/CategoryItem/MobileProductListElement';
+import ColumnContainer from 'components/atoms/ColumnContainer';
+import DesktopArticleListElement from 'components/molcules/CategoryItem/ScrapList/DesktopArticleListElement';
+import DesktopVideoListElement from 'components/molcules/CategoryItem/ScrapList/DesktopVideoListElement';
+import MobileArticleListElement from 'components/molcules/CategoryItem/ScrapList/MobileArticleListElement';
+import MobileProductListElement from 'components/molcules/CategoryItem/ScrapList/MobileProductListElement';
+import MobileVideoListElement from 'components/molcules/CategoryItem/ScrapList/MobileVideoListElement';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 

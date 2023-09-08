@@ -1,9 +1,11 @@
 import { useSnapCarousel } from 'react-snap-carousel';
-import RowContainer from '../atoms/RowContainer';
-import { LeftArrowIcon, RightArrowIcon } from '../atoms/Icon';
-import theme from '../../assets/styles/theme';
-import DesktopProductListElement from './CategoryItem/DesktopProductListElement';
-import { useCategoryItemList } from '../../context/CategoryListContext';
+
+import theme from 'assets/styles/theme';
+import { useCategoryItemList } from 'context/CategoryListContext';
+
+import { LeftArrowIcon, RightArrowIcon } from 'components/atoms/Icon';
+import RowContainer from 'components/atoms/RowContainer';
+import DesktopProductListElement from './CategoryItem/ScrapList/DesktopProductListElement';
 
 const AdvancedCarousel = () => {
     const { scrollRef, next, prev } = useSnapCarousel();
