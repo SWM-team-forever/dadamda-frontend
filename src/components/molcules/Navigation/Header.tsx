@@ -205,7 +205,7 @@ const HeaderContainer = styled.div`
     padding: 13px 24px;
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.40);
-    backdrop-filter: blur(4px);
+    // backdrop-filter: blur(4px);
     display: flex;
     justify-content: space-between;
     align-items: center;
