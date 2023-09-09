@@ -83,7 +83,9 @@ export default function CustomizedMenus() {
                             },
                             padding: '6px 8px',
                             color: theme.color.Blue_dry,
-                        }}>
+                        }}
+                        autoFocus
+                    >
                         <Typography textAlign="center" variant='h5'>{menuItem.title}</Typography>
                     </MenuItem>
                 ))}
