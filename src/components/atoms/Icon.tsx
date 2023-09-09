@@ -207,3 +207,12 @@ export function ScrapCardSeeMoreIcon({ width, height, fill }: IconProps) {
         </svg>
     );
 }
+
+export function SearchIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 18 17" fill="none">
+            <path d="M15.5263 16.421C15.9168 16.8116 16.55 16.8116 16.9405 16.421C17.331 16.0305 17.331 15.3973 16.9405 15.0068L15.5263 16.421ZM12.5263 13.421L15.5263 16.421L16.9405 15.0068L13.9405 12.0068L12.5263 13.421Z" fill={fill} />
+            <circle cx="8.05263" cy="8.05263" r="7.05263" stroke={fill} stroke-width="2" />
+        </svg>
+    );
+}
