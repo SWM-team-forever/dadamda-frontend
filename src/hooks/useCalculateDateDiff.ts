@@ -1,5 +1,5 @@
-import dayjs, {Dayjs} from 'dayjs';
-import duration, {Duration} from 'dayjs/plugin/duration';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
