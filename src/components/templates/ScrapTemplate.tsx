@@ -137,22 +137,6 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 {type === 'product' && <ProductTemplate products={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'article' && <ArticleTemplate videos={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {!providingTemplates.includes(type) && <NotReadyTemplate />}
-                <IconButton
-                    src={fab}
-                    style={{
-                        position: 'fixed',
-                        bottom: '15px',
-                        right: '15px',
-                        width: '48px',
-                        height: '48px',
-                    }}
-                    onClick={showScrapCreateModal}
-                />
-                {isScrapCreateModalVisible &&
-                    <Overlay>
-                        <ScrapCreateModal hideScrapCreateModal={hideScrapCreateModal} setError={setError} />
-                    </Overlay>
-                }
             </ScrapListContainer>
         </>
     );
