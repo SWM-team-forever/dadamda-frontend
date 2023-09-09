@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
 
 import theme from '../../assets/styles/theme';
+import SearchBar from '@/components/molcules/SearchBar';
 
 interface ScrapListHeaderProps {
     count: number,
@@ -11,13 +12,14 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
     return (
         <Box
             sx={{
-                p: '24px',
+                padding: '24px',
             }}
         >
             <Box
                 sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
+                    mb: '16px',
                 }}
             >
                 <Box
@@ -55,6 +57,7 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
                     + 스크랩 추가
                 </Button>
             </Box>
+            <SearchBar />
         </Box>
     )
 }
