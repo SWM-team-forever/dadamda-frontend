@@ -16,6 +16,9 @@ function NavigationMenuItem({ item, isActive }: { item: any, isActive: boolean }
                 padding: '9px 8px',
                 borderRadius: isActive ? '8px' : '',
                 background: isActive ? theme.color.Blue_060 : '',
+                '&:hover:active': {
+                    background: theme.color.Blue_060,
+                },
             }}
         >
             {isActive ? item.selectedIcon : item.icon}
