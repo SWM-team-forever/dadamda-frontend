@@ -160,11 +160,11 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
 
 const ScrapListContainer = styled.div`
     width: calc(100% - 200px);
-    height: calc(100% - 50px);
-    background-color: ${theme.color.background_color};
+    height: calc(100% - 56px);
+    background-color: linear-gradient(114deg, #EBEEF3 12.12%, #D6DEEA 100%);
     position: fixed;
     right: 0;
-    top: 50px;
+    top: 56px;
     @media screen and (max-width: 600px) {
       width: 100vw;
       left: 0;
