@@ -4,13 +4,8 @@ import styled from 'styled-components';
 import NotReadyTemplate from './NotReadyTemplate';
 import OtherTemplate from './OtherTemplate';
 import ListTemplate from './ListTemplate';
-import ScrapCreateModal from '../organisms/ScrapCreateModal';
-import Overlay from '../atoms/Overlay';
-import IconButton from '../atoms/IconButton';
 
 import ErrorHandler from '../../utility/ErrorHandler';
-import fab from '../../assets/icons/fab.png';
-import theme from '../../assets/styles/theme';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
 import VideoTemplate from './VideoTemplate';
 import ArticleTemplate from './ArticleTemplate';
@@ -21,15 +16,6 @@ interface ScrapTemplateProps {
 }
 
 function ScrapTemplate({ type }: ScrapTemplateProps) {
-    const [isScrapCreateModalVisible, setIsScrapCreateModalVisible] = useState(false);
-    const showScrapCreateModal = () => {
-        setIsScrapCreateModalVisible(true);
-    }
-
-    function hideScrapCreateModal() {
-        setIsScrapCreateModalVisible(false);
-    }
-
     const urlMatching: { [key: string]: string } = {
         'other': GET_OTHER_SCRAP_URL,
         'list': GET_LIST_SCRAP_URL,
@@ -38,7 +24,6 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         'video': GET_VIDEO_SCRAP_URL,
     }
 
-    // const definedErrors = ['BR001', 'BR002', 'NF000', 'NF001', 'NF002', 'NF003', 'IS000'];
     const token = localStorage.getItem('token');
     const size = 10;
     const [types, setTypes] = useState<any[]>([]);
@@ -65,10 +50,6 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                     "X-AUTH-TOKEN": token,
                 },
             }).then((response) => {
-                // if (response.json().body) {
-                //     throw new Error('UNDEFINED_ERROR');
-                // }
-                // console.log('body', response.json());
                 return response.json().then(body => {
                     if (response.ok) {
                         return body;
