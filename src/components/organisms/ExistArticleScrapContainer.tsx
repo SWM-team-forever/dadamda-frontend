@@ -1,4 +1,4 @@
-import { CircularProgress, Card } from '@mui/material';
+import { CircularProgress, Card, Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
@@ -10,6 +10,8 @@ import { useGetArticleScrap } from '@/api/scrap';
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import RowContainer from '@/components/atoms/RowContainer';
 import MobileArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileArticleListElement';
+import theme from '@/assets/styles/theme';
+import { MoveToPageIcon } from '@/components/atoms/Icon';
 
 function ExistArticleScrapContainer() {
     const [categoryItemList, setCategoryItemList] = useCategoryItemList();
@@ -57,66 +59,62 @@ function ExistArticleScrapContainer() {
             {/* Desktop */}
 
             <Desktop>
-                <VideoListWrapper>
+                <Box
+                    sx={{
+                        width: '237px',
+                        height: '100%',
+                        overflow: 'auto',
+                    }}
+                >
                     <CategoryItemListProvider.DesktopArticleList />
-                </VideoListWrapper>
-                <Card sx={{
-                    flex: '1',
-                    height: '100%',
-                    overflow: 'auto',
-                }}>
-                    <FocusedArticleItemDetails varient={'desktopArticleItem'} />
-                </Card>
-                <iframe src={selectedContent.pageUrl}
-                    style={{
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
                         flex: '1',
                         height: '100%',
-                    }} />
+                        borderRadius: '8px',
+                        backgroundColor: theme.color.Gray_020,
+                        boxShadow: '0px 2px 16px 0px rgba(19, 48, 74, 0.08)',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            p: '9px 16px 9px 0',
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            boxSizing: 'border-box',
+                        }}
+                    >
+                        <MoveToPageIcon width='16' height='16' fill={theme.color.Gray_070} />
+                    </Box>
+                    <iframe src={selectedContent.pageUrl}
+                        style={{
+                            height: '100%',
+                        }} />
+                </Box>
+                <Box
+                    sx={{
+                        width: '237px',
+                    }}
+                >
+                    <CategoryItemSelectedProvider.MemoArea />
+                </Box>
             </Desktop >
 
             {/* Mobile */}
-            <Mobile>
-                <ColumnContainer>
-                    {categoryItemList.map(content => {
-                        return <MobileArticleListElement content={content} />
-                    })}
-                </ColumnContainer>
+            < Mobile >
+                <Box
+                    sx={{
+                        p: '0 24px 24px 24px',
+                    }}
+                >
+                    <CategoryItemListProvider.DesktopArticleList />
+                </Box>
             </Mobile >
         </>
-    )
-}
-
-function FocusedArticleItemDetails({ varient }: { varient: string }) {
-    return (
-        <ColumnContainer
-            style={{
-                gap: '10px',
-                padding: '30px 30px 0 30px',
-                boxSizing: 'border-box',
-                width: '100%',
-                background: 'white',
-            }}>
-            <CategoryItemSelectedProvider.Header varient={varient} />
-            <CategoryItemSelectedProvider.Thumbnail />
-            <RowContainer
-                style={{
-                    justifyContent: 'space-between',
-                }}>
-                <RowContainer
-                    style={{
-                        gap: '5px',
-                    }}>
-                    <CategoryItemSelectedProvider.AuthorImage />
-                    <ColumnContainer>
-                        <CategoryItemSelectedProvider.Author varient={varient} />
-                        <CategoryItemSelectedProvider.BlogName varient={varient} />
-                    </ColumnContainer>
-                </RowContainer>
-                <CategoryItemSelectedProvider.PublishedDate varient={varient} />
-            </RowContainer>
-            <CategoryItemSelectedProvider.Description varient={varient} />
-            <CategoryItemSelectedProvider.MemoArea />
-        </ColumnContainer>
     )
 }
 
@@ -132,11 +130,10 @@ const VideoListWrapper = styled.div`
 `
 
 const Desktop = styled.div`
-    padding: 0 20px
-    gap: 10px;
+    padding: 0 24px;
+    gap: 24px;
     box-sizing: border-box;
-    width: 100%;
-    height: calc(100% - 64px);
+    height: calc(100% - 84px);
     display: flex;
     @media screen and (max-width: 600px) {
         display: none;
