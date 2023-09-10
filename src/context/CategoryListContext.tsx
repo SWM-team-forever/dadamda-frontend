@@ -8,6 +8,7 @@ import DesktopVideoListElement from '@/components/molcules/CategoryItem/Category
 import MobileArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileArticleListElement';
 import MobileProductListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileProductListElement';
 import MobileVideoListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileVideoListElement';
+import ScrapCard from '@/components/organisms/ScrapCard';
 
 const CategoryItemListContext = createContext({} as [contentProps['content'][], Dispatch<SetStateAction<contentProps['content'][]>>]);
 
@@ -63,10 +64,10 @@ function DesktopArticleList() {
 
     return (
         <ColumnContainer style={{
-            gap: '10px',
+            gap: '24px',
         }}>
             {categoryItemList.map(categoryItem =>
-                <DesktopArticleListElement content={categoryItem} />
+                <ScrapCard content={categoryItem} />
             )}
         </ColumnContainer>
     )
