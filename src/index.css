@@ -5,4 +5,5 @@ body {
 
 * {
   font-family: Pretendard,'Noto Sans KR', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
