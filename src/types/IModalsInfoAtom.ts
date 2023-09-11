@@ -1,15 +1,8 @@
 interface ICustomModalInfo {
-    type: 'custom',
-    element: JSX.Element,
+    title: string,
+    isOpen: boolean,
+    element: React.ReactNode,
+    callback?: () => void,
 }
 
-interface IModalInfo { 
-    config: ICustomModalInfo;
-}
-
-interface IModalsInfoAtom {
-    modals: IModalInfo[];
-}
-
-export default IModalsInfoAtom;
-export type {IModalInfo, ICustomModalInfo};
+export type {ICustomModalInfo};
