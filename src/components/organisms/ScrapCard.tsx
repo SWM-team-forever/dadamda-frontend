@@ -58,7 +58,7 @@ function ScrapCard({ content }: contentProps) {
     ];
     const varient = 'scrapCard';
 
-    const { openModal } = useModal();
+    const { openModal, connectMemoWithScrapId } = useModal();
 
     return (
         <CardContainer>
@@ -145,6 +145,7 @@ function ScrapCard({ content }: contentProps) {
                     onClick={
                         (e) => {
                             e.stopPropagation();
+                            connectMemoWithScrapId(content.scrapId);
                         }}
                     sx={{
                         width: '100%',
@@ -152,7 +153,9 @@ function ScrapCard({ content }: contentProps) {
                         justifyContent: 'flex-end',
                     }}
                 >
-                    <MemoCreateButton showMemoCreateModal={() => openModal('memoCreate')} />
+                    <MemoCreateButton
+                        showMemoCreateModal={() => openModal('memoCreate')}
+                    />
                 </Box>
             </CardWrapper>
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} setError={setError} />}
