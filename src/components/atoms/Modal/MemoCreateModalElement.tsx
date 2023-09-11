@@ -1,11 +1,11 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useState, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 import theme from '@/assets/styles/theme';
 
 function MemoCreateModalElement() {
-    const [, setTextAreaValue] = useState('');
+    const [textAreaValue, setTextAreaValue] = useState('');
     const [, setToken] = useState<string | null>(null);
     useEffect(() => {
         setToken(localStorage.getItem('token'));
@@ -19,6 +19,7 @@ function MemoCreateModalElement() {
     return (
         <Box>
             <EditText placeholder="추가할 메모를 입력하세요." onChange={(e) => handleSetValue(e)} />
+            <Typography>{textAreaValue.length} / 1000자</Typography>
         </Box>
     );
 }
