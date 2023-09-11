@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Box, Modal, Typography } from '@mui/material';
 
 import { useModal } from '@/hooks/useModal';
 import theme from '@/assets/styles/theme';
@@ -61,22 +61,6 @@ function MemoCreateModalWrapper() {
                     </Typography>
                 </Box>
                 {modal.element}
-                <Button
-                    variant='contained'
-                    sx={{
-                        backgroundColor: theme.color.Gray_050,
-                        borderRadius: '4px',
-                        boxShadow: 'none',
-                        width: 'fit-content',
-                        alignSelf: 'flex-end',
-                        '&:hover': {
-                            backgroundColor: theme.color.Blue_080,
-                            boxShadow: 'none',
-                        }
-                    }}
-                >
-                    등록
-                </Button>
             </Box>
         </Modal>
     );
