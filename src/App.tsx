@@ -2,9 +2,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@mui/material';
 
-import theme from '@/assets/styles/theme';
+import theme from '@/assets/styles/themeMuiStyle';
 import { LoginProvider, RequireAuth } from '@/context/LoginContext';
 import { useModal } from '@/hooks/useModal';
 
