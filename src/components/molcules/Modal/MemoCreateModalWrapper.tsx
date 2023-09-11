@@ -42,7 +42,9 @@ function MemoCreateModalWrapper() {
                     <Box
                         sx={{
                             alignSelf: 'flex-end',
+                            cursor: 'pointer',
                         }}
+                        onClick={closeModal}
                     >
                         <CloseIcon width='24' height='24' fill={theme.color.Gray_070} />
                     </Box>
