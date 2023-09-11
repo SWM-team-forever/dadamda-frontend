@@ -19,6 +19,10 @@ export const useModal = () => {
         }
     }
 
+    const connectMemoWithScrapId = useCallback((scrapId: number) => {
+        setModal((prev) => { return { ...prev, scrapId: scrapId } })
+    }, [setModal]);
+
     const openModal = useCallback((
         type: string
     ) => {
@@ -28,5 +32,5 @@ export const useModal = () => {
         })
     }, [setModal]);
 
-    return { modal, closeModal, openModal };
+    return { modal, closeModal, openModal, connectMemoWithScrapId };
 }
