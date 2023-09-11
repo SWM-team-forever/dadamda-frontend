@@ -54,8 +54,10 @@ function MemoCreateModalElement() {
                     color: theme.color.Gray_060,
                     fontWeight: '500',
                     fontHeight: '150%',
+                    p: '14px 21px',
                 }}
                 multiline
+                rows={5}
             />
             <Typography
                 variant="h6"
