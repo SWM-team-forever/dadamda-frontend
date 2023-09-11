@@ -18,7 +18,7 @@ function MemoCreateModalWrapper() {
                 sx={{
                     backgroundColor: theme.color.Gray_020,
                     borderRadius: '8px',
-                    p: '32px',
+                    p: '16px',
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
