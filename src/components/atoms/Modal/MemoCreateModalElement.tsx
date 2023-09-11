@@ -43,7 +43,9 @@ function MemoCreateModalElement() {
     return (
         <Box
             sx={{
-                p: '0 16px'
+                p: '0 16px',
+                display: 'flex',
+                flexDirection: 'column',
             }}
         >
             <OutlinedInput
