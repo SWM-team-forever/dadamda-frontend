@@ -15,7 +15,7 @@ function MemoCreateModalElement() {
     const { modal, closeModal } = useModal();
     const [textAreaValue, setTextAreaValue] = useState('');
 
-    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
     }
