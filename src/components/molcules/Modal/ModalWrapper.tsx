@@ -4,7 +4,7 @@ import { useModal } from '@/hooks/useModal';
 import theme from '@/assets/styles/theme';
 import { CloseIcon } from '@/components/atoms/Icon';
 
-function MemoCreateModalWrapper() {
+function ModalWrapper() {
     const { modal, closeModal } = useModal();
 
     return (
@@ -66,4 +66,4 @@ function MemoCreateModalWrapper() {
     );
 }
 
-export default MemoCreateModalWrapper;
+export default ModalWrapper;

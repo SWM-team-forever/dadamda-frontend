@@ -8,7 +8,7 @@ import theme from '@/assets/styles/themeMuiStyle';
 import { LoginProvider, RequireAuth } from '@/context/LoginContext';
 import { useModal } from '@/hooks/useModal';
 
-import MemoCreateModalWrapper from '@/components/molcules/Modal/MemoCreateModalWrapper';
+import ModalWrapper from '@/components/molcules/Modal/ModalWrapper';
 import Header from '@/components/molcules/Navigation/Header';
 import NotReadyTemplate from '@/components/templates/NotReadyTemplate';
 import ScrapTemplate from '@/components/templates/ScrapTemplate';
@@ -33,7 +33,7 @@ function App() {
             <LoginProvider>
               <BrowserRouter>
                 <Header />
-                {modal.isOpen && <MemoCreateModalWrapper />}
+                {modal.isOpen && <ModalWrapper />}
                 <Routes>
                   <Route path='/' element={<MainPage />}></Route>
                   <Route path='/main' element={<MainPage />}></Route>
