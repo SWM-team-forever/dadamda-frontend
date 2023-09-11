@@ -1,8 +1,13 @@
-import IModalsInfoAtom from "@/types/IModalsInfoAtom";
 import { atom } from "jotai";
 
-const modalAtom = atom<IModalsInfoAtom>({
-    modals: [],
-});
+import { ICustomModalInfo } from "@/types/IModalsInfoAtom";
+
+const modalAtom = atom<ICustomModalInfo>(
+    {
+        title: '',
+        isOpen: false,
+        element: '',
+    }
+);
 
 export default modalAtom;
