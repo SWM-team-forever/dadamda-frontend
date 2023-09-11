@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/atoms/DefaultButton';
@@ -12,11 +12,7 @@ import Overlay from '../components/atoms/Overlay';
 import UserDeleteModal from '../components/organisms/UserDeleteModal';
 import useWarningSnackbar from '../hooks/useWarningSnackbar';
 
-interface UserPageProps {
-    setError: Dispatch<SetStateAction<Partial<null | string>>>,
-}
-
-function UserPage({ setError }: UserPageProps) {
+function UserPage() {
     const [userName, setUserName] = useState('');
     const [userEmail, setUserEmail] = useState('');
     const [accountProvider, setAccountProvider] = useState('');
@@ -46,7 +42,7 @@ function UserPage({ setError }: UserPageProps) {
                 setUserEmail(data.data.email);
                 setAccountProvider(data.data.provider);
                 setProfileImageUrl(data.data.profileUrl);
-            }).catch(err => setError(err.message));
+            });
     }, []);
 
     const navigate = useNavigate();
@@ -79,9 +75,6 @@ function UserPage({ setError }: UserPageProps) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('profileImageURL');
                 navigate('/main');
-            })
-            .catch(err => {
-                setError(err.message)
             });
     }
 
