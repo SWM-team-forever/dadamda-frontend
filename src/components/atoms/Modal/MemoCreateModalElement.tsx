@@ -1,6 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Box, OutlinedInput, Typography } from '@mui/material';
 import { useState, useEffect, ChangeEvent } from 'react';
-import styled from 'styled-components';
 
 import theme from '@/assets/styles/theme';
 
@@ -16,24 +15,38 @@ function MemoCreateModalElement() {
         setTextAreaValue(e.target.value);
     }
 
+    const MAX_MEMO_LENGTH = 1000;
+
     return (
-        <Box>
-            <EditText placeholder="추가할 메모를 입력하세요." onChange={(e) => handleSetValue(e)} />
-            <Typography>{textAreaValue.length} / 1000자</Typography>
+        <Box
+            sx={{
+                p: '0 16px'
+            }}
+        >
+            <OutlinedInput
+                placeholder="추가할 메모를 입력하세요."
+                onChange={(e) => handleSetValue(e)}
+                sx={{
+                    width: '100%',
+                    color: theme.color.Gray_060,
+                    fontWeight: '500',
+                    fontHeight: '150%',
+                }}
+                multiline
+            />
+            <Typography
+                variant="h6"
+                color={theme.color.Gray_060}
+                sx={{
+                    fontWeight: '500',
+                    lineHeight: '150%',
+                    mt: '6px',
+                }}
+            >
+                {textAreaValue.length} / {MAX_MEMO_LENGTH}자
+            </Typography>
         </Box>
     );
 }
-
-const EditText = styled.textarea`
-    font-size: 12px;
-    border-radius: 4px;
-    padding: 15px;
-    background-color: ${theme.color.background_color};
-    border: none;
-    height: 100px;
-    width: 100%;
-    box-sizing: border-box;
-    resize: none;
-`
 
 export default MemoCreateModalElement;
