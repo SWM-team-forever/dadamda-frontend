@@ -1,6 +1,6 @@
 interface ITooltipAtom {
     isOpen: boolean,
-    menu: {
+    menu?: {
         title: string,
         clickAction: (e: React.MouseEvent<HTMLElement>) => void,
     }
