@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DELETE_SCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 interface fetchDatasProps {
     url?: string,
@@ -111,6 +112,10 @@ export const useDeleteScrap = () => {
     return useMutation(fetchDeleteScrap, {
         onSuccess: () => {
             queryClient.invalidateQueries(['scraps']);
+            useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
+        },
+        onError: () => {
+            useDefaultSnackbar('스크랩이 삭제에 실패하였습니다.', 'error');
         }
     });
 }
