@@ -2,11 +2,11 @@ import styled from "styled-components"
 import { Masonry } from "@mui/lab"
 import { useCallback, useState } from "react"
 import { CircularProgress } from "@mui/material"
-
-import ScrapCard from "./ScrapCard"
 import { useQuery } from "@tanstack/react-query"
+
 import { useGetListScrap } from "../../api/scrap"
 import { contentProps } from "../../types/ContentType"
+import ScrapCard from "@/components/organisms/ScrapCard"
 
 function ExistListScrapContainer() {
     const token = localStorage.getItem('token');
