@@ -1,4 +1,4 @@
-let temp;
+let temp: number;
 describe("simple test", () => {
   beforeEach(() => {
     temp = 1;
