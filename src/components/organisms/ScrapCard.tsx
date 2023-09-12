@@ -61,17 +61,20 @@ function ScrapCard({ content }: contentProps) {
     const varient = 'scrapCard';
 
     const { openModal, connectMemoWithScrapId } = useModal();
+    const { closeTooltip } = useTooltip();
     const menuItemContentList = [
         {
             title: '스크랩 수정',
             clickAction: (e: React.MouseEvent<HTMLElement>) => {
                 console.log('clicked');
+                closeTooltip(e);
             }
         },
         {
             title: '스크랩 삭제',
             clickAction: (e: React.MouseEvent<HTMLElement>) => {
-                console.log('clicked');
+                openModal('scrapDelete');
+                closeTooltip(e);
             }
         }
     ]
