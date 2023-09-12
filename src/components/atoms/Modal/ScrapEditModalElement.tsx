@@ -202,8 +202,11 @@ function ScrapEditModalElement() {
         const renderingResult = [];
         for (const key in editalbeContent) {
             const element = editalbeContent[key as keyof typeof editalbeContent];
-            renderingResult.push(
-                element.isDeleted ? deletedContentRendering(element) : existContentRendering(element, key)
+            (element.isDeleted) && renderingResult.push(
+                deletedContentRendering(element)
+            );
+            (!element.isDeleted && isNotNullOrUndefined(element.state)) && renderingResult.push(
+                existContentRendering(element, key)
             );
         }
 
@@ -220,8 +223,11 @@ function ScrapEditModalElement() {
             >
                 <Box
                     onClick={() => {
-                        element.setState('');
+                        element.setState(null);
                         element.setIsDeleted(false);
+                    }}
+                    sx={{
+                        cursor: 'pointer',
                     }}
                 >
                     <PlusCircleIcon width="24px" height="24px" fill={theme.color.Blue_080} />
@@ -263,6 +269,10 @@ function ScrapEditModalElement() {
                     <Box
                         onClick={() => {
                             element.setState('');
+                            element.setIsDeleted(true);
+                        }}
+                        sx={{
+                            cursor: 'pointer',
                         }}
                     >
                         <MinusCircleIcon width="24px" height="24px" fill={theme.color.Gray_070} />
