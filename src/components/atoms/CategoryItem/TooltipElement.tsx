@@ -39,6 +39,7 @@ export default function TooltipElement() {
                 e.stopPropagation();
                 closeTooltip(e);
             }}
+            autoFocus={false}
         >
             {menu && menu.map((menuItem) => (
                 <MenuItem
@@ -51,7 +52,6 @@ export default function TooltipElement() {
                         padding: '6px 8px',
                         color: theme.color.Blue_dry,
                     }}
-
                 >
                     <Typography textAlign="center" variant='h5'>{menuItem.title}</Typography>
                 </MenuItem>
