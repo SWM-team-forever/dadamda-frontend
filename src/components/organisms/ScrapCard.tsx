@@ -19,19 +19,9 @@ import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInf
 import Memo from '@/components/molcules/Memo';
 import ScrapEditModal from '@/components/organisms/ScrapEditModal';
 import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
+import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 
 function ScrapCard({ content }: contentProps) {
-    const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
-    const [, setError] = useState<string | null>(null);
-
-    function showScrapEditModal() {
-        setIsScrapEditModalVisible(true);
-    }
-
-    function hideScrapEditModal() {
-        setIsScrapEditModalVisible(false);
-    }
-
     content = {
         ...content,
         title: decode(content.title, { level: 'html5' }),
@@ -50,12 +40,14 @@ function ScrapCard({ content }: contentProps) {
 
     const { openModal, connectMemoWithScrapId } = useModal();
     const { closeTooltip } = useTooltip();
+    const { setSelectedScrap } = useSelectedScrap();
 
     const menuItemContentList = [
         {
             title: '스크랩 수정',
             clickAction: (e: React.MouseEvent<HTMLElement>) => {
-                console.log('clicked');
+                setSelectedScrap(content);
+                openModal('scrapEdit');
                 closeTooltip(e);
             }
         },
@@ -166,7 +158,6 @@ function ScrapCard({ content }: contentProps) {
                     />
                 </Box>
             </CardWrapper>
-            {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} setError={setError} />}
         </CardContainer>
     )
 }
