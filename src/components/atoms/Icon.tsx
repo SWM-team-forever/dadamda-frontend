@@ -224,3 +224,12 @@ export function MoveToPageIcon({ width, height, fill }: IconProps) {
         </svg>
     );
 }
+
+export function MinusCircleIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" fill={fill} />
+            <path d="M7.37165 11.4871L16.6283 11.4871C16.7647 11.4871 16.8955 11.5413 16.992 11.6377C17.0884 11.7342 17.1426 11.865 17.1426 12.0014C17.1426 12.1378 17.0884 12.2686 16.992 12.365C16.8955 12.4614 16.7647 12.5156 16.6283 12.5156L7.37165 12.5156C7.23526 12.5156 7.10445 12.4614 7.00801 12.365C6.91157 12.2686 6.85739 12.1378 6.85739 12.0014C6.85739 11.865 6.91157 11.7342 7.00801 11.6377C7.10445 11.5413 7.23526 11.4871 7.37165 11.4871Z" fill="white" />
+        </svg>
+    )
+}
