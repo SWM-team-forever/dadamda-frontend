@@ -7,9 +7,7 @@ import { useTooltip } from '@/hooks/useTooltip';
 
 export default function TooltipElement() {
     const { tooltip, closeTooltip } = useTooltip();
-    const anchorEl = tooltip.anchorEl;
-    const menu = tooltip.menu;
-    const open = tooltip.isOpen;
+    const { anchorEl, menu, isOpen } = tooltip;
 
     return (
         <Menu
@@ -36,7 +34,7 @@ export default function TooltipElement() {
                 vertical: 'top',
                 horizontal: 'center',
             }}
-            open={open}
+            open={isOpen}
             onClose={(e: React.MouseEvent) => {
                 e.stopPropagation();
                 closeTooltip(e);
