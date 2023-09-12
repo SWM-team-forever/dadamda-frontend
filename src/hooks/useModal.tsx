@@ -25,15 +25,20 @@ export const useModal = () => {
     }
 
     const connectMemoWithScrapId = useCallback((scrapId: number) => {
-        setModal((prev) => { return { ...prev, scrapId: scrapId } })
-    }, [setModal]);
+        setModal((prev) => {
+            return { ...prev, scrapId: scrapId }
+        })
+    }, [setModal, modal]);
 
     const openModal = useCallback((
         type: string
     ) => {
-        setModal({
-            ...modalTypeMatching[type as keyof typeof modalTypeMatching],
-            isOpen: true,
+        setModal((prev) => {
+            return {
+                ...prev,
+                ...modalTypeMatching[type as keyof typeof modalTypeMatching],
+                isOpen: true,
+            }
         })
     }, [setModal]);
 

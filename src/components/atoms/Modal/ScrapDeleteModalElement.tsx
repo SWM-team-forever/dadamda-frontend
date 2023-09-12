@@ -1,7 +1,7 @@
 import { useDeleteScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
-import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
-import { CircularProgress, Box, Typography, Button } from '@mui/material';
+import { useModal } from '@/hooks/useModal';
+import { Box, Typography, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 
 const scrapDeleteModalButtonStyle = {
@@ -23,6 +23,7 @@ function ScrapDeleteElementModal() {
         setToken(localStorage.getItem('token'));
     }, []);
 
+    const { modal, closeModal } = useModal();
     const { mutate } = useDeleteScrap();
 
     return (
@@ -53,12 +54,18 @@ function ScrapDeleteElementModal() {
                 <Button
                     variant='contained'
                     sx={scrapDeleteModalButtonStyle}
+                    onClick={closeModal}
                 >
                     취소하기
                 </Button>
                 <Button
                     variant='contained'
                     sx={scrapDeleteModalButtonStyle}
+                    onClick={() => {
+                        const scrapId = modal.scrapId;
+                        (token && scrapId) && mutate({ token, scrapId });
+                        closeModal();
+                    }}
                 >
                     삭제하기
                 </Button>
