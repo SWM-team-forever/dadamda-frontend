@@ -1,19 +1,22 @@
 import { usePostCreateScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
+import { EtcIcon, LinkIcon } from '@/components/atoms/Icon';
+import { useModal } from '@/hooks/useModal';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
-import { CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, OutlinedInput } from '@mui/material';
 import { useState, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');
     const [token, setToken] = useState<string | null>(null);
+    const { closeModal } = useModal();
 
     useEffect(() => {
         setToken(localStorage.getItem('token'));
     }, []);
 
-    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
     };
@@ -39,17 +42,68 @@ function ScrapCreateModalElement() {
     }
 
     return (
-        <ModalWrapper>
-            <ModalHeader>
-                <ModalTitleContainer>
-                    <EmphasizedTypography>스크랩 추가하기</EmphasizedTypography>
-                    <DefaultTypography>스크랩할 링크를 입력해주세요.</DefaultTypography>
-                </ModalTitleContainer>
-            </ModalHeader>
-            <EditText rows={1} placeholder="예) www.naver.com" onChange={(e) => handleSetValue(e)} />
-            <ModalFooter>
-            </ModalFooter>
-        </ModalWrapper>
+        <Box
+            sx={{
+                display: 'flex',
+                gap: '9px',
+                mb: '24px',
+            }}
+        >
+            <OutlinedInput
+                placeholder="추가할 메모를 입력하세요."
+                onChange={(e) => handleSetValue(e)}
+                sx={{
+                    width: '100%',
+                    color: theme.color.Gray_060,
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    fontHeight: '150%',
+                    borderRadius: '8px',
+                    backgroundColor: '#FFF',
+                    border: `1px solid ${theme.color.Gray_040}`,
+                    height: 'fit-content',
+                    p: '12px',
+                    gap: '12px',
+                    '& .MuiInputBase-root': {
+                        p: '12px',
+                        display: 'flex',
+                        gap: '12px',
+                        alignItems: 'center',
+                    },
+                    '& input': {
+                        p: '0',
+                    }
+                }}
+                startAdornment={
+                    <LinkIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />
+                }
+            />
+            <Button
+                variant='contained'
+                sx={{
+                    backgroundColor: theme.color.Gray_050,
+                    borderRadius: '4px',
+                    boxShadow: 'none',
+                    width: 'fit-content',
+                    p: '8px 14px',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    lineHeight: '150%',
+                    '&:hover': {
+                        backgroundColor: theme.color.Blue_080,
+                        boxShadow: 'none',
+                    }
+                }}
+                onClick={
+                    () => {
+                        (token) && mutate({ token, textAreaValue });
+                        closeModal();
+                    }
+                }
+            >
+                추가
+            </Button>
+        </Box>
     );
 }
 
