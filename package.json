@@ -11,7 +11,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=chpt_e873d38e5684887",
-    "test": "jest"
+    "test": "vitest --globals"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -23,8 +23,11 @@
     "@react-oauth/google": "^0.11.0",
     "@tanstack/react-query": "^4.33.0",
     "@tanstack/react-query-devtools": "^4.33.0",
+    "@types/jest": "^27.5.1",
     "dayjs": "^1.11.9",
     "html-entities": "^2.4.0",
+    "jotai": "^2.4.2",
+    "jotai-utils": "^0.0.0",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -33,7 +36,8 @@
     "react-scripts": "^5.0.1",
     "react-snap-carousel": "^0.3.2",
     "react-social-login-buttons": "^3.9.1",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.1",
+    "vitest": "^0.33.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.10",
@@ -50,7 +54,6 @@
     "@tanstack/eslint-plugin-query": "^4.32.5",
     "@testing-library/jest-dom": "^6.0.1",
     "@testing-library/react": "^14.0.0",
-    "@types/jest": "^29.5.3",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",

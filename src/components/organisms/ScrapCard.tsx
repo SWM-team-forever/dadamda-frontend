@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 
 import theme from '@/assets/styles/theme';
 import { contentProps } from '@/types/ContentType';
-import ErrorHandler from '@/utility/ErrorHandler';
+import { useModal } from '@/hooks/useModal';
 
 import { DescriptionElement } from '@/components/atoms/CategoryItem/DescrptionElement';
 import MemoCreateButton from '@/components/atoms/CategoryItem/MemoCreateButton';
@@ -14,18 +14,17 @@ import { ThumbnailElement } from '@/components/atoms/CategoryItem/ThumbnailEleme
 import { TitleElement } from '@/components/atoms/CategoryItem/TitleElement';
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import RowContainer from '@/components/atoms/RowContainer';
+import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
 import Memo from '@/components/molcules/Memo';
-import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
-import MemoCreateModal from '@/components/organisms/MemoCreateModal';
 import ScrapDeleteModal from '@/components/organisms/ScrapDeleteModal';
 import ScrapEditModal from '@/components/organisms/ScrapEditModal';
 
 function ScrapCard({ content }: contentProps) {
     const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
     const [isScrapDeleteModalVisible, setIsScrapDeleteModalVisible] = useState(false);
-    const [isMemoCreateModalVisible, setIsMemoCreateModalVisible] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [, setIsMemoCreateModalVisible] = useState(false);
+    const [, setError] = useState<string | null>(null);
 
     function showScrapEditModal() {
         setIsScrapEditModalVisible(true);
@@ -43,14 +42,6 @@ function ScrapCard({ content }: contentProps) {
         setIsScrapDeleteModalVisible(false);
     }
 
-    function showMemoCreateModal() {
-        setIsMemoCreateModalVisible(true);
-    }
-
-    function hideMemoCreateModal() {
-        setIsMemoCreateModalVisible(false);
-    }
-
     content = {
         ...content,
         title: decode(content.title, { level: 'html5' }),
@@ -66,6 +57,8 @@ function ScrapCard({ content }: contentProps) {
         content.authorImageUrl
     ];
     const varient = 'scrapCard';
+
+    const { openModal, connectMemoWithScrapId } = useModal();
 
     return (
         <CardContainer>
@@ -152,6 +145,7 @@ function ScrapCard({ content }: contentProps) {
                     onClick={
                         (e) => {
                             e.stopPropagation();
+                            connectMemoWithScrapId(content.scrapId);
                         }}
                     sx={{
                         width: '100%',
@@ -159,13 +153,13 @@ function ScrapCard({ content }: contentProps) {
                         justifyContent: 'flex-end',
                     }}
                 >
-                    <MemoCreateButton showMemoCreateModal={showMemoCreateModal} />
+                    <MemoCreateButton
+                        showMemoCreateModal={() => openModal('memoCreate')}
+                    />
                 </Box>
             </CardWrapper>
             {isScrapEditModalVisible && <ScrapEditModal hideScrapEditModal={hideScrapEditModal} content={content} setError={setError} />}
             {isScrapDeleteModalVisible && <ScrapDeleteModal hideScrapDeleteModal={hideScrapDeleteModal} scrapId={content.scrapId} />}
-            {isMemoCreateModalVisible && <MemoCreateModal hideMemoCreateModal={hideMemoCreateModal} scrapId={content.scrapId} setError={setError} />}
-            {error && <ErrorHandler error={error} setError={setError} />}
         </CardContainer>
     )
 }
