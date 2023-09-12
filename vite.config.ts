@@ -8,4 +8,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
   },
+  build: {
+    publicDir: 'public',
+  }
 })
