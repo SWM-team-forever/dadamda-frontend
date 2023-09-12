@@ -6,7 +6,7 @@ import { useModal } from "@/hooks/useModal";
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { EDIT_sCRAP_URL } from "@/secret";
-import { Box, TextareaAutosize, Typography } from "@mui/material";
+import { Box, Button, TextareaAutosize, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 
 function ScrapEditModalElement() {
@@ -343,6 +343,20 @@ function ScrapEditModalElement() {
                 {selectedScrap?.thumbnailUrl && <ThumbnailImage thumbnailUrl={selectedScrap?.thumbnailUrl} />}
             </Box>
             {contentRendering()}
+            <Button
+                fullWidth
+                variant="contained"
+                sx={{
+                    backgroundColor: theme.color.Blue_080,
+                    borderRadius: '4px',
+                    fontSize: '16px',
+                    fontWeight: '600',
+                    lineHeight: '150%',
+                    p: '8px 0',
+                }}
+            >
+                변경하기
+            </Button>
         </Box>
     )
 }
