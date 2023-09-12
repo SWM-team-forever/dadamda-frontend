@@ -1,10 +1,13 @@
+import theme from "@/assets/styles/theme";
+import { MinusCircleIcon, PlusCircleIcon } from "@/components/atoms/Icon";
 import TextArea from "@/components/atoms/TextArea";
+import ThumbnailImage from "@/components/atoms/ThumbnailImage";
 import { useModal } from "@/hooks/useModal";
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { EDIT_sCRAP_URL } from "@/secret";
-import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Box, TextareaAutosize, Typography } from "@mui/material";
+import { ChangeEvent, useEffect, useState } from "react";
 
 function ScrapEditModalElement() {
     const { selectedScrap } = useSelectedScrap();
@@ -195,51 +198,105 @@ function ScrapEditModalElement() {
                 })
     }
 
-
     const contentRendering = () => {
         const renderingResult = [];
         for (const key in editalbeContent) {
             const element = editalbeContent[key as keyof typeof editalbeContent];
-            (!element.isDeleted && isNotNullOrUndefined(element.state))
-                && renderingResult.push(
-                    <div>
-                        {
-                            < TextArea
-                                labelText={element.label}
-                                defaultValue={content[key as keyof typeof content] as string}
-                                setState={element.setState}
-                                key={element.label + content.scrapId}
-                                isDeleteable={element.isDeleteable}
-                            />
-                        }
-                    </div>);
+            renderingResult.push(
+                element.isDeleted ? deletedContentRendering(element) : existContentRendering(element, key)
+            );
         }
 
         return renderingResult;
     }
 
-    const deletedContentRendering = () => {
-        const renderingResult = [];
-        for (const key in editalbeContent) {
-            const element = editalbeContent[key as keyof typeof editalbeContent];
-            element.isDeleted
-                && renderingResult.push(
-                    <div>
-                        {
-                            <AddableElement
-                                elementTitle={element.label}
-                                key={element.label + content.scrapId}
-                                onClick={() => {
-                                    element.setState('');
-                                    element.setIsDeleted(false);
-                                }}
-                            />
-                        }
-                    </div>
-                );
+    const deletedContentRendering = (element: any) => {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    gap: '8px',
+                }}
+            >
+                <Box
+                    onClick={() => {
+                        element.setState('');
+                        element.setIsDeleted(false);
+                    }}
+                >
+                    <PlusCircleIcon width="24px" height="24px" fill={theme.color.Blue_080} />
+                </Box>
+                <Typography
+                    color={theme.color.Gray_090}
+                    variant="h3"
+                    sx={{
+                        fontWeight: '600',
+                        lineHeight: '150%',
+                    }}
+                >
+                    {element.label}
+                </Typography>
+            </Box>
+        )
+    }
+
+    const existContentRendering = (element: any, key: string) => {
+        const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+            e.preventDefault();
+            element.setState(e.target.value);
         }
 
-        return renderingResult;
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        gap: '8px',
+                    }}
+                >
+                    <Box
+                        onClick={() => {
+                            element.setState('');
+                        }}
+                    >
+                        <MinusCircleIcon width="24px" height="24px" fill={theme.color.Gray_070} />
+                    </Box>
+                    <Typography
+                        color={theme.color.Gray_090}
+                        variant="h3"
+                        sx={{
+                            fontWeight: '600',
+                            lineHeight: '150%',
+                        }}
+                    >
+                        {element.label}
+                    </Typography>
+                </Box>
+                <TextareaAutosize
+                    defaultValue={content[key as keyof typeof content] as string}
+                    style={{
+                        resize: 'none',
+                        background: '#FFF',
+                        border: `1px solid ${theme.color.Gray_040}`,
+                        width: '100%',
+                        boxSizing: 'border-box',
+                        borderRadius: '8px',
+                        padding: '10px',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        lineHeight: '150%',
+                        color: theme.color.Gray_090,
+                    }}
+                    onChange={e => handleSetValue(e)}
+                />
+            </Box>
+        )
     }
 
     return (
@@ -250,12 +307,32 @@ function ScrapEditModalElement() {
                 overflowY: 'scroll',
                 overflowX: 'hidden',
                 boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '24px',
             }}
         >
-            <Typography>미리보기 이미지</Typography>
-            {selectedScrap?.thumbnailUrl && <img src={selectedScrap.thumbnailUrl} alt="미리보기 이미지" />}
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                    width: '100%',
+                }}
+            >
+                <Typography
+                    color={theme.color.Gray_090}
+                    variant="h3"
+                    sx={{
+                        fontWeight: '600',
+                        lineHeight: '150%',
+                    }}
+                >
+                    미리보기 이미지
+                </Typography>
+                {selectedScrap?.thumbnailUrl && <ThumbnailImage thumbnailUrl={selectedScrap?.thumbnailUrl} />}
+            </Box>
             {contentRendering()}
-            {deletedContentRendering()}
         </Box>
     )
 }
