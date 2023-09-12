@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import modalAtom from "@/state/modalAtom";
 
 import MemoCreateModalElement from "@/components/atoms/Modal/MemoCreateModalElement";
+import ScrapCreateModalElement from "@/components/atoms/Modal/ScrapCreateModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -16,6 +17,10 @@ export const useModal = () => {
         memoCreate: {
             title: '메모 추가하기',
             element: <MemoCreateModalElement />,
+        },
+        scrapCreate: {
+            title: '스크랩 추가하기',
+            element: <ScrapCreateModalElement />,
         }
     }
 
