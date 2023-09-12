@@ -9,6 +9,7 @@ export default function TooltipElement() {
     const { tooltip, closeTooltip } = useTooltip();
     const anchorEl = tooltip.anchorEl;
     const menu = tooltip.menu;
+    const open = tooltip.isOpen;
 
     return (
         <Menu
@@ -20,9 +21,9 @@ export default function TooltipElement() {
                 '& .MuiList-root': {
                     padding: '0px',
                 },
+                filter: 'drop-shadow(0px 2px 16px rgba(19, 48, 74, 0.08))',
                 mt: '24px',
                 fill: '#FFF',
-                filter: 'drop-shadow(0px 2px 16px rgba(19, 48, 74, 0.08))',
             }}
             id="menu-appbar"
             anchorEl={anchorEl}
@@ -35,7 +36,7 @@ export default function TooltipElement() {
                 vertical: 'top',
                 horizontal: 'center',
             }}
-            open={Boolean(anchorEl)}
+            open={open}
             onClose={(e: React.MouseEvent) => {
                 e.stopPropagation();
                 closeTooltip(e);
@@ -52,7 +53,7 @@ export default function TooltipElement() {
                         padding: '6px 8px',
                         color: theme.color.Blue_dry,
                     }}
-                    autoFocus
+
                 >
                     <Typography textAlign="center" variant='h5'>{menuItem.title}</Typography>
                 </MenuItem>
