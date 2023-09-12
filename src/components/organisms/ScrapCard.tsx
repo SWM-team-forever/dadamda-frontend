@@ -19,6 +19,8 @@ import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInf
 import Memo from '@/components/molcules/Memo';
 import ScrapDeleteModal from '@/components/organisms/ScrapDeleteModal';
 import ScrapEditModal from '@/components/organisms/ScrapEditModal';
+import { useTooltip } from '@/hooks/useTooltip';
+import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
 
 function ScrapCard({ content }: contentProps) {
     const [isScrapEditModalVisible, setIsScrapEditModalVisible] = useState(false);
@@ -59,6 +61,20 @@ function ScrapCard({ content }: contentProps) {
     const varient = 'scrapCard';
 
     const { openModal, connectMemoWithScrapId } = useModal();
+    const menuItemContentList = [
+        {
+            title: '스크랩 수정',
+            clickAction: (e: React.MouseEvent<HTMLElement>) => {
+                console.log('clicked');
+            }
+        },
+        {
+            title: '스크랩 삭제',
+            clickAction: (e: React.MouseEvent<HTMLElement>) => {
+                console.log('clicked');
+            }
+        }
+    ]
 
     return (
         <CardContainer>
@@ -77,7 +93,7 @@ function ScrapCard({ content }: contentProps) {
                     }}
                 >
                     {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
-                    <Tooltip />
+                    <TooltipWrapper menu={menuItemContentList} />
                 </Box>
                 {content.title && <TitleElement title={content.title} varient={varient} />}
                 {
