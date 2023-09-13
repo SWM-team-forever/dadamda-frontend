@@ -5,6 +5,7 @@ import modalAtom from "@/state/modalAtom";
 
 import MemoCreateModalElement from "@/components/atoms/Modal/MemoCreateModalElement";
 import LoginModalElement from "@/components/atoms/Modal/LoginModalElement";
+import UserDeleteModalElement from "@/components/atoms/Modal/UserDeleteModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -24,7 +25,7 @@ export const useModal = () => {
         },
         userDelete: {
             title: '회원 탈퇴하기',
-            element: <></>,
+            element: <UserDeleteModalElement />,
         }
     }
 
