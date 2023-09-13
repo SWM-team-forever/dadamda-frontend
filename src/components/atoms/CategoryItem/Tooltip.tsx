@@ -9,7 +9,6 @@ import theme from '../../../assets/styles/theme';
 
 export default function CustomizedMenus() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
     const handleOpenScrapEditOrDeleteMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
