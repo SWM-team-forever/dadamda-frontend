@@ -32,7 +32,7 @@ export const useDeleteUser = () => {
             logout();
             useDefaultSnackbar('회원 탈퇴에 성공했습니다', 'success');
         },
-        onError: (error) => {
+        onError: () => {
             useDefaultSnackbar('회원 탈퇴에 실패했습니다', 'error');
         }
     });
