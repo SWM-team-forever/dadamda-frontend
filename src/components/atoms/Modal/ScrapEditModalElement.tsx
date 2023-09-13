@@ -1,3 +1,4 @@
+import { useEditScrap } from "@/api/scrap";
 import theme from "@/assets/styles/theme";
 import { MinusCircleIcon, PlusCircleIcon } from "@/components/atoms/Icon";
 import ThumbnailImage from "@/components/atoms/ThumbnailImage";
@@ -155,6 +156,7 @@ function ScrapEditModalElement() {
     });
 
     initiateEditableContent();
+    const { mutate } = useEditScrap();
 
     const editScrap = () => {
         for (const key in editalbeContent) {
@@ -164,31 +166,7 @@ function ScrapEditModalElement() {
             }
         }
 
-        const url = EDIT_sCRAP_URL;
-        token &&
-            fetch(url, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-                body: JSON.stringify(content),
-            }).then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-                .then(() => {
-                    closeModal();
-                    useDefaultSnackbar('스크랩이 변경되었습니다.', 'success');
-                })
-                .then(() => {
-                    closeModal();
-                })
+        token && mutate({ token, content });
     }
 
     const contentRendering = () => {
