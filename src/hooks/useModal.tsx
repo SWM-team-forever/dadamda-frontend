@@ -6,6 +6,7 @@ import modalAtom from "@/state/modalAtom";
 import MemoCreateModalElement from "@/components/atoms/Modal/MemoCreateModalElement";
 import ScrapDeleteElementModal from "@/components/atoms/Modal/ScrapDeleteModalElement";
 import ScrapEditModalElement from "@/components/atoms/Modal/ScrapEditModalElement";
+import ScrapCreateModalElement from "@/components/atoms/Modal/ScrapCreateModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -26,6 +27,10 @@ export const useModal = () => {
         scrapEdit: {
             title: '스크랩 편집하기',
             element: <ScrapEditModalElement />,
+        },
+        scrapCreate: {
+            title: '스크랩 추가하기',
+            element: <ScrapCreateModalElement />,
         }
     }
 
