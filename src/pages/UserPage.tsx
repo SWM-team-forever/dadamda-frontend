@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import Button from '../components/atoms/DefaultButton';
 import RowContainer from '../components/atoms/RowContainer';
 
 import theme from '../assets/styles/theme';
-import { DELETE_USER_URL, GET_USER_INFORMATION_URL } from '../secret';
+import { GET_USER_INFORMATION_URL } from '../secret';
 import defaultUserImage from '../assets/images/Avatar.png';
-import Overlay from '../components/atoms/Overlay';
-import UserDeleteModal from '../components/organisms/UserDeleteModal';
 import useWarningSnackbar from '../hooks/useWarningSnackbar';
+import { useLogout } from '@/hooks/useAccount';
+import { useModal } from '@/hooks/useModal';
 
 function UserPage() {
     const [userName, setUserName] = useState('');
@@ -45,49 +44,6 @@ function UserPage() {
             });
     }, []);
 
-    const navigate = useNavigate();
-
-    const logout = () => {
-        localStorage.removeItem('token');
-        navigate('/main');
-    };
-
-    const deleteUser = () => {
-        const token = localStorage.getItem('token');
-        const url = DELETE_USER_URL;
-        token && fetch(url, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "X-AUTH-TOKEN": token,
-            },
-        })
-            .then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-            .then(() => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('profileImageURL');
-                navigate('/main');
-            });
-    }
-
-    const [isUserDeleteModalVisible, setIsUserDeleteModalVisible] = useState(false);
-
-    const showUserDeleteModal = () => {
-        setIsUserDeleteModalVisible(true);
-    }
-
-    const hideUserDeleteModal = () => {
-        setIsUserDeleteModalVisible(false);
-    }
-
     const userPageMenu = [
         {
             name: '이름',
@@ -101,6 +57,8 @@ function UserPage() {
             name: '연결된 소셜 계정',
             content: `${accountProvider} 계정으로 가입되셨습니다.`
         }];
+
+    const { openModal } = useModal();
 
     return (
         <>
@@ -124,16 +82,11 @@ function UserPage() {
                         })}
                     </Content>
                     <RowContainer>
-                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={logout} />
-                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={showUserDeleteModal} />
+                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={useLogout} />
+                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={() => openModal('userDelete')} />
                     </RowContainer>
                     <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
-                {isUserDeleteModalVisible &&
-                    <Overlay>
-                        <UserDeleteModal hideUserDeleteModal={hideUserDeleteModal} deleteUser={deleteUser} />
-                    </Overlay>
-                }
             </Wrapper>
         </>
     );
