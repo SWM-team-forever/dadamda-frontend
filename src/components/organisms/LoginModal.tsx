@@ -7,32 +7,17 @@ import ColumnContainer from '../atoms/ColumnContainer';
 import { googleLoginURL } from '../../secret';
 import LoginButton from '../atoms/LoginButton';
 import googleLogo from '../../assets/icons/btn_google_light_normal_ios.svg';
-import naverLogo from '../../assets/icons/btnG_아이콘사각.png';
-import kakaoLogo from '../../assets/icons/kakao_login_large_wide.png';
+import { useModal } from '@/hooks/useModal';
+import { Box } from '@mui/material';
 
-interface LoginModalProps {
-    hideLoginModal: () => void;
-}
-
-function LoginModal({ hideLoginModal }: LoginModalProps) {
+function LoginModal() {
     const oAuthHandler = (): void => {
         window.location.href = googleLoginURL;
     };
 
     return (
-        <ModalContainer>
-            <CrossIconContainer>
-                <img src={CrossIcon}
-                    style={{ width: "24px", height: "24px", cursor: "pointer" }}
-                    onClick={hideLoginModal}
-                />
-            </CrossIconContainer>
-            <LogoContainer>
-                <img src={logo} style={{ width: "36px", height: "36px" }} />
-                <EmpasizedTypography>다담다</EmpasizedTypography>
-            </LogoContainer>
+        <Box>
             <TextContainer>
-                <EmpasizedTypography>소셜 로그인하기</EmpasizedTypography>
                 <DefaultTypography>다담다 서비스를 사용하기 위해</DefaultTypography>
                 <DefaultTypography>로그인해주세요.</DefaultTypography>
             </TextContainer>
@@ -44,42 +29,11 @@ function LoginModal({ hideLoginModal }: LoginModalProps) {
                         style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
                         onClick={oAuthHandler}
                     />
-                    {/* <img src={kakaoLogo} />
-                    <LoginButton
-                        text={'네이버로 시작하기'}
-                        iconSource={naverLogo}
-                        style={{ color: 'white', backgroundColor: '#03C75A' }} /> */}
                 </ColumnContainer>
             </ButtonContainer>
-        </ModalContainer>
+        </Box>
     );
 }
-
-const ModalContainer = styled.div`
-    width: 390px;
-    background-color: white;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: ${theme.style.shadow};
-    z-index: 1;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    @media screen and (max-width: 500px) {
-      width: 300px;
-  }
-`
-
-const CrossIconContainer = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding: 15px;
-    box-sizing: border-box;
-`
 
 const LogoContainer = styled.div`
     width: 100%;
