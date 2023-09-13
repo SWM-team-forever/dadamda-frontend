@@ -1,10 +1,9 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { Box, Button, CircularProgress, OutlinedInput } from '@mui/material';
+import { Box, Button, OutlinedInput } from '@mui/material';
 
 import { usePostCreateScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
-import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 
 import { LinkIcon } from '@/components/atoms/Icon';
 
@@ -37,7 +36,6 @@ function ScrapCreateModalElement() {
                 onChange={(e) => handleSetValue(e)}
                 sx={{
                     width: '100%',
-                    color: theme.color.Gray_060,
                     fontSize: '14px',
                     fontWeight: '500',
                     fontHeight: '150%',
@@ -55,7 +53,11 @@ function ScrapCreateModalElement() {
                     },
                     '& input': {
                         p: '0',
-                    }
+                    },
+                    '& fieldset': {
+                        border: 'none',
+                        color: theme.color.Gray_060,
+                    },
                 }}
                 startAdornment={
                     <LinkIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />
