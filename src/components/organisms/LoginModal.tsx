@@ -33,14 +33,6 @@ function LoginModal() {
     );
 }
 
-const LogoContainer = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-`
-
 const ButtonContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -63,11 +55,6 @@ const TextContainer = styled.div`
 
 const DefaultTypography = styled.span`
     font-size: 14px;
-`
-
-const EmpasizedTypography = styled.span`
-    font-size: 20px;
-    font-weight: bold;
 `
 
 export default LoginModal;
