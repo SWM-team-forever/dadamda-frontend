@@ -21,6 +21,10 @@ export const useModal = () => {
         login: {
             title: '소셜 로그인하기',
             element: <LoginModalElement />,
+        },
+        userDelete: {
+            title: '회원 탈퇴하기',
+            element: <></>,
         }
     }
 
