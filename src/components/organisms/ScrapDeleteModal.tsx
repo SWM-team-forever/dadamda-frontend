@@ -2,12 +2,11 @@ import styled from 'styled-components';
 
 import theme from '../../assets/styles/theme';
 import Button from '../atoms/DefaultButton';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { DELETE_SCRAP_URL } from '../../secret';
+import { useEffect, useState } from 'react';
 
 import { useDefaultSnackbar } from '../../hooks/useWarningSnackbar';
 import { CircularProgress } from '@mui/material';
-import { useDeleteScrap, usePostCreateScrap } from '../../api/scrap';
+import { useDeleteScrap } from '../../api/scrap';
 
 interface ScrapDeleteModalProps {
     hideScrapDeleteModal: () => void,
