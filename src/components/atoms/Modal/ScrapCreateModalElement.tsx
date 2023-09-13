@@ -118,6 +118,7 @@ function ScrapCreateModalElement() {
             <FormHelperText
                 sx={{
                     alignSelf: 'start',
+                    color: '#f44336',
                 }}
             >
                 {!isValidationSuccess() && validation()}
