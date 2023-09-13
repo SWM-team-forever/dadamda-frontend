@@ -10,11 +10,7 @@ const Hero = () => {
     const { openModal } = useModal();
 
     const startButtonHandler = () => {
-        if (token) {
-            navigate('/scrap');
-        }
-
-        openModal('login');
+        token ? navigate('/scrap') : openModal('login');
     }
 
     return (
