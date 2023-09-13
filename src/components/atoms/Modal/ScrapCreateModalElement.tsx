@@ -23,9 +23,9 @@ function ScrapCreateModalElement() {
 
     const { mutate } = usePostCreateScrap();
 
-    const SCRAP_LINK_MAX_LENGTH = 1024;
+    const SCRAP_LINK_MAX_LENGTH = 2083;
     const isLessThanLengthLimitation = (textAreaValue.length <= SCRAP_LINK_MAX_LENGTH);
-    const isBlank = (textAreaValue.replace(/\s+/g, '').length > 0);
+    const iswhiteSpaceExist = (textAreaValue.replace(/\s+/g, '').length !== textAreaValue.length);
     const isEntered = (textAreaValue.length > 0);
     function isValidURL() {
         const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/;
@@ -38,10 +38,10 @@ function ScrapCreateModalElement() {
         }
 
         if (!isEntered) {
-            return '';
+            return ' ';
         }
 
-        if (!isBlank || !isValidURL()) {
+        if (!iswhiteSpaceExist || !isValidURL()) {
             return '유효하지 않은 URL입니다.';
         }
 
@@ -132,7 +132,7 @@ function ScrapCreateModalElement() {
                     color: '#f44336',
                 }}
             >
-                {!isValidationSuccess() && validation()}
+                {!isValidationSuccess() ? validation() : ' '}
             </FormHelperText>
         </FormControl>
     );
