@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import modalAtom from "@/state/modalAtom";
 
 import MemoCreateModalElement from "@/components/atoms/Modal/MemoCreateModalElement";
+import LoginModal from "@/components/organisms/LoginModal";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -16,6 +17,10 @@ export const useModal = () => {
         memoCreate: {
             title: '메모 추가하기',
             element: <MemoCreateModalElement />,
+        },
+        login: {
+            title: '소셜 로그인하기',
+            element: <LoginModal />,
         }
     }
 
