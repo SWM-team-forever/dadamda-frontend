@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import { Box } from '@mui/material';
 
-import theme from '../../assets/styles/theme';
-import { googleLoginURL } from '../../secret';
-import googleLogo from '../../assets/icons/btn_google_light_normal_ios.svg';
+import { googleLoginURL } from '@/secret';
+import theme from '@/assets/styles/theme';
+import googleLogo from '@/assets/icons/btn_google_light_normal_ios.svg';
 
-import ColumnContainer from '../atoms/ColumnContainer';
-import LoginButton from '../atoms/LoginButton';
+import ColumnContainer from '@/components/atoms/ColumnContainer';
+import LoginButton from '@/components/atoms/LoginButton';
 
-function LoginModal() {
+function LoginModalElement() {
     const oAuthHandler = (): void => {
         window.location.href = googleLoginURL;
     };
@@ -57,4 +57,4 @@ const DefaultTypography = styled.span`
     font-size: 14px;
 `
 
-export default LoginModal;
+export default LoginModalElement;

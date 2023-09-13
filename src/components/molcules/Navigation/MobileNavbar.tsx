@@ -6,12 +6,12 @@ import theme from '../../../assets/styles/theme';
 
 import { Box, Typography } from '@mui/material';
 
-import LoginModal from '../../organisms/LoginModal';
 import Overlay from '../../atoms/Overlay';
 import { CloseIcon, DownArrowIcon, ProfileIcon } from '../../atoms/Icon';
 import ProfileImage from '../../atoms/ProfileImage';
 import ColumnContainer from '../../atoms/ColumnContainer';
 import ScrapNaviagtion from './ScrapNaviagtion';
+import { useModal } from '@/hooks/useModal';
 
 interface MobileNavbarProps {
   toggleMobileNavbar: () => void;
@@ -19,24 +19,16 @@ interface MobileNavbarProps {
 
 function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
+  const { openModal } = useModal();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   };
 
-  const showLoginModal = () => {
-    setIsLoginModalVisible(true);
-  }
-
-  const hideLoginModal = () => {
-    setIsLoginModalVisible(false);
-  }
-
   const navigate = useNavigate();
 
   const login = () => {
-    showLoginModal();
+    openModal('login');
   }
 
   const logout = () => {
@@ -169,11 +161,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
           {isLogin ? '로그아웃' : '로그인/회원가입'}
         </Typography>
       </NavbarMenu>
-      {isLoginModalVisible &&
-        <Overlay>
-          <LoginModal hideLoginModal={hideLoginModal} />
-        </Overlay>
-      }
     </NavbarContainer>
   );
 }
