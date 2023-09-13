@@ -6,6 +6,9 @@ import modalAtom from "@/state/modalAtom";
 import MemoCreateModalElement from "@/components/atoms/Modal/MemoCreateModalElement";
 import LoginModalElement from "@/components/atoms/Modal/LoginModalElement";
 import UserDeleteModalElement from "@/components/atoms/Modal/UserDeleteModalElement";
+import ScrapDeleteElementModal from "@/components/atoms/Modal/ScrapDeleteModalElement";
+import ScrapEditModalElement from "@/components/atoms/Modal/ScrapEditModalElement";
+import ScrapCreateModalElement from "@/components/atoms/Modal/ScrapCreateModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -26,19 +29,36 @@ export const useModal = () => {
         userDelete: {
             title: '회원 탈퇴하기',
             element: <UserDeleteModalElement />,
+        },
+        scrapDelete: {
+            title: '스크랩 삭제하기',
+            element: <ScrapDeleteElementModal />,
+        },
+        scrapEdit: {
+            title: '스크랩 편집하기',
+            element: <ScrapEditModalElement />,
+        },
+        scrapCreate: {
+            title: '스크랩 추가하기',
+            element: <ScrapCreateModalElement />,
         }
     }
 
     const connectMemoWithScrapId = useCallback((scrapId: number) => {
-        setModal((prev) => { return { ...prev, scrapId: scrapId } })
-    }, [setModal]);
+        setModal((prev) => {
+            return { ...prev, scrapId: scrapId }
+        })
+    }, [setModal, modal]);
 
     const openModal = useCallback((
         type: string
     ) => {
-        setModal({
-            ...modalTypeMatching[type as keyof typeof modalTypeMatching],
-            isOpen: true,
+        setModal((prev) => {
+            return {
+                ...prev,
+                ...modalTypeMatching[type as keyof typeof modalTypeMatching],
+                isOpen: true,
+            }
         })
     }, [setModal]);
 

@@ -2,6 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 
 import theme from '../../assets/styles/theme';
 import SearchBar from '@/components/molcules/SearchBar';
+import { useModal } from '@/hooks/useModal';
 
 interface ScrapListHeaderProps {
     count: number,
@@ -9,6 +10,8 @@ interface ScrapListHeaderProps {
 }
 
 function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
+    const { openModal } = useModal();
+
     return (
         <Box
             sx={{
@@ -53,6 +56,7 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
                 <Button
                     color='primary'
                     variant='contained'
+                    onClick={() => openModal('scrapCreate')}
                 >
                     + 스크랩 추가
                 </Button>

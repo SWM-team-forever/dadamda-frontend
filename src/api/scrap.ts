@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DELETE_SCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
+import { DELETE_SCRAP_URL, EDIT_sCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+import { contentProps } from "@/types/ContentType";
 
 interface fetchDatasProps {
     url?: string,
@@ -79,7 +81,8 @@ export const usePostCreateScrap = () => {
     return useMutation(fetchPostCreateScrap, {
         onSuccess: () => {
             queryClient.invalidateQueries(['scraps']);
-        }
+            useDefaultSnackbar('스크랩이 생성되었습니다', 'success');
+        },
     });
 }
 
@@ -111,6 +114,47 @@ export const useDeleteScrap = () => {
     return useMutation(fetchDeleteScrap, {
         onSuccess: () => {
             queryClient.invalidateQueries(['scraps']);
+            useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
+        },
+        onError: () => {
+            useDefaultSnackbar('스크랩이 삭제에 실패하였습니다.', 'error');
+        }
+    });
+}
+
+interface fetchEditScrapProps {
+    token: string,
+    content: contentProps['content'],
+}
+
+const fetchEditScrap = async({token, content}: fetchEditScrapProps) => {
+    return await fetch(EDIT_sCRAP_URL, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+        body: JSON.stringify(content),
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    })
+}
+
+export const useEditScrap = () => {
+    const queryClient = useQueryClient();
+    return useMutation(fetchEditScrap, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['scraps']);
+            useDefaultSnackbar('스크랩이 변경되었습니다.', 'success');
+        },
+        onError: () => {
+            useDefaultSnackbar('스크랩이 변경에 실패하였습니다.', 'error');
         }
     });
 }
