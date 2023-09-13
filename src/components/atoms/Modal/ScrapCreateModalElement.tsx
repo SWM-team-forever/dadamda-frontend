@@ -1,5 +1,5 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { Box, Button, OutlinedInput } from '@mui/material';
+import { Box, Button, FormControl, FormHelperText, OutlinedInput } from '@mui/material';
 
 import { usePostCreateScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
@@ -23,72 +23,100 @@ function ScrapCreateModalElement() {
 
     const { mutate } = usePostCreateScrap();
 
+    const SCRAP_LINK_MAX_LENGTH = 1024;
+    const isLessThanLengthLimitation = (textAreaValue.length <= SCRAP_LINK_MAX_LENGTH);
+    const validation = () => {
+        if (!isLessThanLengthLimitation) {
+            return `최대 ${SCRAP_LINK_MAX_LENGTH}글자까지만 입력 가능합니다.`;
+        }
+        return 'success';
+    }
+    const isValidationSuccess = () => validation() === 'success';
+
     return (
-        <Box
+        <FormControl
             sx={{
                 display: 'flex',
-                gap: '9px',
                 mb: '24px',
+                width: '100%',
+                alignItems: 'center',
             }}
         >
-            <OutlinedInput
-                placeholder="추가할 메모를 입력하세요."
-                onChange={(e) => handleSetValue(e)}
+            <Box
                 sx={{
+                    display: 'flex',
                     width: '100%',
-                    fontSize: '14px',
-                    fontWeight: '500',
-                    fontHeight: '150%',
-                    borderRadius: '8px',
-                    backgroundColor: '#FFF',
-                    border: `1px solid ${theme.color.Gray_040}`,
-                    height: 'fit-content',
-                    p: '12px',
-                    gap: '12px',
-                    '& .MuiInputBase-root': {
-                        p: '12px',
-                        display: 'flex',
-                        gap: '12px',
-                        alignItems: 'center',
-                    },
-                    '& input': {
-                        p: '0',
-                    },
-                    '& fieldset': {
-                        border: 'none',
-                        color: theme.color.Gray_060,
-                    },
+                    gap: '9px',
                 }}
-                startAdornment={
-                    <LinkIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />
-                }
-            />
-            <Button
-                variant='contained'
-                sx={{
-                    backgroundColor: theme.color.Gray_050,
-                    borderRadius: '4px',
-                    boxShadow: 'none',
-                    width: 'fit-content',
-                    p: '8px 14px',
-                    fontSize: '16px',
-                    fontWeight: '600',
-                    lineHeight: '150%',
-                    '&:hover': {
-                        backgroundColor: theme.color.Blue_080,
-                        boxShadow: 'none',
-                    }
-                }}
-                onClick={
-                    () => {
-                        (token) && mutate({ token, textAreaValue });
-                        closeModal();
-                    }
-                }
             >
-                추가
-            </Button>
-        </Box>
+                <OutlinedInput
+                    placeholder="추가할 스크랩 주소를 입력하세요."
+                    onChange={(e) => handleSetValue(e)}
+                    error={!isValidationSuccess()}
+                    sx={{
+                        width: '100%',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        fontHeight: '150%',
+                        borderRadius: '8px',
+                        backgroundColor: '#FFF',
+                        border: `1px solid ${theme.color.Gray_040}`,
+                        height: 'fit-content',
+                        p: '12px',
+                        gap: '12px',
+                        '& .MuiInputBase-root': {
+                            p: '12px',
+                            display: 'flex',
+                            gap: '12px',
+                            alignItems: 'center',
+                        },
+                        '& input': {
+                            p: '0',
+                        },
+                        '& fieldset': {
+                            border: 'none',
+                            color: theme.color.Gray_060,
+                        },
+                    }}
+                    startAdornment={
+                        <LinkIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />
+                    }
+                />
+                <Button
+                    variant='contained'
+                    sx={{
+                        backgroundColor: theme.color.Gray_050,
+                        borderRadius: '8px',
+                        boxShadow: 'none',
+                        width: 'fit-content',
+                        p: '8px 14px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        lineHeight: '150%',
+                        '&:hover': {
+                            backgroundColor: theme.color.Blue_080,
+                            boxShadow: 'none',
+                        }
+                    }}
+                    disabled={!isValidationSuccess()}
+                    onClick={
+                        () => {
+                            (token) && mutate({ token, textAreaValue });
+                            closeModal();
+                        }
+                    }
+                >
+                    추가
+                </Button>
+            </Box>
+            <FormHelperText
+                sx={{
+                    alignSelf: 'start',
+                }}
+            >
+                {!isValidationSuccess() && validation()}
+            </FormHelperText>
+        </FormControl>
     );
 }
 
