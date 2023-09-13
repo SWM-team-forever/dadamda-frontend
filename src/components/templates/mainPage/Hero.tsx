@@ -1,31 +1,16 @@
-import React, { useState } from 'react';
 import { Grid, Typography, Button, Box } from '@mui/material';
-import heroImage from '../../../assets/images/heroImage.png'
 import { useNavigate } from 'react-router-dom';
-import Overlay from '../../atoms/Overlay';
-import LoginModal from '../../organisms/LoginModal';
-import theme from '../../../assets/styles/theme';
+
+import heroImage from '../../../assets/images/heroImage.png'
+import { useModal } from '@/hooks/useModal';
 
 const Hero = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
-
-    const showLoginModal = () => {
-        setIsLoginModalVisible(true);
-    }
-
-    const hideLoginModal = () => {
-        setIsLoginModalVisible(false);
-    }
-
+    const { openModal } = useModal();
 
     const startButtonHandler = () => {
-        if (token) {
-            navigate('/scrap');
-        }
-
-        showLoginModal();
+        token ? navigate('/scrap') : openModal('login');
     }
 
     return (
@@ -75,10 +60,6 @@ const Hero = () => {
                         boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.1) 0px 4px 6px, rgba(0, 0, 0, 0.15) 0px 8px 30px',
                     }} />
                 </Grid>
-                {isLoginModalVisible &&
-                    <Overlay>
-                        <LoginModal hideLoginModal={hideLoginModal} />
-                    </Overlay>}
             </Grid>
         </Box>
     );

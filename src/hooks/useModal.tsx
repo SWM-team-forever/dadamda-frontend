@@ -4,6 +4,8 @@ import { useCallback } from "react";
 import modalAtom from "@/state/modalAtom";
 
 import MemoCreateModalElement from "@/components/atoms/Modal/MemoCreateModalElement";
+import LoginModalElement from "@/components/atoms/Modal/LoginModalElement";
+import UserDeleteModalElement from "@/components/atoms/Modal/UserDeleteModalElement";
 import ScrapDeleteElementModal from "@/components/atoms/Modal/ScrapDeleteModalElement";
 import ScrapEditModalElement from "@/components/atoms/Modal/ScrapEditModalElement";
 import ScrapCreateModalElement from "@/components/atoms/Modal/ScrapCreateModalElement";
@@ -19,6 +21,14 @@ export const useModal = () => {
         memoCreate: {
             title: '메모 추가하기',
             element: <MemoCreateModalElement />,
+        },
+        login: {
+            title: '소셜 로그인하기',
+            element: <LoginModalElement />,
+        },
+        userDelete: {
+            title: '회원 탈퇴하기',
+            element: <UserDeleteModalElement />,
         },
         scrapDelete: {
             title: '스크랩 삭제하기',
