@@ -11,14 +11,13 @@ const fetchDeleteUser = async (token: string) => {
             "X-AUTH-TOKEN": token,
         },
     })
-    .then((response) => {
-        return response.json().then(body => {
-            if (response.ok) {
-                return body;
-            } else {
-                throw new Error(body.resultCode);
-            }
-        })
+    .then(async (response) => {
+        const body = await response.json();
+        if (response.ok) {
+            return body;
+        } else {
+            throw new Error(body.resultCode);
+        }
     })
 
     return response;
@@ -26,13 +25,14 @@ const fetchDeleteUser = async (token: string) => {
 
 export const useDeleteUser = () => {
     const queryClient = useQueryClient();
+    const logout = useLogout();
     return useMutation(fetchDeleteUser, {
         onSuccess: () => {
             queryClient.invalidateQueries(['user']);
+            logout();
             useDefaultSnackbar('회원 탈퇴에 성공했습니다', 'success');
-            useLogout();
         },
-        onError: () => {
+        onError: (error) => {
             useDefaultSnackbar('회원 탈퇴에 실패했습니다', 'error');
         }
     });
