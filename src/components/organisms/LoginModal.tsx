@@ -1,14 +1,12 @@
 import styled from 'styled-components';
+import { Box } from '@mui/material';
 
 import theme from '../../assets/styles/theme';
-import CrossIcon from '../../assets/icons/CrossIcon.png';
-import logo from '../../assets/images/dadamda-logo128.png';
-import ColumnContainer from '../atoms/ColumnContainer';
 import { googleLoginURL } from '../../secret';
-import LoginButton from '../atoms/LoginButton';
 import googleLogo from '../../assets/icons/btn_google_light_normal_ios.svg';
-import { useModal } from '@/hooks/useModal';
-import { Box } from '@mui/material';
+
+import ColumnContainer from '../atoms/ColumnContainer';
+import LoginButton from '../atoms/LoginButton';
 
 function LoginModal() {
     const oAuthHandler = (): void => {
