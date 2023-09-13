@@ -68,10 +68,12 @@ function MemoCreateModalElement() {
                     onChange={(e) => handleSetValue(e)}
                     sx={{
                         width: '100%',
-                        color: theme.color.Gray_060,
                         fontWeight: '500',
                         fontHeight: '150%',
                         p: '14px 21px',
+                        '& fieldset': {
+                            color: theme.color.Gray_060,
+                        },
                     }}
                     multiline
                     rows={5}
