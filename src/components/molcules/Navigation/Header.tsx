@@ -12,6 +12,7 @@ import Overlay from '../../atoms/Overlay';
 
 import logo from '../../../assets/icons/dadamda-logo128.png';
 import theme from '../../../assets/styles/theme';
+import { useModal } from '@/hooks/useModal';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
@@ -54,16 +55,8 @@ function Header() {
 
     const [isClicked, setIsClicked] = useState(false);
     const toggleMobileNavbar = () => setIsClicked(!isClicked);
-    const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
     const navigate = useNavigate();
-
-    const showLoginModal = () => {
-        setIsLoginModalVisible(true);
-    }
-
-    const hideLoginModal = () => {
-        setIsLoginModalVisible(false);
-    }
+    const { modal, openModal, closeModal } = useModal();
 
     const logout = () => {
         localStorage.removeItem('token');
@@ -169,7 +162,7 @@ function Header() {
                                 display: { xs: 'none', sm: 'block' },
                                 cursor: 'pointer',
                             }}
-                            onClick={showLoginModal}>
+                            onClick={() => openModal('login')}>
                             로그인/회원가입
                         </Typography>
                     }
@@ -189,11 +182,6 @@ function Header() {
                     <Overlay />
                     <MobileNavbar toggleMobileNavbar={toggleMobileNavbar} />
                 </Box>
-            }
-            {isLoginModalVisible &&
-                <Overlay>
-                    <LoginModal hideLoginModal={hideLoginModal} />
-                </Overlay>
             }
         </>
     );
