@@ -97,6 +97,7 @@ function ScrapCreateModalElement() {
                     startAdornment={
                         <LinkIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />
                     }
+                    autoFocus
                 />
                 <Button
                     variant='contained'
