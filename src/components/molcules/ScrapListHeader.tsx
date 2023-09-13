@@ -56,11 +56,7 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
                 <Button
                     color='primary'
                     variant='contained'
-                    onClick={() => {
-                        console.log('clicked');
-                        openModal('scrapCreate')
-                    }
-                    }
+                    onClick={() => openModal('scrapCreate')}
                 >
                     + 스크랩 추가
                 </Button>
