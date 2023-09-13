@@ -25,10 +25,16 @@ function ScrapCreateModalElement() {
 
     const SCRAP_LINK_MAX_LENGTH = 1024;
     const isLessThanLengthLimitation = (textAreaValue.length <= SCRAP_LINK_MAX_LENGTH);
+    const isBlank = (textAreaValue.replace(/\s+/g, '').length > 0);
     const validation = () => {
         if (!isLessThanLengthLimitation) {
             return `최대 ${SCRAP_LINK_MAX_LENGTH}글자까지만 입력 가능합니다.`;
         }
+
+        if (!isBlank) {
+            return '유효하지 않은 URL입니다.';
+        }
+
         return 'success';
     }
     const isValidationSuccess = () => validation() === 'success';
