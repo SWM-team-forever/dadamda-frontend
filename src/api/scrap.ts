@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DELETE_SCRAP_URL, EDIT_sCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { contentProps } from "@/types/ContentType";
+import * as Sentry from '@sentry/react';
 
 interface fetchDatasProps {
     url?: string,
@@ -78,11 +79,20 @@ const fetchPostCreateScrap = async({token, textAreaValue}: fetchPostCreateScrapP
 
 export const usePostCreateScrap = () => {
     const queryClient = useQueryClient();
+    const isExistScrap = (error: any) => error.message === 'BR002';
+
     return useMutation(fetchPostCreateScrap, {
         onSuccess: () => {
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('스크랩이 생성되었습니다', 'success');
         },
+        onError: (error) => {
+            Sentry.captureException(error);
+            isExistScrap(error) 
+            ? useDefaultSnackbar('이미 존재하는 스크랩입니다.', 'error')
+            : useDefaultSnackbar('스크랩 생성에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
     });
 }
 
@@ -116,9 +126,11 @@ export const useDeleteScrap = () => {
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
         },
-        onError: () => {
-            useDefaultSnackbar('스크랩이 삭제에 실패하였습니다.', 'error');
-        }
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('스크랩 삭제에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
     });
 }
 
@@ -153,8 +165,10 @@ export const useEditScrap = () => {
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('스크랩이 변경되었습니다.', 'success');
         },
-        onError: () => {
-            useDefaultSnackbar('스크랩이 변경에 실패하였습니다.', 'error');
-        }
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('스크랩 변경에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
     });
 }

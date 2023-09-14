@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, OutlinedInput, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, FormControl, FormHelperText, OutlinedInput, Typography } from '@mui/material';
 import { useState, useEffect, ChangeEvent } from 'react';
 
 import theme from '@/assets/styles/theme';
@@ -39,6 +39,20 @@ function MemoCreateModalElement() {
     }
 
     const MAX_MEMO_LENGTH = 1000;
+    const isLessThanLengthLimitation = (textAreaValue.length <= MAX_MEMO_LENGTH);
+    const isEntered = (textAreaValue.length > 0);
+    const validation = () => {
+        if (!isLessThanLengthLimitation) {
+            return `최대 ${MAX_MEMO_LENGTH}글자까지만 입력 가능합니다.`;
+        }
+
+        if (!isEntered) {
+            return '빈 메모는 입력하실 수 없습니다.';
+        }
+
+        return 'success';
+    }
+    const isValidationSuccess = () => validation() === 'success';
 
     return (
         <Box
@@ -48,30 +62,38 @@ function MemoCreateModalElement() {
                 flexDirection: 'column',
             }}
         >
-            <OutlinedInput
-                placeholder="추가할 메모를 입력하세요."
-                onChange={(e) => handleSetValue(e)}
-                sx={{
-                    width: '100%',
-                    color: theme.color.Gray_060,
-                    fontWeight: '500',
-                    fontHeight: '150%',
-                    p: '14px 21px',
-                }}
-                multiline
-                rows={5}
-            />
-            <Typography
-                variant="h6"
-                color={theme.color.Gray_060}
-                sx={{
-                    fontWeight: '500',
-                    lineHeight: '150%',
-                    mt: '6px',
-                }}
-            >
-                {textAreaValue.length} / {MAX_MEMO_LENGTH}자
-            </Typography>
+            <FormControl>
+                <OutlinedInput
+                    placeholder="추가할 메모를 입력하세요."
+                    onChange={(e) => handleSetValue(e)}
+                    sx={{
+                        width: '100%',
+                        fontWeight: '500',
+                        fontHeight: '150%',
+                        p: '14px 21px',
+                        '& fieldset': {
+                            color: theme.color.Gray_060,
+                        },
+                    }}
+                    multiline
+                    rows={5}
+                    error={!isValidationSuccess()}
+                    autoFocus
+                />
+                <FormHelperText>
+                    <Typography
+                        variant="h6"
+                        color={isValidationSuccess() ? theme.color.Gray_060 : '#f44336'}
+                        sx={{
+                            fontWeight: '500',
+                            lineHeight: '150%',
+                            mt: '6px',
+                        }}
+                    >
+                        {isValidationSuccess() ? `${textAreaValue.length} / ${MAX_MEMO_LENGTH}자` : validation()}
+                    </Typography>
+                </FormHelperText>
+            </FormControl>
             <Button
                 variant='contained'
                 sx={{
@@ -91,6 +113,7 @@ function MemoCreateModalElement() {
                         closeModal();
                     }
                 }
+                disabled={!isValidationSuccess()}
             >
                 등록
             </Button>
