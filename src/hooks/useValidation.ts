@@ -1,4 +1,8 @@
-export function isValidURL(url: string) {
-    const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/;
-    return urlPattern.test(url);
+export function useIsValidURL(url: string) {
+    try {
+        new URL(url);
+        return true;
+    } catch (err) {
+        return false;
+    }
 }
