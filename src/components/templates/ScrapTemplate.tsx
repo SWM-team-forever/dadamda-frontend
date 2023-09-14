@@ -5,7 +5,6 @@ import NotReadyTemplate from './NotReadyTemplate';
 import OtherTemplate from './OtherTemplate';
 import ListTemplate from './ListTemplate';
 
-import ErrorHandler from '../../utility/ErrorHandler';
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
 import VideoTemplate from './VideoTemplate';
 import ArticleTemplate from './ArticleTemplate';
@@ -63,11 +62,9 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                     setPages(data.data.pageable.pageNumber + 1);
                     setHasNextPage(!data.data.last);
                 })
-                .catch(err => setError(err.message));
+                .catch(err => { throw new Error(err) });
         setIsFetching(false);
     }, [pages, types, type]);
-
-    const [error, setError] = useState<string | null>(null);
 
     const fetchScrapCount = () => {
         const url = urlMatching[type] + `/count`;
@@ -90,7 +87,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 .then((data) => {
                     setCount(data.data.count);
                 })
-                .catch(err => setError(err.message));
+                .catch(err => { throw new Error(err) });
     }
 
     useEffect(() => {
@@ -110,7 +107,6 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
 
     return (
         <>
-            {error && <ErrorHandler error={error} setError={setError} />}
             <ScrapListContainer>
                 {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
                 {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}

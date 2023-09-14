@@ -195,7 +195,7 @@ function ScrapEditModalElement() {
             >
                 <Box
                     onClick={() => {
-                        element.setState('');
+                        content[element.label as keyof typeof content] ? element.setState(content[element.label as keyof typeof content]) : element.setState('');
                         element.setIsDeleted(false);
                     }}
                     sx={{
