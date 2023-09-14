@@ -25,3 +25,8 @@ dist-ssr
 
 .env
 src/secret.ts
+# Sentry Auth Token
+.env.sentry-build-plugin
+
+# Sentry Auth Token
+.env.sentry-build-plugin
