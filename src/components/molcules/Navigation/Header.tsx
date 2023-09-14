@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { NavLink, NavLinkProps, useNavigate } from 'react-router-dom';
 import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 
-import LoginModal from '../../organisms/LoginModal';
 import MobileNavbar from './MobileNavbar';
 import ProfileImage from '../../atoms/ProfileImage';
 import { LogoTextIcon, ProfileIcon } from '../../atoms/Icon';
