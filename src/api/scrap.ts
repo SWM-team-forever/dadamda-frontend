@@ -78,11 +78,19 @@ const fetchPostCreateScrap = async({token, textAreaValue}: fetchPostCreateScrapP
 
 export const usePostCreateScrap = () => {
     const queryClient = useQueryClient();
+    const isExistScrap = (error: any) => error.message === 'BR002';
+
     return useMutation(fetchPostCreateScrap, {
         onSuccess: () => {
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('스크랩이 생성되었습니다', 'success');
         },
+        onError: (error) => {
+            isExistScrap(error) 
+            ? useDefaultSnackbar('이미 존재하는 스크랩입니다.', 'error')
+            : useDefaultSnackbar('스크랩 생성에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
     });
 }
 
