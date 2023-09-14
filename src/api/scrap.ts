@@ -125,8 +125,9 @@ export const useDeleteScrap = () => {
             useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
         },
         onError: () => {
-            useDefaultSnackbar('스크랩이 삭제에 실패하였습니다.', 'error');
-        }
+            useDefaultSnackbar('스크랩 삭제에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
     });
 }
 
@@ -162,7 +163,8 @@ export const useEditScrap = () => {
             useDefaultSnackbar('스크랩이 변경되었습니다.', 'success');
         },
         onError: () => {
-            useDefaultSnackbar('스크랩이 변경에 실패하였습니다.', 'error');
-        }
+            useDefaultSnackbar('스크랩 변경에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
     });
 }

@@ -35,6 +35,10 @@ export const usePostCreateMemo = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('메모가 생성되었습니다', 'success');
-        }
+        },
+        onError: () => {
+            useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
     });
 }
