@@ -6,6 +6,7 @@ import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 
 import { LinkIcon } from '@/components/atoms/Icon';
+import { useIsValidURL } from '@/hooks/useValidation';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -27,10 +28,6 @@ function ScrapCreateModalElement() {
     const isLessThanLengthLimitation = (textAreaValue.length <= SCRAP_LINK_MAX_LENGTH);
     const iswhiteSpaceExist = (textAreaValue.replace(/\s+/g, '').length !== textAreaValue.length);
     const isEntered = (textAreaValue.length > 0);
-    function isValidURL() {
-        const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/;
-        return urlPattern.test(textAreaValue);
-    }
 
     const validation = () => {
         if (!isLessThanLengthLimitation) {
@@ -41,7 +38,7 @@ function ScrapCreateModalElement() {
             return ' ';
         }
 
-        if (!iswhiteSpaceExist || !isValidURL()) {
+        if (iswhiteSpaceExist || !useIsValidURL(textAreaValue)) {
             return '유효하지 않은 URL입니다.';
         }
 
