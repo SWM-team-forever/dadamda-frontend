@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { POST_CREATE_MEMO_URL } from "../secret";
 import { useDefaultSnackbar } from "../hooks/useWarningSnackbar";
+import * as Sentry from '@sentry/react';
 
 export interface fetchPostCreateMemoProps {
     token: string,
@@ -36,7 +37,8 @@ export const usePostCreateMemo = () => {
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('메모가 생성되었습니다', 'success');
         },
-        onError: () => {
+        onError: (error) => {
+            Sentry.captureException(error);
             useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
         },
         useErrorBoundary: false,
