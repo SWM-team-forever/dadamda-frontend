@@ -13,6 +13,7 @@ import { MoveToPageIcon } from '@/components/atoms/Icon';
 import ScrapCard from '@/components/organisms/ScrapCard';
 import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 import { useEffect, useLayoutEffect } from 'react';
+import DesktopArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopArticleListElement';
 
 function ExistArticleScrapContainer() {
     const token = localStorage.getItem('token');
@@ -69,7 +70,7 @@ function ExistArticleScrapContainer() {
                             {data?.pages.map((page) =>
                                 page.data.content.map((content) => {
                                     return (
-                                        <ScrapCard content={content} />
+                                        <DesktopArticleListElement content={content} />
                                     )
                                 })
                             )}
@@ -116,6 +117,10 @@ function ExistArticleScrapContainer() {
                         width: '237px',
                     }}
                 >
+
+                    {/* {content.memoList?.map(memo => {
+                        return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
+                    })} */}
                     {/* <CategoryItemSelectedProvider.MemoArea /> */}
                 </Box>
             </Desktop >
