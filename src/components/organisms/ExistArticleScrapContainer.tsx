@@ -39,7 +39,7 @@ function ExistArticleScrapContainer() {
     // })
 
     function isSelectedScrapExist() {
-        return selectedScrap.scrapId === 0;
+        return selectedScrap.scrapId !== 0;
     }
 
     return (
