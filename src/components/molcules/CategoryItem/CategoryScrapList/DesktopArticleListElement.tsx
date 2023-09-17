@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { decode } from 'html-entities';
 import { Box, Typography } from '@mui/material';
 
@@ -7,19 +6,16 @@ import theme from '@/assets/styles/theme';
 import { contentProps } from '@/types/ContentType';
 import { useModal } from '@/hooks/useModal';
 import { useTooltip } from '@/hooks/useTooltip';
+import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 
 import { DescriptionElement } from '@/components/atoms/CategoryItem/DescrptionElement';
-import MemoCreateButton from '@/components/atoms/CategoryItem/MemoCreateButton';
 import { SiteNameElement } from '@/components/atoms/CategoryItem/SiteNameElement';
 import { ThumbnailElement } from '@/components/atoms/CategoryItem/ThumbnailElement';
 import { TitleElement } from '@/components/atoms/CategoryItem/TitleElement';
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import RowContainer from '@/components/atoms/RowContainer';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
-import Memo from '@/components/molcules/Memo';
-import ScrapEditModal from '@/components/organisms/ScrapEditModal';
 import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
-import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 
 function DesktopArticleListElement({ content }: contentProps) {
     content = {
@@ -160,7 +156,7 @@ const CardWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: ${theme.color.Gray_020};
+    background-color: ${theme.color.Gray_020};
     border-radius: 8px;
     box-shadow: 0px 2px 16px 0px rgba(19, 48, 74, 0.08);  
 `
