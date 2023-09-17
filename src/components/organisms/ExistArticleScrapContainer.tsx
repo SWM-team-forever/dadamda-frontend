@@ -1,57 +1,45 @@
-import { CircularProgress, Card, Box } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { useState, useCallback } from 'react';
+import { CircularProgress, Box } from '@mui/material';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
+import InfiniteScroll from 'react-infinite-scroller';
 
 import CategoryItemListProvider, { useCategoryItemList } from '@/context/CategoryListContext';
 import CategoryItemSelectedProvider, { useCategoryItemSelected } from '@/context/CategoryItemContext';
 import { useGetArticleScrap } from '@/api/scrap';
 
 import ColumnContainer from '@/components/atoms/ColumnContainer';
-import RowContainer from '@/components/atoms/RowContainer';
-import MobileArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/MobileArticleListElement';
 import theme from '@/assets/styles/theme';
 import { MoveToPageIcon } from '@/components/atoms/Icon';
+import ScrapCard from '@/components/organisms/ScrapCard';
+import { useSelectedScrap } from '@/hooks/useSelectedScrap';
+import { useEffect, useLayoutEffect } from 'react';
 
 function ExistArticleScrapContainer() {
-    const [categoryItemList, setCategoryItemList] = useCategoryItemList();
-    const [selectedContent, setSelectedContent] = useCategoryItemSelected();
-
     const token = localStorage.getItem('token');
-    const size = 30;
-    const [pages, setPages] = useState(0);
-    const [, setError] = useState<string | null>(null);
+    const size = 2;
+    const { selectedScrap, setSelectedScrap, removeSelectedScrap } = useSelectedScrap();
 
-    const onSuccess = useCallback((data: any) => {
-        setCategoryItemList(data);
-        setSelectedContent(data[0]);
-    }, []);
 
-    const onError = useCallback((err: Error) => {
-        setError(err.message);
-    }, []);
-
-    const { isLoading, error, data } = useQuery(
-        ['scraps'],
-        () => token && useGetArticleScrap({ pages: pages, size: size, token: token }),
+    const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(
+        ['articleScrap'],
+        ({ pageParam = 0 }) => {
+            return token && useGetArticleScrap({ pages: pageParam, size: size, token: token })
+        },
         {
-            onSuccess,
-            onError,
-            select(data) {
-                return data?.data?.content;
+            getNextPageParam: (lastPage) => {
+                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
+                return nextPage;
             },
-            refetchOnWindowFocus: false,
+
         }
     );
 
-    if (isLoading) {
-        return <CircularProgress
-            sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            }} />;
+    // useLayoutEffect(() => {
+    //     selectedScrap.scrapId === 0 && setSelectedScrap(data?.pages[0].data.content[0]);
+    // })
+
+    function isSelectedScrapExist() {
+        return selectedScrap.scrapId === 0;
     }
 
     return (
@@ -66,7 +54,27 @@ function ExistArticleScrapContainer() {
                         overflow: 'auto',
                     }}
                 >
-                    <CategoryItemListProvider.DesktopArticleList />
+                    <InfiniteScroll
+                        hasMore={hasNextPage}
+                        loadMore={() => fetchNextPage()}
+                        pageStart={0}
+                        loader={<CircularProgress
+                            key={0}
+                        />}
+                        useWindow={false}
+                    >
+                        <ColumnContainer style={{
+                            gap: '24px',
+                        }}>
+                            {data?.pages.map((page) =>
+                                page.data.content.map((content) => {
+                                    return (
+                                        <ScrapCard content={content} />
+                                    )
+                                })
+                            )}
+                        </ColumnContainer>
+                    </InfiniteScroll>
                 </Box>
                 <Box
                     sx={{
@@ -90,17 +98,25 @@ function ExistArticleScrapContainer() {
                     >
                         <MoveToPageIcon width='16' height='16' fill={theme.color.Gray_070} />
                     </Box>
-                    <iframe src={selectedContent.pageUrl}
-                        style={{
-                            height: '100%',
-                        }} />
+                    {isSelectedScrapExist()
+                        ? <iframe src={selectedScrap.pageUrl}
+                            style={{
+                                height: '100%',
+                            }}
+                        />
+                        : <iframe src={data?.pages[0].data.content[0].pageUrl}
+                            style={{
+                                height: '100%',
+                            }}
+                        />
+                    }
                 </Box>
                 <Box
                     sx={{
                         width: '237px',
                     }}
                 >
-                    <CategoryItemSelectedProvider.MemoArea />
+                    {/* <CategoryItemSelectedProvider.MemoArea /> */}
                 </Box>
             </Desktop >
 
@@ -111,7 +127,7 @@ function ExistArticleScrapContainer() {
                         p: '0 24px 24px 24px',
                     }}
                 >
-                    <CategoryItemListProvider.DesktopArticleList />
+                    {/* <CategoryItemListProvider.DesktopArticleList /> */}
                 </Box>
             </Mobile >
         </>
