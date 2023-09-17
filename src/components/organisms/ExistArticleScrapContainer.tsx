@@ -14,6 +14,7 @@ import ScrapCard from '@/components/organisms/ScrapCard';
 import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 import { useEffect, useLayoutEffect } from 'react';
 import DesktopArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopArticleListElement';
+import MemoList from '@/components/molcules/CategoryItem/Memo/MemoList';
 
 function ExistArticleScrapContainer() {
     const token = localStorage.getItem('token');
@@ -122,6 +123,7 @@ function ExistArticleScrapContainer() {
                         return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
                     })} */}
                     {/* <CategoryItemSelectedProvider.MemoArea /> */}
+                    <MemoList />
                 </Box>
             </Desktop >
 
