@@ -244,7 +244,7 @@ export function PlusCircleIcon({ width, height, fill }: IconProps) {
 
     )
 }
-        
+
 export function LinkIcon({ width, height, fill, color }: IconProps) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 24 25" fill="none">
@@ -252,4 +252,12 @@ export function LinkIcon({ width, height, fill, color }: IconProps) {
             <path d="M9.63392 14.8213L12.6339 9.62513C12.7665 9.39544 12.9849 9.22784 13.2411 9.1592C13.4973 9.09056 13.7703 9.12649 13.9999 9.2591C14.2296 9.39171 14.3972 9.61013 14.4659 9.86631C14.5345 10.1225 14.4986 10.3954 14.366 10.6251L11.366 15.8213C11.2334 16.051 11.0149 16.2186 10.7588 16.2872C10.5026 16.3558 10.2296 16.3199 9.99994 16.1873C9.77026 16.0547 9.60266 15.8363 9.53402 15.5801C9.46537 15.3239 9.50131 15.051 9.63392 14.8213Z" fill={color} />
         </svg>
     );
+}
+
+export function MoveBackIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 15 17" fill="none">
+            <path d="M7.91846 1.979L1.70289 8.26777C1.31466 8.66057 1.31466 9.29743 1.70289 9.69024L7.91846 15.979" stroke={fill} stroke-width="2" stroke-linecap="round" />
+        </svg>
+    )
 }
