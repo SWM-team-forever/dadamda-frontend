@@ -11,6 +11,13 @@ interface ScrapListHeaderProps {
 
 function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
     const { openModal } = useModal();
+    const typeMatching = {
+        'other': '기타',
+        'list': '전체',
+        'video': '영상',
+        'product': '상품',
+        'article': '아티클',
+    }
 
     return (
         <Box
@@ -40,7 +47,7 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
                             lineHeight: '160%',
                         }}
                     >
-                        스크랩 {type}
+                        스크랩 {typeMatching[type as keyof typeof typeMatching]}
                     </Typography>
                     <Typography
                         variant='h6'
@@ -61,7 +68,7 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
                     + 스크랩 추가
                 </Button>
             </Box>
-            <SearchBar />
+            <SearchBar type={type} />
         </Box>
     )
 }

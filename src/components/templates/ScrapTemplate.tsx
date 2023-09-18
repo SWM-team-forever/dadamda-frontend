@@ -60,18 +60,11 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
 
     const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
     const masonryTemplates = ['other', 'list'];
-    const typeMatching = {
-        'other': '기타',
-        'list': '전체',
-        'video': '영상',
-        'product': '상품',
-        'article': '아티클',
-    }
 
     return (
         <>
             <ScrapListContainer>
-                <ScrapListHeader type={typeMatching[type as keyof typeof typeMatching]} count={count} />
+                <ScrapListHeader type={type} count={count} />
                 <Box
                     sx={{
                         height: 'calc(100% - 145px)',
