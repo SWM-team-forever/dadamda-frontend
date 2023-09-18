@@ -1,27 +1,40 @@
 import { useGetScrapByType } from '@/api/scrap';
+import { useGetScrapSearchResultByType } from '@/api/search';
 import ScrapCard from '@/components/organisms/ScrapCard';
 import { contentProps } from '@/types/ContentType';
 import { Masonry } from '@mui/lab';
 import { CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 function MasonryListTemplate({ type }: { type: string }) {
     const token = localStorage.getItem('token');
     const size = 8;
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    function isSearchTemplate() {
+        return searchParams.has('keyword');
+    }
+
+    function getKeyword() {
+        return searchParams.get('keyword');
+    }
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type],
+        ['scraps', type, getKeyword()],
         ({ pageParam = 0 }) => {
-            return token && useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            return token && (isSearchTemplate()
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: getKeyword() })
+                : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            )
         },
         {
             getNextPageParam: (lastPage) => {
                 const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
                 return nextPage;
             },
-
         }
     );
 
