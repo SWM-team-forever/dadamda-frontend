@@ -261,3 +261,19 @@ export function MoveBackIcon({ width, height, fill }: IconProps) {
         </svg>
     )
 }
+
+export function UpIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 17 15" fill="none">
+            <path d="M15.9183 7.95898L9.59329 1.78034C9.19822 1.39442 8.56137 1.39814 8.17085 1.78867L1.91858 8.04094" stroke={fill} stroke-width="2" stroke-linecap="round" />
+        </svg>
+    )
+}
+
+export function DownIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 17 15" fill="none">
+            <path d="M1.91858 7.04102L8.24362 13.2197C8.63869 13.6056 9.27554 13.6019 9.66607 13.2113L15.9183 6.95906" stroke={fill} stroke-width="2" stroke-linecap="round" />
+        </svg>
+    )
+}
