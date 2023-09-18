@@ -1,8 +1,10 @@
 import theme from '@/assets/styles/theme';
-import { MoveToPageIcon } from '@/components/atoms/Icon';
-import MemoList from '@/components/molcules/CategoryItem/Memo/MemoList';
-import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 import { Box } from '@mui/material';
+
+import { useSelectedScrap } from '@/hooks/useSelectedScrap';
+
+import MemoList from '@/components/molcules/CategoryItem/Memo/MemoList';
+import { MoveToPageIcon } from '@/components/atoms/Icon';
 
 function CategoryInfo() {
     const { selectedScrap } = useSelectedScrap();
