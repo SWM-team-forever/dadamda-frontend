@@ -47,7 +47,11 @@ function MemoList() {
                 <MemoCreateModalElement />
             </Box>
             {selectedScrap.memoList.map((memo) => {
-                return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
+                return <Memo
+                    memoImageURL={memo.memoImageUrl}
+                    memoText={memo.memoText}
+                    createdDate={memo.createdDate}
+                />
             })}
         </Box>
     )
