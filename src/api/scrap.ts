@@ -4,11 +4,12 @@ import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { contentProps } from "@/types/ContentType";
 import * as Sentry from '@sentry/react';
 
-interface fetchDatasProps {
+export interface fetchDatasProps {
     url?: string,
     pages: number,
     size: number,
     token: string,
+    keyword?: string,
 }
 
 const fetchDatas = async ({ url, pages, size, token }: fetchDatasProps) => {
