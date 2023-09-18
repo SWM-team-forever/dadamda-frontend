@@ -4,10 +4,18 @@ import theme from "@/assets/styles/theme";
 
 import { SearchIcon } from "@/components/atoms/Icon";
 import { useRef, useState } from "react";
+import { useGetScrapSearchResultByType } from "@/api/search";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function SearchBar() {
     const [isSearched, setIsSearched] = useState(false);
     const [searchText, setSearchText] = useState('');
+
+    function getType() {
+        const path = location.pathname.split('/');
+        return path[2];
+    }
+    const navigate = useNavigate();
 
     const buttonInfo = {
         isSearched: {
@@ -15,11 +23,13 @@ function SearchBar() {
             action: () => {
                 setIsSearched(false);
                 setSearchText('');
+                navigate(`/scrap/${getType()}`);
             }
         },
         isNotSearched: {
             text: '검색',
             action: () => {
+                navigate(`/scrap/${getType()}?keyword=${searchText}`)
                 setIsSearched(true);
             }
         }
