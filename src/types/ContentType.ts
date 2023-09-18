@@ -10,6 +10,7 @@ export interface contentProps {
             memoId: number,
             memoImageUrl?: string,
             memoText?: string,
+            createdDate: string,
         }[],
         siteName?: string,
         author?: string,
