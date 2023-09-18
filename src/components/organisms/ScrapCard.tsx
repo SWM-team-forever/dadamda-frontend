@@ -17,9 +17,9 @@ import ColumnContainer from '@/components/atoms/ColumnContainer';
 import RowContainer from '@/components/atoms/RowContainer';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
 import Memo from '@/components/molcules/Memo';
-import ScrapEditModal from '@/components/organisms/ScrapEditModal';
 import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
 import { useSelectedScrap } from '@/hooks/useSelectedScrap';
+import { PriceElement } from '@/components/atoms/CategoryItem/PriceElement';
 
 function ScrapCard({ content }: contentProps) {
     content = {
@@ -79,7 +79,10 @@ function ScrapCard({ content }: contentProps) {
                     {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
                     <TooltipWrapper menu={menuItemContentList} scrapId={content.scrapId} />
                 </Box>
-                {content.title && <TitleElement title={content.title} varient={varient} />}
+                <Box>
+                    {content.title && <TitleElement title={content.title} varient={varient} />}
+                    {content.price && <PriceElement price={content.price} variant={varient} />}
+                </Box>
                 {
                     channelInfoElementArray.some((element) => !!element) && < ChannelInfo content={content} />
                 }
@@ -138,7 +141,11 @@ function ScrapCard({ content }: contentProps) {
                 </RowContainer>
                 {content.description && <DescriptionElement description={content.description} varient={varient} />}
                 {content.memoList?.map(memo => {
-                    return <Memo memoImageURL={memo.memoImageUrl} memoText={memo.memoText} />
+                    return <Memo
+                        memoImageURL={memo.memoImageUrl}
+                        memoText={memo.memoText}
+                        createdDate={memo.createdDate}
+                    />
                 })}
                 <Box
                     component='div'
