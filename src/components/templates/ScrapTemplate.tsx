@@ -1,14 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import NotReadyTemplate from './NotReadyTemplate';
-import OtherTemplate from './OtherTemplate';
-import ListTemplate from './ListTemplate';
 
 import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
-import VideoTemplate from './VideoTemplate';
-import ArticleTemplate from './ArticleTemplate';
-import ProductTemplate from './ProductTemplate';
+import ScrapListHeader from '@/components/molcules/ScrapListHeader';
+import ColumnListTemplate from '@/components/templates/ColumnListTemplate';
+import MasonryListTemplate from '@/components/templates/MasonryListTemplate';
+import { Box } from '@mui/material';
 
 interface ScrapTemplateProps {
     type: string,
@@ -24,47 +23,11 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     }
 
     const token = localStorage.getItem('token');
-    const size = 10;
-    const [types, setTypes] = useState<any[]>([]);
-    const [isFetching, setIsFetching] = useState(true);
-    const [hasNextPage, setHasNextPage] = useState(true);
-    const [pages, setPages] = useState(0);
     const [count, setCount] = useState(0);
 
     const initiate = () => {
-        setTypes([]);
-        setIsFetching(true);
-        setHasNextPage(true);
-        setPages(0);
         setCount(0);
     }
-
-    const fetchDatas = useCallback(async () => {
-        const url = urlMatching[type] + `?page=${pages}&size=${size}`;
-        token &&
-            fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-            }).then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-                .then((data) => {
-                    setTypes([...types, ...data.data.content]);
-                    setPages(data.data.pageable.pageNumber + 1);
-                    setHasNextPage(!data.data.last);
-                })
-                .catch(err => { throw new Error(err) });
-        setIsFetching(false);
-    }, [pages, types, type]);
 
     const fetchScrapCount = () => {
         const url = urlMatching[type] + `/count`;
@@ -95,25 +58,30 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
         fetchScrapCount();
     }, [type]);
 
-    useEffect(() => {
-        if (isFetching && hasNextPage) {
-            fetchDatas();
-        } else if (!hasNextPage) {
-            setIsFetching(false);
-        }
-    }, [isFetching]);
-
     const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
+    const masonryTemplates = ['other', 'list'];
+    const typeMatching = {
+        'other': '기타',
+        'list': '전체',
+        'video': '영상',
+        'product': '상품',
+        'article': '아티클',
+    }
 
     return (
         <>
             <ScrapListContainer>
-                {type === 'other' && <OtherTemplate others={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
-                {type === 'list' && <ListTemplate lists={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
-                {type === 'video' && <VideoTemplate videos={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
-                {type === 'product' && <ProductTemplate products={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
-                {type === 'article' && <ArticleTemplate videos={types} isFetching={isFetching} setIsFetching={setIsFetching} count={count} />}
-                {!providingTemplates.includes(type) && <NotReadyTemplate />}
+                <ScrapListHeader type={typeMatching[type as keyof typeof typeMatching]} count={count} />
+                <Box
+                    sx={{
+                        height: 'calc(100% - 145px)',
+                    }}
+                >
+                    {count === 0 && <NotReadyTemplate />}
+                    {masonryTemplates.includes(type) && <MasonryListTemplate type={type} />}
+                    {!masonryTemplates.includes(type) && <ColumnListTemplate type={type} />}
+                    {!providingTemplates.includes(type) && <NotReadyTemplate />}
+                </Box>
             </ScrapListContainer>
         </>
     );
