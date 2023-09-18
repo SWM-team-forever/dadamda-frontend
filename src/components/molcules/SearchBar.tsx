@@ -3,19 +3,19 @@ import { Box, Button, InputBase } from "@mui/material";
 import theme from "@/assets/styles/theme";
 
 import { SearchIcon } from "@/components/atoms/Icon";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetScrapSearchResultByType } from "@/api/search";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-function SearchBar() {
+function SearchBar({ type }: { type: string }) {
     const [isSearched, setIsSearched] = useState(false);
     const [searchText, setSearchText] = useState('');
 
-    function getType() {
-        const path = location.pathname.split('/');
-        return path[2];
-    }
     const navigate = useNavigate();
+    useEffect(() => {
+        setIsSearched(false);
+        setSearchText('');
+    }, [type])
 
     const buttonInfo = {
         isSearched: {
@@ -23,13 +23,13 @@ function SearchBar() {
             action: () => {
                 setIsSearched(false);
                 setSearchText('');
-                navigate(`/scrap/${getType()}`);
+                navigate(`/scrap/${type}`);
             }
         },
         isNotSearched: {
             text: '검색',
             action: () => {
-                navigate(`/scrap/${getType()}?keyword=${searchText}`)
+                navigate(`/scrap/${type}?keyword=${searchText}`)
                 setIsSearched(true);
             }
         }
