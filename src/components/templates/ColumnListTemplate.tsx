@@ -1,4 +1,5 @@
 import { useGetScrapByType } from "@/api/scrap";
+import { useGetScrapSearchResultByType } from "@/api/search";
 import MoveToPageMobileModal from "@/components/atoms/Modal/MoveToPageMobileModal";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
 import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
@@ -12,22 +13,32 @@ import styled from "styled-components";
 function ColumnListTemplate({ type }: { type: string }) {
     const token = localStorage.getItem('token');
     const size = 30;
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    function isSearchTemplate() {
+        return searchParams.has('keyword');
+    }
+
+    function getKeyword() {
+        return searchParams.get('keyword');
+    }
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type],
+        ['scraps', type, getKeyword()],
         ({ pageParam = 0 }) => {
-            return token && useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            return token && (isSearchTemplate()
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: getKeyword() })
+                : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            )
         },
         {
             getNextPageParam: (lastPage) => {
                 const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
                 return nextPage;
             },
-            enabled: true,
         }
     );
 
-    const [searchParams, setSearchParams] = useSearchParams();
     const scrapId = searchParams.get('scrapId');
     const { selectedScrap, setSelectedScrap } = useSelectedScrap();
 
