@@ -82,7 +82,7 @@ function App() {
                     <Route index element={<ScrapTemplate type={'list'} />}></Route>
                   </Route>
                   <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}>
-                    <Route index element={<BoardListTemplate type='article' />} />
+                    <Route index element={<BoardListTemplate />} />
                   </Route>
                   <Route path='/trending' element={<TrendingPage />}></Route>
                   <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
