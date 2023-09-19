@@ -24,7 +24,10 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
     );
 
     function createNewColumn() {
-
+        const columnToAdd: Column = {
+            id: generateId(),
+            title: `Column ${columns.length + 1}`,
+        }
     }
 }
 
