@@ -29,7 +29,9 @@ function CategoryInfo() {
                         display: 'flex',
                         justifyContent: 'flex-end',
                         boxSizing: 'border-box',
+                        cursor: 'pointer',
                     }}
+                    onClick={() => window.open(selectedScrap.pageUrl)}
                 >
                     <MoveToPageIcon width='16' height='16' fill={theme.color.Gray_070} />
                 </Box>
