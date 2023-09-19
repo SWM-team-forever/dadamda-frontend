@@ -3,7 +3,7 @@ import DesktopArticleListElement from '@/components/molcules/CategoryItem/Catego
 import { CircularProgress } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroller';
 
-function CategoryList({ hasNextPage, fetchNextPage, data }: { hasNextPage: boolean, fetchNextPage: any, data: any }) {
+function CategoryList({ hasNextPage, fetchNextPage, data }: { hasNextPage: boolean | undefined, fetchNextPage: any, data: any }) {
 
     return (
         <InfiniteScroll
@@ -18,7 +18,7 @@ function CategoryList({ hasNextPage, fetchNextPage, data }: { hasNextPage: boole
             <ColumnContainer style={{
                 gap: '24px',
             }}>
-                {data?.pages.map((page) =>
+                {data?.pages.map((page: { data: { content: any[]; }; }) =>
                     page.data.content.map((content) => {
                         return (
                             <DesktopArticleListElement content={content} />

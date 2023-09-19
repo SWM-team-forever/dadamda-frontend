@@ -6,7 +6,6 @@ import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/Cat
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 import { Box, CircularProgress } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useLayoutEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 

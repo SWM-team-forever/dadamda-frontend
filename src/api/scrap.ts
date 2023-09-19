@@ -9,7 +9,7 @@ export interface fetchDatasProps {
     pages: number,
     size: number,
     token: string,
-    keyword?: string,
+    keyword?: string | null,
 }
 
 const fetchDatas = async ({ url, pages, size, token }: fetchDatasProps) => {
