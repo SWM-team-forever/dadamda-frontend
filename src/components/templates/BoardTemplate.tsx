@@ -1,8 +1,14 @@
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
 
+export type id = string | number;
+export type Column = {
+    id: id;
+    title: string;
+}
+
 function BoardTemplate({ boardId }: { boardId: string | null }) {
-    const [columns, setColumns] = useState([]);
+    const [columns, setColumns] = useState<Column[]>([]);
 
     return (
         <div>
