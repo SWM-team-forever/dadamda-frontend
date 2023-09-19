@@ -1,5 +1,5 @@
 import ColumnContainer from '@/components/atoms/ColumnContainer';
-import DesktopArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/DesktopScrapListElement';
+import DesktopArticleListElement from '@/components/molcules/CategoryItem/CategoryScrapList/ColumnScrapListElement';
 import { CircularProgress } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroller';
 
