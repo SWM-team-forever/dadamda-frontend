@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DELETE_SCRAP_URL, EDIT_sCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
+import { DELETE_SCRAP_URL, EDIT_sCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, POST_CREATE_OTHER_SCRAP_URL } from "../secret";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { contentProps } from "@/types/ContentType";
 import * as Sentry from '@sentry/react';
 
-interface fetchDatasProps {
+export interface fetchDatasProps {
     url?: string,
     pages: number,
     size: number,
     token: string,
+    keyword?: string | null,
 }
 
 const fetchDatas = async ({ url, pages, size, token }: fetchDatasProps) => {
@@ -48,6 +49,19 @@ export const useGetArticleScrap = async({pages, size, token}: fetchDatasProps) =
 
 export const useGetListScrap = async({pages, size, token}: fetchDatasProps) => {
     const scraps = await fetchDatas({url: GET_LIST_SCRAP_URL, pages: pages, size: size, token: token});
+    return scraps;
+}
+
+const findURLByType = {
+    'product': GET_PRODUCT_SCRAP_URL,
+    'video': GET_VIDEO_SCRAP_URL,
+    'article': GET_ARTICLE_SCRAP_URL,
+    'list': GET_LIST_SCRAP_URL,
+    'other': GET_OTHER_SCRAP_URL,
+}
+
+export const useGetScrapByType = async({pages, size, token, type}: fetchDatasProps & {type: string}) => {
+    const scraps = await fetchDatas({url: findURLByType[type as keyof typeof findURLByType], pages: pages, size: size, token: token});
     return scraps;
 }
 

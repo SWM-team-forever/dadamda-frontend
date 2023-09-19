@@ -4,8 +4,6 @@ import { MinusCircleIcon, PlusCircleIcon } from "@/components/atoms/Icon";
 import ThumbnailImage from "@/components/atoms/ThumbnailImage";
 import { useModal } from "@/hooks/useModal";
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
-import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { EDIT_sCRAP_URL } from "@/secret";
 import { Box, Button, TextareaAutosize, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 

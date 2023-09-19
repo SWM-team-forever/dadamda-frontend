@@ -2,13 +2,15 @@ import styled from 'styled-components';
 import theme from '../../assets/styles/theme';
 import { Box, Typography } from '@mui/material';
 import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
+import { create } from '@mui/material/styles/createTransitions';
 
 interface MemoProps {
     memoImageURL?: string,
     memoText?: string,
+    createdDate: string,
 }
 
-function Memo({ memoImageURL, memoText }: MemoProps) {
+function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
     return (
         <Box
             sx={{
@@ -35,7 +37,7 @@ function Memo({ memoImageURL, memoText }: MemoProps) {
                         lineHeight: '160%',
                     }}
                 >
-                    2023.09.10
+                    {createdDate}
                 </Typography>
                 <Tooltip />
             </Box>

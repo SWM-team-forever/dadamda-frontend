@@ -44,8 +44,6 @@ export function PriceElement({ price, varient }: any) {
                 width: '100%',
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-all',
-                color: theme.color.primary_color,
-                fontWeight: 'bold',
             }}>
             <Typography sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>
                 {price}

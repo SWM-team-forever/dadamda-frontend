@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { decode } from 'html-entities';
 import { Box, Typography } from '@mui/material';
 
@@ -7,21 +6,20 @@ import theme from '@/assets/styles/theme';
 import { contentProps } from '@/types/ContentType';
 import { useModal } from '@/hooks/useModal';
 import { useTooltip } from '@/hooks/useTooltip';
+import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 
 import { DescriptionElement } from '@/components/atoms/CategoryItem/DescrptionElement';
-import MemoCreateButton from '@/components/atoms/CategoryItem/MemoCreateButton';
 import { SiteNameElement } from '@/components/atoms/CategoryItem/SiteNameElement';
 import { ThumbnailElement } from '@/components/atoms/CategoryItem/ThumbnailElement';
 import { TitleElement } from '@/components/atoms/CategoryItem/TitleElement';
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import RowContainer from '@/components/atoms/RowContainer';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
-import Memo from '@/components/molcules/Memo';
 import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
-import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 import { PriceElement } from '@/components/atoms/CategoryItem/PriceElement';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-function ScrapCard({ content }: contentProps) {
+function DesktopArticleListElement({ content }: contentProps) {
     content = {
         ...content,
         title: decode(content.title, { level: 'html5' }),
@@ -40,7 +38,7 @@ function ScrapCard({ content }: contentProps) {
 
     const { openModal, connectMemoWithScrapId } = useModal();
     const { closeTooltip } = useTooltip();
-    const { setSelectedScrap } = useSelectedScrap();
+    const { selectedScrap, setSelectedScrap } = useSelectedScrap();
 
     const menuItemContentList = [
         {
@@ -60,13 +58,32 @@ function ScrapCard({ content }: contentProps) {
         }
     ]
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const scrapId = searchParams.get('scrapId');
+
+    function isSelectedScrap() {
+        return scrapId && content.scrapId === +(scrapId);
+    }
+
+    const navigate = useNavigate();
+
     return (
-        <CardContainer>
+        <Box
+            sx={{
+                position: 'relative',
+                wordBreak: 'break-all',
+                borderRadius: '8px',
+                backgroundColor: theme.color.Gray_020,
+                boxShadow: '0px 2px 16px 0px rgba(19, 48, 74, 0.08)',
+                border: isSelectedScrap() ? `2px solid ${theme.color.Blue_070}` : 'none',
+            }}
+        >
             <CardWrapper
                 style={{ cursor: 'pointer' }}
                 onClick={(e) => {
                     e.stopPropagation();
-                    window.open(`${content.pageUrl}`);
+                    setSelectedScrap(content);
+                    navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
                 }}>
                 <Box
                     component='div'
@@ -140,51 +157,19 @@ function ScrapCard({ content }: contentProps) {
                     }
                 </RowContainer>
                 {content.description && <DescriptionElement description={content.description} varient={varient} />}
-                {content.memoList?.map(memo => {
-                    return <Memo
-                        memoImageURL={memo.memoImageUrl}
-                        memoText={memo.memoText}
-                        createdDate={memo.createdDate}
-                    />
-                })}
-                <Box
-                    component='div'
-                    onClick={
-                        (e) => {
-                            e.stopPropagation();
-                            connectMemoWithScrapId(content.scrapId);
-                        }}
-                    sx={{
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                    }}
-                >
-                    <MemoCreateButton
-                        showMemoCreateModal={() => openModal('memoCreate')}
-                    />
-                </Box>
             </CardWrapper>
-        </CardContainer>
+        </Box>
     )
 }
-
-const CardContainer = styled.div`
-    position: relative;
-    word-break: break-all;
-    border-radius: 8px;
-    background: ${theme.color.Gray_020}
-    box-shadow: 0px 2px 16px 0px rgba(19, 48, 74, 0.08);
-`
 
 const CardWrapper = styled.div`
     padding: 15px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: ${theme.color.Gray_020};
+    background-color: ${theme.color.Gray_020};
     border-radius: 8px;
     box-shadow: 0px 2px 16px 0px rgba(19, 48, 74, 0.08);  
 `
 
-export default ScrapCard;
+export default DesktopArticleListElement;

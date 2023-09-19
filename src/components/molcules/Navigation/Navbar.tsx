@@ -27,7 +27,6 @@ function Navbar() {
             height: '100%',
             boxSizing: 'border-box',
             position: 'fixed',
-            // backdropFilter: 'blur(4px)',
             display: {
                 xs: 'none',
                 sm: 'flex',

@@ -1,10 +1,40 @@
-import { Box, InputBase } from "@mui/material";
+import { Box, Button, InputBase } from "@mui/material";
 
 import theme from "@/assets/styles/theme";
 
 import { SearchIcon } from "@/components/atoms/Icon";
+import { useEffect, useRef, useState } from "react";
+import { useGetScrapSearchResultByType } from "@/api/search";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-function SearchBar() {
+function SearchBar({ type }: { type: string }) {
+    const [isSearched, setIsSearched] = useState(false);
+    const [searchText, setSearchText] = useState('');
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        setIsSearched(false);
+        setSearchText('');
+    }, [type])
+
+    const buttonInfo = {
+        isSearched: {
+            text: '지우기',
+            action: () => {
+                setIsSearched(false);
+                setSearchText('');
+                navigate(`/scrap/${type}`);
+            }
+        },
+        isNotSearched: {
+            text: '검색',
+            action: () => {
+                navigate(`/scrap/${type}?keyword=${searchText}`)
+                setIsSearched(true);
+            }
+        }
+    };
+
     return (
         <Box
             sx={{
@@ -18,30 +48,38 @@ function SearchBar() {
                 alignItems: 'center',
             }}
         >
-            <Box
+            <InputBase
                 sx={{
-                    display: 'flex',
-                    gap: '4px',
-                    width: '100%',
+                    flex: 1,
+                    gap: '8px',
                     alignItems: 'center',
+                    '& .MuiInputBase-input': {
+                        color: theme.color.Gray_070,
+                        fontWeight: '500',
+                        lineHeight: '150%',
+                        fontSize: '14px',
+                        p: '0',
+                    }
                 }}
-            >
-                <SearchIcon width="16" height="16" fill={theme.color.Gray_070} />
-                <InputBase
-                    sx={{
-                        ml: 1,
-                        flex: 1,
-                        '& .MuiInputBase-input': {
+                value={searchText}
+                placeholder="검색"
+                inputProps={{ 'aria-label': 'search google maps' }}
+                startAdornment={
+                    <SearchIcon width="16" height="16" fill={theme.color.Gray_070} />
+                }
+                onChange={(e) => { setSearchText(e.target.value) }}
+                endAdornment={
+                    <Button
+                        sx={{
+                            p: '0',
                             color: theme.color.Gray_070,
-                            fontWeight: '500',
-                            lineHeight: '150%',
-                            fontSize: '14px',
-                        }
-                    }}
-                    placeholder="검색"
-                    inputProps={{ 'aria-label': 'search google maps' }}
-                />
-            </Box>
+                        }}
+                        onClick={isSearched ? buttonInfo.isSearched.action : buttonInfo.isNotSearched.action}
+                    >
+                        {isSearched ? buttonInfo.isSearched.text : buttonInfo.isNotSearched.text}
+                    </Button>
+                }
+            />
         </Box>
     )
 }
