@@ -61,13 +61,14 @@ function MasonryListTemplate({ type }: { type: string }) {
                     key={0}
                 />}
                 useWindow={false}
+                style={{
+                    width: '100%',
+                    margin: '0',
+                }}
             >
                 <Masonry
-                    columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
-                    style={{
-                        width: '100%',
-                        margin: '0',
-                    }}
+                    columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
+
                 >
                     {data?.pages.map((page) => {
                         return page.data.content.map((content: contentProps['content']) => {
