@@ -27,8 +27,14 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         const columnToAdd: Column = {
             id: generateId(),
             title: `Column ${columns.length + 1}`,
-        }
+        };
+
+        setColumns([...columns, columnToAdd]);
     }
+}
+
+function generateId() {
+    return Math.floor(Math.random() * 10001);
 }
 
 export default BoardTemplate;
