@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 function MasonryListTemplate({ type }: { type: string }) {
     const token = localStorage.getItem('token');
-    const size = 8;
+    const size = 30;
     const [searchParams, setSearchParams] = useSearchParams();
 
     function isSearchTemplate() {
