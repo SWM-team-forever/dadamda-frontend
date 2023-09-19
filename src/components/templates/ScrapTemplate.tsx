@@ -62,6 +62,18 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
     const masonryTemplates = ['other', 'list'];
 
+    function MatchTemplateWithTypeAndCount() {
+        if (!providingTemplates.includes(type)) {
+            return <NotReadyTemplate />
+        }
+
+        if (count === 0) {
+            return <EmptyScrapContainer />
+        }
+
+        return masonryTemplates.includes(type) ? <MasonryListTemplate type={type} /> : <ColumnListTemplate type={type} />
+    }
+
     return (
         <>
             <ScrapListContainer>
@@ -71,10 +83,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                         height: 'calc(100% - 145px)',
                     }}
                 >
-                    {count === 0 && <EmptyScrapContainer />}
-                    {masonryTemplates.includes(type) && <MasonryListTemplate type={type} />}
-                    {!masonryTemplates.includes(type) && <ColumnListTemplate type={type} />}
-                    {!providingTemplates.includes(type) && <NotReadyTemplate />}
+                    {MatchTemplateWithTypeAndCount()}
                 </Box>
             </ScrapListContainer>
         </>
