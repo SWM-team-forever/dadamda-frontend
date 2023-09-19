@@ -7,83 +7,52 @@ import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRO
 import ScrapListHeader from '@/components/molcules/ScrapListHeader';
 import ColumnListTemplate from '@/components/templates/ColumnListTemplate';
 import MasonryListTemplate from '@/components/templates/MasonryListTemplate';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
+import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
+import { useQuery } from '@tanstack/react-query';
+import { useGetScrapCount } from '@/api/count';
 
 interface ScrapTemplateProps {
     type: string,
 }
 
 function ScrapTemplate({ type }: ScrapTemplateProps) {
-    const urlMatching: { [key: string]: string } = {
-        'other': GET_OTHER_SCRAP_URL,
-        'list': GET_LIST_SCRAP_URL,
-        'article': GET_ARTICLE_SCRAP_URL,
-        'product': GET_PRODUCT_SCRAP_URL,
-        'video': GET_VIDEO_SCRAP_URL,
-    }
-
     const token = localStorage.getItem('token');
-    const [count, setCount] = useState(0);
 
-    const initiate = () => {
-        setCount(0);
-    }
-
-    const fetchScrapCount = () => {
-        const url = urlMatching[type] + `/count`;
-        token &&
-            fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-AUTH-TOKEN": token,
-                },
-            }).then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-                .then((data) => {
-                    setCount(data.data.count);
-                })
-                .catch(err => { throw new Error(err) });
-    }
-
-    useEffect(() => {
-        initiate();
-        fetchScrapCount();
-    }, [type]);
-
-    const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
-    const masonryTemplates = ['other', 'list'];
-
-    function MatchTemplateWithTypeAndCount() {
-        if (!providingTemplates.includes(type)) {
-            return <NotReadyTemplate />
+    const { data, isLoading, isFetched } = useQuery(['scrapCount', type],
+        () => {
+            return token && useGetScrapCount({ type: type, token: token })
+        },
+        {
+            enabled: !!token,
+            refetchOnWindowFocus: false,
+            select: (data) => {
+                return data?.data.count;
+            }
         }
+    );
 
-        if (count === 0) {
-            return <EmptyScrapContainer />
-        }
-
-        return masonryTemplates.includes(type) ? <MasonryListTemplate type={type} /> : <ColumnListTemplate type={type} />
+    if (isLoading) {
+        return <CircularProgress
+            sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+            }} />;
     }
 
     return (
         <>
             <ScrapListContainer>
-                <ScrapListHeader type={type} count={count} />
+                {isFetched && <ScrapListHeader type={type} count={data} />}
                 <Box
                     sx={{
                         height: 'calc(100% - 145px)',
                     }}
                 >
-                    {MatchTemplateWithTypeAndCount()}
+                    {isFetched && <MatchTemplateWithTypeAndCount type={type} count={data} />}
                 </Box>
             </ScrapListContainer>
         </>
