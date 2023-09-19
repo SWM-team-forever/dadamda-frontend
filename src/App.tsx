@@ -25,6 +25,7 @@ import ErrorPage from '@/pages/ErrorPage';
 import * as Sentry from '@sentry/react';
 import React from 'react';
 import { SENTRY_DSN } from '@/secret';
+import BoardListTemplate from '@/components/templates/BoardListTemplate';
 
 const queryClient = new QueryClient();
 Sentry.init({
@@ -81,7 +82,7 @@ function App() {
                     <Route index element={<ScrapTemplate type={'list'} />}></Route>
                   </Route>
                   <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}>
-                    <Route index element={<NotReadyTemplate />} />
+                    <Route index element={<BoardListTemplate type='article' />} />
                   </Route>
                   <Route path='/trending' element={<TrendingPage />}></Route>
                   <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
