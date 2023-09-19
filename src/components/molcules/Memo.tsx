@@ -3,9 +3,6 @@ import theme from '../../assets/styles/theme';
 import { Box, Typography } from '@mui/material';
 import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
 import { create } from '@mui/material/styles/createTransitions';
-import { useTooltip } from '@/hooks/useTooltip';
-import { useSelectedScrap } from '@/hooks/useSelectedScrap';
-import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
 
 interface MemoProps {
     memoImageURL?: string,
@@ -13,24 +10,7 @@ interface MemoProps {
     createdDate: string,
 }
 
-function Memo({ memoImageURL, memoText, createdDate, scrapId }: MemoProps & { scrapId: number }) {
-    const { closeTooltip } = useTooltip();
-
-    const menuItemContentList = [
-        {
-            title: '메모 수정',
-            clickAction: (e: React.MouseEvent<HTMLElement>) => {
-                closeTooltip(e);
-            }
-        },
-        {
-            title: '메모 삭제',
-            clickAction: (e: React.MouseEvent<HTMLElement>) => {
-                closeTooltip(e);
-            }
-        }
-    ]
-
+function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
     return (
         <Box
             sx={{
@@ -59,7 +39,7 @@ function Memo({ memoImageURL, memoText, createdDate, scrapId }: MemoProps & { sc
                 >
                     {createdDate}
                 </Typography>
-                <TooltipWrapper menu={menuItemContentList} scrapId={scrapId} />
+                <Tooltip />
             </Box>
             {memoText
                 ? <Typography
