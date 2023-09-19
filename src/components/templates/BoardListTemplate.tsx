@@ -14,34 +14,26 @@ import { useQuery } from '@tanstack/react-query';
 import { useGetScrapCount } from '@/api/count';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import BoardTemplate from '@/components/templates/BoardTemplate';
 
 function BoardListTemplate() {
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
-    // const { data, isLoading, isFetched } = useQuery(['boardCount'],
-    //     () => {
-    //         return providingTemplates.includes(type)
-    //             ? (token && useGetScrapCount({ type: type, token: token }))
-    //             : { data: { count: 0 } };
-    //     },
-    //     {
-    //         enabled: !!token,
-    //         refetchOnWindowFocus: false,
-    //         select: (data) => {
-    //             return data?.data.count;
-    //         }
-    //     }
-    // );
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    // if (isLoading) {
-    //     return <CircularProgress
-    //         sx={{
-    //             position: 'absolute',
-    //             top: '50%',
-    //             left: '50%',
-    //             transform: 'translate(-50%, -50%)',
-    //         }} />;
-    // }
+    function isBoardPage() {
+        return searchParams.has('boardId');
+    }
+
+    function getBoardPageId() {
+        return searchParams.get('boardId');
+    }
+
+    if (isBoardPage()) {
+        return (<BoardTemplate boardId={getBoardPageId()} />)
+    }
 
     return (
         <>
@@ -59,6 +51,7 @@ function BoardListTemplate() {
                             height: '180px',
                             backgroundColor: theme.color.Blue_090,
                         }}
+                        onClick={() => navigate(`/board?boardId=${1}`)}
                     >
                         보드 1
                     </Box>
