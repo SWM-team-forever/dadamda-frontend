@@ -19,10 +19,13 @@ interface ScrapTemplateProps {
 
 function ScrapTemplate({ type }: ScrapTemplateProps) {
     const token = localStorage.getItem('token');
+    const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
 
     const { data, isLoading, isFetched } = useQuery(['scrapCount', type],
         () => {
-            return token && useGetScrapCount({ type: type, token: token })
+            return providingTemplates.includes(type)
+                ? (token && useGetScrapCount({ type: type, token: token }))
+                : { data: { count: 0 } };
         },
         {
             enabled: !!token,
