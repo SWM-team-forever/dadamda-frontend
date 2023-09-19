@@ -8,6 +8,7 @@ import ScrapListHeader from '@/components/molcules/ScrapListHeader';
 import ColumnListTemplate from '@/components/templates/ColumnListTemplate';
 import MasonryListTemplate from '@/components/templates/MasonryListTemplate';
 import { Box } from '@mui/material';
+import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 
 interface ScrapTemplateProps {
     type: string,
@@ -70,7 +71,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                         height: 'calc(100% - 145px)',
                     }}
                 >
-                    {count === 0 && <NotReadyTemplate />}
+                    {count === 0 && <EmptyScrapContainer />}
                     {masonryTemplates.includes(type) && <MasonryListTemplate type={type} />}
                     {!masonryTemplates.includes(type) && <ColumnListTemplate type={type} />}
                     {!providingTemplates.includes(type) && <NotReadyTemplate />}
