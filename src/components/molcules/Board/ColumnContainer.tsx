@@ -28,7 +28,8 @@ function ColumnContainer(props: Props) {
         data: {
             type: 'column',
             column,
-        }
+        },
+        disabled: editMode,
     });
 
     const style = {
