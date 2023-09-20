@@ -1,4 +1,5 @@
 import { Column } from "@/components/templates/BoardTemplate";
+import { Box } from "@mui/material";
 
 interface Props {
     column: Column;
@@ -6,7 +7,14 @@ interface Props {
 
 function ColumnContainer(props: Props) {
     const { column } = props;
-    return <div>{column.title}</div>
+    return <Box
+        sx={{
+            width: "350px",
+            height: "500px",
+        }}
+    >
+        {column.title}
+    </Box>
 }
 
 export default ColumnContainer;

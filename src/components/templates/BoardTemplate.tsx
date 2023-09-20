@@ -15,7 +15,12 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         <div>
             보드 {boardId} 보드 페이지
             <Box>
-                <Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        gap: "10px",
+                    }}
+                >
                     {columns.map((column) => <ColumnContainer column={column} />)}
                 </Box>
                 <Button
