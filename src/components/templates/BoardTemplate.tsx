@@ -21,10 +21,13 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                         gap: "10px",
                     }}
                 >
-                    {columns.map((column) => <ColumnContainer
-                        column={column}
-                        deleteColumn={deleteColumn}
-                    />)}
+                    {columns.map((column) =>
+                        <ColumnContainer
+                            column={column}
+                            deleteColumn={deleteColumn}
+                            key={column.id}
+                        />
+                    )}
                 </Box>
                 <Button
                     onClick={createNewColumn}
