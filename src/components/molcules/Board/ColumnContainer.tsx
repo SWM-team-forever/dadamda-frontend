@@ -1,5 +1,5 @@
 import { Column } from "@/components/templates/BoardTemplate";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 interface Props {
     column: Column;
@@ -13,7 +13,24 @@ function ColumnContainer(props: Props) {
             height: "500px",
         }}
     >
-        {column.title}
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+            }}
+        >
+            <Box
+                sx={{
+                    display: 'flex',
+                }}
+            >
+                0
+                {column.title}
+            </Box>
+            <Button>
+                X
+            </Button>
+        </Box>
     </Box>
 }
 
