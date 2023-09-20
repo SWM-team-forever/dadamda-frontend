@@ -1,7 +1,7 @@
 import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
 import { useMemo, useState } from "react";
-import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 
@@ -16,6 +16,14 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
     const columnsId = useMemo(() => columns.map((column) => column.id), [columns]);
     const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 3,
+            },
+        })
+    );
+
     return (
         <div>
             보드 {boardId} 보드 페이지
@@ -23,6 +31,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                 <DndContext
                     onDragStart={onDragStart}
                     onDragEnd={onDragEnd}
+                    sensors={sensors}
                 >
                     <Box
                         sx={{
