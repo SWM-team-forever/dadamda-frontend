@@ -1,6 +1,8 @@
 import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 
 export type id = string | number;
 export type Column = {
@@ -10,30 +12,38 @@ export type Column = {
 
 function BoardTemplate({ boardId }: { boardId: string | null }) {
     const [columns, setColumns] = useState<Column[]>([]);
+    const columnsId = useMemo(() => columns.map((column) => column.id), [columns]);
 
     return (
         <div>
             보드 {boardId} 보드 페이지
             <Box>
-                <Box
-                    sx={{
-                        display: "flex",
-                        gap: "10px",
-                    }}
-                >
-                    {columns.map((column) =>
-                        <ColumnContainer
-                            column={column}
-                            deleteColumn={deleteColumn}
-                            key={column.id}
-                        />
-                    )}
-                </Box>
-                <Button
-                    onClick={createNewColumn}
-                >
-                    + Add Column
-                </Button>
+                <DndContext>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: "10px",
+                        }}
+                    >
+                        <SortableContext
+                            items={columnsId}
+                        >
+                            {columns.map((column) =>
+                                <ColumnContainer
+                                    column={column}
+                                    deleteColumn={deleteColumn}
+                                    key={column.id}
+                                />
+                            )}
+                        </SortableContext>
+                    </Box>
+                    <Button
+                        onClick={createNewColumn}
+                    >
+                        + Add Column
+                    </Button>
+                </DndContext>
+
             </Box>
         </div>
     );
