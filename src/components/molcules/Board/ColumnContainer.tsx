@@ -100,8 +100,10 @@ function ColumnContainer(props: Props) {
             >
                 X
             </Button>
-
         </Box>
+        <Button>
+            + Add Task
+        </Button>
     </Box>
 }
 
