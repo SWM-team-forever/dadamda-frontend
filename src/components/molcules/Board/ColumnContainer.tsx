@@ -1,9 +1,12 @@
-function ColumnContainer() {
-    return (
-        <div>
+import { Column } from "@/components/templates/BoardTemplate";
 
-        </div>
-    );
+interface Props {
+    column: Column;
+}
+
+function ColumnContainer(props: Props) {
+    const { column } = props;
+    return <div>{column.title}</div>
 }
 
 export default ColumnContainer;

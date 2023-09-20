@@ -1,3 +1,4 @@
+import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
 
@@ -14,6 +15,9 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         <div>
             보드 {boardId} 보드 페이지
             <Box>
+                <Box>
+                    {columns.map((column) => <ColumnContainer column={column} />)}
+                </Box>
                 <Button
                     onClick={createNewColumn}
                 >
