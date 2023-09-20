@@ -3,6 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { Box, Button } from "@mui/material";
 import { CSS } from "@dnd-kit/utilities";
 import theme from "@/assets/styles/theme";
+import { DragOverlay } from "@dnd-kit/core";
 
 interface Props {
     column: Column;
@@ -57,6 +58,7 @@ function ColumnContainer(props: Props) {
             >
                 X
             </Button>
+
         </Box>
     </Box>
 }

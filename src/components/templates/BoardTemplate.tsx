@@ -1,8 +1,9 @@
 import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
 import { useMemo, useState } from "react";
-import { DndContext, DragStartEvent } from "@dnd-kit/core";
+import { DndContext, DragOverlay, DragStartEvent } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
+import { createPortal } from "react-dom";
 
 export type id = string | number;
 export type Column = {
@@ -43,6 +44,17 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                     >
                         + Add Column
                     </Button>
+                    {createPortal(
+                        <DragOverlay>
+                            {activeColumn
+                                && <ColumnContainer
+                                    column={activeColumn}
+                                    deleteColumn={deleteColumn}
+                                />
+                            }
+                        </DragOverlay>,
+                        document.body
+                    )}
                 </DndContext>
 
             </Box>
