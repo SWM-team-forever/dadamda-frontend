@@ -1,7 +1,7 @@
 import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
 import { useMemo, useState } from "react";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, DragStartEvent } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
 
 export type id = string | number;
@@ -13,12 +13,13 @@ export type Column = {
 function BoardTemplate({ boardId }: { boardId: string | null }) {
     const [columns, setColumns] = useState<Column[]>([]);
     const columnsId = useMemo(() => columns.map((column) => column.id), [columns]);
+    const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
     return (
         <div>
             보드 {boardId} 보드 페이지
             <Box>
-                <DndContext>
+                <DndContext onDragStart={onDragStart}>
                     <Box
                         sx={{
                             display: "flex",
@@ -60,6 +61,14 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
     function deleteColumn(id: id) {
         const newColumns = columns.filter((column) => column.id !== id);
         setColumns(newColumns);
+    }
+
+    function onDragStart(event: DragStartEvent) {
+        if (event.active.data.current?.type === 'column') {
+            const column = event.active.data.current?.column;
+            setActiveColumn(column);
+            return;
+        }
     }
 }
 
