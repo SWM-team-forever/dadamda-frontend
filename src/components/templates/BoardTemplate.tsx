@@ -1,8 +1,8 @@
 import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
 import { useMemo, useState } from "react";
-import { DndContext, DragOverlay, DragStartEvent } from "@dnd-kit/core";
-import { SortableContext } from "@dnd-kit/sortable";
+import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
+import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 
 export type id = string | number;
@@ -20,7 +20,10 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         <div>
             보드 {boardId} 보드 페이지
             <Box>
-                <DndContext onDragStart={onDragStart}>
+                <DndContext
+                    onDragStart={onDragStart}
+                    onDragEnd={onDragEnd}
+                >
                     <Box
                         sx={{
                             display: "flex",
@@ -81,6 +84,27 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
             setActiveColumn(column);
             return;
         }
+    }
+
+    function onDragEnd(Event: DragEndEvent) {
+        const { active, over } = Event;
+        if (!over) {
+            return;
+        }
+
+        const activeColumnId = active.id;
+        const overColumnId = over.id;
+
+        if (activeColumnId === overColumnId) {
+            return;
+        }
+
+        setColumns((columns) => {
+            const overColumnIndex = columns.findIndex((column) => column.id === overColumnId);
+            const activeColumnIndex = columns.findIndex((column) => column.id === activeColumnId);
+
+            return arrayMove(columns, activeColumnIndex, overColumnIndex);
+        });
     }
 }
 
