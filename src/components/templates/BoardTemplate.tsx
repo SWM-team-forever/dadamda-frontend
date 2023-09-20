@@ -10,11 +10,17 @@ export type Column = {
     id: id;
     title: string;
 }
+export type Task = {
+    id: id;
+    columnId: id;
+    content: string;
+}
 
 function BoardTemplate({ boardId }: { boardId: string | null }) {
     const [columns, setColumns] = useState<Column[]>([]);
     const columnsId = useMemo(() => columns.map((column) => column.id), [columns]);
     const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+    const [tasks, setTasks] = useState<Task[]>([]);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
