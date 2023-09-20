@@ -21,7 +21,10 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                         gap: "10px",
                     }}
                 >
-                    {columns.map((column) => <ColumnContainer column={column} />)}
+                    {columns.map((column) => <ColumnContainer
+                        column={column}
+                        deleteColumn={deleteColumn}
+                    />)}
                 </Box>
                 <Button
                     onClick={createNewColumn}
@@ -39,6 +42,11 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         };
 
         setColumns([...columns, columnToAdd]);
+    }
+
+    function deleteColumn(id: id) {
+        const newColumns = columns.filter((column) => column.id !== id);
+        setColumns(newColumns);
     }
 }
 

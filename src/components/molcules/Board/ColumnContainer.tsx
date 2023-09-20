@@ -1,12 +1,13 @@
-import { Column } from "@/components/templates/BoardTemplate";
+import { Column, id } from "@/components/templates/BoardTemplate";
 import { Box, Button } from "@mui/material";
 
 interface Props {
     column: Column;
+    deleteColumn: (id: id) => void;
 }
 
 function ColumnContainer(props: Props) {
-    const { column } = props;
+    const { column, deleteColumn } = props;
     return <Box
         sx={{
             width: "350px",
@@ -27,7 +28,9 @@ function ColumnContainer(props: Props) {
                 0
                 {column.title}
             </Box>
-            <Button>
+            <Button
+                onClick={() => deleteColumn(column.id)}
+            >
                 X
             </Button>
         </Box>
