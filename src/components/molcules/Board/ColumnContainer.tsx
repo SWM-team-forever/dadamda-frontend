@@ -13,7 +13,14 @@ interface Props {
 function ColumnContainer(props: Props) {
     const { column, deleteColumn } = props;
 
-    const { setNodeRef, attributes, listeners, transform, transition } = useSortable({
+    const {
+        setNodeRef,
+        attributes,
+        listeners,
+        transform,
+        transition,
+        isDragging,
+    } = useSortable({
         id: column.id,
         data: {
             type: 'column',
@@ -24,6 +31,20 @@ function ColumnContainer(props: Props) {
     const style = {
         transition,
         transform: CSS.Transform.toString(transform),
+    }
+
+    if (isDragging) {
+        return <Box
+            sx={{
+                width: "350px",
+                height: "500px",
+                backgroundColor: theme.color.Blue_050,
+                opacity: 0.5,
+                border: '1px solid black',
+            }}
+            style={style}
+            ref={setNodeRef}
+        ></Box>
     }
 
     return <Box
