@@ -46,6 +46,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                 <ColumnContainer
                                     column={column}
                                     deleteColumn={deleteColumn}
+                                    updateColumn={updateColumn}
                                     key={column.id}
                                 />
                             )}
@@ -62,6 +63,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                 && <ColumnContainer
                                     column={activeColumn}
                                     deleteColumn={deleteColumn}
+                                    updateColumn={updateColumn}
                                 />
                             }
                         </DragOverlay>,
@@ -114,6 +116,21 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
 
             return arrayMove(columns, activeColumnIndex, overColumnIndex);
         });
+    }
+
+    function updateColumn(id: id, title: string) {
+        const newColumns = columns.map((column) => {
+            if (column.id !== id) {
+                return column;
+            }
+
+            return {
+                ...column,
+                title,
+            };
+        });
+
+        setColumns(newColumns);
     }
 }
 
