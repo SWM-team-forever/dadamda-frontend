@@ -1,4 +1,4 @@
-import { Column, id } from "@/components/templates/BoardTemplate";
+import { Column, Task, id } from "@/components/templates/BoardTemplate";
 import { useSortable } from "@dnd-kit/sortable";
 import { Box, Button } from "@mui/material";
 import { CSS } from "@dnd-kit/utilities";
@@ -12,10 +12,11 @@ interface Props {
     updateColumn: (id: id, title: string) => void;
 
     createTask: (columnId: id) => void;
+    tasks: Task[];
 }
 
 function ColumnContainer(props: Props) {
-    const { column, deleteColumn, updateColumn, createTask } = props;
+    const { column, deleteColumn, updateColumn, createTask, tasks } = props;
     const [editMode, setEditMode] = useState(false);
 
     const {
@@ -103,8 +104,20 @@ function ColumnContainer(props: Props) {
                 X
             </Button>
         </Box>
+        <Box>
+            {tasks.map((task) => {
+                return <Box
+                    key={task.id}
+                    sx={{
+                        backgroundColor: theme.color.Blue_090,
+                    }}
+                >
+                    {task.content}
+                </Box>
+            })}
+        </Box>
         <Button
-            onAbort={() => {
+            onClick={() => {
                 createTask(column.id);
             }}
         >

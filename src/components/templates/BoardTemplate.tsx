@@ -56,6 +56,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     updateColumn={updateColumn}
                                     key={column.id}
                                     createTask={createTask}
+                                    tasks={tasks.filter((task) => task.columnId === column.id)}
                                 />
                             )}
                         </SortableContext>
@@ -73,6 +74,9 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     deleteColumn={deleteColumn}
                                     updateColumn={updateColumn}
                                     createTask={createTask}
+                                    tasks={tasks.filter(
+                                        (task) => task.columnId === activeColumn.id
+                                    )}
                                 />
                             }
                         </DragOverlay>,
