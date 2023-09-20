@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
+import { create } from "@mui/material/styles/createTransitions";
 
 export type id = string | number;
 export type Column = {
@@ -54,6 +55,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     deleteColumn={deleteColumn}
                                     updateColumn={updateColumn}
                                     key={column.id}
+                                    createTask={createTask}
                                 />
                             )}
                         </SortableContext>
@@ -70,6 +72,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     column={activeColumn}
                                     deleteColumn={deleteColumn}
                                     updateColumn={updateColumn}
+                                    createTask={createTask}
                                 />
                             }
                         </DragOverlay>,
@@ -137,6 +140,16 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         });
 
         setColumns(newColumns);
+    }
+
+    function createTask(columnId: id) {
+        const newTask: Task = {
+            id: generateId(),
+            columnId,
+            content: `Task ${tasks.length + 1}`,
+        };
+
+        setTasks([...tasks, newTask]);
     }
 }
 

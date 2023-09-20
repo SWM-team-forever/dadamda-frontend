@@ -10,10 +10,12 @@ interface Props {
     column: Column;
     deleteColumn: (id: id) => void;
     updateColumn: (id: id, title: string) => void;
+
+    createTask: (columnId: id) => void;
 }
 
 function ColumnContainer(props: Props) {
-    const { column, deleteColumn, updateColumn } = props;
+    const { column, deleteColumn, updateColumn, createTask } = props;
     const [editMode, setEditMode] = useState(false);
 
     const {
@@ -101,7 +103,11 @@ function ColumnContainer(props: Props) {
                 X
             </Button>
         </Box>
-        <Button>
+        <Button
+            onAbort={() => {
+                createTask(column.id);
+            }}
+        >
             + Add Task
         </Button>
     </Box>
