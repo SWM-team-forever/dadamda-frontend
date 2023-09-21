@@ -1,30 +1,61 @@
 import styled from 'styled-components';
 import theme from '../../assets/styles/theme';
+import { Box, Typography } from '@mui/material';
+import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
+import { create } from '@mui/material/styles/createTransitions';
 
 interface MemoProps {
     memoImageURL?: string,
     memoText?: string,
+    createdDate: string,
 }
 
-function Memo({ memoImageURL, memoText }: MemoProps) {
+function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
     return (
-        <MemoContainer>
-            {memoText ? memoText : <ImageMemo src={memoImageURL} />}
-        </MemoContainer>
+        <Box
+            sx={{
+                p: '10px',
+                boxSizing: 'border-box',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                backgroundColor: '#FFF',
+                borderRadius: '4px',
+            }}
+        >
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <Typography
+                    variant='h6'
+                    color='#A4AAB7'
+                    sx={{
+                        fontWeight: '400',
+                        lineHeight: '160%',
+                    }}
+                >
+                    {createdDate}
+                </Typography>
+                <Tooltip />
+            </Box>
+            {memoText
+                ? <Typography
+                    variant='h5'
+                    color='#656A6F'
+                    sx={{
+                        fontWeight: '400',
+                        lineHeight: '160%',
+                    }}
+                >
+                    {memoText}
+                </Typography>
+                : <ImageMemo src={memoImageURL} />}
+        </Box>
     );
 }
-
-const MemoContainer = styled.div`
-    width: 100%;
-    border-radius: 4px;
-    background-color: ${theme.color.background_color};
-    padding: 10px;
-    box-sizing: border-box;
-    font-size: 14px;
-    color: ${theme.color.text_gray_color};
-    white-space: pre-wrap;
-    word-break: break-all;
-`
 
 const ImageMemo = styled.img<{ imageSource?: string }>`
     width: 100%;

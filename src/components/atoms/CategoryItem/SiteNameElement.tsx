@@ -1,33 +1,33 @@
 import { Typography } from "@mui/material";
+
 import theme from "../../../assets/styles/theme";
-import { SiWhitesource } from "react-icons/si";
 
 const mobileProductStyle = {
-    fontSize: '0.75rem',
-    wordBreak: 'break-all',
-    color: theme.color.text_gray_color,
-    fontWeight: '400',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '150%',
 }
 
 const desktopProductListStyle = {
-    fontSize: '0.75rem',
-    wordBreak: 'break-all',
-    color: theme.color.text_gray_color,
-    fontWeight: '400',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '150%',
 }
 
 const desktopProductItemStyle = {
-    fontSize: '0.75rem',
-    wordBreak: 'break-all',
-    color: theme.color.text_gray_color,
-    fontWeight: '400',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '150%',
 }
 
 const mobileVideoStyle = {
-    color: theme.color.text_gray_color,
-    fontSize: '0.75rem',
-    fontWeight: '400',
-    lineHeight: '160%',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '150%',
 }
 
 const desktopVideoItemStyle = {
@@ -35,6 +35,13 @@ const desktopVideoItemStyle = {
     fontSize: '0.75rem',
     fontWeight: '400',
     fontHeight: '160%',
+}
+
+const desktopVideoListStyle = {
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '150%',
 }
 
 const desktopArticleItemStyle = {
@@ -45,28 +52,24 @@ const desktopArticleItemStyle = {
 }
 
 const desktopArticleListStyle = {
-    color: theme.color.primary_color,
-    fontSize: '0.625rem',
-    fontWeight: '400',
-    fontHeight: '160%',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '150%',
 }
 
 const mobileArticleStyle = {
-    color: theme.color.primary_color,
-    fontSize: '0.625rem',
-    fontWeight: '400',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
     lineHeight: '160%',
 }
 
 const scrapCardStyle = {
-    borderRadius: '10px',
-    padding: '0 10px',
-    background: theme.color.primary_color,
-    color: theme.color.background_color,
-    fontSize: '0.75rem',
-    fontWeight: '400',
-    lineHeight: '160%',
-    width: 'fit-content',
+    color: theme.color.Gray_080,
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '150%',
 }
 
 const siteNameStyles = {

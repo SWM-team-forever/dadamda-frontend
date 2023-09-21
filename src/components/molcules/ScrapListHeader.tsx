@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { Box, Button, Typography } from '@mui/material';
 
-import searchIcon from '../../assets/icons/SearchIcon.png';
 import theme from '../../assets/styles/theme';
-import useWarningSnackbar from '../../hooks/useWarningSnackbar';
+import SearchBar from '@/components/molcules/SearchBar';
+import { useModal } from '@/hooks/useModal';
 
 interface ScrapListHeaderProps {
     count: number,
@@ -10,52 +10,67 @@ interface ScrapListHeaderProps {
 }
 
 function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
+    const { openModal } = useModal();
+    const typeMatching = {
+        'other': '기타',
+        'list': '전체',
+        'video': '영상',
+        'product': '상품',
+        'article': '아티클',
+    }
+
     return (
-        <ScrapListHeaderWrapper>
-            <ScarpCountWrapper>
-                <EmpasizedTypography>{count} </EmpasizedTypography>
-                <DefaultTypography>개의 </DefaultTypography>
-                <EmpasizedTypography>{type} 스크랩</EmpasizedTypography>
-                <DefaultTypography>이 있습니다.</DefaultTypography>
-            </ScarpCountWrapper>
-            <SearchBar onClick={useWarningSnackbar}>
-                <SearchIconWrapper src={searchIcon} />
-                <EmpasizedTypography>Search</EmpasizedTypography>
-            </SearchBar>
-        </ScrapListHeaderWrapper>
+        <Box
+            sx={{
+                padding: '24px',
+            }}
+        >
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    mb: '16px',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                    }}
+                >
+                    <Typography
+                        variant='h1'
+                        color={theme.color.Gray_090}
+                        sx={{
+                            fontWeight: '600',
+                            lineHeight: '160%',
+                        }}
+                    >
+                        스크랩 {typeMatching[type as keyof typeof typeMatching]}
+                    </Typography>
+                    <Typography
+                        variant='h6'
+                        color={theme.color.Gray_070}
+                        sx={{
+                            fontWeight: '600',
+                            lineHeight: '150%',
+                        }}
+                    >
+                        {count} 개
+                    </Typography>
+                </Box>
+                <Button
+                    color='primary'
+                    variant='contained'
+                    onClick={() => openModal('scrapCreate')}
+                >
+                    + 스크랩 추가
+                </Button>
+            </Box>
+            <SearchBar type={type} />
+        </Box>
     )
 }
-
-const ScrapListHeaderWrapper = styled.div`
-    display: flex;
-    padding: 20px;
-    justify-content: space-between;
-`
-
-const ScarpCountWrapper = styled.div`
-
-`
-
-const DefaultTypography = styled.span`
-    font-size: 14px;
-    color: ${theme.color.text_gray_color};
-`
-
-const EmpasizedTypography = styled.span`
-    font-size: 14px;
-    font-weight: bold;
-    color: ${theme.color.text_gray_color};
-`
-
-const SearchBar = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-`
-
-const SearchIconWrapper = styled.img`
-    width: 24px;
-    height: 24px;
-`
 
 export default ScrapListHeader

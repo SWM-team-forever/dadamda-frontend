@@ -3,31 +3,31 @@ import theme from "../../../assets/styles/theme";
 import RowContainer from "../RowContainer";
 
 const mobileProductStyle = {
-    fontSize: '0.875rem',
-    color: theme.color.primary_color,
-    fontWeight: '700',
-    lineHeight: '160%',
+    color: theme.color.Gray_090,
+    fontSize: '14px',
+    fontWeight: '400',
+    lineHeight: '150%',
 };
 
 const desktopProductItemStyle = {
-    fontSize: '0.875rem',
-    color: theme.color.primary_color,
-    fontWeight: '700',
-    lineHeight: '160%',
+    color: theme.color.Gray_090,
+    fontSize: '14px',
+    fontWeight: '400',
+    lineHeight: '150%',
 };
 
 const desktopProductListStyle = {
-    fontSize: '0.9375rem',
-    color: theme.color.primary_color,
-    fontWeight: '700',
-    lineHeight: '160%',
+    color: theme.color.Gray_090,
+    fontSize: '14px',
+    fontWeight: '400',
+    lineHeight: '150%',
 };
 
 const scrapCardStyle = {
-    color: theme.color.primary_color,
-    fontSize: '0.875rem',
-    fontWeight: '700',
-    lineHeight: '160%',
+    color: theme.color.Gray_090,
+    fontSize: '14px',
+    fontWeight: '400',
+    lineHeight: '150%',
 }
 
 const siteNameStyles = {
@@ -44,8 +44,6 @@ export function PriceElement({ price, varient }: any) {
                 width: '100%',
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-all',
-                color: theme.color.primary_color,
-                fontWeight: 'bold',
             }}>
             <Typography sx={siteNameStyles[varient as keyof typeof siteNameStyles]}>
                 {price}

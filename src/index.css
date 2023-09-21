@@ -1,4 +1,9 @@
 body {
   margin: 0;
-  font-family: 'NanumSquare', sans-serif;
+  background: linear-gradient(114deg, #EBEEF3 12.12%, #D6DEEA 100%);
+}
+
+* {
+  font-family: Pretendard,'Noto Sans KR', sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
