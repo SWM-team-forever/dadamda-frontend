@@ -1,10 +1,10 @@
 import { Column, Task, id } from "@/components/templates/BoardTemplate";
-import { useSortable } from "@dnd-kit/sortable";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { Box, Button } from "@mui/material";
 import { CSS } from "@dnd-kit/utilities";
 import theme from "@/assets/styles/theme";
 import { DragOverlay } from "@dnd-kit/core";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import TaskCard from "@/components/molcules/Board/TaskCard";
 
 interface Props {
@@ -29,6 +29,8 @@ function ColumnContainer(props: Props) {
         updateTask,
     } = props;
     const [editMode, setEditMode] = useState(false);
+
+    const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
     const {
         setNodeRef,
@@ -116,14 +118,16 @@ function ColumnContainer(props: Props) {
             </Button>
         </Box>
         <Box>
-            {tasks.map((task) => {
-                return <TaskCard
-                    key={task.id}
-                    task={task}
-                    deleteTask={deleteTask}
-                    updateTask={updateTask}
-                />
-            })}
+            <SortableContext items={tasksIds}>
+                {tasks.map((task) => {
+                    return <TaskCard
+                        key={task.id}
+                        task={task}
+                        deleteTask={deleteTask}
+                        updateTask={updateTask}
+                    />
+                })}
+            </SortableContext>
         </Box>
         <Button
             onClick={() => {
