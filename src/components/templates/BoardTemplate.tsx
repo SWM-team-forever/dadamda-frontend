@@ -170,6 +170,10 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         const isActiveATask = active.data.current?.type === 'Task';
         const isOverATask = over.data.current?.type === 'Task';
 
+        if (!isActiveATask) {
+            return;
+        }
+
         if (isActiveATask && isOverATask) {
             setTasks((tasks) => {
                 const activeIndex = tasks.findIndex((task) => task.id === activeColumnId);
