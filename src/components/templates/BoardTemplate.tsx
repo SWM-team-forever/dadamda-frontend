@@ -54,6 +54,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     column={column}
                                     deleteColumn={deleteColumn}
                                     updateColumn={updateColumn}
+                                    deleteTask={deleteTask}
                                     key={column.id}
                                     createTask={createTask}
                                     tasks={tasks.filter((task) => task.columnId === column.id)}
@@ -74,6 +75,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     deleteColumn={deleteColumn}
                                     updateColumn={updateColumn}
                                     createTask={createTask}
+                                    deleteTask={deleteTask}
                                     tasks={tasks.filter(
                                         (task) => task.columnId === activeColumn.id
                                     )}
@@ -154,6 +156,11 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         };
 
         setTasks([...tasks, newTask]);
+    }
+
+    function deleteTask(id: id) {
+        const newTask = tasks.filter(task => task.id !== id);
+        setTasks(newTask);
     }
 }
 
