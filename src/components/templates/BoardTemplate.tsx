@@ -115,6 +115,9 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
     function deleteColumn(id: id) {
         const newColumns = columns.filter((column) => column.id !== id);
         setColumns(newColumns);
+
+        const newTasks = tasks.filter((task) => task.columnId !== id);
+        setTasks(newTasks);
     }
 
     function onDragStart(event: DragStartEvent) {
