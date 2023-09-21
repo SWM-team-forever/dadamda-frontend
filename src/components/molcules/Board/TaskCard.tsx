@@ -1,5 +1,5 @@
 import { Task } from "@/components/templates/BoardTemplate";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 interface Props {
     task: Task;
@@ -13,6 +13,7 @@ function TaskCard({ task }: Props) {
             }}
         >
             {task.content}
+            <Button>- Delete</Button>
         </Box>
     );
 }
