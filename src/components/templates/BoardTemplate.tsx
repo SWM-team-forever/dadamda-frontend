@@ -5,6 +5,7 @@ import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, u
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import { create } from "@mui/material/styles/createTransitions";
+import TaskCard from "@/components/molcules/Board/TaskCard";
 
 export type id = string | number;
 export type Column = {
@@ -22,6 +23,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
     const columnsId = useMemo(() => columns.map((column) => column.id), [columns]);
     const [activeColumn, setActiveColumn] = useState<Column | null>(null);
     const [tasks, setTasks] = useState<Task[]>([]);
+    const [activeTask, setActiveTask] = useState<Task | null>(null);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -83,6 +85,13 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     updateTask={updateTask}
                                 />
                             }
+                            {activeTask
+                                && <TaskCard
+                                    task={activeTask}
+                                    deleteTask={deleteTask}
+                                    updateTask={updateTask}
+                                />
+                            }
                         </DragOverlay>,
                         document.body
                     )}
@@ -110,6 +119,12 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         if (event.active.data.current?.type === 'column') {
             const column = event.active.data.current?.column;
             setActiveColumn(column);
+            return;
+        }
+
+        if (event.active.data.current?.type === 'task') {
+            const task = event.active.data.current?.task;
+            setActiveTask(task);
             return;
         }
     }
