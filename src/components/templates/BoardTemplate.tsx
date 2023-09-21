@@ -1,7 +1,7 @@
 import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
 import { useMemo, useState } from "react";
-import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import { create } from "@mui/material/styles/createTransitions";
@@ -40,6 +40,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                 <DndContext
                     onDragStart={onDragStart}
                     onDragEnd={onDragEnd}
+                    onDragOver={onDragOver}
                     sensors={sensors}
                 >
                     <Box
@@ -129,8 +130,11 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         }
     }
 
-    function onDragEnd(Event: DragEndEvent) {
-        const { active, over } = Event;
+    function onDragEnd(event: DragEndEvent) {
+        setActiveColumn(null);
+        setActiveTask(null);
+
+        const { active, over } = event;
         if (!over) {
             return;
         }
@@ -148,6 +152,32 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
 
             return arrayMove(columns, activeColumnIndex, overColumnIndex);
         });
+    }
+
+    function onDragOver(event: DragOverEvent) {
+        const { active, over } = event;
+        if (!over) {
+            return;
+        }
+
+        const activeColumnId = active.id;
+        const overColumnId = over.id;
+
+        if (activeColumnId === overColumnId) {
+            return;
+        }
+
+        const isActiveATask = active.data.current?.type === 'Task';
+        const isOverATask = over.data.current?.type === 'Task';
+
+        if (isActiveATask && isOverATask) {
+            setTasks((tasks) => {
+                const activeIndex = tasks.findIndex((task) => task.id === activeColumnId);
+                const overIndex = tasks.findIndex((task) => task.id === overColumnId);
+
+                return arrayMove(tasks, activeIndex, overIndex);
+            });
+        }
     }
 
     function updateColumn(id: id, title: string) {
