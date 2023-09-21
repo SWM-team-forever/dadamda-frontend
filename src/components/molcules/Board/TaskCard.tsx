@@ -1,8 +1,19 @@
-function TaskCard() {
-    return (
-        <div>
+import { Task } from "@/components/templates/BoardTemplate";
+import { Box } from "@mui/material";
 
-        </div>
+interface Props {
+    task: Task;
+}
+
+function TaskCard({ task }: Props) {
+    return (
+        <Box
+            sx={{
+                cursor: 'grab',
+            }}
+        >
+            {task.content}
+        </Box>
     );
 }
 
