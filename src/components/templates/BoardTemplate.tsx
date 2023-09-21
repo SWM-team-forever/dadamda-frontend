@@ -175,6 +175,10 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                 const activeIndex = tasks.findIndex((task) => task.id === activeColumnId);
                 const overIndex = tasks.findIndex((task) => task.id === overColumnId);
 
+                if (tasks[activeIndex].columnId !== tasks[overIndex].columnId) {
+                    tasks[activeIndex].columnId = tasks[overIndex].columnId;
+                }
+
                 return arrayMove(tasks, activeIndex, overIndex);
             });
         }
