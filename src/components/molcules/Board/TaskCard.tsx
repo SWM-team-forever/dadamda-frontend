@@ -42,6 +42,21 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         setMouseIsOver(false);
     }
 
+    if (isDragging) {
+        return <Box
+            ref={setNodeRef}
+            style={style}
+            sx={{
+                cursor: 'grab',
+                width: '100%',
+                height: '50px',
+                backgroundColor: theme.color.Gray_080,
+                mb: '10px',
+                opacity: 0.5,
+            }}
+        />
+    }
+
     if (editMode) {
         return (
             <Box
@@ -51,6 +66,10 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
                 {...listeners}
                 sx={{
                     cursor: 'grab',
+                    width: '100%',
+                    height: '50px',
+                    backgroundColor: theme.color.Gray_080,
+                    mb: '10px',
                 }}
                 onClick={toggleEditMode}
             >
