@@ -57,6 +57,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     deleteTask={deleteTask}
                                     key={column.id}
                                     createTask={createTask}
+                                    updateTask={updateTask}
                                     tasks={tasks.filter((task) => task.columnId === column.id)}
                                 />
                             )}
@@ -79,6 +80,7 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                                     tasks={tasks.filter(
                                         (task) => task.columnId === activeColumn.id
                                     )}
+                                    updateTask={updateTask}
                                 />
                             }
                         </DragOverlay>,
@@ -162,6 +164,22 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
         const newTask = tasks.filter(task => task.id !== id);
         setTasks(newTask);
     }
+
+    function updateTask(id: id, content: string) {
+        const newTasks = tasks.map((task) => {
+            if (task.id !== id) {
+                return task;
+            }
+
+            return {
+                ...task,
+                content,
+            };
+        });
+
+        setTasks(newTasks);
+    }
+
 }
 
 function generateId() {
