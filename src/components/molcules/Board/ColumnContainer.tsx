@@ -5,6 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import theme from "@/assets/styles/theme";
 import { DragOverlay } from "@dnd-kit/core";
 import { useState } from "react";
+import TaskCard from "@/components/molcules/Board/TaskCard";
 
 interface Props {
     column: Column;
@@ -106,14 +107,7 @@ function ColumnContainer(props: Props) {
         </Box>
         <Box>
             {tasks.map((task) => {
-                return <Box
-                    key={task.id}
-                    sx={{
-                        backgroundColor: theme.color.Blue_090,
-                    }}
-                >
-                    {task.content}
-                </Box>
+                return <TaskCard key={task.id} task={task} />
             })}
         </Box>
         <Button
