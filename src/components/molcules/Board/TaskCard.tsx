@@ -9,6 +9,12 @@ interface Props {
 
 function TaskCard({ task, deleteTask }: Props) {
     const [mouseIsOver, setMouseIsOver] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+
+    const toggleEditMode = () => {
+        setEditMode(prev => !prev);
+        setMouseIsOver(false);
+    }
 
     return (
         <Box
@@ -17,6 +23,7 @@ function TaskCard({ task, deleteTask }: Props) {
             }}
             onMouseEnter={() => setMouseIsOver(true)}
             onMouseLeave={() => setMouseIsOver(false)}
+            onClick={toggleEditMode}
         >
             {task.content}
             {mouseIsOver
