@@ -6,6 +6,7 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import { create } from "@mui/material/styles/createTransitions";
 import TaskCard from "@/components/molcules/Board/TaskCard";
+import { act } from "react-dom/test-utils";
 
 export type id = string | number;
 export type Column = {
@@ -182,6 +183,18 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
                 tasks[activeIndex].columnId = tasks[overIndex].columnId;
 
                 return arrayMove(tasks, activeIndex, overIndex);
+            });
+        }
+
+        const isOverAColumn = over.data.current?.type === 'column';
+
+        if (!isActiveATask && isOverAColumn) {
+            setTasks((tasks) => {
+                const activeIndex = tasks.findIndex((task) => task.id === activeColumnId);
+
+                tasks[activeIndex].columnId = overColumnId;
+
+                return arrayMove(tasks, activeIndex, activeIndex);
             });
         }
     }
