@@ -97,6 +97,7 @@ export const usePostCreateScrap = () => {
 
     return useMutation(fetchPostCreateScrap, {
         onSuccess: () => {
+            queryClient.invalidateQueries(['scrapCount']);
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('스크랩이 생성되었습니다', 'success');
         },
@@ -137,6 +138,7 @@ export const useDeleteScrap = () => {
     const queryClient = useQueryClient();
     return useMutation(fetchDeleteScrap, {
         onSuccess: () => {
+            queryClient.invalidateQueries(['scrapCount']);
             queryClient.invalidateQueries(['scraps']);
             useDefaultSnackbar('스크랩이 삭제되었습니다.', 'success');
         },
