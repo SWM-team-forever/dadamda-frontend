@@ -19,7 +19,7 @@ export type Task = {
     content: string;
 }
 
-function BoardTemplate({ boardId }: { boardId: string | null }) {
+function BoardTemplate() {
     const [columns, setColumns] = useState<Column[]>([]);
     const columnsId = useMemo(() => columns.map((column) => column.id), [columns]);
     const [activeColumn, setActiveColumn] = useState<Column | null>(null);
@@ -35,72 +35,69 @@ function BoardTemplate({ boardId }: { boardId: string | null }) {
     );
 
     return (
-        <div>
-            보드 {boardId} 보드 페이지
-            <Box>
-                <DndContext
-                    onDragStart={onDragStart}
-                    onDragEnd={onDragEnd}
-                    onDragOver={onDragOver}
-                    sensors={sensors}
+        <Box>
+            <DndContext
+                onDragStart={onDragStart}
+                onDragEnd={onDragEnd}
+                onDragOver={onDragOver}
+                sensors={sensors}
+            >
+                <Box
+                    sx={{
+                        display: "flex",
+                        gap: "10px",
+                    }}
                 >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            gap: "10px",
-                        }}
+                    <SortableContext
+                        items={columnsId}
                     >
-                        <SortableContext
-                            items={columnsId}
-                        >
-                            {columns.map((column) =>
-                                <ColumnContainer
-                                    column={column}
-                                    deleteColumn={deleteColumn}
-                                    updateColumn={updateColumn}
-                                    deleteTask={deleteTask}
-                                    key={column.id}
-                                    createTask={createTask}
-                                    updateTask={updateTask}
-                                    tasks={tasks.filter((task) => task.columnId === column.id)}
-                                />
-                            )}
-                        </SortableContext>
-                    </Box>
-                    <Button
-                        onClick={createNewColumn}
-                    >
-                        + Add Column
-                    </Button>
-                    {createPortal(
-                        <DragOverlay>
-                            {activeColumn
-                                && <ColumnContainer
-                                    column={activeColumn}
-                                    deleteColumn={deleteColumn}
-                                    updateColumn={updateColumn}
-                                    createTask={createTask}
-                                    deleteTask={deleteTask}
-                                    tasks={tasks.filter(
-                                        (task) => task.columnId === activeColumn.id
-                                    )}
-                                    updateTask={updateTask}
-                                />
-                            }
-                            {activeTask
-                                && <TaskCard
-                                    task={activeTask}
-                                    deleteTask={deleteTask}
-                                    updateTask={updateTask}
-                                />
-                            }
-                        </DragOverlay>,
-                        document.body
-                    )}
-                </DndContext>
+                        {columns.map((column) =>
+                            <ColumnContainer
+                                column={column}
+                                deleteColumn={deleteColumn}
+                                updateColumn={updateColumn}
+                                deleteTask={deleteTask}
+                                key={column.id}
+                                createTask={createTask}
+                                updateTask={updateTask}
+                                tasks={tasks.filter((task) => task.columnId === column.id)}
+                            />
+                        )}
+                    </SortableContext>
+                </Box>
+                <Button
+                    onClick={createNewColumn}
+                >
+                    + Add Column
+                </Button>
+                {createPortal(
+                    <DragOverlay>
+                        {activeColumn
+                            && <ColumnContainer
+                                column={activeColumn}
+                                deleteColumn={deleteColumn}
+                                updateColumn={updateColumn}
+                                createTask={createTask}
+                                deleteTask={deleteTask}
+                                tasks={tasks.filter(
+                                    (task) => task.columnId === activeColumn.id
+                                )}
+                                updateTask={updateTask}
+                            />
+                        }
+                        {activeTask
+                            && <TaskCard
+                                task={activeTask}
+                                deleteTask={deleteTask}
+                                updateTask={updateTask}
+                            />
+                        }
+                    </DragOverlay>,
+                    document.body
+                )}
+            </DndContext>
 
-            </Box>
-        </div>
+        </Box>
     );
 
     function createNewColumn() {
