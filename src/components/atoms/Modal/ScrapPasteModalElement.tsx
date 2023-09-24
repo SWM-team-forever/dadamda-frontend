@@ -1,8 +1,11 @@
+import SearchBar from "@/components/molcules/SearchBar";
+import { Box } from "@mui/material";
+
 function ScrapPasteModalElement() {
     return (
-        <div>
-
-        </div>
+        <Box>
+            <SearchBar type={"list"} />
+        </Box>
     );
 }
 
