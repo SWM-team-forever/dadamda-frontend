@@ -16,7 +16,7 @@ function RightSideModalWrapper() {
         >
             <Box
                 sx={{
-                    backgroundColor: theme.color.Gray_020,
+                    backgroundColor: theme.color.Gray_030,
                     borderRadius: '8px',
                     p: '16px',
                     position: 'absolute',
