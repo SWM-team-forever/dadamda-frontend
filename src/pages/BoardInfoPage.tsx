@@ -1,4 +1,5 @@
 import BoardTemplate from "@/components/templates/BoardTemplate";
+import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 
@@ -8,6 +9,8 @@ function BoardInfoPage() {
     function getBoardPageId() {
         return searchParams.get('boardId');
     }
+
+    const { openModal } = useModal();
 
     return (
         <Box
@@ -29,7 +32,11 @@ function BoardInfoPage() {
             >
                 <BoardTemplate />
                 <Box>
-                    <Button>스크랩 추가</Button>
+                    <Button
+                        onClick={() => openModal('scrapCreateOnBoard')}
+                    >
+                        스크랩 추가
+                    </Button>
                 </Box>
             </Box>
         </Box>
