@@ -27,3 +27,10 @@ export interface contentProps {
         dtype: string,
     }
 }
+
+export type TMemo = {
+    memoId: number,
+    memoImageUrl?: string,
+    memoText?: string,
+    createdDate: string,
+}
