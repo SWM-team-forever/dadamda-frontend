@@ -28,6 +28,7 @@ import { SENTRY_DSN } from '@/secret';
 import BoardListTemplate from '@/components/templates/BoardListTemplate';
 import BoardTemplate from '@/components/templates/BoardTemplate';
 import BoardInfoPage from '@/pages/BoardInfoPage';
+import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
 
 const queryClient = new QueryClient();
 Sentry.init({
@@ -63,7 +64,9 @@ function App() {
           <LoginProvider>
             <BrowserRouter>
               <Header />
-              {modal.isOpen && <ModalWrapper />}
+              {modal.isOpen && (
+                modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
+              )}
               <ErrorBoundary
                 FallbackComponent={ErrorPage}
                 onReset={() => {
