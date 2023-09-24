@@ -72,7 +72,7 @@ function ScrapPasteModalElement() {
                 <TabPanel
                     value={value}
                     sx={{
-                        height: '100%',
+                        height: 'calc(100% - 200px)',
                         overflowY: 'auto',
                     }}
                 >
