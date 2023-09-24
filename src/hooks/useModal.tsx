@@ -21,26 +21,37 @@ export const useModal = () => {
         memoCreate: {
             title: '메모 추가하기',
             element: <MemoCreateModalElement />,
+            position: 'center',
         },
         login: {
             title: '소셜 로그인하기',
             element: <LoginModalElement />,
+            position: 'center',
         },
         userDelete: {
             title: '회원 탈퇴하기',
             element: <UserDeleteModalElement />,
+            position: 'center',
         },
         scrapDelete: {
             title: '스크랩 삭제하기',
             element: <ScrapDeleteElementModal />,
+            position: 'center',
         },
         scrapEdit: {
             title: '스크랩 편집하기',
             element: <ScrapEditModalElement />,
+            position: 'center',
         },
         scrapCreate: {
             title: '스크랩 추가하기',
             element: <ScrapCreateModalElement />,
+            position: 'center',
+        },
+        scrapCreateOnBoard: {
+            title: '스크랩 추가하기',
+            element: <ScrapCreateModalElement />,
+            position: 'right',
         }
     }
 
