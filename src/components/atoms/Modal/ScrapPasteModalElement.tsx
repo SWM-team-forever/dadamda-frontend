@@ -65,7 +65,7 @@ function ScrapPasteModalElement() {
                     onChange={handleTabValueChange}
                     visibleScrollbar
                     indicatorColor='primary'
-
+                    value={value}
                 >
                     <Tab label="전체" value='list' />
                     <Tab label="상품" value='product' />
@@ -94,6 +94,7 @@ function ScrapPasteModalElement() {
                                         onClick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
+                                            console.log('clicked');
                                             pasteScrap(content);
                                         }}
                                     >
