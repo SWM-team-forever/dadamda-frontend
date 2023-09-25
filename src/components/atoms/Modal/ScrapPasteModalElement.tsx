@@ -91,10 +91,7 @@ function ScrapPasteModalElement() {
                             return page.data.content.map((content: contentProps['content']) => {
                                 return (
                                     <Box
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            console.log('clicked');
+                                        onClick={() => {
                                             pasteScrap(content);
                                         }}
                                     >

@@ -64,9 +64,7 @@ function ScrapCard({ content }: contentProps) {
         <CardContainer>
             <CardWrapper
                 style={{ cursor: 'pointer' }}
-                onClick={(e) => {
-                    e.stopPropagation();
-                }}>
+            >
                 <Box
                     component='div'
                     sx={{
