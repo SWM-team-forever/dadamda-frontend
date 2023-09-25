@@ -1,8 +1,10 @@
 import { useGetScrapByType } from "@/api/scrap";
 import theme from "@/assets/styles/themeMuiStyle";
+import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
-import ScrapCard from "@/components/organisms/ScrapCard";
 import MasonryListTemplate from "@/components/templates/MasonryListTemplate";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
+import boardAtom from "@/state/boardAtom";
 import { contentProps } from "@/types/ContentType";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
@@ -16,6 +18,8 @@ function ScrapPasteModalElement() {
     const handleTabValueChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     }
+
+    const { pasteScrap } = useBoardAtom();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
         ['scraps', value],
@@ -87,7 +91,11 @@ function ScrapPasteModalElement() {
                             return page.data.content.map((content: contentProps['content']) => {
                                 return (
                                     <Box
-
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            pasteScrap(content);
+                                        }}
                                     >
                                         <ScrapCard content={content} key={content.scrapId} />
                                     </Box>
