@@ -1,9 +1,8 @@
 import { TMemo, contentProps } from "@/types/ContentType"
-import { string } from "prop-types";
 
 export type Memo = TMemo;
 export type Scrap = contentProps['content'];
-type ScrapOrMemo = (Memo | Scrap) & {
+export type ScrapOrMemo = (Memo | Scrap) & {
     columnId: string,
 };
 export type Column = {
