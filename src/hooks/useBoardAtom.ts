@@ -7,11 +7,17 @@ export const useBoardAtom = () => {
     
     const pasteScrap = (scrap: Scrap) => {
         setBoard((prev) => {
-            const newBoard = {...prev};
-            newBoard.ScrapOrMemoList.push({...scrap, columnId: board.columnList[0].columnId});
-            return newBoard;
-        })
-    }
+            const columnId = prev.columnList.length > 0 ? prev.columnList[0].columnId.toString() : '0';
+            return {
+                ...prev,
+                ScrapOrMemoList: [
+                    ...prev.ScrapOrMemoList,
+                    { ...scrap, columnId },
+                ],
+                columnList: prev.columnList.length === 0 ? [{ columnId: '0', columnName: '기본' }] : prev.columnList,
+            };
+        });
+    };
 
     return {
         board,
