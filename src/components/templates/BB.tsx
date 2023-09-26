@@ -10,7 +10,6 @@ import {
     DragOverlay,
     DropAnimation,
     getFirstCollision,
-    KeyboardSensor,
     MouseSensor,
     TouchSensor,
     Modifiers,
@@ -35,6 +34,9 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS, Transform } from '@dnd-kit/utilities';
 import theme from '@/assets/styles/theme';
+import ScrapCard from '@/components/molcules/Board/ScrapCard';
+import { contentProps } from '@/types/ContentType';
+import scrapCardDataMock from '__mocks__/scrapCardDataMock';
 
 const animateLayoutChanges: AnimateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -146,6 +148,8 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
                     {
                         ...style,
                         '--columns': columns,
+                        width: '320px',
+                        backgroundColor: theme.color.Blue_080,
                     } as React.CSSProperties
                 }
                 onClick={onClick}
@@ -234,7 +238,7 @@ const dropAnimation: DropAnimation = {
     }),
 };
 
-type Items = Record<UniqueIdentifier, UniqueIdentifier[]>;
+type Items = Record<UniqueIdentifier, contentProps['content'][]>;
 
 export interface ItemProps {
     dragOverlay?: boolean;
@@ -252,7 +256,7 @@ export interface ItemProps {
     style?: React.CSSProperties;
     transition?: string | null;
     wrapperStyle?: React.CSSProperties;
-    value: React.ReactNode;
+    value: contentProps['content'];
     onRemove?(): void;
     renderItem?(args: {
         dragOverlay: boolean;
@@ -273,7 +277,6 @@ export const Item = React.memo(
     React.forwardRef<HTMLLIElement, ItemProps>(
         (
             {
-                color,
                 dragOverlay,
                 dragging,
                 disabled,
@@ -324,11 +327,6 @@ export const Item = React.memo(
             ) : (
                 <div
                     ref={ref}
-                    style={{
-                        width: '300px',
-                        height: '50px',
-                        backgroundColor: theme.color.Blue_090,
-                    }}
                 >
                     <div
                         style={style}
@@ -337,7 +335,7 @@ export const Item = React.memo(
                         {...props}
                         tabIndex={!handle ? 0 : undefined}
                     >
-                        {value}
+                        <ScrapCard content={value} />
                     </div>
                 </div>
             );
@@ -398,10 +396,7 @@ export function MultipleContainers({
     const [items, setItems] = useState<Items>(
         () =>
             initialItems ?? {
-                A: ['A1', 'A2', 'A3'],
-                B: ['B1', 'B2', 'B3'],
-                C: ['C1', 'C2', 'C3'],
-                D: ['D1', 'D2', 'D3'],
+                A: [scrapCardDataMock],
             }
     );
     const [containers, setContainers] = useState(
@@ -411,7 +406,6 @@ export function MultipleContainers({
     const lastOverId = useRef<UniqueIdentifier | null>(null);
     const recentlyMovedToNewContainer = useRef(false);
     const isSortingContainer = activeId ? containers.includes(activeId) : false;
-    console.log(activeId);
 
     /**
      * Custom collision detection strategy optimized for multiple containers
@@ -459,7 +453,7 @@ export function MultipleContainers({
                             droppableContainers: args.droppableContainers.filter(
                                 (container) =>
                                     container.id !== overId &&
-                                    containerItems.includes(container.id)
+                                    containerItems.includes(container.data.current?.id)
                             ),
                         })[0]?.id;
                     }
@@ -493,7 +487,11 @@ export function MultipleContainers({
             return id;
         }
 
-        return Object.keys(items).find((key) => items[key].includes(id));
+        console.log(items);
+
+        return Object.keys(items).find((key) => {
+            return items[key].includes(id)
+        });
     };
 
     const getIndex = (id: UniqueIdentifier) => {
@@ -544,6 +542,8 @@ export function MultipleContainers({
                 if (overId == null || overId === TRASH_ID || active.id in items) {
                     return;
                 }
+
+                console.log(active, over);
 
                 const overContainer = findContainer(overId);
                 const activeContainer = findContainer(active.id);
