@@ -37,6 +37,7 @@ import theme from '@/assets/styles/theme';
 import ScrapCard from '@/components/molcules/Board/ScrapCard';
 import { contentProps } from '@/types/ContentType';
 import scrapCardDataMock from '__mocks__/scrapCardDataMock';
+import { Box } from '@mui/material';
 
 const animateLayoutChanges: AnimateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -138,12 +139,12 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
         }: ContainerProps,
         ref
     ) => {
-        const Component = onClick ? 'button' : 'div';
+        const Component = onClick ? 'button' : Box;
 
         return (
             <Component
                 {...props}
-                ref={ref}
+                ref={ref as React.RefObject<HTMLButtonElement>}
                 style={
                     {
                         ...style,
@@ -325,7 +326,7 @@ export const Item = React.memo(
                     value,
                 })
             ) : (
-                <div
+                <Box
                     ref={ref}
                 >
                     <div
@@ -337,7 +338,7 @@ export const Item = React.memo(
                     >
                         <ScrapCard content={value} />
                     </div>
-                </div>
+                </Box>
             );
         }
     )
@@ -486,8 +487,6 @@ export function MultipleContainers({
         if (id in items) {
             return id;
         }
-
-        console.log(items);
 
         return Object.keys(items).find((key) => {
             return items[key].includes(id)
