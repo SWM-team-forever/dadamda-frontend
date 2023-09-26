@@ -1,8 +1,8 @@
 import ColumnContainer from "@/components/molcules/Board/ColumnContainer";
 import { Box, Button } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, PointerSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, MouseSensor, PointerSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
+import { AnimateLayoutChanges, SortableContext, arrayMove, defaultAnimateLayoutChanges } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import { create } from "@mui/material/styles/createTransitions";
 import TaskCard from "@/components/molcules/Board/TaskCard";
@@ -21,8 +21,12 @@ function BoardTemplate() {
             activationConstraint: {
                 distance: 3,
             },
-        })
+        }),
+        useSensor(MouseSensor),
+        useSensor(TouchSensor),
     );
+    const animateLayoutChanges: AnimateLayoutChanges = (args) =>
+        defaultAnimateLayoutChanges({ ...args, wasDragging: true });
 
     return (
         <Box>
