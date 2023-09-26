@@ -4,6 +4,7 @@ export type Memo = TMemo;
 export type Scrap = contentProps['content'];
 export type ScrapOrMemo = (Memo | Scrap) & {
     columnId: string,
+    taskId: string,
 };
 export type Column = {
     title?: string,
