@@ -1,6 +1,8 @@
 import BoardTemplate from "@/components/templates/BoardTemplate";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
+import { useEffect, useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 function BoardInfoPage() {
@@ -9,6 +11,16 @@ function BoardInfoPage() {
     function getBoardPageId() {
         return searchParams.get('boardId');
     }
+
+    const { board, setBoard } = useBoardAtom();
+
+    useLayoutEffect(() => {
+        setBoard({
+            ...board,
+            title: '보드 1',
+            boardId: getBoardPageId(),
+        });
+    }, [])
 
     const { openModal } = useModal();
 
