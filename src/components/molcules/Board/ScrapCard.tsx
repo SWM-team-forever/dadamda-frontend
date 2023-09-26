@@ -21,11 +21,11 @@ import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
 import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 import { PriceElement } from '@/components/atoms/CategoryItem/PriceElement';
 
-function ScrapCard({ content }: contentProps) {
+function ScrapCard({ content }: { content: contentProps['content'] }) {
     content = {
         ...content,
-        title: decode(content.title, { level: 'html5' }),
-        description: decode(content.description, { level: 'html5' })
+        title: decode('title' in content ? content.title : '', { level: 'html5' }),
+        description: 'description' in content ? decode(content.description, { level: 'html5' }) : ''
     }
 
     const channelInfoElementArray = [
