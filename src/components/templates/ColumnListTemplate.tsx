@@ -1,13 +1,16 @@
-import { useGetScrapByType } from "@/api/scrap";
-import { useGetScrapSearchResultByType } from "@/api/search";
-import MoveToPageMobileModal from "@/components/atoms/Modal/MoveToPageMobileModal";
-import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
-import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
-import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 import { Box, CircularProgress } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+
+import { useGetScrapByType } from "@/api/scrap";
+import { useGetScrapSearchResultByType } from "@/api/search";
+import { useSelectedScrap } from "@/hooks/useSelectedScrap";
+
+import MoveToPageMobileModal from "@/components/atoms/Modal/MoveToPageMobileModal";
+import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
+import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
+import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
 
 function ColumnListTemplate({ type }: { type: string }) {
     const token = localStorage.getItem('token');
@@ -56,6 +59,10 @@ function ColumnListTemplate({ type }: { type: string }) {
                 }}
             />
         )
+    }
+
+    if (data?.pages[0].data.content.length === 0) {
+        return <EmptyScrapContainer />
     }
 
     return (
