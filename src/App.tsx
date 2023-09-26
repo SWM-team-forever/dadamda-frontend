@@ -29,6 +29,7 @@ import BoardListTemplate from '@/components/templates/BoardListTemplate';
 import BoardTemplate from '@/components/templates/BoardTemplate';
 import BoardInfoPage from '@/pages/BoardInfoPage';
 import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
+import { TrashableItems } from '@/components/templates/TrashableItems';
 
 const queryClient = new QueryClient();
 Sentry.init({
@@ -92,7 +93,7 @@ function App() {
                   <Route path='/trending' element={<TrendingPage />}></Route>
                   <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
                   <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
-                  <Route path='/board_info' element={<RequireAuth><BoardInfoPage /></RequireAuth>}></Route>
+                  <Route path='/board_info' element={<RequireAuth><TrashableItems confirmDrop={false} /></RequireAuth>}></Route>
                 </Routes>
               </ErrorBoundary>
             </BrowserRouter>
