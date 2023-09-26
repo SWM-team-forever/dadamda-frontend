@@ -34,6 +34,7 @@ import {
     horizontalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS, Transform } from '@dnd-kit/utilities';
+import theme from '@/assets/styles/theme';
 
 const animateLayoutChanges: AnimateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -321,30 +322,13 @@ export const Item = React.memo(
                     value,
                 })
             ) : (
-                <li
-                    style={
-                        {
-                            ...wrapperStyle,
-                            transition: [transition, wrapperStyle?.transition]
-                                .filter(Boolean)
-                                .join(', '),
-                            '--translate-x': transform
-                                ? `${Math.round(transform.x)}px`
-                                : undefined,
-                            '--translate-y': transform
-                                ? `${Math.round(transform.y)}px`
-                                : undefined,
-                            '--scale-x': transform?.scaleX
-                                ? `${transform.scaleX}`
-                                : undefined,
-                            '--scale-y': transform?.scaleY
-                                ? `${transform.scaleY}`
-                                : undefined,
-                            '--index': index,
-                            '--color': color,
-                        } as React.CSSProperties
-                    }
+                <div
                     ref={ref}
+                    style={{
+                        width: '300px',
+                        height: '50px',
+                        backgroundColor: theme.color.Blue_090,
+                    }}
                 >
                     <div
                         style={style}
@@ -354,14 +338,8 @@ export const Item = React.memo(
                         tabIndex={!handle ? 0 : undefined}
                     >
                         {value}
-                        <span>
-                            {onRemove ? (
-                                <Remove onClick={onRemove} />
-                            ) : null}
-                            {handle ? <Handle {...handleProps} {...listeners} /> : null}
-                        </span>
                     </div>
-                </li>
+                </div>
             );
         }
     )
