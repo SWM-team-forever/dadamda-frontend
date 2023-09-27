@@ -53,7 +53,7 @@ export interface fetchDeleteMemoProps {
 
 const fetchDeleteMemo = async({token, memoId, scrapId}: fetchDeleteMemoProps) => {
     const response = await fetch(DELETE_MEMO_URL, {
-        method: "POST",
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             "X-AUTH-TOKEN": token,
