@@ -1,12 +1,12 @@
 export const MAX_MEMO_LENGTH = 1000;
 export const SCRAP_LINK_MAX_LENGTH = 2083;
-export const MAX_SCRAP_TITLE_LENGTH = 10;
-export const MAX_SCRAP_DESCRIPTION_LENGTH = 10;
-export const MAX_SCRAP_SITENAME_LENGTH = 10;
-export const MAX_SCRAP_AUTHOR_LENGTH = 10;
-export const MAX_SCRAP_BLOGNAME_LENGTH = 10;
-export const MAX_SCRAP_PRICE_LENGTH = 10;
-export const MAX_SCRAP_CHANNELNAME_LENGTH = 10;
+export const MAX_SCRAP_TITLE_LENGTH = 200;
+export const MAX_SCRAP_DESCRIPTION_LENGTH = 1000;
+export const MAX_SCRAP_SITENAME_LENGTH = 100;
+export const MAX_SCRAP_AUTHOR_LENGTH = 100;
+export const MAX_SCRAP_BLOGNAME_LENGTH = 100;
+export const MAX_SCRAP_PRICE_LENGTH = 100;
+export const MAX_SCRAP_CHANNELNAME_LENGTH = 100;
 
 export function useIsValidURL(url: string) {
     try {
