@@ -3,7 +3,8 @@ import { Box } from '@mui/material';
 
 import { googleLoginURL } from '@/secret';
 import theme from '@/assets/styles/theme';
-import googleLogo from '@/assets/icons/btn_google_light_normal_ios.svg';
+import googleLogo from '@/assets/icons/google_login.png';
+import kakaoLogo from '@/assets/icons/kakao_logo.png';
 
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import LoginButton from '@/components/atoms/LoginButton';
@@ -29,8 +30,8 @@ function LoginModalElement() {
                     />
                     <LoginButton
                         text={'카카오로 시작하기'}
-                        iconSource={googleLogo}
-                        style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
+                        iconSource={kakaoLogo}
+                        style={{ color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' }}
                         onClick={oAuthHandler}
                     />
                 </ColumnContainer>
