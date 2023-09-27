@@ -1,4 +1,4 @@
-import { useIsValidURL } from '@/hooks/useValidation';
+import { useIsLessThanLengthLimitation, useIsValidURL } from '@/hooks/useValidation';
 import { expect, describe, it } from 'vitest';
 
 describe('validation hook 테스트', () => {
@@ -8,5 +8,10 @@ describe('validation hook 테스트', () => {
         expect(useIsValidURL('https://velog.io/@juanito_y247/React-Query-Devtools')).toBe(true);
         expect(useIsValidURL('www.naver.com')).toBe(false);
         expect(useIsValidURL('https://velog.io/@juhyeon1114/React-%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%A6%AC%EB%B7%B0-Zustand-Recoil-Jotai-React-query')).toBe(true);
+    });
+
+    it('useIsLessThanLengthLimitation을 통해 길이 제한이 감지 되는지 검사한다.', () => {
+        expect(useIsLessThanLengthLimitation('1234567890', 10)).toBe(true);
+        expect(useIsLessThanLengthLimitation('1234567890', 9)).toBe(false);
     });
 })
