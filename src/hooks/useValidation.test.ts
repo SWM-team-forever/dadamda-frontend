@@ -1,4 +1,4 @@
-import { useIsBlank, useIsLessThanLengthLimitation, useIsValidURL } from '@/hooks/useValidation';
+import { useIsBlank, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL } from '@/hooks/useValidation';
 import { expect, describe, it } from 'vitest';
 
 describe('validation hook 테스트', () => {
@@ -23,5 +23,7 @@ describe('validation hook 테스트', () => {
         expect(useIsBlank('a  ')).toBe(false);
         expect(useIsBlank('  a  ')).toBe(false);
         expect(useIsBlank('a')).toBe(false);
+        expect(useIsBlank(`\n`)).toBe(true);
+        expect(useIsBlank(`\t`)).toBe(true);
     });
 })
