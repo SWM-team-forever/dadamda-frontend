@@ -5,7 +5,7 @@ import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
-import { MAX_MEMO_LENGTH } from '@/hooks/useValidation';
+import { MAX_MEMO_LENGTH, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 
 function MemoCreateModalElement() {
     const [, setToken] = useState<string | null>(null);
@@ -39,14 +39,12 @@ function MemoCreateModalElement() {
         useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
     }
 
-    const isLessThanLengthLimitation = (textAreaValue.length <= MAX_MEMO_LENGTH);
-    const isEntered = (textAreaValue.length > 0);
     const validation = () => {
-        if (!isLessThanLengthLimitation) {
+        if (!useIsLessThanLengthLimitation(textAreaValue, MAX_MEMO_LENGTH)) {
             return `최대 ${MAX_MEMO_LENGTH}글자까지만 입력 가능합니다.`;
         }
 
-        if (!isEntered) {
+        if (!useIsEntered(textAreaValue)) {
             return ' ';
         }
 
