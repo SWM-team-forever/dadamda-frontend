@@ -1,4 +1,4 @@
-import { useIsLessThanLengthLimitation, useIsValidURL } from '@/hooks/useValidation';
+import { useIsBlank, useIsLessThanLengthLimitation, useIsValidURL } from '@/hooks/useValidation';
 import { expect, describe, it } from 'vitest';
 
 describe('validation hook 테스트', () => {
@@ -13,5 +13,15 @@ describe('validation hook 테스트', () => {
     it('useIsLessThanLengthLimitation을 통해 길이 제한이 감지 되는지 검사한다.', () => {
         expect(useIsLessThanLengthLimitation('1234567890', 10)).toBe(true);
         expect(useIsLessThanLengthLimitation('1234567890', 9)).toBe(false);
+    });
+
+    it('useIsBlank을 통해 공백으로 이루어졌는지 검사한다.', () => {
+        expect(useIsBlank('')).toBe(true);
+        expect(useIsBlank(' ')).toBe(true);
+        expect(useIsBlank('  ')).toBe(true);
+        expect(useIsBlank('  a')).toBe(false);
+        expect(useIsBlank('a  ')).toBe(false);
+        expect(useIsBlank('  a  ')).toBe(false);
+        expect(useIsBlank('a')).toBe(false);
     });
 })
