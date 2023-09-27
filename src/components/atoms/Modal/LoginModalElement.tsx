@@ -10,11 +10,7 @@ import ColumnContainer from '@/components/atoms/ColumnContainer';
 import LoginButton from '@/components/atoms/LoginButton';
 
 function LoginModalElement() {
-    const oAuthHandler = (loginProvider: string): void => {
-        window.location.href = loginProvider === 'google' ? googleLoginURL : kakaoLoginURL;
-    };
-
-    const loginProviderInformation = {
+    const loginProviderInformation: { [key: string]: { url: string; source: string; style: { color: string; backgroundColor: string; }; } } = {
         google: {
             url: googleLoginURL,
             source: googleLogo,
@@ -26,6 +22,10 @@ function LoginModalElement() {
             style: { color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' }
         }
     }
+
+    const oAuthHandler = (loginProvider: string): void => {
+        window.location.href = loginProviderInformation[loginProvider].url;
+    };
 
     return (
         <Box>
