@@ -24,6 +24,9 @@ function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
                 backgroundColor: '#FFF',
                 borderRadius: '4px',
             }}
+            onClick={(e) => {
+                e.stopPropagation();
+            }}
         >
             <Box
                 sx={{
