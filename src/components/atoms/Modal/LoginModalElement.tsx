@@ -14,12 +14,14 @@ function LoginModalElement() {
         google: {
             url: googleLoginURL,
             source: googleLogo,
-            style: { color: theme.color.icon_color, backgroundColor: 'white' }
+            style: { color: theme.color.icon_color, backgroundColor: 'white' },
+            label: '구글로 시작하기',
         },
         kakao: {
             url: kakaoLoginURL,
             source: kakaoLogo,
-            style: { color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' }
+            style: { color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' },
+            label: '카카오로 시작하기',
         }
     }
 
@@ -35,18 +37,15 @@ function LoginModalElement() {
             </TextContainer>
             <ButtonContainer>
                 <ColumnContainer style={{ width: '100%', gap: "10px" }}>
-                    <LoginButton
-                        text={'구글로 시작하기'}
-                        iconSource={googleLogo}
-                        style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
-                        onClick={() => oAuthHandler('google')}
-                    />
-                    <LoginButton
-                        text={'카카오로 시작하기'}
-                        iconSource={kakaoLogo}
-                        style={{ color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' }}
-                        onClick={() => oAuthHandler('kakao')}
-                    />
+                    {Object.keys(loginProviderInformation).map((loginProvider, index) => (
+                        <LoginButton
+                            key={index}
+                            onClick={() => oAuthHandler(loginProvider)}
+                            style={loginProviderInformation[loginProvider].style}
+                            iconSource={loginProviderInformation[loginProvider].source}
+                            text={loginProviderInformation[loginProvider].label}
+                        />
+                    ))}
                 </ColumnContainer>
             </ButtonContainer>
         </Box>
