@@ -6,3 +6,7 @@ export function useIsValidURL(url: string) {
         return false;
     }
 }
+
+export function useIsLessThanLengthLimitation(text: string, limit: number) {
+    return text.length <= limit;
+}
