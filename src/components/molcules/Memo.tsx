@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
 import { create } from '@mui/material/styles/createTransitions';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
+import { CloseIcon } from '@/components/atoms/Icon';
 
 interface MemoProps {
     memoImageURL?: string,
@@ -40,7 +41,9 @@ function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
                 >
                     {getTimeDiff(createdDate)}
                 </Typography>
-                <Tooltip />
+                <Box>
+                    <CloseIcon width='10' height='10' fill={theme.color.Gray_060} />
+                </Box>
             </Box>
             {memoText
                 ? <Typography
