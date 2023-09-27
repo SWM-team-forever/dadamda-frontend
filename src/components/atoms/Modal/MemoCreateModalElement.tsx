@@ -5,7 +5,7 @@ import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
-import { MAX_MEMO_LENGTH, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
+import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 
 function MemoCreateModalElement() {
     const [, setToken] = useState<string | null>(null);
@@ -46,6 +46,10 @@ function MemoCreateModalElement() {
 
         if (!useIsEntered(textAreaValue)) {
             return ' ';
+        }
+
+        if (useIsBlank(textAreaValue)) {
+            return '공백만 입력되었습니다.';
         }
 
         return 'success';
