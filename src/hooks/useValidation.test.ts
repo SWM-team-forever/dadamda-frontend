@@ -26,4 +26,10 @@ describe('validation hook 테스트', () => {
         expect(useIsBlank(`\n`)).toBe(true);
         expect(useIsBlank(`\t`)).toBe(true);
     });
+
+    it('useIsEntered를 통해 입력이 되었는지 검사한다.', () => {
+        expect(useIsEntered('')).toBe(false);
+        expect(useIsEntered(' ')).toBe(true);
+        expect(useIsEntered('a')).toBe(true);
+    });
 })
