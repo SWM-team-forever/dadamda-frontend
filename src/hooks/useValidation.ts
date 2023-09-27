@@ -1,3 +1,5 @@
+export const MAX_MEMO_LENGTH = 1000;
+
 export function useIsValidURL(url: string) {
     try {
         new URL(url);

@@ -5,6 +5,7 @@ import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
+import { MAX_MEMO_LENGTH } from '@/hooks/useValidation';
 
 function MemoCreateModalElement() {
     const [, setToken] = useState<string | null>(null);
@@ -38,7 +39,6 @@ function MemoCreateModalElement() {
         useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
     }
 
-    const MAX_MEMO_LENGTH = 1000;
     const isLessThanLengthLimitation = (textAreaValue.length <= MAX_MEMO_LENGTH);
     const isEntered = (textAreaValue.length > 0);
     const validation = () => {
