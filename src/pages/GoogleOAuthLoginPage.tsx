@@ -9,8 +9,8 @@ import RowContainer from "../components/atoms/RowContainer";
 function GoogleOAuthLoginpage() {
     const navigate = useNavigate();
 
-    function getUserProfileImage(token: string) {
-        return fetch(GET_USER_PROFILE_IMAGE, {
+    async function getUserProfileImage(token: string) {
+        return await fetch(GET_USER_PROFILE_IMAGE, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
