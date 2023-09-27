@@ -32,4 +32,11 @@ describe('validation hook 테스트', () => {
         expect(useIsEntered(' ')).toBe(true);
         expect(useIsEntered('a')).toBe(true);
     });
+
+    it('useIsWhiteSpaceExist를 통해 공백이 존재하는지 검사한다.', () => {
+        expect(useIsEntered(' ')).toBe(true);
+        expect(useIsEntered('a')).toBe(true);
+        expect(useIsEntered('a ')).toBe(true);
+        expect(useIsEntered(`a\n`)).toBe(true);
+    });
 })
