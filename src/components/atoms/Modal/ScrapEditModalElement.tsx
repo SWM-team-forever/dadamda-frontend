@@ -148,7 +148,7 @@ function ScrapEditModalElement() {
         }
 
         if (!useIsEntered(text)) {
-            return ' ';
+            return '내용을 입력해주세요.';
         }
 
         if (useIsBlank(text)) {
@@ -156,6 +156,22 @@ function ScrapEditModalElement() {
         }
 
         return 'success';
+    }
+
+    function checkIsEveryValidationSuccessed() {
+        for (const key in editalbeContent) {
+            const element = editalbeContent[key as keyof typeof editalbeContent];
+            if (!element.isDeleted
+                && typeof (element.state) === 'string'
+                && validation({
+                    text: element.state,
+                    textLimitation: element.limitation
+                }) !== 'success') {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     const [token, setToken] = useState<string | null>(null);
@@ -374,6 +390,7 @@ function ScrapEditModalElement() {
                     removeSelectedScrap();
                     editScrap()
                 }}
+                disabled={!checkIsEveryValidationSuccessed()}
             >
                 변경하기
             </Button>
