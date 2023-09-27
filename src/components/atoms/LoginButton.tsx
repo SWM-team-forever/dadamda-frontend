@@ -13,8 +13,9 @@ function LoginButton({ text, iconSource, onClick, style }: LoginButtonProps) {
     return (
         <LoginButtonContainer onClick={onClick} style={style}>
             <IconButton src={iconSource} style={{
-                width: '46px',
-                height: '46px',
+                width: '20px',
+                height: '20px',
+                padding: '10px',
             }} />
             <span style={{ flex: '1', textAlign: 'center' }}>{text}</span>
         </LoginButtonContainer>
