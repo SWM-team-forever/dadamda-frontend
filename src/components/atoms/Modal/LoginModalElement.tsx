@@ -27,6 +27,12 @@ function LoginModalElement() {
                         style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
                         onClick={oAuthHandler}
                     />
+                    <LoginButton
+                        text={'카카오로 시작하기'}
+                        iconSource={googleLogo}
+                        style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
+                        onClick={oAuthHandler}
+                    />
                 </ColumnContainer>
             </ButtonContainer>
         </Box>
