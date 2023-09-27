@@ -179,7 +179,7 @@ function ScrapEditModalElement() {
         const defaultContentMenu = {
             other: ['title', 'description'],
             article: ['title', 'description', 'siteName', 'author', 'blogName'],
-            product: ['title', 'description', 'siteName', 'price'],
+            product: ['title', 'siteName', 'price'],
             video: ['title', 'description', 'siteName', 'channelName'],
         };
 
