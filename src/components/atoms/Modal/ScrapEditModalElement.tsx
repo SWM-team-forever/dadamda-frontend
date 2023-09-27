@@ -4,7 +4,8 @@ import { MinusCircleIcon, PlusCircleIcon } from "@/components/atoms/Icon";
 import ThumbnailImage from "@/components/atoms/ThumbnailImage";
 import { useModal } from "@/hooks/useModal";
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
-import { Box, Button, TextareaAutosize, Typography } from "@mui/material";
+import { MAX_SCRAP_AUTHOR_LENGTH, MAX_SCRAP_BLOGNAME_LENGTH, MAX_SCRAP_CHANNELNAME_LENGTH, MAX_SCRAP_DESCRIPTION_LENGTH, MAX_SCRAP_PRICE_LENGTH, MAX_SCRAP_SITENAME_LENGTH, MAX_SCRAP_TITLE_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
+import { Box, Button, FormControl, FormHelperText, TextareaAutosize, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 
 function ScrapEditModalElement() {
@@ -36,6 +37,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: title,
+            limitation: MAX_SCRAP_TITLE_LENGTH,
             showState: () => { setTitle(content.title) },
             setState: setTitle,
             setIsDeleted(value: boolean) {
@@ -47,6 +49,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: description,
+            limitation: MAX_SCRAP_DESCRIPTION_LENGTH,
             showState: () => setDescription(content.description),
             setState: setDescription,
             setIsDeleted(value: boolean) {
@@ -58,6 +61,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: siteName,
+            limitation: MAX_SCRAP_SITENAME_LENGTH,
             showState: () => setSiteName(content.siteName),
             setState: setSiteName,
             setIsDeleted(value: boolean) {
@@ -69,6 +73,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: author,
+            limitation: MAX_SCRAP_AUTHOR_LENGTH,
             showState: () => setAuthor(content.author),
             setState: setAuthor,
             setIsDeleted(value: boolean) {
@@ -80,6 +85,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: blogName,
+            limitation: MAX_SCRAP_BLOGNAME_LENGTH,
             showState: () => setBlogName(content.blogName),
             setState: setBlogName,
             setIsDeleted(value: boolean) {
@@ -91,6 +97,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: price,
+            limitation: MAX_SCRAP_PRICE_LENGTH,
             showState: () => setPrice(content.price),
             setState: setPrice,
             setIsDeleted(value: boolean) {
@@ -102,6 +109,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: channelName,
+            limitation: MAX_SCRAP_CHANNELNAME_LENGTH,
             showState: () => setChannelName(content.channelName),
             setState: setChannelName,
             setIsDeleted(value: boolean) {
@@ -113,6 +121,7 @@ function ScrapEditModalElement() {
             isDeleteable: true,
             isDeleted: false,
             state: playTime,
+            limitation: 0,
             showState: () => setPlayTime(content.playTime),
             setState: setPlayTime,
             setIsDeleted(value: boolean) {
@@ -124,6 +133,7 @@ function ScrapEditModalElement() {
             isDeleteable: false,
             isDeleted: false,
             state: watchedCnt,
+            limitation: 0,
             showState: () => setWatchedCnt(content.watchedCnt),
             setState: setWatchedCnt,
             setIsDeleted(value: boolean) {
@@ -131,6 +141,38 @@ function ScrapEditModalElement() {
             }
         },
     };
+
+    const validation = ({ text, textLimitation }: { text: string, textLimitation: number }) => {
+        if (!useIsLessThanLengthLimitation(text, textLimitation)) {
+            return `최대 ${textLimitation}글자까지만 입력 가능합니다.`;
+        }
+
+        if (!useIsEntered(text)) {
+            return '내용을 입력해주세요.';
+        }
+
+        if (useIsBlank(text)) {
+            return '공백만 입력되었습니다.';
+        }
+
+        return 'success';
+    }
+
+    function checkIsEveryValidationSuccessed() {
+        for (const key in editalbeContent) {
+            const element = editalbeContent[key as keyof typeof editalbeContent];
+            if (!element.isDeleted
+                && typeof (element.state) === 'string'
+                && validation({
+                    text: element.state,
+                    textLimitation: element.limitation
+                }) !== 'success') {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     const [token, setToken] = useState<string | null>(null);
     function initiateEditableContent() {
@@ -259,23 +301,41 @@ function ScrapEditModalElement() {
                         {element.label}
                     </Typography>
                 </Box>
-                <TextareaAutosize
-                    defaultValue={content[key as keyof typeof content] as string}
-                    style={{
-                        resize: 'none',
-                        background: '#FFF',
-                        border: `1px solid ${theme.color.Gray_040}`,
-                        width: '100%',
-                        boxSizing: 'border-box',
-                        borderRadius: '8px',
-                        padding: '10px',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        lineHeight: '150%',
-                        color: theme.color.Gray_090,
-                    }}
-                    onChange={e => handleSetValue(e)}
-                />
+                <FormControl>
+                    <TextareaAutosize
+                        defaultValue={content[key as keyof typeof content] as string}
+                        style={{
+                            resize: 'none',
+                            background: '#FFF',
+                            border: `1px solid ${theme.color.Gray_040}`,
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            borderRadius: '8px',
+                            padding: '10px',
+                            fontSize: '14px',
+                            fontWeight: '500',
+                            lineHeight: '150%',
+                            color: theme.color.Gray_090,
+                        }}
+                        onChange={e => handleSetValue(e)}
+                    />
+                    <FormHelperText
+                        sx={{
+                            alignSelf: 'start',
+                            color: '#f44336',
+                        }}
+                    >
+                        {validation({
+                            text: element.state,
+                            textLimitation: element.limitation,
+                        }) !== 'success'
+                            ? validation({
+                                text: element.state,
+                                textLimitation: element.limitation,
+                            })
+                            : ' '}
+                    </FormHelperText>
+                </FormControl>
             </Box>
         )
     }
@@ -330,6 +390,7 @@ function ScrapEditModalElement() {
                     removeSelectedScrap();
                     editScrap()
                 }}
+                disabled={!checkIsEveryValidationSuccessed()}
             >
                 변경하기
             </Button>
