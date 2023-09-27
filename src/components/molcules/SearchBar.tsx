@@ -6,6 +6,7 @@ import { SearchIcon } from "@/components/atoms/Icon";
 import { useEffect, useRef, useState } from "react";
 import { useGetScrapSearchResultByType } from "@/api/search";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useIsBlank } from "@/hooks/useValidation";
 
 function SearchBar({ type }: { type: string }) {
     const [isSearched, setIsSearched] = useState(false);
@@ -34,6 +35,8 @@ function SearchBar({ type }: { type: string }) {
             }
         }
     };
+
+    const isValidationSuccess = () => useIsBlank(searchText) ? false : true;
 
     return (
         <Box
@@ -74,6 +77,7 @@ function SearchBar({ type }: { type: string }) {
                             p: '0',
                             color: theme.color.Gray_070,
                         }}
+                        disabled={!isValidationSuccess()}
                         onClick={isSearched ? buttonInfo.isSearched.action : buttonInfo.isNotSearched.action}
                     >
                         {isSearched ? buttonInfo.isSearched.text : buttonInfo.isNotSearched.text}
