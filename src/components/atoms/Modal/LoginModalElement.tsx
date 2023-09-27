@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Box } from '@mui/material';
 
-import { googleLoginURL } from '@/secret';
+import { googleLoginURL, kakaoLoginURL } from '@/secret';
 import theme from '@/assets/styles/theme';
 import googleLogo from '@/assets/icons/google_login.png';
 import kakaoLogo from '@/assets/icons/kakao_logo.png';
@@ -10,8 +10,8 @@ import ColumnContainer from '@/components/atoms/ColumnContainer';
 import LoginButton from '@/components/atoms/LoginButton';
 
 function LoginModalElement() {
-    const oAuthHandler = (): void => {
-        window.location.href = googleLoginURL;
+    const oAuthHandler = (loginProvider: string): void => {
+        window.location.href = loginProvider === 'google' ? googleLoginURL : kakaoLoginURL;
     };
 
     return (
@@ -26,13 +26,13 @@ function LoginModalElement() {
                         text={'구글로 시작하기'}
                         iconSource={googleLogo}
                         style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
-                        onClick={oAuthHandler}
+                        onClick={() => oAuthHandler('google')}
                     />
                     <LoginButton
                         text={'카카오로 시작하기'}
                         iconSource={kakaoLogo}
                         style={{ color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' }}
-                        onClick={oAuthHandler}
+                        onClick={() => oAuthHandler('kakao')}
                     />
                 </ColumnContainer>
             </ButtonContainer>
