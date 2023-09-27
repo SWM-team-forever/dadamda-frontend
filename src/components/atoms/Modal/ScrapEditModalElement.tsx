@@ -20,8 +20,6 @@ function ScrapEditModalElement() {
     const [blogName, setBlogName] = useState<string | undefined | null>(content.blogName);
     const [price, setPrice] = useState<string | undefined | null>(content.price);
     const [channelName, setChannelName] = useState<string | undefined | null>(content.channelName);
-    const [playTime, setPlayTime] = useState<string | undefined | null>(content.playTime);
-    const [watchedCnt, setWatchedCnt] = useState<string | undefined | null>(content.watchedCnt);
 
     const isNotNullOrUndefined = (state: any) => {
         if (state === null || state === undefined) {
@@ -114,30 +112,6 @@ function ScrapEditModalElement() {
             setState: setChannelName,
             setIsDeleted(value: boolean) {
                 editalbeContent.channelName.isDeleted = value;
-            }
-        },
-        'playTime': {
-            label: '영상 길이',
-            isDeleteable: true,
-            isDeleted: false,
-            state: playTime,
-            limitation: 0,
-            showState: () => setPlayTime(content.playTime),
-            setState: setPlayTime,
-            setIsDeleted(value: boolean) {
-                editalbeContent.playTime.isDeleted = value;
-            }
-        },
-        'watchedCnt': {
-            label: '조회수',
-            isDeleteable: false,
-            isDeleted: false,
-            state: watchedCnt,
-            limitation: 0,
-            showState: () => setWatchedCnt(content.watchedCnt),
-            setState: setWatchedCnt,
-            setIsDeleted(value: boolean) {
-                editalbeContent.watchedCnt.isDeleted = value;
             }
         },
     };
