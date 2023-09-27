@@ -3,11 +3,12 @@ import theme from '../../assets/styles/theme';
 import { Box, Typography } from '@mui/material';
 import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
 import { create } from '@mui/material/styles/createTransitions';
+import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 
 interface MemoProps {
     memoImageURL?: string,
     memoText?: string,
-    createdDate: string,
+    createdDate: number,
 }
 
 function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
@@ -37,7 +38,7 @@ function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
                         lineHeight: '160%',
                     }}
                 >
-                    {createdDate}
+                    {getTimeDiff(createdDate)}
                 </Typography>
                 <Tooltip />
             </Box>
