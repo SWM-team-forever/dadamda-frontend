@@ -47,7 +47,7 @@ function MemoCreateModalElement() {
         }
 
         if (!isEntered) {
-            return '빈 메모는 입력하실 수 없습니다.';
+            return ' ';
         }
 
         return 'success';
@@ -77,13 +77,11 @@ function MemoCreateModalElement() {
                     }}
                     multiline
                     rows={5}
-                    error={!isValidationSuccess()}
-                    autoFocus
                 />
                 <FormHelperText>
                     <Typography
                         variant="h6"
-                        color={isValidationSuccess() ? theme.color.Gray_060 : '#f44336'}
+                        color={theme.color.Gray_060}
                         sx={{
                             fontWeight: '500',
                             lineHeight: '150%',
