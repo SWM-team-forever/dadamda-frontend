@@ -83,7 +83,7 @@ function MemoCreateModalElement() {
                 <FormHelperText>
                     <Typography
                         variant="h6"
-                        color={theme.color.Gray_060}
+                        color={isValidationSuccess() ? theme.color.Gray_060 : '#f44336'}
                         sx={{
                             fontWeight: '500',
                             lineHeight: '150%',
