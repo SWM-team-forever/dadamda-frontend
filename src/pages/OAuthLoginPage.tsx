@@ -6,7 +6,7 @@ import { GET_USER_PROFILE_IMAGE } from "../secret";
 
 import RowContainer from "../components/atoms/RowContainer";
 
-function GoogleOAuthLoginpage() {
+function OAuthLoginpage() {
     const navigate = useNavigate();
 
     async function getUserProfileImage(token: string) {
@@ -47,4 +47,4 @@ function GoogleOAuthLoginpage() {
     )
 }
 
-export default GoogleOAuthLoginpage;
+export default OAuthLoginpage;
