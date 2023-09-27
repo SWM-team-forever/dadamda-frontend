@@ -51,6 +51,8 @@ function MemoList() {
                     memoImageURL={memo.memoImageUrl}
                     memoText={memo.memoText}
                     createdDate={memo.createdDate}
+                    scrapId={selectedScrap.scrapId}
+                    memoId={memo.memoId}
                 />
             })}
         </Box>
