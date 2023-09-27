@@ -11,6 +11,7 @@ import MoveToPageMobileModal from "@/components/atoms/Modal/MoveToPageMobileModa
 import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
 import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
+import { useModal } from "@/hooks/useModal";
 
 function ColumnListTemplate({ type }: { type: string }) {
     const token = localStorage.getItem('token');
@@ -43,9 +44,11 @@ function ColumnListTemplate({ type }: { type: string }) {
 
     const scrapId = searchParams.get('scrapId');
     const { selectedScrap, setSelectedScrap } = useSelectedScrap();
+    const { connectMemoWithScrapId } = useModal();
 
     if (!scrapId) {
         setSelectedScrap(data?.pages[0].data.content[0]);
+        // connectMemoWithScrapId(data?.pages[0].data.content[0].scrapId);
     }
 
     if (isLoading) {

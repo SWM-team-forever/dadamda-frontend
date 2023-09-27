@@ -83,6 +83,7 @@ function DesktopArticleListElement({ content }: contentProps) {
                 onClick={(e) => {
                     e.stopPropagation();
                     setSelectedScrap(content);
+                    // connectMemoWithScrapId(content.scrapId);
                     navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
                 }}>
                 <Box
