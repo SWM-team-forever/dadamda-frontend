@@ -18,3 +18,7 @@ export function useIsBlank(text: string) {
 export function useIsEntered(text: string) {
     return text.length > 0;
 }
+
+export function useIsWhiteSpaceExist(text: string) {
+    return text.replace(/\s+/g, '').length !== text.length;
+}
