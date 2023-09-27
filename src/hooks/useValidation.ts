@@ -12,7 +12,7 @@ export function useIsLessThanLengthLimitation(text: string, limit: number) {
 }
 
 export function useIsBlank(text: string) {
-    return text.replace(/\s+/g, '').length === 0;
+    return /^\s*$/.test(text);
 }
 
 export function useIsEntered(text: string) {
@@ -20,5 +20,5 @@ export function useIsEntered(text: string) {
 }
 
 export function useIsWhiteSpaceExist(text: string) {
-    return text.replace(/\s+/g, '').length !== text.length;
+    return /^\S*$/.test(text);
 }
