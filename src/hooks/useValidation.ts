@@ -1,4 +1,5 @@
 export const MAX_MEMO_LENGTH = 1000;
+export const SCRAP_LINK_MAX_LENGTH = 2083;
 
 export function useIsValidURL(url: string) {
     try {
