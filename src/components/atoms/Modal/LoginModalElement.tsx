@@ -9,8 +9,15 @@ import kakaoLogo from '@/assets/icons/kakao_logo.png';
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import LoginButton from '@/components/atoms/LoginButton';
 
+type TLoginProviderInformationElement = {
+    url: string,
+    source: string,
+    style: { color: string, backgroundColor: string },
+    label: string,
+}
+
 function LoginModalElement() {
-    const loginProviderInformation: { [key: string]: { url: string; source: string; style: { color: string; backgroundColor: string; }; } } = {
+    const loginProviderInformation: { [key: string]: TLoginProviderInformationElement } = {
         google: {
             url: googleLoginURL,
             source: googleLogo,
