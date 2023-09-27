@@ -37,10 +37,6 @@ function ScrapCreateModalElement() {
             return '유효하지 않은 URL입니다.';
         }
 
-        if (useIsBlank(textAreaValue)) {
-            return '공백만 입력되었습니다.';
-        }
-
         return 'success';
     }
     const isValidationSuccess = () => validation() === 'success';
