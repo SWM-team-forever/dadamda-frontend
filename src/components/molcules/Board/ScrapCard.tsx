@@ -24,8 +24,8 @@ import { PriceElement } from '@/components/atoms/CategoryItem/PriceElement';
 function ScrapCard({ content }: { content: contentProps['content'] }) {
     content = {
         ...content,
-        title: decode('title' in content ? content.title : '', { level: 'html5' }),
-        description: 'description' in content ? decode(content.description, { level: 'html5' }) : ''
+        title: decode(content.title, { level: 'html5' }),
+        description: decode(content.description, { level: 'html5' }),
     }
 
     const channelInfoElementArray = [
