@@ -14,20 +14,18 @@ function LoginModalElement() {
         window.location.href = loginProvider === 'google' ? googleLoginURL : kakaoLoginURL;
     };
 
-    const loginProviderInformation = [
-        {
-            provider: 'google',
+    const loginProviderInformation = {
+        google: {
             url: googleLoginURL,
             source: googleLogo,
             style: { color: theme.color.icon_color, backgroundColor: 'white' }
         },
-        {
-            provider: 'kakao',
+        kakao: {
             url: kakaoLoginURL,
             source: kakaoLogo,
             style: { color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' }
         }
-    ]
+    }
 
     return (
         <Box>
