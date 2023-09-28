@@ -1,8 +1,9 @@
+import { Box, Grid, Typography } from '@mui/material';
+
 import sectionBlueGradationBackground from '@/assets/images/landing/section4/sectionBlueGradationBackground.png';
 import section5Image from '@/assets/images/landing/section4/section5Image.png';
 import leftHereTooltip from '@/assets/images/landing/section4/leftHereTooltip.png';
 import theme from '@/assets/styles/theme';
-import { Box, Grid, Typography } from '@mui/material';
 
 function Section4() {
     return (

@@ -1,5 +1,6 @@
-import theme from "@/assets/styles/theme";
 import { Box, Grid, Typography } from "@mui/material";
+
+import theme from "@/assets/styles/theme";
 
 function Section2() {
     const fontStyle = {

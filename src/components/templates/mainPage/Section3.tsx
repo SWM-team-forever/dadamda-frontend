@@ -1,7 +1,8 @@
+import { Box, Grid, Typography } from '@mui/material';
+
 import section3Image1 from '@/assets/images/landing/section3/section3Image1.png';
 import section3Image2 from '@/assets/images/landing/section3/section3Image2.png';
 import theme from '@/assets/styles/theme';
-import { Box, Grid, Typography } from '@mui/material';
 
 function Section3() {
     return (

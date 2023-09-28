@@ -1,5 +1,4 @@
-import theme from "@/assets/styles/theme";
-import { Box, Grid, Typography, Button } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import section1Image from "@/assets/images/landing/section1/section1Image.png";
 import section1Text1 from "@/assets/images/landing/section1/section1Text1.png";

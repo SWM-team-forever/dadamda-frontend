@@ -1,4 +1,5 @@
 import { Box, Typography, Link, Grid } from '@mui/material';
+
 import theme from '@/assets/styles/theme';
 
 const Footer = () => {

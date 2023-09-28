@@ -1,4 +1,5 @@
 import { Box, Grid, Typography } from "@mui/material";
+
 import section6BackgroundImage from '@/assets/images/landing/section6/section6BackgroundImage.png';
 import section6Image from '@/assets/images/landing/section6/section6Image.png';
 import theme from "@/assets/styles/theme";

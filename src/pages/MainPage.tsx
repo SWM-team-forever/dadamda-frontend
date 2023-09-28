@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useEffect } from 'react';
 
 import ChannelService from '../../ChannelService';
-import { CHANNEL_SERVICE_PLUGIN_KEY } from '../secret';
+import { CHANNEL_SERVICE_PLUGIN_KEY } from '@/secret';
 
 import Hero from '@/components/templates/mainPage/Hero';
 import Footer from '@/components/templates/mainPage/Footer';
