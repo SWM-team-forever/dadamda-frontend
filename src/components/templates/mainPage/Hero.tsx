@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import heroImage from '../../../assets/images/heroImage.png'
 import { useModal } from '@/hooks/useModal';
+import theme from '@/assets/styles/theme';
+import YellowCheckImage from '@/assets/images/YellowCheckImage';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -17,45 +19,91 @@ const Hero = () => {
         <Box sx={{
             width: '100%',
             display: 'flex',
-            minHeight: '600px',
-            alignItems: 'center',
+            height: '100%',
+            alignItems: {
+                xs: 'flex-end',
+                md: 'center',
+            },
             justifyContent: 'center',
+            overflow: 'hidden',
+            backgroundColor: '#DAE9FF',
         }}>
-            <Grid container spacing={6} sx={{
-                display: 'flex',
-                alignItems: 'center',
-                maxWidth: '1300px',
-                padding: '50px',
-            }}>
-                <Grid item xs={12} md={5}>
-                    <Typography variant="h5" fontWeight={700} sx={{
-                    }}>
-                        뭘 좋아하는 지 몰라서
+            <Grid container spacing={6}
+                sx={{
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    maxWidth: '1300px',
+                    m: 0,
+                    justifyContent: 'center',
+                }}>
+                <Grid item xs={12} md={10}
+                    sx={{
+                        '&.MuiGrid-item': {
+                            p: '0',
+                            m: '100px 0 40px 0',
+                        },
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '20px',
+                        p: '0',
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <Typography
+                        fontWeight={700}
+                        sx={{
+                            fontSize: {
+                                xs: '26px',
+                                md: '32px',
+                            },
+                            wordBreak: 'keep-all',
+                            textAlign: 'center',
+                        }}
+                        color={theme.color.Gray_090}
+                    >
+                        어떤 링크든!<br />
+                        클릭 한 번이면 콘텐츠로 저장.
                     </Typography>
-                    <Typography variant="h5" fontWeight={700} sx={{
-                        paddingBottom: '15px',
-                    }}>
-                        다 준비해보았습니다
-                    </Typography>
-                    <Typography variant="h6" sx={{
-                        opacity: '0.4',
-                        wordBreak: 'keep-all',
-                        paddingBottom: '15px',
-                    }}>
-                        내용에 따라 자동으로 북마크를 구성하는
-                        신개념 컨텐츠 맞춤 스크랩 서비스, <strong>다담다</strong>
+                    <Typography
+                        fontWeight={400}
+                        sx={{
+                            fontSize: {
+                                xs: '16px',
+                                md: '18px',
+                            },
+                            wordBreak: 'keep-all',
+                            textAlign: 'center',
+                        }}
+                        color={theme.color.Gray_090}
+                    >
+                        내용에 따라 자동으로 북마크를 구성하는<br />
+                        신개념 컨텐츠 맞춤 스크랩 서비스, 다담다
                     </Typography>
                     <Button
                         variant="contained"
                         color="primary"
-                        sx={{ width: '200px', fontSize: '16px' }}
+                        sx={{
+                            width: '200px',
+                            fontSize: '16px',
+                            borderRadius: '40px',
+                            fontWeight: '600',
+                        }}
                         onClick={startButtonHandler}
                     >
-                        서비스 시작하기
+                        무료로 다담다 시작하기
                     </Button>
                 </Grid>
-                <Grid item xs={12} md={7}>
-                    <img src={heroImage} alt="My Team" style={{
+                <Grid item xs={12} md={10}
+                    sx={{
+                        '&.MuiGrid-item': {
+                            p: '0',
+                        },
+                        alignSelf: 'self-end'
+                    }}
+                >
+                    <img src={heroImage} alt="scrap-image" style={{
                         width: '100%',
                         boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.1) 0px 4px 6px, rgba(0, 0, 0, 0.15) 0px 8px 30px',
                     }} />
