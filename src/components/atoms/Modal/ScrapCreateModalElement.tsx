@@ -33,7 +33,7 @@ function ScrapCreateModalElement() {
             return ' ';
         }
 
-        if (!useIsWhiteSpaceExist(textAreaValue) || !useIsValidURL(textAreaValue)) {
+        if (useIsWhiteSpaceExist(textAreaValue) || !useIsValidURL(textAreaValue)) {
             return '유효하지 않은 URL입니다.';
         }
 
