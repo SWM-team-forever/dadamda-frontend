@@ -18,7 +18,7 @@ const Hero = () => {
         <Box sx={{
             width: '100%',
             display: 'flex',
-            height: '100%',
+            height: 'calc(100% + 56px)',
             alignItems: {
                 xs: 'flex-end',
                 md: 'center',
