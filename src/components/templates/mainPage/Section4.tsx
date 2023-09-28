@@ -30,11 +30,13 @@ function Section4() {
                     justifyContent: 'space-around',
                 }}
             >
-                <Grid item xs={10} sm={5}
+                <Grid item xs={10} sm={10}
                     sx={{
                         '&.MuiGrid-item': {
-                            p: '0',
-                            mb: '50px',
+                            m: {
+                                xs: '80px 0 60px 40px',
+                                sm: '120px 0 0 120px',
+                            },
                             boxSizing: 'border-box',
                         },
                     }}
@@ -47,7 +49,6 @@ function Section4() {
                             justifyContent: 'center',
                             gap: '15px',
                             p: '0',
-                            width: '80%',
                         }}
                     >
                         <Typography sx={{
