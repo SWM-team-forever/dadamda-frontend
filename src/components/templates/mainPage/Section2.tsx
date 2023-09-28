@@ -7,6 +7,8 @@ function Section2() {
         fontWeight: '700',
         lineHeight: '160%',
         color: theme.color.Gray_090,
+        wordBreak: 'keep-all',
+        textAlign: 'center',
     };
 
     return (
