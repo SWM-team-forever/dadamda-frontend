@@ -6,10 +6,10 @@ import { CHANNEL_SERVICE_PLUGIN_KEY } from '../secret';
 import { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import Hero from '../components/templates/mainPage/Hero';
-import Section from '../components/templates/mainPage/Section';
 import Howto from '../components/templates/mainPage/Howto';
 import Footer from '../components/templates/mainPage/Footer';
 import Section1 from '@/components/templates/mainPage/Section1';
+import Section2 from '@/components/templates/mainPage/Section2';
 
 function MainPage() {
   useEffect(() => {
@@ -25,7 +25,7 @@ function MainPage() {
     <BackgroundContainer>
       <Hero />
       <Section1 />
-      <Howto />
+      <Section2 />
       <Footer />
     </BackgroundContainer>
   )
