@@ -1,4 +1,5 @@
 import sectionBlueGradationBackground from '@/assets/images/landing/section4/sectionBlueGradationBackground.png';
+import section4Image from '@/assets/images/landing/section4/section4Image.png';
 import theme from '@/assets/styles/theme';
 import { Box, Grid, Typography } from '@mui/material';
 
@@ -7,7 +8,7 @@ function Section4() {
         <Box sx={{
             width: '100%',
             display: 'flex',
-            height: 'calc(100% + 56px)',
+            maxHeight: 'calc(100% + 56px)',
             alignItems: 'flex-start',
             justifyContent: 'center',
             overflow: 'hidden',
@@ -17,17 +18,18 @@ function Section4() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
         }}>
-            <Grid container spacing={{
-                xs: '0',
-                md: '6',
-            }} sx={{
-                display: 'flex',
-                alignItems: 'flex-start',
-                maxWidth: '1300px',
-                boxSizing: 'border-box',
-                m: '0',
-                justifyContent: 'space-around',
-            }}>
+            <Grid
+                container
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    maxWidth: '1300px',
+                    boxSizing: 'border-box',
+                    m: '0',
+                    justifyContent: 'space-around',
+                }}
+            >
                 <Grid item xs={10} sm={5}
                     sx={{
                         '&.MuiGrid-item': {
@@ -67,16 +69,17 @@ function Section4() {
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid item xs={10} sm={5}
+                <Grid item xs={10} sm={7}
                     sx={{
                         '&.MuiGrid-item': {
                             p: '0',
                         },
+                        alignSelf: 'flex-end'
                     }}
                 >
-                    <Box>
-
-                    </Box>
+                    <img src={section4Image} alt="section4Image" style={{
+                        width: '100%',
+                    }} />
                 </Grid>
             </Grid>
         </Box>
