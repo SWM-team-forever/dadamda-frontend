@@ -1,10 +1,9 @@
-import { Grid, Typography, Button, Box } from '@mui/material';
+import { Grid, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import heroImage from '@/assets/images/heroImage.png';
 import heroText from '@/assets/images/heroText.png'
 import { useModal } from '@/hooks/useModal';
-import theme from '@/assets/styles/theme';
 
 const Hero = () => {
     const navigate = useNavigate();
