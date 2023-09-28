@@ -1,14 +1,11 @@
-import React from 'react';
 import { Box, Typography, Link } from '@mui/material';
-import theme from '../../../assets/styles/theme';
+import theme from '@/assets/styles/theme';
 
 const Footer = () => {
-    const date = new Date().getFullYear();
-
     return (
         <Box sx={{
             flexGrow: 1,
-            background: theme.color.background_color,
+            background: theme.color.Gray_020,
             display: 'flex',
             alignItems: 'center',
             padding: '20px',
