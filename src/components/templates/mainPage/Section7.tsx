@@ -1,5 +1,4 @@
 import theme from "@/assets/styles/theme";
-import Footer from "@/components/templates/mainPage/Footer";
 import { Box, Button, Grid, Typography } from "@mui/material";
 
 function Section7() {
@@ -11,6 +10,11 @@ function Section7() {
         wordBreak: 'keep-all',
         textAlign: 'center',
     };
+
+    const chromeExtensionInstallLink = 'https://chrome.google.com/webstore/detail/dadamda/kgaiabolccidmgihificdfaimdlfmcfj?hl=ko';
+    const moveToChromeExtensionInstallLinkHandler = () => {
+        location.href = chromeExtensionInstallLink;
+    }
 
     return (
         <Box
@@ -100,6 +104,7 @@ function Section7() {
                             fontSize: '16px',
                             fontWeight: '600',
                         }}
+                        onClick={moveToChromeExtensionInstallLinkHandler}
                     >
                         다담다 무료 설치
                     </Button>
