@@ -32,7 +32,7 @@ function Section6() {
                     sx={{
                         '&.MuiGrid-item': {
                             p: '0',
-                            m: '50px 0',
+                            mb: '50px',
                         },
                         display: 'flex',
                         flexDirection: 'column',
