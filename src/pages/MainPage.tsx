@@ -9,6 +9,7 @@ import Hero from '../components/templates/mainPage/Hero';
 import Section from '../components/templates/mainPage/Section';
 import Howto from '../components/templates/mainPage/Howto';
 import Footer from '../components/templates/mainPage/Footer';
+import Section1 from '@/components/templates/mainPage/Section1';
 
 function MainPage() {
   useEffect(() => {
@@ -23,7 +24,7 @@ function MainPage() {
   return (
     <BackgroundContainer>
       <Hero />
-      <Section />
+      <Section1 />
       <Howto />
       <Footer />
     </BackgroundContainer>
