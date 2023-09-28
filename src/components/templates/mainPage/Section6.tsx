@@ -1,13 +1,15 @@
 import { Box, Grid, Typography } from "@mui/material";
 import section6BackgroundImage from '@/assets/images/landing/section6/section6BackgroundImage.png';
+import section6Image from '@/assets/images/landing/section6/section6Image.png';
+import theme from "@/assets/styles/theme";
 
 function Section6() {
     return (
         <Box sx={{
             width: '100%',
             display: 'flex',
-            maxHeight: 'calc(100% + 56px)',
-            alignItems: 'flex-start',
+            minHeight: 'calc(100% + 56px)',
+            alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
             boxSizing: 'border-box',
@@ -30,7 +32,7 @@ function Section6() {
                     sx={{
                         '&.MuiGrid-item': {
                             p: '0',
-                            mt: '50px',
+                            m: '50px 0',
                         },
                         display: 'flex',
                         flexDirection: 'column',
@@ -39,6 +41,7 @@ function Section6() {
                         gap: '20px',
                         p: '0',
                         boxSizing: 'border-box',
+                        alignSelf: 'center',
                     }}
                 >
                     <Box
@@ -53,44 +56,27 @@ function Section6() {
                         }}
                     >
                         <Typography sx={{
-                            color: '#FFBB36',
+                            color: theme.color.Blue_080,
                             fontSize: '18px',
                             fontWeight: '700',
                             lineHeight: '160%',
 
                         }}>
-                            # 빠른 저장
+                            # 공유 보드
                         </Typography>
                         <Typography sx={{
-                            color: 'white',
-                            fontSize: {
-                                xs: '26px',
-                                sm: '32px',
-                            },
+                            fontSize: '28px',
                             fontWeight: '700',
-                            lineHeight: '140%',
-                            textAlign: 'center',
-                            whiteSpace: 'nowrap',
-                        }}>
-                            클릭 한번으로 링크 저장!<br />
-                            그것도 보기 좋게.
-                        </Typography>
-                        <Typography sx={{
-                            color: 'white',
-                            fontSize: '16px',
-                            fontWeight: '400',
                             lineHeight: '150%',
                             textAlign: 'center',
                             whiteSpace: 'nowrap',
                         }}>
-                            저장한 링크는 콘텐츠로 저장해줘요.
+                            나만의 보드를 만들고<br />
+                            다른 사람과 나누세요
                         </Typography>
                     </Box>
-                    {/* <img src={section3Image1} alt="section3Image1" style={{
-                        width: '100%',
-                    }} /> */}
                 </Grid>
-                <Grid item xs={12} sm={8}
+                <Grid item xs={12} sm={10}
                     sx={{
                         '&.MuiGrid-item': {
                             p: '0',
@@ -105,7 +91,8 @@ function Section6() {
                         transform: {
                             xs: 'translateY(50%)',
                             sm: 'translateY(0)',
-                        }
+                        },
+                        alignSelf: 'center',
                     }}
                 >
                     <Box
@@ -116,9 +103,9 @@ function Section6() {
                             },
                         }}
                     >
-                        {/* <img src={section3Image2} alt="section3Image2" style={{
+                        <img src={section6Image} alt="section3Image1" style={{
                             width: '100%',
-                        }} /> */}
+                        }} />
                     </Box>
                 </Grid>
             </Grid>
