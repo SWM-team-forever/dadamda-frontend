@@ -58,7 +58,7 @@ function Section4() {
                             fontWeight: '700',
                             lineHeight: '160%',
                         }}>
-                            # 자동 컨텐츠 맞춤 정보 추출
+                            # 도움이 되는 메모
                         </Typography>
                         <Typography sx={{
                             fontSize: '28px',
@@ -66,9 +66,8 @@ function Section4() {
                             lineHeight: '150%',
                             wordBreak: 'keep-all',
                         }}>
-                            컨텐츠의 정보를<br />
-                            번거롭게 작성할 필요 없어요.<br />
-                            그저 저장만 하세요.
+                            메모를 남길 수도 있어요.<br />
+                            기록으로 기억하세요.
                         </Typography>
                     </Box>
                 </Grid>
