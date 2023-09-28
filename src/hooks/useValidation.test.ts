@@ -1,4 +1,4 @@
-import { useIsBlank, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL } from '@/hooks/useValidation';
+import { useIsBlank, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
 import { expect, describe, it } from 'vitest';
 
 describe('validation hook 테스트', () => {
@@ -34,9 +34,11 @@ describe('validation hook 테스트', () => {
     });
 
     it('useIsWhiteSpaceExist를 통해 공백이 존재하는지 검사한다.', () => {
-        expect(useIsEntered(' ')).toBe(true);
-        expect(useIsEntered('a')).toBe(true);
-        expect(useIsEntered('a ')).toBe(true);
-        expect(useIsEntered(`a\n`)).toBe(true);
+        expect(useIsWhiteSpaceExist(' ')).toBe(true);
+        expect(useIsWhiteSpaceExist('a')).toBe(false);
+        expect(useIsWhiteSpaceExist('a ')).toBe(true);
+        expect(useIsWhiteSpaceExist(`a\n`)).toBe(true);
+        expect(useIsWhiteSpaceExist(`\n\n`)).toBe(true);
+        expect(useIsWhiteSpaceExist(`\t`)).toBe(true);
     });
 })

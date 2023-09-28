@@ -30,5 +30,5 @@ export function useIsEntered(text: string) {
 }
 
 export function useIsWhiteSpaceExist(text: string) {
-    return /^\S*$/.test(text);
+    return !/^\S*$/.test(text);
 }
