@@ -5,13 +5,14 @@ import ChannelService from '../../ChannelService';
 import { CHANNEL_SERVICE_PLUGIN_KEY } from '../secret';
 
 import Hero from '@/components/templates/mainPage/Hero';
-import Footer from '../components/templates/mainPage/Footer';
+import Footer from '@/components/templates/mainPage/Footer';
 import Section1 from '@/components/templates/mainPage/Section1';
 import Section2 from '@/components/templates/mainPage/Section2';
 import Section3 from '@/components/templates/mainPage/Section3';
 import Section4 from '@/components/templates/mainPage/Section4';
 import Section5 from '@/components/templates/mainPage/Section5';
 import Section6 from '@/components/templates/mainPage/Section6';
+import Section7 from '@/components/templates/mainPage/Section7';
 
 function MainPage() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function MainPage() {
       <Section4 />
       <Section5 />
       <Section6 />
+      <Section7 />
       <Footer />
     </BackgroundContainer>
   )
