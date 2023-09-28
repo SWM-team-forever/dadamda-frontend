@@ -22,8 +22,18 @@ function Section1() {
                 maxWidth: '1300px',
                 padding: '50px',
             }}>
-                <Grid item xs={12} md={5}>
-                    <Box>
+                <Grid item xs={10} md={5}>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '15px',
+                            p: '0',
+                            boxSizing: 'border-box',
+                        }}
+                    >
                         <img src={section1Text1} alt="section1Text1" style={{
                             width: '100%',
                         }} />
@@ -33,9 +43,7 @@ function Section1() {
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={7}>
-                    <Box
-
-                    >
+                    <Box>
                         <img src={section1Image} alt="section1Image" style={{
                             width: '100%',
                         }} />
