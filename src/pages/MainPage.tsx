@@ -8,6 +8,7 @@ import Hero from '../components/templates/mainPage/Hero';
 import Footer from '../components/templates/mainPage/Footer';
 import Section1 from '@/components/templates/mainPage/Section1';
 import Section2 from '@/components/templates/mainPage/Section2';
+import Section3 from '@/components/templates/mainPage/Section3';
 
 function MainPage() {
   useEffect(() => {
@@ -24,6 +25,7 @@ function MainPage() {
       <Hero />
       <Section1 />
       <Section2 />
+      <Section3 />
       <Footer />
     </BackgroundContainer>
   )
