@@ -9,8 +9,8 @@ function Section4() {
         <Box sx={{
             width: '100%',
             display: 'flex',
-            maxHeight: 'calc(100% + 56px)',
-            alignItems: 'flex-start',
+            minHeight: 'calc(100% + 56px)',
+            alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
             boxSizing: 'border-box',
