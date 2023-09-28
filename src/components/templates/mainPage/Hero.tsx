@@ -35,6 +35,7 @@ const Hero = () => {
                     maxWidth: '1300px',
                     m: 0,
                     justifyContent: 'center',
+                    height: '100%',
                 }}>
                 <Grid item xs={12} md={10}
                     sx={{
@@ -51,36 +52,11 @@ const Hero = () => {
                         boxSizing: 'border-box',
                     }}
                 >
-                    <Typography
-                        fontWeight={700}
-                        sx={{
-                            fontSize: {
-                                xs: '26px',
-                                md: '32px',
-                            },
-                            wordBreak: 'keep-all',
-                            textAlign: 'center',
-                        }}
-                        color={theme.color.Gray_090}
-                    >
-                        어떤 링크든!<br />
-                        클릭 한 번이면 콘텐츠로 저장.
-                    </Typography>
-                    <Typography
-                        fontWeight={400}
-                        sx={{
-                            fontSize: {
-                                xs: '16px',
-                                md: '18px',
-                            },
-                            wordBreak: 'keep-all',
-                            textAlign: 'center',
-                        }}
-                        color={theme.color.Gray_090}
-                    >
-                        내용에 따라 자동으로 북마크를 구성하는<br />
-                        신개념 컨텐츠 맞춤 스크랩 서비스, 다담다
-                    </Typography>
+                    <img src={heroText} alt="scrap-text"
+                        style={{
+                            width: '100%',
+                            maxWidth: '600px',
+                        }} />
                     <Button
                         variant="contained"
                         color="primary"
