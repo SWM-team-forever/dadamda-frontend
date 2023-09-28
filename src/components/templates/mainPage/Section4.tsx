@@ -1,5 +1,6 @@
 import sectionBlueGradationBackground from '@/assets/images/landing/section4/sectionBlueGradationBackground.png';
 import section4Image from '@/assets/images/landing/section4/section4Image.png';
+import rightHereTooltip from '@/assets/images/landing/section4/rightHereTooltip.png';
 import theme from '@/assets/styles/theme';
 import { Box, Grid, Typography } from '@mui/material';
 
@@ -63,6 +64,7 @@ function Section4() {
                             fontSize: '28px',
                             fontWeight: '700',
                             lineHeight: '150%',
+                            wordBreak: 'keep-all',
                         }}>
                             컨텐츠의 정보를<br />
                             번거롭게 작성할 필요 없어요.<br />
@@ -78,12 +80,22 @@ function Section4() {
                         alignSelf: 'flex-end'
                     }}
                 >
-                    <img src={section4Image} alt="section4Image" style={{
-                        width: '100%',
-                    }} />
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <img src={rightHereTooltip} alt="rightHereTooltip" style={{
+                            width: '75px',
+                        }} />
+                        <img src={section4Image} alt="section4Image" style={{
+                            width: '100%',
+                        }} />
+                    </Box>
                 </Grid>
             </Grid>
-        </Box>
+        </Box >
     );
 }
 
