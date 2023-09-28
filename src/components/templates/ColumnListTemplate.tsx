@@ -85,15 +85,6 @@ function ColumnListTemplate({ type }: { type: string }) {
                 </Box>
                 <CategoryInfo />
             </Desktop >
-            <Box
-                sx={{
-                    display: { xs: 'block', md: 'none' },
-                    cursor: 'pointer',
-                }}
-                onClick={() => window.open(selectedScrap.pageUrl)}
-            >
-                <MoveToPageMobileModal />
-            </Box>
         </Box>
     )
 }
