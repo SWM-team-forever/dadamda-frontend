@@ -35,11 +35,12 @@ function Section4() {
                     sx={{
                         '&.MuiGrid-item': {
                             m: {
-                                xs: '80px 0 60px 40px',
-                                sm: '120px 0 0 120px',
+                                xs: '80px 40px 60px 0',
+                                sm: '120px 120px 20px 0',
                             },
                             boxSizing: 'border-box',
                         },
+                        alignSelf: 'flex-end',
                     }}
                 >
                     <Box
@@ -76,20 +77,24 @@ function Section4() {
                         '&.MuiGrid-item': {
                             p: '0',
                         },
-                        alignSelf: 'flex-end'
+                        alignSelf: 'flex-start'
                     }}
                 >
                     <Box
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
+                            transform: {
+                                xs: 'translateX(-25%)',
+                                sm: 'none',
+                            },
                         }}
                     >
-                        <img src={leftHereTooltip} alt="rightHereTooltip" style={{
-                            width: '75px',
-                        }} />
                         <img src={section5Image} alt="section4Image" style={{
                             width: '100%',
+                        }} />
+                        <img src={leftHereTooltip} alt="rightHereTooltip" style={{
+                            width: '75px',
                         }} />
                     </Box>
                 </Grid>
