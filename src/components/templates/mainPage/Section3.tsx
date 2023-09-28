@@ -8,8 +8,8 @@ function Section3() {
         <Box sx={{
             width: '100%',
             display: 'flex',
-            maxHeight: 'calc(100% + 56px)',
-            alignItems: 'flex-start',
+            minHeight: 'calc(100% + 56px)',
+            alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
             boxSizing: 'border-box',
@@ -85,11 +85,19 @@ function Section3() {
                             저장한 링크는 콘텐츠로 저장해줘요.
                         </Typography>
                     </Box>
-                    <img src={section3Image1} alt="section3Image1" style={{
-                        width: '100%',
-                    }} />
+                    <Grid item xs={10} sm={10}
+                        sx={{
+                            '&.MuiGrid-root': {
+                                height: '0',
+                            },
+                        }}
+                    >
+                        <img src={section3Image1} alt="section3Image1" style={{
+                            width: '100%',
+                        }} />
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} sm={8}
+                <Grid item xs={10} sm={8}
                     sx={{
                         '&.MuiGrid-item': {
                             p: '0',
@@ -104,7 +112,8 @@ function Section3() {
                         transform: {
                             xs: 'translateY(50%)',
                             sm: 'translateY(0)',
-                        }
+                        },
+                        alignSelf: 'center',
                     }}
                 >
                     <Box
