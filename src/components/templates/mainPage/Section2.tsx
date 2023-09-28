@@ -3,7 +3,10 @@ import { Box, Grid, Typography } from "@mui/material";
 
 function Section2() {
     const fontStyle = {
-        fontSize: '32px',
+        fontSize: {
+            xs: '26px',
+            sm: '32px',
+        },
         fontWeight: '700',
         lineHeight: '160%',
         color: theme.color.Gray_090,
