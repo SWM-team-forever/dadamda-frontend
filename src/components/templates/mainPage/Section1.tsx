@@ -10,39 +10,63 @@ function Section1() {
         <Box sx={{
             width: '100%',
             display: 'flex',
-            height: '100%',
+            minHeight: 'calc(100% + 56px)',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: 'white',
             overflow: 'hidden',
+            p: {
+                xs: '20px',
+                sm: '50px',
+            },
+            boxSizing: 'border-box',
         }}>
-            <Grid container spacing={6} sx={{
+            <Grid container spacing={{
+                xs: '0',
+                md: '6',
+            }} sx={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'flex-start',
                 maxWidth: '1300px',
-                padding: '50px',
+                boxSizing: 'border-box',
+                m: '0',
+                justifyContent: 'space-around',
             }}>
-                <Grid item xs={10} md={5}>
+                <Grid item xs={10} sm={5}
+                    sx={{
+                        '&.MuiGrid-item': {
+                            p: '0',
+                            mb: '50px',
+                            boxSizing: 'border-box',
+                        },
+                    }}
+                >
                     <Box
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            alignItems: 'center',
+                            alignItems: 'flex-start',
                             justifyContent: 'center',
                             gap: '15px',
                             p: '0',
-                            boxSizing: 'border-box',
+                            width: '80%',
                         }}
                     >
                         <img src={section1Text1} alt="section1Text1" style={{
                             width: '100%',
                         }} />
                         <img src={section1Text2} alt="section1Text2" style={{
-                            width: '100%',
+                            width: '50%',
                         }} />
                     </Box>
                 </Grid>
-                <Grid item xs={12} md={7}>
+                <Grid item xs={10} sm={5}
+                    sx={{
+                        '&.MuiGrid-item': {
+                            p: '0',
+                        },
+                    }}
+                >
                     <Box>
                         <img src={section1Image} alt="section1Image" style={{
                             width: '100%',
