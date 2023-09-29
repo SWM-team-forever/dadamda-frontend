@@ -51,7 +51,7 @@ export interface ActionProps extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 export const Action = forwardRef<HTMLButtonElement, ActionProps>(
-    ({ active, cursor, style, ...props }, ref) => {
+    ({ active, className, cursor, style, ...props }, ref) => {
         return (
             <button
                 ref={ref}
@@ -239,7 +239,7 @@ const dropAnimation: DropAnimation = {
     }),
 };
 
-type Items = Record<UniqueIdentifier, (contentProps['content'] & { id: UniqueIdentifier })[]>;
+type Items = Record<UniqueIdentifier, contentProps['content'][]>;
 
 export interface ItemProps {
     dragOverlay?: boolean;
@@ -257,8 +257,7 @@ export interface ItemProps {
     style?: React.CSSProperties;
     transition?: string | null;
     wrapperStyle?: React.CSSProperties;
-    value: UniqueIdentifier;
-    content: contentProps['content'];
+    value: contentProps['content'];
     onRemove?(): void;
     renderItem?(args: {
         dragOverlay: boolean;
@@ -272,7 +271,6 @@ export interface ItemProps {
         transform: ItemProps['transform'];
         transition: ItemProps['transition'];
         value: ItemProps['value'];
-        content: ItemProps['content'];
     }): React.ReactElement;
 }
 
@@ -296,7 +294,6 @@ export const Item = React.memo(
                 transition,
                 transform,
                 value,
-                content,
                 wrapperStyle,
                 ...props
             },
@@ -327,7 +324,6 @@ export const Item = React.memo(
                     transform,
                     transition,
                     value,
-                    content,
                 })
             ) : (
                 <Box
@@ -340,7 +336,7 @@ export const Item = React.memo(
                         {...props}
                         tabIndex={!handle ? 0 : undefined}
                     >
-                        <ScrapCard content={content} />
+                        <ScrapCard content={value} />
                     </div>
                 </Box>
             );
@@ -401,7 +397,7 @@ export function MultipleContainers({
     const [items, setItems] = useState<Items>(
         () =>
             initialItems ?? {
-                A: [{ ...scrapCardDataMock, id: 'A' + scrapCardDataMock.scrapId }],
+                A: [scrapCardDataMock],
             }
     );
     const [containers, setContainers] = useState(
@@ -493,7 +489,7 @@ export function MultipleContainers({
         }
 
         return Object.keys(items).find((key) => {
-            return items[key]['id'] === id;
+            return items[key].includes(id)
         });
     };
 
@@ -504,7 +500,7 @@ export function MultipleContainers({
             return -1;
         }
 
-        const index = items[container].findIndex((item) => item.id === id);
+        const index = items[container].indexOf(id);
 
         return index;
     };
@@ -546,6 +542,8 @@ export function MultipleContainers({
                     return;
                 }
 
+                console.log(active, over);
+
                 const overContainer = findContainer(overId);
                 const activeContainer = findContainer(active.id);
 
@@ -557,8 +555,8 @@ export function MultipleContainers({
                     setItems((items) => {
                         const activeItems = items[activeContainer];
                         const overItems = items[overContainer];
-                        const overIndex = overItems.indexOf(over?.data.current?.id);
-                        const activeIndex = activeItems.indexOf(active.data.current?.id);
+                        const overIndex = overItems.indexOf(overId);
+                        const activeIndex = activeItems.indexOf(active.id);
 
                         let newIndex: number;
 
@@ -582,7 +580,7 @@ export function MultipleContainers({
                         return {
                             ...items,
                             [activeContainer]: items[activeContainer].filter(
-                                (item) => item.id !== active.id
+                                (item) => item !== active.id
                             ),
                             [overContainer]: [
                                 ...items[overContainer].slice(0, newIndex),
@@ -624,7 +622,7 @@ export function MultipleContainers({
                     setItems((items) => ({
                         ...items,
                         [activeContainer]: items[activeContainer].filter(
-                            (id) => id.id !== activeId
+                            (id) => id !== activeId
                         ),
                     }));
                     setActiveId(null);
@@ -636,14 +634,13 @@ export function MultipleContainers({
 
                     unstable_batchedUpdates(() => {
                         setContainers((containers) => [...containers, newContainerId]);
-                        setItems((items) => {
-                            const newItems = { ...items };
-                            newItems[activeContainer] = items[activeContainer].filter(
-                                (id) => id.id !== activeId
-                            );
-                            newItems[newContainerId] = [active.data.current?.id];
-                            return newItems;
-                        });
+                        setItems((items) => ({
+                            ...items,
+                            [activeContainer]: items[activeContainer].filter(
+                                (id) => id !== activeId
+                            ),
+                            [newContainerId]: [active.id],
+                        }));
                         setActiveId(null);
                     });
                     return;
@@ -652,8 +649,8 @@ export function MultipleContainers({
                 const overContainer = findContainer(overId);
 
                 if (overContainer) {
-                    const activeIndex = items[activeContainer].indexOf(active.data.current?.id);
-                    const overIndex = items[overContainer].indexOf(over?.data.current?.id);
+                    const activeIndex = items[activeContainer].indexOf(active.id);
+                    const overIndex = items[overContainer].indexOf(overId);
 
                     if (activeIndex !== overIndex) {
                         setItems((items) => ({
@@ -695,7 +692,7 @@ export function MultipleContainers({
                             id={containerId}
                             label={minimal ? undefined : `Column ${containerId}`}
                             columns={columns}
-                            items={items[containerId].map((item) => item.id)}
+                            items={items[containerId]}
                             scrollable={scrollable}
                             style={containerStyle}
                             unstyled={minimal}
@@ -706,9 +703,8 @@ export function MultipleContainers({
                                     return (
                                         <SortableItem
                                             disabled={isSortingContainer}
-                                            key={value.id}
-                                            id={value.id}
-                                            content={value}
+                                            key={value}
+                                            id={value}
                                             index={index}
                                             handle={handle}
                                             style={getItemStyles}
@@ -765,7 +761,6 @@ export function MultipleContainers({
                     isDragging: true,
                     isDragOverlay: true,
                 })}
-                content={items[findContainer(id) as UniqueIdentifier].find(item => item.id === id) as contentProps['content']}
                 color={getColor(id)}
                 wrapperStyle={wrapperStyle({ index: 0 })}
                 renderItem={renderItem}
@@ -787,20 +782,19 @@ export function MultipleContainers({
             >
                 {items[containerId].map((item, index) => (
                     <Item
-                        key={item.id}
-                        value={item.id}
+                        key={item}
+                        value={item}
                         handle={handle}
                         style={getItemStyles({
                             containerId,
                             overIndex: -1,
-                            index: getIndex(item.id),
-                            value: item.id,
+                            index: getIndex(item),
+                            value: item,
                             isDragging: false,
                             isSorting: false,
                             isDragOverlay: false,
                         })}
-                        content={item}
-                        color={getColor(item.id)}
+                        color={getColor(item)}
                         wrapperStyle={wrapperStyle({ index })}
                         renderItem={renderItem}
                     />
@@ -882,7 +876,6 @@ function Trash({ id }: { id: UniqueIdentifier }) {
 interface SortableItemProps {
     containerId: UniqueIdentifier;
     id: UniqueIdentifier;
-    content: contentProps['content'];
     index: number;
     handle: boolean;
     disabled?: boolean;
@@ -899,7 +892,6 @@ function SortableItem({
     handle,
     renderItem,
     style,
-    content,
     containerId,
     getIndex,
     wrapperStyle,
@@ -938,7 +930,6 @@ function SortableItem({
                 overIndex: over ? getIndex(over.id) : overIndex,
                 containerId,
             })}
-            content={content}
             color={getColor(id)}
             transition={transition}
             transform={transform}
