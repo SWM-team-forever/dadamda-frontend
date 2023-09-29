@@ -11,6 +11,12 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+    layout: "fullscreen",
+    reactRouter: {
+      initialEntries: ["/"],
+      initialIndex: 0,
+      storybookBasePath: "/",
+    }
   },
   decorators: [
     withRouter,
