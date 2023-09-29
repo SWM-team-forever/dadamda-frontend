@@ -5,10 +5,7 @@ export const fontUrl =
 
 const GlobalStyles = css`
     * {
-        fontFamily: Pretendard,'Noto Sans KR', sans-serif;
-    }
-    :focus:not(:focus-visible) {
-        outline: none;
+        font-family: Pretendard,'Noto Sans KR', sans-serif !important;
     }
 `;
 export const GlobalStyle = () => <Global styles={GlobalStyles} />;
