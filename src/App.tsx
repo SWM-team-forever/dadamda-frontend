@@ -11,10 +11,9 @@ import { useModal } from '@/hooks/useModal';
 
 import ModalWrapper from '@/components/molcules/Modal/ModalWrapper';
 import Header from '@/components/molcules/Navigation/Header';
-import NotReadyTemplate from '@/components/templates/NotReadyTemplate';
 import ScrapTemplate from '@/components/templates/ScrapTemplate';
 import BoardPage from '@/pages/BoardPage';
-import GoogleOAuthLoginpage from '@/pages/GoogleOAuthLoginPage';
+import OAuthLoginpage from '@/pages/OAuthLoginPage';
 import MainPage from '@/pages/MainPage';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
 import ScrapPage from '@/pages/ScrapPage';
@@ -85,7 +84,7 @@ function App() {
                     <Route index element={<BoardListTemplate />} />
                   </Route>
                   <Route path='/trending' element={<TrendingPage />}></Route>
-                  <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
+                  <Route path='/oauth-login' element={<OAuthLoginpage />}></Route>
                   <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
                 </Routes>
               </ErrorBoundary>
