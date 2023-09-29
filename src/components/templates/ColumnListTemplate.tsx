@@ -5,13 +5,11 @@ import styled from "styled-components";
 
 import { useGetScrapByType } from "@/api/scrap";
 import { useGetScrapSearchResultByType } from "@/api/search";
-import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 
-import MoveToPageMobileModal from "@/components/atoms/Modal/MoveToPageMobileModal";
 import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
 import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
-import { useModal } from "@/hooks/useModal";
+import { useEffect, useState } from "react";
 
 function ColumnListTemplate({ type }: { type: string }) {
     const token = localStorage.getItem('token');
@@ -42,14 +40,11 @@ function ColumnListTemplate({ type }: { type: string }) {
         }
     );
 
-    const scrapId = searchParams.get('scrapId');
-    const { selectedScrap, setSelectedScrap } = useSelectedScrap();
-    const { connectMemoWithScrapId } = useModal();
+    const [scrapId, setScrapId] = useState<string | null>(null);
 
-    if (!scrapId) {
-        setSelectedScrap(data?.pages[0].data.content[0]);
-        // connectMemoWithScrapId(data?.pages[0].data.content[0].scrapId);
-    }
+    useEffect(() => {
+        setScrapId(searchParams.get('scrapId'));
+    }, [searchParams])
 
     if (isLoading) {
         return (
@@ -86,17 +81,8 @@ function ColumnListTemplate({ type }: { type: string }) {
                 >
                     <CategoryList data={data} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
                 </Box>
-                <CategoryInfo />
+                <CategoryInfo data={data} scrapId={scrapId ? +scrapId : data?.pages[0].data.content[0].scrapId} />
             </Desktop >
-            <Box
-                sx={{
-                    display: { xs: 'block', md: 'none' },
-                    cursor: 'pointer',
-                }}
-                onClick={() => window.open(selectedScrap.pageUrl)}
-            >
-                <MoveToPageMobileModal />
-            </Box>
         </Box>
     )
 }

@@ -82,8 +82,6 @@ function DesktopArticleListElement({ content }: contentProps) {
                 style={{ cursor: 'pointer' }}
                 onClick={(e) => {
                     e.stopPropagation();
-                    setSelectedScrap(content);
-                    // connectMemoWithScrapId(content.scrapId);
                     navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
                 }}>
                 <Box
