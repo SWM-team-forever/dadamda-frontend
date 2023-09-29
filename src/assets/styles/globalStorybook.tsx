@@ -4,8 +4,8 @@ export const fontUrl =
     'https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css';
 
 const GlobalStyles = css`
-    body {
-        font-family: Pretendard,'Noto Sans KR', sans-serif;
+    * {
+        font-family: Pretendard,'Noto Sans KR', sans-serif !important;
     }
 `;
 export const GlobalStyle = () => <Global styles={GlobalStyles} />;
