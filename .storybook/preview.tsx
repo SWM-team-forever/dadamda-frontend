@@ -1,6 +1,17 @@
 import type { Preview } from "@storybook/react";
 import React from "react";
 import { withRouter } from "storybook-addon-react-router-v6";
+import { GlobalStyle } from "../src/assets/styles/globalStorybook";
+import { loadFontsForStorybook } from "./utils";
+
+loadFontsForStorybook();
+
+const withGlobalStyle = (storyFn) => (
+  <>
+    <GlobalStyle />
+    {storyFn()}
+  </>
+);
 
 const preview: Preview = {
   parameters: {
@@ -20,6 +31,7 @@ const preview: Preview = {
   },
   decorators: [
     withRouter,
+    withGlobalStyle,
     (Story) => (
       <div>
         <Story />
