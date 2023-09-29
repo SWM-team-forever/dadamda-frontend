@@ -6,7 +6,7 @@ import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 
 import { LinkIcon } from '@/components/atoms/Icon';
-import { useIsValidURL } from '@/hooks/useValidation';
+import { SCRAP_LINK_MAX_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -24,21 +24,16 @@ function ScrapCreateModalElement() {
 
     const { mutate } = usePostCreateScrap();
 
-    const SCRAP_LINK_MAX_LENGTH = 2083;
-    const isLessThanLengthLimitation = (textAreaValue.length <= SCRAP_LINK_MAX_LENGTH);
-    const iswhiteSpaceExist = (textAreaValue.replace(/\s+/g, '').length !== textAreaValue.length);
-    const isEntered = (textAreaValue.length > 0);
-
     const validation = () => {
-        if (!isLessThanLengthLimitation) {
+        if (!useIsLessThanLengthLimitation(textAreaValue, SCRAP_LINK_MAX_LENGTH)) {
             return `최대 ${SCRAP_LINK_MAX_LENGTH}글자까지만 입력 가능합니다.`;
         }
 
-        if (!isEntered) {
+        if (!useIsEntered(textAreaValue)) {
             return ' ';
         }
 
-        if (iswhiteSpaceExist || !useIsValidURL(textAreaValue)) {
+        if (useIsWhiteSpaceExist(textAreaValue) || !useIsValidURL(textAreaValue)) {
             return '유효하지 않은 URL입니다.';
         }
 
