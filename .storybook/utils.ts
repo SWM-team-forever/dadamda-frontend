@@ -9,6 +9,7 @@ export const loadFontsForStorybook = () => {
     fontLink.id = fontLinkId;
     fontLink.href = fontUrl;
     fontLink.rel = 'stylesheet';
+    fontLink.type = 'text/css';
 
     document.head.appendChild(fontLink);
   }
