@@ -129,14 +129,7 @@ async function connectYorkie() {
     const doc = new yorkie.Document('my-first-document');
     await client.attach(doc);
 
-    doc.update((root) => {
-        root.todos = [];           // {"todos":[]}
-        root.todos.push('todo-1'); // {"todos":["todo-1"]}
-        root.obj = {               // {"todos":["todo-1"], "obj":{"name":"yorkie","age":14}}
-            name: 'yorkie',
-            age: 14,
-        };
-    });
+    return doc;
 }
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
@@ -395,6 +388,7 @@ interface Props {
 export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
 const empty: UniqueIdentifier[] = [];
+const doc = await connectYorkie();
 
 export function MultipleContainers({
     adjustScale = false,
@@ -542,7 +536,9 @@ export function MultipleContainers({
         });
     }, [items]);
 
-    connectYorkie();
+    doc.update((root) => {
+        root['1'] = items;
+    });
 
     return (
         <DndContext
