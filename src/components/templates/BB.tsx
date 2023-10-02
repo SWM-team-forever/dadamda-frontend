@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState, forwardRef, CSSProperties } from 'react';
 import { createPortal, unstable_batchedUpdates } from 'react-dom';
+import yorkie from 'yorkie-js-sdk';
 import {
     CancelDrop,
     closestCenter,
@@ -117,6 +118,25 @@ export interface ContainerProps {
     unstyled?: boolean;
     onClick?(): void;
     onRemove?(): void;
+}
+
+async function connectYorkie() {
+    const client = new yorkie.Client('https://api.yorkie.dev', {
+        apiKey: 'ckd53dt047aeajg75ia0',
+    });
+    await client.activate();
+
+    const doc = new yorkie.Document('my-first-document');
+    await client.attach(doc);
+
+    doc.update((root) => {
+        root.todos = [];           // {"todos":[]}
+        root.todos.push('todo-1'); // {"todos":["todo-1"]}
+        root.obj = {               // {"todos":["todo-1"], "obj":{"name":"yorkie","age":14}}
+            name: 'yorkie',
+            age: 14,
+        };
+    });
 }
 
 export const Container = forwardRef<HTMLDivElement, ContainerProps>(
@@ -521,6 +541,8 @@ export function MultipleContainers({
             recentlyMovedToNewContainer.current = false;
         });
     }, [items]);
+
+    connectYorkie();
 
     return (
         <DndContext
