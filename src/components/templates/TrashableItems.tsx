@@ -1,4 +1,4 @@
-import { TRASH_ID, MultipleContainers } from "@/components/templates/BB";
+import { TRASH_ID, MultipleContainers } from "@/components/templates/BB.jsx";
 import { UniqueIdentifier, CancelDrop } from "@dnd-kit/core";
 import { useState, useRef } from "react";
 
@@ -27,15 +27,13 @@ export const TrashableItems = ({ confirmDrop }: { confirmDrop: boolean }) => {
             <MultipleContainers
                 cancelDrop={confirmDrop ? cancelDrop : undefined}
                 trashable
+                columns={undefined}
+                items={undefined}
+                containerStyle={undefined}
+                modifiers={undefined}
+                renderItem={undefined}
+                scrollable={undefined}
             />
-            {/* {activeId && (
-                <ConfirmModal
-                    onConfirm={() => resolveRef.current?.(true)}
-                    onDeny={() => resolveRef.current?.(false)}
-                >
-                    Are you sure you want to delete "{activeId}"?
-                </ConfirmModal>
-            )} */}
         </>
     );
 };
