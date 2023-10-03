@@ -25,10 +25,10 @@ import {
     horizontalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import theme from '@/assets/styles/theme.ts';
 import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
 import scrapCardDataMock from '__mocks__/scrapCardDataMock.ts';
 import { Box } from '@mui/material';
+import { YORKIE_API_KEY } from '@/secret';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -88,7 +88,7 @@ export function Remove(props) {
 
 async function connectYorkie() {
     const client = new yorkie.Client('https://api.yorkie.dev', {
-        apiKey: 'ckd53dt047aeajg75ia0',
+        apiKey: YORKIE_API_KEY,
     });
     await client.activate();
 
