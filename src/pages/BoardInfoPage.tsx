@@ -33,8 +33,13 @@ function BoardInfoPage() {
         >
             <Typography
                 variant="h1"
+                sx={{
+                    fontSize: '24px',
+                    fontWeight: '500',
+                    m: '20px',
+                }}
             >
-                보드 {getBoardPageId()}
+                {board.title}
             </Typography>
             <Box
                 sx={{
