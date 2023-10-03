@@ -26,10 +26,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
-import scrapCardDataMock from '__mocks__/scrapCardDataMock.ts';
 import { Box } from '@mui/material';
-import { YORKIE_API_KEY } from '@/secret';
-import { useBoardAtom } from '@/hooks/useBoardAtom';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
