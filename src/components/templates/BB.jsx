@@ -605,7 +605,7 @@ export function MultipleContainers({
                         <DroppableContainer
                             key={containerId}
                             id={containerId}
-                            label={minimal ? undefined : `Column ${containerId}`}
+                            // label={minimal ? undefined : `Column ${containerId}`}
                             columns={columns}
                             items={items[containerId]}
                             scrollable={scrollable}
