@@ -28,13 +28,18 @@ function BoardInfoPage() {
         return searchParams.get('boardId');
     }
 
+    function getTitle() {
+        return searchParams.get('title');
+    }
+
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
+    const boardTitle = getTitle();
 
     useLayoutEffect(() => {
-        setBoard({
+        (boardTitle && boardPageId) && setBoard({
             ...board,
-            title: doc.getRoot()[boardPageId].title,
+            title: boardTitle,
             boardId: boardPageId,
         });
     }, [])

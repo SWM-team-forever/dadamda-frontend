@@ -72,7 +72,7 @@ function BoardListTemplate() {
                                             height: '180px',
                                             backgroundColor: theme.color.Blue_090,
                                         }}
-                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
+                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}&title=${board.boardName}`)}
                                     >
                                         {board.boardName}
                                     </Box>
