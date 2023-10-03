@@ -459,8 +459,6 @@ export function MultipleContainers({
                     return;
                 }
 
-                console.log(active, over);
-
                 const overContainer = findContainer(overId);
                 const activeContainer = findContainer(active.id);
 

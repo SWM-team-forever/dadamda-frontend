@@ -119,7 +119,6 @@ export const useBoardAtom = () => {
         const isOverAColumn = over.data.current?.type === 'column';
 
         if (!isActiveATask && isOverAColumn) {
-            console.log('cccc');
             setBoard((board) => {
                 const activeIndex = board.ScrapOrMemoList.findIndex((task) => task.columnId === activeColumnId);
 
