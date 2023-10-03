@@ -1,7 +1,6 @@
 import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { Typography, TextareaAutosize, Box, Chip, Button } from "@mui/material";
-import { element } from "prop-types";
 import { useState } from "react";
 
 function BoardCreateModalElement() {
