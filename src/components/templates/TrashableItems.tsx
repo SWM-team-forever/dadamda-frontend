@@ -28,7 +28,7 @@ export const TrashableItems = ({ confirmDrop, doc, boardId }: { confirmDrop: boo
                 cancelDrop={confirmDrop ? cancelDrop : undefined}
                 trashable
                 columns={undefined}
-                items={undefined}
+                items={{}}
                 containerStyle={undefined}
                 modifiers={undefined}
                 renderItem={undefined}
