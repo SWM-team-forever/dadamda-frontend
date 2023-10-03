@@ -2,57 +2,39 @@ import React, { useCallback, useEffect, useRef, useState, forwardRef, CSSPropert
 import { createPortal, unstable_batchedUpdates } from 'react-dom';
 import yorkie from 'yorkie-js-sdk';
 import {
-    CancelDrop,
     closestCenter,
     pointerWithin,
     rectIntersection,
-    CollisionDetection,
     DndContext,
     DragOverlay,
-    DropAnimation,
     getFirstCollision,
     MouseSensor,
     TouchSensor,
-    Modifiers,
     useDroppable,
-    UniqueIdentifier,
     useSensors,
     useSensor,
     MeasuringStrategy,
-    KeyboardCoordinateGetter,
     defaultDropAnimationSideEffects,
-    DraggableSyntheticListeners,
 } from '@dnd-kit/core';
 import {
-    AnimateLayoutChanges,
     SortableContext,
     useSortable,
     arrayMove,
     defaultAnimateLayoutChanges,
     verticalListSortingStrategy,
-    SortingStrategy,
     horizontalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { CSS, Transform } from '@dnd-kit/utilities';
-import theme from '@/assets/styles/theme';
-import ScrapCard from '@/components/molcules/Board/ScrapCard';
-import { contentProps } from '@/types/ContentType';
-import scrapCardDataMock from '__mocks__/scrapCardDataMock';
+import { CSS } from '@dnd-kit/utilities';
+import theme from '@/assets/styles/theme.ts';
+import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
+import scrapCardDataMock from '__mocks__/scrapCardDataMock.ts';
 import { Box } from '@mui/material';
 
-const animateLayoutChanges: AnimateLayoutChanges = (args) =>
+const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
 
-export interface ActionProps extends React.HTMLAttributes<HTMLButtonElement> {
-    active?: {
-        fill: string;
-        background: string;
-    };
-    cursor?: CSSProperties['cursor'];
-}
-
-export const Action = forwardRef<HTMLButtonElement, ActionProps>(
-    ({ active, className, cursor, style, ...props }, ref) => {
+export const Action = forwardRef(
+    ({ active, cursor, style, ...props }, ref) => {
         return (
             <button
                 ref={ref}
@@ -64,14 +46,14 @@ export const Action = forwardRef<HTMLButtonElement, ActionProps>(
                         cursor,
                         '--fill': active?.fill,
                         '--background': active?.background,
-                    } as CSSProperties
+                    }
                 }
             />
         );
     }
 );
 
-export const Handle = forwardRef<HTMLButtonElement, ActionProps>(
+export const Handle = forwardRef(
     (props, ref) => {
         return (
             <Action
@@ -88,7 +70,7 @@ export const Handle = forwardRef<HTMLButtonElement, ActionProps>(
     }
 );
 
-export function Remove(props: ActionProps) {
+export function Remove(props) {
     return (
         <Action
             {...props}
@@ -104,22 +86,6 @@ export function Remove(props: ActionProps) {
     );
 }
 
-export interface ContainerProps {
-    children: React.ReactNode;
-    columns?: number;
-    label?: string;
-    style?: React.CSSProperties;
-    horizontal?: boolean;
-    hover?: boolean;
-    handleProps?: React.HTMLAttributes<any>;
-    scrollable?: boolean;
-    shadow?: boolean;
-    placeholder?: boolean;
-    unstyled?: boolean;
-    onClick?(): void;
-    onRemove?(): void;
-}
-
 async function connectYorkie() {
     const client = new yorkie.Client('https://api.yorkie.dev', {
         apiKey: 'ckd53dt047aeajg75ia0',
@@ -132,7 +98,7 @@ async function connectYorkie() {
     return doc;
 }
 
-export const Container = forwardRef<HTMLDivElement, ContainerProps>(
+export const Container = forwardRef(
     (
         {
             children,
@@ -149,7 +115,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
             shadow,
             unstyled,
             ...props
-        }: ContainerProps,
+        },
         ref
     ) => {
         const Component = onClick ? 'button' : Box;
@@ -157,14 +123,14 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(
         return (
             <Component
                 {...props}
-                ref={ref as React.RefObject<HTMLButtonElement>}
+                ref={ref}
                 style={
                     {
                         ...style,
                         '--columns': columns,
                         width: '320px',
                         backgroundColor: theme.color.Blue_080,
-                    } as React.CSSProperties
+                    }
                 }
                 onClick={onClick}
                 tabIndex={onClick ? 0 : undefined}
@@ -192,11 +158,6 @@ function DroppableContainer({
     items,
     style,
     ...props
-}: ContainerProps & {
-    disabled?: boolean;
-    id: UniqueIdentifier;
-    items: UniqueIdentifier[];
-    style?: React.CSSProperties;
 }) {
     const {
         active,
@@ -242,7 +203,7 @@ function DroppableContainer({
     );
 }
 
-const dropAnimation: DropAnimation = {
+const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
         styles: {
             active: {
@@ -252,43 +213,8 @@ const dropAnimation: DropAnimation = {
     }),
 };
 
-type Items = Record<UniqueIdentifier, contentProps['content'][]>;
-
-export interface ItemProps {
-    dragOverlay?: boolean;
-    color?: string;
-    disabled?: boolean;
-    dragging?: boolean;
-    handle?: boolean;
-    handleProps?: any;
-    height?: number;
-    index?: number;
-    fadeIn?: boolean;
-    transform?: Transform | null;
-    listeners?: DraggableSyntheticListeners;
-    sorting?: boolean;
-    style?: React.CSSProperties;
-    transition?: string | null;
-    wrapperStyle?: React.CSSProperties;
-    value: contentProps['content'];
-    onRemove?(): void;
-    renderItem?(args: {
-        dragOverlay: boolean;
-        dragging: boolean;
-        sorting: boolean;
-        index: number | undefined;
-        fadeIn: boolean;
-        listeners: DraggableSyntheticListeners;
-        ref: React.Ref<HTMLElement>;
-        style: React.CSSProperties | undefined;
-        transform: ItemProps['transform'];
-        transition: ItemProps['transition'];
-        value: ItemProps['value'];
-    }): React.ReactElement;
-}
-
 export const Item = React.memo(
-    React.forwardRef<HTMLLIElement, ItemProps>(
+    React.forwardRef(
         (
             {
                 dragOverlay,
@@ -307,6 +233,7 @@ export const Item = React.memo(
                 transition,
                 transform,
                 value,
+                itemId,
                 wrapperStyle,
                 ...props
             },
@@ -337,6 +264,7 @@ export const Item = React.memo(
                     transform,
                     transition,
                     value,
+                    itemId,
                 })
             ) : (
                 <Box
@@ -357,37 +285,9 @@ export const Item = React.memo(
     )
 );
 
-interface Props {
-    adjustScale?: boolean;
-    cancelDrop?: CancelDrop;
-    columns?: number;
-    containerStyle?: React.CSSProperties;
-    coordinateGetter?: KeyboardCoordinateGetter;
-    getItemStyles?(args: {
-        value: UniqueIdentifier;
-        index: number;
-        overIndex: number;
-        isDragging: boolean;
-        containerId: UniqueIdentifier;
-        isSorting: boolean;
-        isDragOverlay: boolean;
-    }): React.CSSProperties;
-    wrapperStyle?(args: { index: number }): React.CSSProperties;
-    itemCount?: number;
-    items?: Items;
-    handle?: boolean;
-    renderItem?: any;
-    strategy?: SortingStrategy;
-    modifiers?: Modifiers;
-    minimal?: boolean;
-    trashable?: boolean;
-    scrollable?: boolean;
-    vertical?: boolean;
-}
-
 export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
-const empty: UniqueIdentifier[] = [];
+const empty = [];
 const doc = await connectYorkie();
 
 export function MultipleContainers({
@@ -407,18 +307,17 @@ export function MultipleContainers({
     trashable = false,
     vertical = false,
     scrollable,
-}: Props) {
-    const [items, setItems] = useState<Items>(
-        () =>
-            initialItems ?? {
-                A: [scrapCardDataMock],
-            }
+}) {
+    const [items, setItems] = useState(
+        {
+            A: [{ B: scrapCardDataMock }],
+        }
     );
     const [containers, setContainers] = useState(
-        Object.keys(items) as UniqueIdentifier[]
+        Object.keys(items)
     );
-    const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
-    const lastOverId = useRef<UniqueIdentifier | null>(null);
+    const [activeId, setActiveId] = useState(null);
+    const lastOverId = useRef(null);
     const recentlyMovedToNewContainer = useRef(false);
     const isSortingContainer = activeId ? containers.includes(activeId) : false;
 
@@ -430,7 +329,7 @@ export function MultipleContainers({
      * - If there are no intersecting containers, return the last matched intersection
      *
      */
-    const collisionDetectionStrategy: CollisionDetection = useCallback(
+    const collisionDetectionStrategy= useCallback(
         (args) => {
             if (activeId && activeId in items) {
                 return closestCenter({
@@ -492,22 +391,22 @@ export function MultipleContainers({
         },
         [activeId, items]
     );
-    const [clonedItems, setClonedItems] = useState<Items | null>(null);
+    const [clonedItems, setClonedItems] = useState(null);
     const sensors = useSensors(
         useSensor(MouseSensor),
         useSensor(TouchSensor),
     );
-    const findContainer = (id: UniqueIdentifier) => {
+    const findContainer = (id) => {
         if (id in items) {
             return id;
         }
 
         return Object.keys(items).find((key) => {
-            return items[key].includes(id)
+            return items[key].includes(id);
         });
     };
 
-    const getIndex = (id: UniqueIdentifier) => {
+    const getIndex = (id) => {
         const container = findContainer(id);
 
         if (!container) {
@@ -576,7 +475,7 @@ export function MultipleContainers({
                         const overIndex = overItems.indexOf(overId);
                         const activeIndex = activeItems.indexOf(active.id);
 
-                        let newIndex: number;
+                        let newIndex;
 
                         if (overId in items) {
                             newIndex = overItems.length + 1;
@@ -765,13 +664,13 @@ export function MultipleContainers({
         </DndContext>
     );
 
-    function renderSortableItemDragOverlay(id: UniqueIdentifier) {
+    function renderSortableItemDragOverlay(id) {
         return (
             <Item
                 value={id}
                 handle={handle}
                 style={getItemStyles({
-                    containerId: findContainer(id) as UniqueIdentifier,
+                    containerId: findContainer(id),
                     overIndex: -1,
                     index: getIndex(id),
                     value: id,
@@ -787,7 +686,7 @@ export function MultipleContainers({
         );
     }
 
-    function renderContainerDragOverlay(containerId: UniqueIdentifier) {
+    function renderContainerDragOverlay(containerId) {
         return (
             <Container
                 label={`Column ${containerId}`}
@@ -821,7 +720,7 @@ export function MultipleContainers({
         );
     }
 
-    function handleRemove(containerID: UniqueIdentifier) {
+    function handleRemove(containerID) {
         setContainers((containers) =>
             containers.filter((id) => id !== containerID)
         );
@@ -847,7 +746,7 @@ export function MultipleContainers({
     }
 }
 
-function getColor(id: UniqueIdentifier) {
+function getColor(id) {
     switch (String(id)[0]) {
         case 'A':
             return '#7193f1';
@@ -862,7 +761,7 @@ function getColor(id: UniqueIdentifier) {
     return undefined;
 }
 
-function Trash({ id }: { id: UniqueIdentifier }) {
+function Trash({ id }) {
     const { setNodeRef, isOver } = useDroppable({
         id,
     });
@@ -890,19 +789,6 @@ function Trash({ id }: { id: UniqueIdentifier }) {
     );
 }
 
-
-interface SortableItemProps {
-    containerId: UniqueIdentifier;
-    id: UniqueIdentifier;
-    index: number;
-    handle: boolean;
-    disabled?: boolean;
-    style(args: any): React.CSSProperties;
-    getIndex(id: UniqueIdentifier): number;
-    renderItem(): React.ReactElement;
-    wrapperStyle({ index }: { index: number }): React.CSSProperties;
-}
-
 function SortableItem({
     disabled,
     id,
@@ -913,7 +799,7 @@ function SortableItem({
     containerId,
     getIndex,
     wrapperStyle,
-}: SortableItemProps) {
+}) {
     const {
         setNodeRef,
         setActivatorNodeRef,
