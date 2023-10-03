@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState, forwardRef, CSSProperties } from 'react';
 import { createPortal, unstable_batchedUpdates } from 'react-dom';
-import yorkie from 'yorkie-js-sdk';
 import {
     closestCenter,
     pointerWithin,
@@ -307,7 +306,7 @@ export function MultipleContainers({
     scrollable,
 }) {
     const [items, setItems] = useState(
-        doc.getRoot()[boardId].items
+        doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
     );
     const [containers, setContainers] = useState(
         Object.keys(items)
