@@ -1,5 +1,5 @@
 import theme from "@/assets/styles/theme";
-import { Typography, TextareaAutosize, Box, Chip } from "@mui/material";
+import { Typography, TextareaAutosize, Box, Chip, Button } from "@mui/material";
 import { element } from "prop-types";
 import { useState } from "react";
 
@@ -39,7 +39,7 @@ function BoardCreateModalElement() {
     ]
 
     return (
-        <div>
+        <Box>
             <Typography
                 color={theme.color.Gray_090}
                 variant="h3"
@@ -126,7 +126,13 @@ function BoardCreateModalElement() {
                     )
                 })}
             </Box>
-        </div>
+            <Button
+                variant="contained"
+                fullWidth
+            >
+                추가하기
+            </Button>
+        </Box>
     );
 }
 
