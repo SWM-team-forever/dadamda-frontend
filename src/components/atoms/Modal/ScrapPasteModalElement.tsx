@@ -9,13 +9,13 @@ import { contentProps } from "@/types/ContentType";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 function ScrapPasteModalElement() {
     const token = localStorage.getItem('token');
     const size = 30;
     const [value, setValue] = useState('list');
-    const handleTabValueChange = (event: React.SyntheticEvent, newValue: string) => {
+    const handleTabValueChange = (_event: SyntheticEvent<Element, Event>, newValue: string) => {
         setValue(newValue);
     }
 
