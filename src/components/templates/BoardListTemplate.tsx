@@ -4,9 +4,40 @@ import { Box } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
 import { useNavigate } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useGetBoardList } from '@/api/board';
 
 function BoardListTemplate() {
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+
+    const { data, isLoading } = useInfiniteQuery(
+        ['boards'],
+        ({ pageParam = 0 }) => {
+            return token && useGetBoardList({ pages: pageParam, size: 30 })
+        },
+        {
+            getNextPageParam: (lastPage) => {
+                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
+                return nextPage;
+            },
+        }
+    );
+
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                }}
+            >
+                로딩중
+            </Box>
+        )
+    }
 
     return (
         <>
@@ -17,16 +48,22 @@ function BoardListTemplate() {
                         height: 'calc(100% - 145px)',
                     }}
                 >
-                    <Box
-                        sx={{
-                            width: '320px',
-                            height: '180px',
-                            backgroundColor: theme.color.Blue_090,
-                        }}
-                        onClick={() => navigate(`/board_info?boardId=${1}`)}
-                    >
-                        보드 1
-                    </Box>
+                    {data?.pages.map((page) => {
+                        return page.data.content.map((board) => {
+                            return (
+                                <Box
+                                    sx={{
+                                        width: '320px',
+                                        height: '180px',
+                                        backgroundColor: theme.color.Blue_090,
+                                    }}
+                                    onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
+                                >
+                                    {board.title}
+                                </Box>
+                            )
+                        })
+                    })}
                 </Box>
             </ScrapListContainer>
         </>
