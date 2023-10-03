@@ -129,7 +129,7 @@ export const Container = forwardRef(
                         ...style,
                         '--columns': columns,
                         width: '320px',
-                        backgroundColor: theme.color.Blue_080,
+                        // backgroundColor: theme.color.Blue_080,
                     }
                 }
                 onClick={onClick}
@@ -640,6 +640,10 @@ export function MultipleContainers({
                             items={empty}
                             onClick={handleAddColumn}
                             placeholder
+                            style={{
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                            }}
                         >
                             + Add column
                         </DroppableContainer>
