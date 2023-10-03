@@ -7,6 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useGetBoardList } from '@/api/board';
 
+export interface IBoardListInfo {
+    boardId: number;
+    boardName: string;
+    description: string;
+    isFixed?: string,
+    tag: string,
+    modifiedDate: string,
+}
+
 function BoardListTemplate() {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
