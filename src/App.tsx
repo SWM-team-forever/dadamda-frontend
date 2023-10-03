@@ -93,7 +93,7 @@ function App() {
                   <Route path='/trending' element={<TrendingPage />}></Route>
                   <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
                   <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
-                  <Route path='/board_info' element={<RequireAuth><TrashableItems confirmDrop={false} /></RequireAuth>}></Route>
+                  <Route path='/board_info' element={<RequireAuth><BoardInfoPage /></RequireAuth>}></Route>
                 </Routes>
               </ErrorBoundary>
             </BrowserRouter>

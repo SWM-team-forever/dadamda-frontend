@@ -1,8 +1,8 @@
-import BoardTemplate from "@/components/templates/BoardTemplate";
+import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 function BoardInfoPage() {
@@ -42,7 +42,7 @@ function BoardInfoPage() {
                     justifyContent: 'space-between',
                 }}
             >
-                <BoardTemplate />
+                <TrashableItems confirmDrop={false} />
                 <Box>
                     <Button
                         onClick={() => openModal('scrapCreateOnBoard')}
