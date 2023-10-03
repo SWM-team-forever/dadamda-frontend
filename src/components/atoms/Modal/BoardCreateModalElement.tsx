@@ -1,3 +1,4 @@
+import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { Typography, TextareaAutosize, Box, Chip, Button } from "@mui/material";
 import { element } from "prop-types";
@@ -11,7 +12,7 @@ function BoardCreateModalElement() {
 
     const [description, setDescription] = useState<string>();
     const handleDescriptionValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setTitle(e.target.value);
+        setDescription(e.target.value);
     }
 
     const [selectedTag, setSelectedTag] = useState<string>("");
@@ -36,7 +37,16 @@ function BoardCreateModalElement() {
             label: '지식/동향',
             tagValue: "KNOWLEDGE_TREND",
         }
-    ]
+    ];
+
+    const { mutate } = usePostCreateBoard();
+    const handleCreateButtonClick = () => {
+        (title && description && selectedTag) && mutate({
+            name: title,
+            description: description,
+            tag: selectedTag,
+        })
+    }
 
     return (
         <Box>
@@ -129,6 +139,7 @@ function BoardCreateModalElement() {
             <Button
                 variant="contained"
                 fullWidth
+                onClick={handleCreateButtonClick}
             >
                 추가하기
             </Button>
