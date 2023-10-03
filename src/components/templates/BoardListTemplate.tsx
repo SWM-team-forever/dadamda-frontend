@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
 import { useNavigate } from 'react-router-dom';
@@ -18,12 +18,11 @@ export interface IBoardListInfo {
 
 function BoardListTemplate() {
     const navigate = useNavigate();
-    const token = localStorage.getItem('token');
 
     const { data, isLoading } = useInfiniteQuery(
         ['boards'],
         ({ pageParam = 0 }) => {
-            return token && useGetBoardList({ pages: pageParam, size: 30 })
+            return useGetBoardList({ pages: pageParam, size: 30 })
         },
         {
             getNextPageParam: (lastPage) => {
@@ -57,22 +56,26 @@ function BoardListTemplate() {
                         height: 'calc(100% - 145px)',
                     }}
                 >
-                    {data?.pages.map((page) => {
-                        return page.data.content.map((board) => {
-                            return (
-                                <Box
-                                    sx={{
-                                        width: '320px',
-                                        height: '180px',
-                                        backgroundColor: theme.color.Blue_090,
-                                    }}
-                                    onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
-                                >
-                                    {board.title}
-                                </Box>
-                            )
-                        })
-                    })}
+                    <Grid container
+                        columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
+                    >
+                        {data?.pages.map((page) => {
+                            return page.data.content.map((board: IBoardListInfo) => {
+                                return (
+                                    <Box
+                                        sx={{
+                                            width: '320px',
+                                            height: '180px',
+                                            backgroundColor: theme.color.Blue_090,
+                                        }}
+                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
+                                    >
+                                        {board.boardName}
+                                    </Box>
+                                )
+                            })
+                        })}
+                    </Grid>
                 </Box>
             </ScrapListContainer>
         </>
