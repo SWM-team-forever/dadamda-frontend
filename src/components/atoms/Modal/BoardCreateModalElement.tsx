@@ -1,5 +1,6 @@
 import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
+import { useModal } from "@/hooks/useModal";
 import { Typography, TextareaAutosize, Box, Chip, Button } from "@mui/material";
 import { useState } from "react";
 
@@ -39,12 +40,14 @@ function BoardCreateModalElement() {
     ];
 
     const { mutate } = usePostCreateBoard();
+    const { closeModal } = useModal();
     const handleCreateButtonClick = () => {
         (title && description && selectedTag) && mutate({
             name: title,
             description: description,
             tag: selectedTag,
-        })
+        });
+        closeModal();
     }
 
     return (
