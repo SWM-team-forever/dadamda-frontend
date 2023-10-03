@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { Box } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import BoardTemplate from '@/components/templates/BoardTemplate';
+import { useNavigate } from 'react-router-dom';
 
 function BoardListTemplate() {
     const navigate = useNavigate();

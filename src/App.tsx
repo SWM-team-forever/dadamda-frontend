@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
@@ -8,11 +10,13 @@ import { ErrorBoundary } from 'react-error-boundary';
 import theme from '@/assets/styles/themeMuiStyle';
 import { LoginProvider, RequireAuth } from '@/context/LoginContext';
 import { useModal } from '@/hooks/useModal';
+import { SENTRY_DSN } from '@/secret';
 
 import ModalWrapper from '@/components/molcules/Modal/ModalWrapper';
 import Header from '@/components/molcules/Navigation/Header';
-import NotReadyTemplate from '@/components/templates/NotReadyTemplate';
+import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
 import ScrapTemplate from '@/components/templates/ScrapTemplate';
+import BoardListTemplate from '@/components/templates/BoardListTemplate';
 import BoardPage from '@/pages/BoardPage';
 import GoogleOAuthLoginpage from '@/pages/GoogleOAuthLoginPage';
 import MainPage from '@/pages/MainPage';
@@ -21,15 +25,7 @@ import ScrapPage from '@/pages/ScrapPage';
 import TrendingPage from '@/pages/TrendingPage';
 import UserPage from '@/pages/UserPage';
 import ErrorPage from '@/pages/ErrorPage';
-
-import * as Sentry from '@sentry/react';
-import React from 'react';
-import { SENTRY_DSN } from '@/secret';
-import BoardListTemplate from '@/components/templates/BoardListTemplate';
-import BoardTemplate from '@/components/templates/BoardTemplate';
 import BoardInfoPage from '@/pages/BoardInfoPage';
-import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
-import { TrashableItems } from '@/components/templates/TrashableItems';
 
 const queryClient = new QueryClient();
 Sentry.init({
