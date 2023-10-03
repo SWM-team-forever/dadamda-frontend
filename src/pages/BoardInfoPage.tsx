@@ -69,7 +69,7 @@ function BoardInfoPage() {
                     justifyContent: 'space-between',
                 }}
             >
-                <TrashableItems confirmDrop={false} doc={doc} boardId={boardPageId} />
+                {boardPageId && <TrashableItems confirmDrop={false} doc={doc} boardId={boardPageId} />}
                 <Box>
                     <Button
                         onClick={() => openModal('scrapCreateOnBoard')}
