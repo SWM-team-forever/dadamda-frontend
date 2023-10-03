@@ -310,7 +310,7 @@ export function MultipleContainers({
 }) {
     const [items, setItems] = useState(
         {
-            A: [{ B: scrapCardDataMock }],
+            A: [{ ...scrapCardDataMock }],
         }
     );
     const [containers, setContainers] = useState(
