@@ -89,7 +89,6 @@ function BoardListTemplate() {
 const ScrapListContainer = styled.div`
     width: calc(100% - 209px);
     height: calc(100% - 56px);
-    background-color: linear-gradient(114deg, #EBEEF3 12.12%, #D6DEEA 100%);
     position: fixed;
     right: 0;
     top: 56px;
