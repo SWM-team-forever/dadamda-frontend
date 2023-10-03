@@ -29,6 +29,7 @@ import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
 import scrapCardDataMock from '__mocks__/scrapCardDataMock.ts';
 import { Box } from '@mui/material';
 import { YORKIE_API_KEY } from '@/secret';
+import { useBoardAtom } from '@/hooks/useBoardAtom';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -84,18 +85,6 @@ export function Remove(props) {
             </svg>
         </Action>
     );
-}
-
-async function connectYorkie() {
-    const client = new yorkie.Client('https://api.yorkie.dev', {
-        apiKey: YORKIE_API_KEY,
-    });
-    await client.activate();
-
-    const doc = new yorkie.Document('my-first-document');
-    await client.attach(doc);
-
-    return doc;
 }
 
 export const Container = forwardRef(
@@ -288,7 +277,17 @@ export const Item = React.memo(
 export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
 const empty = [];
-const doc = await connectYorkie();
+
+function updateRoot(doc, boardId, items) {
+    doc.update((root) => {
+        root[boardId] = {
+            ...root[boardId],
+            items: {
+                ...items,
+            }
+        }
+    });
+}
 
 export function MultipleContainers({
     adjustScale = false,
@@ -303,15 +302,15 @@ export function MultipleContainers({
     minimal = false,
     modifiers,
     renderItem,
+    doc,
+    boardId,
     strategy = verticalListSortingStrategy,
     trashable = false,
     vertical = false,
     scrollable,
 }) {
     const [items, setItems] = useState(
-        {
-            A: [{ ...scrapCardDataMock }],
-        }
+        doc.getRoot()[boardId].items
     );
     const [containers, setContainers] = useState(
         Object.keys(items)
@@ -434,10 +433,6 @@ export function MultipleContainers({
             recentlyMovedToNewContainer.current = false;
         });
     }, [items]);
-
-    doc.update((root) => {
-        root['1'] = items;
-    });
 
     return (
         <DndContext
