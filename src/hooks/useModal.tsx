@@ -10,6 +10,7 @@ import ScrapDeleteElementModal from "@/components/atoms/Modal/ScrapDeleteModalEl
 import ScrapEditModalElement from "@/components/atoms/Modal/ScrapEditModalElement";
 import ScrapCreateModalElement from "@/components/atoms/Modal/ScrapCreateModalElement";
 import ScrapPasteModalElement from "@/components/atoms/Modal/ScrapPasteModalElement";
+import BoardCreateModalElement from "@/components/atoms/Modal/BoardCreateModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -52,6 +53,11 @@ export const useModal = () => {
         scrapCreateOnBoard: {
             title: '스크랩 추가하기',
             element: <ScrapPasteModalElement />,
+            position: 'right',
+        },
+        boardCreate: {
+            title: '보드 추가하기',
+            element: <BoardCreateModalElement />,
             position: 'right',
         }
     }
