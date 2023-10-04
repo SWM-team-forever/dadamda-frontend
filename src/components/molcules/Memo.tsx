@@ -1,16 +1,22 @@
 import styled from 'styled-components';
 import theme from '../../assets/styles/theme';
 import { Box, Typography } from '@mui/material';
-import Tooltip from '@/components/atoms/CategoryItem/Tooltip';
-import { create } from '@mui/material/styles/createTransitions';
+import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
+import { CloseIcon } from '@/components/atoms/Icon';
+import { useDeleteMemo } from '@/api/memo';
 
 interface MemoProps {
     memoImageURL?: string,
     memoText?: string,
-    createdDate: string,
+    createdDate: number,
+    scrapId: number,
+    memoId: number,
 }
 
-function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
+function Memo({ memoImageURL, memoText, createdDate, scrapId, memoId }: MemoProps) {
+    const { mutate } = useDeleteMemo();
+    const token = localStorage.getItem('token');
+
     return (
         <Box
             sx={{
@@ -21,6 +27,9 @@ function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
                 gap: '8px',
                 backgroundColor: '#FFF',
                 borderRadius: '4px',
+            }}
+            onClick={(e) => {
+                e.stopPropagation();
             }}
         >
             <Box
@@ -37,23 +46,31 @@ function Memo({ memoImageURL, memoText, createdDate }: MemoProps) {
                         lineHeight: '160%',
                     }}
                 >
-                    {createdDate}
+                    {getTimeDiff(createdDate)}
                 </Typography>
-                <Tooltip />
-            </Box>
-            {memoText
-                ? <Typography
-                    variant='h5'
-                    color='#656A6F'
-                    sx={{
-                        fontWeight: '400',
-                        lineHeight: '160%',
-                    }}
+                <Box
+                    onClick={
+                        () => (token) && mutate({ token, scrapId, memoId })
+                    }
                 >
-                    {memoText}
-                </Typography>
-                : <ImageMemo src={memoImageURL} />}
-        </Box>
+                    <CloseIcon width='10' height='10' fill={theme.color.Gray_060} />
+                </Box>
+            </Box>
+            {
+                memoText
+                    ? <Typography
+                        variant='h5'
+                        color='#656A6F'
+                        sx={{
+                            fontWeight: '400',
+                            lineHeight: '160%',
+                        }}
+                    >
+                        {memoText}
+                    </Typography>
+                    : <ImageMemo src={memoImageURL} />
+            }
+        </Box >
     );
 }
 

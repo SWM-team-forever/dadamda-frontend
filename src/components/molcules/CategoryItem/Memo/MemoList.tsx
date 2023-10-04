@@ -1,11 +1,11 @@
 import theme from "@/assets/styles/theme";
-import MemoCreateModalElement from "@/components/atoms/Modal/MemoCreateModalElement";
+import MemoCreateInput from "@/components/molcules/CategoryItem/Memo/MemoCreateInput";
 import Memo from "@/components/molcules/Memo";
-import { useSelectedScrap } from "@/hooks/useSelectedScrap";
+import { contentProps } from "@/types/ContentType";
 import { Box, Typography } from "@mui/material";
 
-function MemoList() {
-    const { selectedScrap } = useSelectedScrap();
+function MemoList({ memoList, scrapId }: { memoList: contentProps['content']['memoList'], scrapId: number }) {
+
     return (
         <Box
             sx={{
@@ -34,7 +34,7 @@ function MemoList() {
                     lineHeight={'150%'}
                     color={theme.color.Gray_080}
                 >
-                    {selectedScrap.memoList.length}
+                    {memoList.length}
                 </Typography>
             </Box>
             <Box
@@ -44,13 +44,15 @@ function MemoList() {
                     p: '16px 0',
                 }}
             >
-                <MemoCreateModalElement />
+                <MemoCreateInput scrapId={scrapId} />
             </Box>
-            {selectedScrap.memoList.map((memo) => {
+            {memoList.map((memo) => {
                 return <Memo
                     memoImageURL={memo.memoImageUrl}
                     memoText={memo.memoText}
                     createdDate={memo.createdDate}
+                    scrapId={scrapId}
+                    memoId={memo.memoId}
                 />
             })}
         </Box>

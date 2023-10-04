@@ -90,7 +90,13 @@ const Footer = () => {
                         </Box>
                     </Box>
                 </Grid>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={4}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        gap: '10px',
+                    }}
+                >
                     <Typography
                         sx={{
                             ...boldTextStyle
@@ -101,6 +107,18 @@ const Footer = () => {
                             color: theme.color.text_gray_color,
                         }}>
                             개인 정보 처리 방침
+                        </Link>
+                    </Typography>
+                    <Typography
+                        sx={{
+                            ...boldTextStyle
+                        }}
+                    >
+                        <Link href='https://gapyeong.notion.site/db7b7965dfd84f65a3b69f0c2f6c33af?pvs=4' target="_blank" underline="none" style={{
+                            textDecoration: 'none',
+                            color: theme.color.text_gray_color,
+                        }}>
+                            이용 약관
                         </Link>
                     </Typography>
                 </Grid>

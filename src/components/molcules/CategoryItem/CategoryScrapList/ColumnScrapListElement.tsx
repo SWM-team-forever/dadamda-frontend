@@ -73,7 +73,6 @@ function DesktopArticleListElement({ content }: contentProps) {
             window.open(content.pageUrl, '_blank');
         } else {
             e.stopPropagation();
-            setSelectedScrap(content);
             navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
         }
     }
