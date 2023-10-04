@@ -70,7 +70,6 @@ function UserPage() {
                             ? <ProfileImage src={profileImageUrl} />
                             : <ProfileImage src={defaultUserImage} />
                         }
-                        <Button label='이미지 변경하기' buttonStyle='primary' isRound onClick={useWarningSnackbar} />
                     </ProfileContainer>
                     <Content>
                         {userPageMenu.map(menu => {
