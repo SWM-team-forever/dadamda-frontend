@@ -5,6 +5,7 @@ import { CircularProgress } from "@mui/material";
 import { GET_USER_PROFILE_IMAGE } from "../secret";
 
 import RowContainer from "../components/atoms/RowContainer";
+import { logEvent } from "@/utility/amplitude";
 
 function OAuthLoginpage() {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ function OAuthLoginpage() {
         token && localStorage.setItem('token', token);
         token && getUserProfileImage(token)
             .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage))
+        logEvent('login');
         return navigate('/scrap/list');
     }, [navigate])
     return (
