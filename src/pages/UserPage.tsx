@@ -59,6 +59,7 @@ function UserPage() {
         }];
 
     const { openModal } = useModal();
+    const handleLogout = useLogout();
 
     return (
         <>
@@ -82,7 +83,7 @@ function UserPage() {
                         })}
                     </Content>
                     <RowContainer>
-                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={useLogout} />
+                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={handleLogout} />
                         <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={() => openModal('userDelete')} />
                     </RowContainer>
                 </UserInfoWrapper>
