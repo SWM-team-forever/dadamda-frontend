@@ -29,11 +29,6 @@ function ScrapNaviagtion() {
             selectedIcon: <VideoIcon size='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} />,
             link: '/scrap/video',
         }, {
-            name: '장소',
-            icon: <LocationIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} secondaryColor={theme.color.Gray_020} />,
-            selectedIcon: <LocationIcon width='24' height='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} secondaryColor={theme.color.Gray_020} />,
-            link: '/scrap/location',
-        }, {
             name: '기타',
             icon: <EtcIcon width='24' height='24' fill={theme.color.Gray_090} color={theme.color.Gray_060} />,
             selectedIcon: <EtcIcon width='24' height='24' fill={theme.color.Blue_080} color={theme.color.Blue_070} />,
