@@ -7,7 +7,7 @@ import { GOOGLE_ANALYTICS_TRACKING_ID } from "@/secret";
  * uri 변경 추적 컴포넌트
  * uri가 변경될 때마다 pageview 이벤트 전송
  */
-const RouteChangeTracker = () => {
+function RouteChangeTracker() {
   const location = useLocation();
   const [initialized, setInitialized] = useState(false);
 
@@ -26,6 +26,8 @@ const RouteChangeTracker = () => {
       ReactGA.send("pageview");
     }
   }, [initialized, location]);
-};
+
+  return null;
+}
 
 export default RouteChangeTracker;
