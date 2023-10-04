@@ -85,7 +85,6 @@ function UserPage() {
                         <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={useLogout} />
                         <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={() => openModal('userDelete')} />
                     </RowContainer>
-                    <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
             </Wrapper>
         </>
