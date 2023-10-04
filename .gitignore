@@ -26,3 +26,4 @@ dist-ssr
 .env
 src/secret.ts
 .env.sentry-build-plugin
+storybook-static
