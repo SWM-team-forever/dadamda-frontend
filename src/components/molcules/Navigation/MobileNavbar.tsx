@@ -45,20 +45,6 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
       toggleMobileNavbar();
     },
   }, {
-    isVisibleWithoutLogin: true,
-    name: '트렌딩',
-    onclick: () => {
-      navigate('/trending');
-      toggleMobileNavbar();
-    },
-  }, {
-    isVisibleWithoutLogin: false,
-    name: '보드',
-    onclick: () => {
-      navigate('/board');
-      toggleMobileNavbar();
-    },
-  }, {
     isVisibleWithoutLogin: false,
     name: '스크랩',
     onclick: () => toggleMenu(),
