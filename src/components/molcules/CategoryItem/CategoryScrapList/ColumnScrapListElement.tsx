@@ -40,6 +40,10 @@ function DesktopArticleListElement({ content }: contentProps) {
     const { closeTooltip } = useTooltip();
     const { selectedScrap, setSelectedScrap } = useSelectedScrap();
 
+    function isScrapSelected() {
+        return searchParams.has('scrapId');
+    }
+
     const menuItemContentList = [
         {
             title: '스크랩 수정',
@@ -65,6 +69,15 @@ function DesktopArticleListElement({ content }: contentProps) {
         return scrapId && content.scrapId === +(scrapId);
     }
 
+    function changeSelectedScrap() {
+        if (isScrapSelected()) {
+            searchParams.delete('scrapId');
+        }
+
+        searchParams.append('scrapId', content.scrapId.toString());
+        setSearchParams(searchParams);
+    }
+
     const navigate = useNavigate();
     const isSMDevice = useMediaQuery('(max-width:600px)');
     const handleScrapClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -73,7 +86,8 @@ function DesktopArticleListElement({ content }: contentProps) {
             window.open(content.pageUrl, '_blank');
         } else {
             e.stopPropagation();
-            navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
+            changeSelectedScrap();
+            // navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
         }
     }
 
