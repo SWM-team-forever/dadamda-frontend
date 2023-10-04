@@ -1,10 +1,10 @@
 import { Box, Button, CircularProgress, FormControl, FormHelperText, OutlinedInput, Typography } from '@mui/material';
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 import theme from '@/assets/styles/theme';
-import { useModal } from '@/hooks/useModal';
 import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
+import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 
 function MemoCreateInput({ scrapId }: { scrapId: number }) {
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -31,16 +31,17 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
         useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
     }
 
-    const MAX_MEMO_LENGTH = 1000;
-    const isLessThanLengthLimitation = (textAreaValue.length <= MAX_MEMO_LENGTH);
-    const isEntered = (textAreaValue.length > 0);
     const validation = () => {
-        if (!isLessThanLengthLimitation) {
+        if (!useIsLessThanLengthLimitation(textAreaValue, MAX_MEMO_LENGTH)) {
             return `최대 ${MAX_MEMO_LENGTH}글자까지만 입력 가능합니다.`;
         }
 
-        if (!isEntered) {
-            return '빈 메모는 입력하실 수 없습니다.';
+        if (!useIsEntered(textAreaValue)) {
+            return ' ';
+        }
+
+        if (useIsBlank(textAreaValue)) {
+            return '공백만 입력되었습니다.';
         }
 
         return 'success';
@@ -70,8 +71,6 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
                     }}
                     multiline
                     rows={5}
-                    error={!isValidationSuccess()}
-                    autoFocus
                 />
                 <FormHelperText>
                     <Typography
