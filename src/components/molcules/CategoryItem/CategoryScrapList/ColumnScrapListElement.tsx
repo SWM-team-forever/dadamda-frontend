@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { decode } from 'html-entities';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 
 import theme from '@/assets/styles/theme';
 import { contentProps } from '@/types/ContentType';
@@ -66,6 +66,16 @@ function DesktopArticleListElement({ content }: contentProps) {
     }
 
     const navigate = useNavigate();
+    const isSMDevice = useMediaQuery('(max-width:600px)');
+    const handleScrapClick = (e: React.MouseEvent<HTMLElement>) => {
+        if (isSMDevice) {
+            e.stopPropagation();
+            window.open(content.pageUrl, '_blank');
+        } else {
+            e.stopPropagation();
+            navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
+        }
+    }
 
     return (
         <Box
@@ -80,10 +90,8 @@ function DesktopArticleListElement({ content }: contentProps) {
         >
             <CardWrapper
                 style={{ cursor: 'pointer' }}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
-                }}>
+                onClick={handleScrapClick}
+            >
                 <Box
                     component='div'
                     sx={{

@@ -1,16 +1,39 @@
 import styled from 'styled-components';
 import { Box } from '@mui/material';
 
-import { googleLoginURL } from '@/secret';
+import { googleLoginURL, kakaoLoginURL } from '@/secret';
 import theme from '@/assets/styles/theme';
-import googleLogo from '@/assets/icons/btn_google_light_normal_ios.svg';
+import googleLogo from '@/assets/icons/google_login.png';
+import kakaoLogo from '@/assets/icons/kakao_logo.png';
 
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import LoginButton from '@/components/atoms/LoginButton';
 
+type TLoginProviderInformationElement = {
+    url: string,
+    source: string,
+    style: { color: string, backgroundColor: string },
+    label: string,
+}
+
 function LoginModalElement() {
-    const oAuthHandler = (): void => {
-        window.location.href = googleLoginURL;
+    const loginProviderInformation: { [key: string]: TLoginProviderInformationElement } = {
+        google: {
+            url: googleLoginURL,
+            source: googleLogo,
+            style: { color: theme.color.icon_color, backgroundColor: 'white' },
+            label: '구글로 시작하기',
+        },
+        kakao: {
+            url: kakaoLoginURL,
+            source: kakaoLogo,
+            style: { color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' },
+            label: '카카오로 시작하기',
+        }
+    }
+
+    const oAuthHandler = (loginProvider: string): void => {
+        window.location.href = loginProviderInformation[loginProvider].url;
     };
 
     return (
@@ -21,12 +44,15 @@ function LoginModalElement() {
             </TextContainer>
             <ButtonContainer>
                 <ColumnContainer style={{ width: '100%', gap: "10px" }}>
-                    <LoginButton
-                        text={'구글로 시작하기'}
-                        iconSource={googleLogo}
-                        style={{ color: theme.color.icon_color, backgroundColor: 'white' }}
-                        onClick={oAuthHandler}
-                    />
+                    {Object.keys(loginProviderInformation).map((loginProvider, index) => (
+                        <LoginButton
+                            key={index}
+                            onClick={() => oAuthHandler(loginProvider)}
+                            style={loginProviderInformation[loginProvider].style}
+                            iconSource={loginProviderInformation[loginProvider].source}
+                            text={loginProviderInformation[loginProvider].label}
+                        />
+                    ))}
                 </ColumnContainer>
             </ButtonContainer>
         </Box>
