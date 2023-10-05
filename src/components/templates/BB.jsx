@@ -25,6 +25,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
+import scrapCardDataMock from '__mocks__/scrapCardDataMock';
 import { Box } from '@mui/material';
 
 const animateLayoutChanges = (args) =>
@@ -306,8 +307,12 @@ export function MultipleContainers({
     scrollable,
 }) {
     const [items, setItems] = useState(
-        doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
+        // doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
+        {
+            A: [{ ...scrapCardDataMock }],
+        }
     );
+    console.log('items', items);
     const [containers, setContainers] = useState(
         Object.keys(items)
     );
@@ -596,13 +601,17 @@ export function MultipleContainers({
                         <DroppableContainer
                             key={containerId}
                             id={containerId}
-                            // label={minimal ? undefined : `Column ${containerId}`}
+                            label={minimal ? undefined : `Column ${containerId}`}
                             columns={columns}
                             items={items[containerId]}
                             scrollable={scrollable}
                             style={containerStyle}
                             unstyled={minimal}
-                            onRemove={() => handleRemove(containerId)}
+                            onRemove={() => {
+                                handleRemove(containerId)
+                                console.log('items', items);
+                                console.log('containers', containers);
+                            }}
                         >
                             <SortableContext items={items[containerId]} strategy={strategy}>
                                 {items[containerId].map((value, index) => {
@@ -717,6 +726,11 @@ export function MultipleContainers({
         setContainers((containers) =>
             containers.filter((id) => id !== containerID)
         );
+        setItems((items) => {
+            const newItems = { ...items };
+            delete newItems[containerID];
+            return newItems;
+        });
     }
 
     function handleAddColumn() {
@@ -735,7 +749,7 @@ export function MultipleContainers({
         const containerIds = Object.keys(items);
         const lastContainerId = containerIds[containerIds.length - 1];
 
-        return String.fromCharCode(lastContainerId.charCodeAt(0) + 1);
+        return lastContainerId ? String.fromCharCode(lastContainerId.charCodeAt(0) + 1): 'A';
     }
 }
 
