@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
 
 import theme from "@/assets/styles/theme";
+import { useMoveToChromeExtensionInstallLink } from "@/hooks/useCustomNavigation";
 
 function Section7() {
     const boldFontStyle = {
@@ -12,9 +13,9 @@ function Section7() {
         textAlign: 'center',
     };
 
-    const chromeExtensionInstallLink = 'https://chrome.google.com/webstore/detail/dadamda/kgaiabolccidmgihificdfaimdlfmcfj?hl=ko';
+    const moveToChromeExtensionInstallLink = useMoveToChromeExtensionInstallLink;
     const moveToChromeExtensionInstallLinkHandler = () => {
-        location.href = chromeExtensionInstallLink;
+        moveToChromeExtensionInstallLink();
     }
 
     return (

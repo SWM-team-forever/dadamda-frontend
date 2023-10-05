@@ -1,9 +1,10 @@
-import { Grid, Button, Box } from '@mui/material';
+import { Grid, Button, Box, Typography, ButtonGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import heroImage from '@/assets/images/heroImage.png';
 import heroText from '@/assets/images/heroText.png'
 import { useModal } from '@/hooks/useModal';
+import { useMoveToChromeExtensionInstallLink } from '@/hooks/useCustomNavigation';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -12,6 +13,11 @@ const Hero = () => {
 
     const startButtonHandler = () => {
         token ? navigate('/scrap') : openModal('login');
+    }
+
+    const moveToChromeExtensionInstallLink = useMoveToChromeExtensionInstallLink;
+    const moveToChromeExtensionInstallLinkHandler = () => {
+        moveToChromeExtensionInstallLink();
     }
 
     return (
@@ -56,19 +62,43 @@ const Hero = () => {
                             width: '100%',
                             maxWidth: '600px',
                         }} />
-                    <Button
-                        variant="contained"
-                        color="primary"
+                    <Box
                         sx={{
-                            width: '200px',
-                            fontSize: '16px',
-                            borderRadius: '40px',
-                            fontWeight: '600',
+                            display: 'flex',
+                            gap: '20px',
                         }}
-                        onClick={startButtonHandler}
                     >
-                        무료로 다담다 시작하기
-                    </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                                width: '200px',
+                                fontSize: '16px',
+                                borderRadius: '40px',
+                                fontWeight: '600',
+                            }}
+                            onClick={startButtonHandler}
+                        >
+                            무료로 다담다 시작하기
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                                width: '200px',
+                                fontSize: '16px',
+                                borderRadius: '40px',
+                                fontWeight: '600',
+                                display: {
+                                    xs: 'none',
+                                    sm: 'block',
+                                }
+                            }}
+                            onClick={moveToChromeExtensionInstallLinkHandler}
+                        >
+                            크롬 익스텐션 설치하기
+                        </Button>
+                    </Box>
                 </Grid>
                 <Grid item xs={12} md={10}
                     sx={{
