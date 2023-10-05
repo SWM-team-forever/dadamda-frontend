@@ -1,10 +1,16 @@
 import { useMoveToChromeExtensionInstallLink } from '@/hooks/useCustomNavigation';
+import { useModal } from '@/hooks/useModal';
 import { Box, Button, Typography } from '@mui/material';
 
 function EmptyScrapContainer() {
     const moveToChromeExtensionInstallLink = useMoveToChromeExtensionInstallLink;
     const moveToChromeExtensionInstallLinkHandler = () => {
         moveToChromeExtensionInstallLink();
+    }
+
+    const { openModal } = useModal();
+    const openScrapCreateModalHandler = () => {
+        openModal('scrapCreate');
     }
 
     return (
@@ -35,7 +41,9 @@ function EmptyScrapContainer() {
                 크롬 익스텐션을 설치하시면 더 편하게 스크랩을 추가하실 수 있습니다.
             </Typography>
             <Box>
-                <Button>
+                <Button
+                    onClick={openScrapCreateModalHandler}
+                >
                     스크랩 추가하기
                 </Button>
                 <Button
