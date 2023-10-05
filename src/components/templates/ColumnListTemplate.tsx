@@ -67,6 +67,8 @@ function ColumnListTemplate({ type }: { type: string }) {
         <Box
             sx={{
                 height: '100%',
+                pb: '10px',
+                boxSizing: 'border-box',
             }}
         >
             <Desktop>

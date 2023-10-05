@@ -40,10 +40,11 @@ function CategoryInfo({ data, scrapId }: { data: any, scrapId: number }) {
                     }}
                 />
             </Box>
-
             <Box
                 sx={{
                     width: '237px',
+                    height: '100%',
+                    overflow: 'auto',
                     display: { xs: 'none', md: 'block' },
                 }}
             >

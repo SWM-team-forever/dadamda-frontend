@@ -64,6 +64,8 @@ function Memo({ memoImageURL, memoText, createdDate, scrapId, memoId }: MemoProp
                         sx={{
                             fontWeight: '400',
                             lineHeight: '160%',
+                            whiteSpace: 'pre-wrap',
+                            wordBreak: 'break-all',
                         }}
                     >
                         {memoText}
