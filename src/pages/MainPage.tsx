@@ -1,14 +1,18 @@
 import styled from 'styled-components';
-import theme from '../assets/styles/theme';
-import Button from '../components/atoms/DefaultButton';
-import ChannelService from '../../ChannelService';
-import { CHANNEL_SERVICE_PLUGIN_KEY } from '../secret';
 import { useEffect } from 'react';
-import { Typography } from '@mui/material';
-import Hero from '../components/templates/mainPage/Hero';
-import Section from '../components/templates/mainPage/Section';
-import Howto from '../components/templates/mainPage/Howto';
-import Footer from '../components/templates/mainPage/Footer';
+
+import ChannelService from '../../ChannelService';
+import { CHANNEL_SERVICE_PLUGIN_KEY } from '@/secret';
+
+import Hero from '@/components/templates/mainPage/Hero';
+import Footer from '@/components/templates/mainPage/Footer';
+import Section1 from '@/components/templates/mainPage/Section1';
+import Section2 from '@/components/templates/mainPage/Section2';
+import Section3 from '@/components/templates/mainPage/Section3';
+import Section4 from '@/components/templates/mainPage/Section4';
+import Section5 from '@/components/templates/mainPage/Section5';
+import Section6 from '@/components/templates/mainPage/Section6';
+import Section7 from '@/components/templates/mainPage/Section7';
 
 function MainPage() {
   useEffect(() => {
@@ -23,8 +27,13 @@ function MainPage() {
   return (
     <BackgroundContainer>
       <Hero />
-      <Section />
-      <Howto />
+      <Section1 />
+      <Section2 />
+      <Section3 />
+      <Section4 />
+      <Section5 />
+      <Section6 />
+      <Section7 />
       <Footer />
     </BackgroundContainer>
   )
@@ -32,9 +41,9 @@ function MainPage() {
 
 const BackgroundContainer = styled.div`    
     width: 100%;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 56px);
     position: fixed;
-    top: 50px;
+    top: 56px;
     overflow: auto;
 `
 

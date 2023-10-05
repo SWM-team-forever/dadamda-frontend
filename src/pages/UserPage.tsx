@@ -59,6 +59,7 @@ function UserPage() {
         }];
 
     const { openModal } = useModal();
+    const handleLogout = useLogout();
 
     return (
         <>
@@ -69,7 +70,6 @@ function UserPage() {
                             ? <ProfileImage src={profileImageUrl} />
                             : <ProfileImage src={defaultUserImage} />
                         }
-                        <Button label='이미지 변경하기' buttonStyle='primary' isRound onClick={useWarningSnackbar} />
                     </ProfileContainer>
                     <Content>
                         {userPageMenu.map(menu => {
@@ -82,10 +82,9 @@ function UserPage() {
                         })}
                     </Content>
                     <RowContainer>
-                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={useLogout} />
+                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={handleLogout} />
                         <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={() => openModal('userDelete')} />
                     </RowContainer>
-                    <a href='/privacy'><Button buttonStyle={'text-only'} label={'개인정보 보호'} /></a>
                 </UserInfoWrapper>
             </Wrapper>
         </>

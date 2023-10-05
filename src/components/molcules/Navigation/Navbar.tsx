@@ -40,17 +40,6 @@ function Navbar() {
                         fontWeight: '600',
                         mb: '8px',
                     }}>
-                    보드
-                </Typography>
-                <NavigationMenuItem item={boardMenuItem} isActive={pathname === boardMenuItem.link} />
-                <Typography
-                    variant='h5'
-                    color={theme.color.Gray_080}
-                    sx={{
-                        fontWeight: '600',
-                        mb: '8px',
-                        mt: '32px',
-                    }}>
                     스크랩
                 </Typography>
                 <ScrapNaviagtion />

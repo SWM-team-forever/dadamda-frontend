@@ -1,13 +1,11 @@
 import theme from '@/assets/styles/theme';
 import { Box } from '@mui/material';
 
-import { useSelectedScrap } from '@/hooks/useSelectedScrap';
-
 import MemoList from '@/components/molcules/CategoryItem/Memo/MemoList';
 import { MoveToPageIcon } from '@/components/atoms/Icon';
 
-function CategoryInfo() {
-    const { selectedScrap } = useSelectedScrap();
+function CategoryInfo({ data, scrapId }: { data: any, scrapId: number }) {
+    const selectedScrap = data?.pages[0].data.content.find((scrap: any) => scrap.scrapId === scrapId);
 
     return (
         <>
@@ -42,14 +40,15 @@ function CategoryInfo() {
                     }}
                 />
             </Box>
-
             <Box
                 sx={{
                     width: '237px',
+                    height: '100%',
+                    overflow: 'auto',
                     display: { xs: 'none', md: 'block' },
                 }}
             >
-                <MemoList />
+                <MemoList memoList={selectedScrap.memoList} scrapId={selectedScrap.scrapId} />
             </Box>
         </>
     );
