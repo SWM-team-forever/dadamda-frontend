@@ -17,7 +17,7 @@ import RowContainer from '@/components/atoms/RowContainer';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
 import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
 import { PriceElement } from '@/components/atoms/CategoryItem/PriceElement';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function DesktopArticleListElement({ content }: contentProps) {
     content = {
@@ -78,7 +78,6 @@ function DesktopArticleListElement({ content }: contentProps) {
         setSearchParams(searchParams);
     }
 
-    const navigate = useNavigate();
     const isSMDevice = useMediaQuery('(max-width:600px)');
     const handleScrapClick = (e: React.MouseEvent<HTMLElement>) => {
         if (isSMDevice) {
@@ -87,7 +86,6 @@ function DesktopArticleListElement({ content }: contentProps) {
         } else {
             e.stopPropagation();
             changeSelectedScrap();
-            // navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
         }
     }
 
