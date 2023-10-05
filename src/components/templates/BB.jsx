@@ -307,10 +307,7 @@ export function MultipleContainers({
     scrollable,
 }) {
     const [items, setItems] = useState(
-        // doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
-        {
-            A: [{ ...scrapCardDataMock }],
-        }
+        doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
     );
     console.log('items', items);
     const [containers, setContainers] = useState(
