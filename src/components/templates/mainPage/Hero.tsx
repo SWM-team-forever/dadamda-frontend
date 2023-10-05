@@ -1,4 +1,4 @@
-import { Grid, Button, Box } from '@mui/material';
+import { Grid, Button, Box, Typography, ButtonGroup } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import heroImage from '@/assets/images/heroImage.png';
@@ -56,19 +56,43 @@ const Hero = () => {
                             width: '100%',
                             maxWidth: '600px',
                         }} />
-                    <Button
-                        variant="contained"
-                        color="primary"
+                    <Box
                         sx={{
-                            width: '200px',
-                            fontSize: '16px',
-                            borderRadius: '40px',
-                            fontWeight: '600',
+                            display: 'flex',
+                            gap: '20px',
                         }}
-                        onClick={startButtonHandler}
                     >
-                        무료로 다담다 시작하기
-                    </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                                width: '200px',
+                                fontSize: '16px',
+                                borderRadius: '40px',
+                                fontWeight: '600',
+                            }}
+                            onClick={startButtonHandler}
+                        >
+                            무료로 다담다 시작하기
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                                width: '200px',
+                                fontSize: '16px',
+                                borderRadius: '40px',
+                                fontWeight: '600',
+                                display: {
+                                    xs: 'none',
+                                    sm: 'block',
+                                }
+                            }}
+                            onClick={startButtonHandler}
+                        >
+                            크롬 익스텐션 설치하기
+                        </Button>
+                    </Box>
                 </Grid>
                 <Grid item xs={12} md={10}
                     sx={{
