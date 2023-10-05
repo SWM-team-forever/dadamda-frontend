@@ -102,6 +102,7 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
                 onClick={
                     () => {
                         (token && scrapId) && mutate({ token, scrapId, textAreaValue });
+                        setTextAreaValue('');
                     }
                 }
                 disabled={!isValidationSuccess()}

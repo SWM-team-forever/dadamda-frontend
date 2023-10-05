@@ -17,7 +17,7 @@ import RowContainer from '@/components/atoms/RowContainer';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
 import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
 import { PriceElement } from '@/components/atoms/CategoryItem/PriceElement';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function DesktopArticleListElement({ content }: contentProps) {
     content = {
@@ -39,6 +39,10 @@ function DesktopArticleListElement({ content }: contentProps) {
     const { openModal, connectMemoWithScrapId } = useModal();
     const { closeTooltip } = useTooltip();
     const { selectedScrap, setSelectedScrap } = useSelectedScrap();
+
+    function isScrapSelected() {
+        return searchParams.has('scrapId');
+    }
 
     const menuItemContentList = [
         {
@@ -65,7 +69,15 @@ function DesktopArticleListElement({ content }: contentProps) {
         return scrapId && content.scrapId === +(scrapId);
     }
 
-    const navigate = useNavigate();
+    function changeSelectedScrap() {
+        if (isScrapSelected()) {
+            searchParams.delete('scrapId');
+        }
+
+        searchParams.append('scrapId', content.scrapId.toString());
+        setSearchParams(searchParams);
+    }
+
     const isSMDevice = useMediaQuery('(max-width:600px)');
     const handleScrapClick = (e: React.MouseEvent<HTMLElement>) => {
         if (isSMDevice) {
@@ -73,7 +85,7 @@ function DesktopArticleListElement({ content }: contentProps) {
             window.open(content.pageUrl, '_blank');
         } else {
             e.stopPropagation();
-            navigate(`/scrap/${content.dtype}?scrapId=${content.scrapId}`);
+            changeSelectedScrap();
         }
     }
 

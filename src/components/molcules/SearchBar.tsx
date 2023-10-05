@@ -11,6 +11,7 @@ import { useIsBlank } from "@/hooks/useValidation";
 function SearchBar({ type }: { type: string }) {
     const [isSearched, setIsSearched] = useState(false);
     const [searchText, setSearchText] = useState('');
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -30,7 +31,8 @@ function SearchBar({ type }: { type: string }) {
         isNotSearched: {
             text: '검색',
             action: () => {
-                navigate(`/scrap/${type}?keyword=${searchText}`)
+                searchParams.append('keyword', searchText);
+                setSearchParams(searchParams);
                 setIsSearched(true);
             }
         }
