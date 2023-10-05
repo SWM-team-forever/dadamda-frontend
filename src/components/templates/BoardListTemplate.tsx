@@ -13,7 +13,7 @@ export interface IBoardListInfo {
     description: string;
     isFixed?: string,
     tag: string,
-    modifiedDate: string,
+    modifiedDate: number,
 }
 
 function BoardListTemplate() {
@@ -57,7 +57,7 @@ function BoardListTemplate() {
                     }}
                 >
                     <Grid container
-                        columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
+                        // columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
                         sx={{
                             gap: '16px',
                             padding: '24px',
@@ -66,16 +66,17 @@ function BoardListTemplate() {
                         {data?.pages.map((page) => {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
-                                    <Box
+                                    <Grid item
+                                        xs={12} sm={6} md={4} lg={3} xl={2}
+                                        key={board.boardId}
                                         sx={{
-                                            width: '320px',
                                             height: '180px',
                                             backgroundColor: theme.color.Blue_090,
                                         }}
                                         onClick={() => navigate(`/board_info?boardId=${board.boardId}&title=${board.boardName}`)}
                                     >
                                         {board.boardName}
-                                    </Box>
+                                    </Grid>
                                 )
                             })
                         })}
