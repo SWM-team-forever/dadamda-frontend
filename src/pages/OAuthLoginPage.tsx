@@ -5,12 +5,13 @@ import { CircularProgress } from "@mui/material";
 import { GET_USER_PROFILE_IMAGE } from "../secret";
 
 import RowContainer from "../components/atoms/RowContainer";
+import { logEvent } from "@/utility/amplitude";
 
-function GoogleOAuthLoginpage() {
+function OAuthLoginpage() {
     const navigate = useNavigate();
 
-    function getUserProfileImage(token: string) {
-        return fetch(GET_USER_PROFILE_IMAGE, {
+    async function getUserProfileImage(token: string) {
+        return await fetch(GET_USER_PROFILE_IMAGE, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -33,6 +34,7 @@ function GoogleOAuthLoginpage() {
         token && localStorage.setItem('token', token);
         token && getUserProfileImage(token)
             .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage))
+        logEvent('login');
         return navigate('/scrap/list');
     }, [navigate])
     return (
@@ -47,4 +49,4 @@ function GoogleOAuthLoginpage() {
     )
 }
 
-export default GoogleOAuthLoginpage;
+export default OAuthLoginpage;

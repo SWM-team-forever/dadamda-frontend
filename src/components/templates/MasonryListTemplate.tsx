@@ -1,13 +1,16 @@
-import { useGetScrapByType } from '@/api/scrap';
-import { useGetScrapSearchResultByType } from '@/api/search';
-import ScrapCard from '@/components/organisms/ScrapCard';
-import { contentProps } from '@/types/ContentType';
 import { Masonry } from '@mui/lab';
 import { CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useGetScrapByType } from '@/api/scrap';
+import { useGetScrapSearchResultByType } from '@/api/search';
+import { contentProps } from '@/types/ContentType';
+
+import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
+import ScrapCard from '@/components/organisms/ScrapCard';
 
 function MasonryListTemplate({ type }: { type: string }) {
     const token = localStorage.getItem('token');
@@ -49,6 +52,10 @@ function MasonryListTemplate({ type }: { type: string }) {
                 }}
             />
         )
+    }
+
+    if (data?.pages[0].data.content.length === 0) {
+        return <EmptyScrapContainer />
     }
 
     return (

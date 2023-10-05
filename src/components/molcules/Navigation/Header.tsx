@@ -18,14 +18,6 @@ const headerPanelMenus = [{
     name: '사이트 소개',
     link: '/main',
 }, {
-    isVisibleWithoutLogin: true,
-    name: '트렌딩',
-    link: '/trending',
-}, {
-    isVisibleWithoutLogin: false,
-    name: '보드',
-    link: '/board',
-}, {
     isVisibleWithoutLogin: false,
     name: '스크랩북',
     link: '/scrap/list',

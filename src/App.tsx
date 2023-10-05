@@ -3,7 +3,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
-import { BrowserRouter, Routes, Route, useLocation, createRoutesFromChildren, matchRoutes, useNavigationType } from 'react-router-dom';
+import { Routes, Route, useLocation, createRoutesFromChildren, matchRoutes, useNavigationType } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -14,18 +14,15 @@ import { SENTRY_DSN } from '@/secret';
 
 import ModalWrapper from '@/components/molcules/Modal/ModalWrapper';
 import Header from '@/components/molcules/Navigation/Header';
-import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
-import ScrapTemplate from '@/components/templates/ScrapTemplate';
-import BoardListTemplate from '@/components/templates/BoardListTemplate';
-import BoardPage from '@/pages/BoardPage';
-import GoogleOAuthLoginpage from '@/pages/GoogleOAuthLoginPage';
-import MainPage from '@/pages/MainPage';
-import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
-import ScrapPage from '@/pages/ScrapPage';
-import TrendingPage from '@/pages/TrendingPage';
-import UserPage from '@/pages/UserPage';
 import ErrorPage from '@/pages/ErrorPage';
-import BoardInfoPage from '@/pages/BoardInfoPage';
+
+import * as Sentry from '@sentry/react';
+import React from 'react';
+import { AMPLITUDE_API_KEY, SENTRY_DSN } from '@/secret';
+import RouteChangeTracker from '@/utility/RouteChangeTracker';
+import { initAmplitude } from '@/utility/amplitude';
+import { logEvent } from '@amplitude/analytics-browser';
+import Routing from '@/utility/Routing';
 
 const queryClient = new QueryClient();
 Sentry.init({
@@ -51,48 +48,27 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
 });
 
+initAmplitude();
+
 function App() {
   const { modal } = useModal();
+  RouteChangeTracker();
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={3}>
           <LoginProvider>
-            <BrowserRouter>
-              <Header />
-              {modal.isOpen && (
-                modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
-              )}
-              <ErrorBoundary
-                FallbackComponent={ErrorPage}
-                onReset={() => {
-                  window.location.reload();
-                }}
-              >
-                <Routes>
-                  <Route path='/' element={<MainPage />}></Route>
-                  <Route path='/main' element={<MainPage />}></Route>
-                  <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
-                  <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
-                    <Route path='list' element={<ScrapTemplate type={'list'} />}></Route>
-                    <Route path='article' element={<ScrapTemplate type={'article'} />}></Route>
-                    <Route path='product' element={<ScrapTemplate type={'product'} />}></Route>
-                    <Route path='video' element={<ScrapTemplate type={'video'} />}></Route>
-                    <Route path='location' element={<ScrapTemplate type={'location'} />}></Route>
-                    <Route path='other' element={<ScrapTemplate type={'other'} />}></Route>
-                    <Route index element={<ScrapTemplate type={'list'} />}></Route>
-                  </Route>
-                  <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}>
-                    <Route index element={<BoardListTemplate />} />
-                  </Route>
-                  <Route path='/trending' element={<TrendingPage />}></Route>
-                  <Route path='/google-login' element={<GoogleOAuthLoginpage />}></Route>
-                  <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
-                  <Route path='/board_info' element={<RequireAuth><BoardInfoPage /></RequireAuth>}></Route>
-                </Routes>
-              </ErrorBoundary>
-            </BrowserRouter>
+            <Header />
+            {modal.isOpen && <ModalWrapper />}
+            <ErrorBoundary
+              FallbackComponent={ErrorPage}
+              onReset={() => {
+                window.location.reload();
+              }}
+            >
+              <Routing />
+            </ErrorBoundary>
             <ReactQueryDevtools initialIsOpen={false} />
           </LoginProvider>
         </SnackbarProvider>
