@@ -1,7 +1,12 @@
-import theme from '../../assets/styles/theme';
+import { useMoveToChromeExtensionInstallLink } from '@/hooks/useCustomNavigation';
 import { Box, Button, Typography } from '@mui/material';
 
 function EmptyScrapContainer() {
+    const moveToChromeExtensionInstallLink = useMoveToChromeExtensionInstallLink;
+    const moveToChromeExtensionInstallLinkHandler = () => {
+        moveToChromeExtensionInstallLink();
+    }
+
     return (
         <Box
             sx={{
@@ -15,7 +20,6 @@ function EmptyScrapContainer() {
         >
             <Typography
                 sx={{
-                    // color: theme.color.Gray_070,
                     fontSize: '20px',
                     fontWeight: '500',
                 }}
@@ -34,7 +38,9 @@ function EmptyScrapContainer() {
                 <Button>
                     스크랩 추가하기
                 </Button>
-                <Button>
+                <Button
+                    onClick={moveToChromeExtensionInstallLinkHandler}
+                >
                     크롬 익스텐션 설치하기
                 </Button>
             </Box>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import heroImage from '@/assets/images/heroImage.png';
 import heroText from '@/assets/images/heroText.png'
 import { useModal } from '@/hooks/useModal';
+import { useMoveToChromeExtensionInstallLink } from '@/hooks/useCustomNavigation';
 
 const Hero = () => {
     const navigate = useNavigate();
@@ -12,6 +13,11 @@ const Hero = () => {
 
     const startButtonHandler = () => {
         token ? navigate('/scrap') : openModal('login');
+    }
+
+    const moveToChromeExtensionInstallLink = useMoveToChromeExtensionInstallLink;
+    const moveToChromeExtensionInstallLinkHandler = () => {
+        moveToChromeExtensionInstallLink();
     }
 
     return (
@@ -88,7 +94,7 @@ const Hero = () => {
                                     sm: 'block',
                                 }
                             }}
-                            onClick={startButtonHandler}
+                            onClick={moveToChromeExtensionInstallLinkHandler}
                         >
                             크롬 익스텐션 설치하기
                         </Button>
