@@ -15,10 +15,6 @@ import { SENTRY_DSN } from '@/secret';
 import ModalWrapper from '@/components/molcules/Modal/ModalWrapper';
 import Header from '@/components/molcules/Navigation/Header';
 import ErrorPage from '@/pages/ErrorPage';
-
-import * as Sentry from '@sentry/react';
-import React from 'react';
-import { AMPLITUDE_API_KEY, SENTRY_DSN } from '@/secret';
 import RouteChangeTracker from '@/utility/RouteChangeTracker';
 import { initAmplitude } from '@/utility/amplitude';
 import { logEvent } from '@amplitude/analytics-browser';
