@@ -19,6 +19,7 @@ import RouteChangeTracker from '@/utility/RouteChangeTracker';
 import { initAmplitude } from '@/utility/amplitude';
 import { logEvent } from '@amplitude/analytics-browser';
 import Routing from '@/utility/Routing';
+import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
 
 const queryClient = new QueryClient();
 Sentry.init({
@@ -56,7 +57,9 @@ function App() {
         <SnackbarProvider maxSnack={3}>
           <LoginProvider>
             <Header />
-            {modal.isOpen && <ModalWrapper />}
+            {modal.isOpen && (
+              modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
+            )}
             <ErrorBoundary
               FallbackComponent={ErrorPage}
               onReset={() => {
