@@ -1,6 +1,7 @@
 import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { useModal } from "@/hooks/useModal";
+import { useIsBlank } from "@/hooks/useValidation";
 import { Typography, TextareaAutosize, Box, Chip, Button } from "@mui/material";
 import { useState } from "react";
 
@@ -48,6 +49,18 @@ function BoardCreateModalElement() {
             tag: selectedTag,
         });
         closeModal();
+    }
+
+    const validateTitle = () => {
+        return title && !useIsBlank(title);
+    }
+
+    const validateDescription = () => {
+        return description && !useIsBlank(description);
+    }
+
+    const validateTag = () => {
+        return selectedTag && !useIsBlank(selectedTag);
     }
 
     return (
@@ -142,6 +155,7 @@ function BoardCreateModalElement() {
                 variant="contained"
                 fullWidth
                 onClick={handleCreateButtonClick}
+                disabled={validateTitle() && validateDescription() && validateTag() ? false : true}
             >
                 추가하기
             </Button>
