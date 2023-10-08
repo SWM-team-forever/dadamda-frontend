@@ -26,7 +26,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
 import scrapCardDataMock from '__mocks__/scrapCardDataMock';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -310,6 +310,17 @@ export function MultipleContainers({
         doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
     );
     console.log('items', items);
+
+    const pasteScrapOnBoard = (scrap) => {
+        const newContainerId = getNextContainerId();
+        setContainers((containers) => [...containers, newContainerId]);
+        setItems((items) => ({
+            ...items,
+            [newContainerId]: [scrap],
+        }));
+        updateRoot(doc, boardId, items);
+    }
+
     const [containers, setContainers] = useState(
         Object.keys(items)
     );
@@ -628,6 +639,11 @@ export function MultipleContainers({
                                     );
                                 })}
                             </SortableContext>
+                            <Button
+                                onClick={() => pasteScrapOnBoard(scrapCardDataMock)}
+                            >
+                                + 스크랩 추가
+                            </Button>
                         </DroppableContainer>
                     ))}
                     {minimal ? undefined : (
