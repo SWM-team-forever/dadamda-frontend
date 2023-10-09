@@ -27,6 +27,7 @@ import { CSS } from '@dnd-kit/utilities';
 import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
 import scrapCardDataMock from '__mocks__/scrapCardDataMock';
 import { Box, Button } from '@mui/material';
+import Memo from '../molcules/Memo';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -263,7 +264,11 @@ export const Item = React.memo(
                         {...props}
                         tabIndex={!handle ? 0 : undefined}
                     >
-                        <ScrapCard content={value} />
+                        {
+                            value.scrapId 
+                            ? <ScrapCard content={value} key={value.id}/>
+                            : <Memo content={value} key={value.id}/>
+                        }
                     </div>
                 </Box>
             );
@@ -310,15 +315,26 @@ export function MultipleContainers({
         doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
     );
     console.log('items', items);
-
-    const pasteScrapOnBoard = (scrap) => {
-        const newContainerId = getNextContainerId();
-        setContainers((containers) => [...containers, newContainerId]);
+    
+    function pasteScrap(doc, boardId, scrap) {
+        const firstElement = Object.keys(items)[0];
         setItems((items) => ({
             ...items,
-            [newContainerId]: [scrap],
+            [firstElement]: [...items[firstElement], {...scrap, id: scrap.id + Math.random()}],
         }));
-        updateRoot(doc, boardId, items);
+    }
+
+    function pasteSticker(memo) {
+        const firstElement = Object.keys(items)[0];
+        setItems((items) => ({
+            ...items,
+            [firstElement]: [...items[firstElement], {...memo, id: memo.id + Math.random()}],
+        })
+        );
+    }
+
+    const pasteScrapOnBoard = (scrap) => {
+        pasteScrap(doc, boardId, scrap);
     }
 
     const [containers, setContainers] = useState(
@@ -644,6 +660,20 @@ export function MultipleContainers({
                             >
                                 + 스크랩 추가
                             </Button>
+
+                            <Button
+                                onClick={() => pasteSticker({
+                                    id: 'memo', 
+                                    content: {
+                                        "memoId":138,
+                                        "memoText":"1번 아티클",
+                                        "memoImageUrl":null,
+                                        "createdDate":1696008962
+                                    }
+                                })}
+                            >
+                                + 메모 추가
+                            </Button>
                         </DroppableContainer>
                     ))}
                     {minimal ? undefined : (
@@ -714,7 +744,7 @@ export function MultipleContainers({
             >
                 {items[containerId].map((item, index) => (
                     <Item
-                        key={item}
+                        key={item.id}
                         value={item}
                         handle={handle}
                         style={getItemStyles({
