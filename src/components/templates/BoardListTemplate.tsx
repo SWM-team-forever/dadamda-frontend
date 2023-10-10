@@ -57,32 +57,59 @@ function BoardListTemplate() {
                     }}
                 >
                     <Grid container
-                        // columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
                         sx={{
-                            gap: '16px',
-                            padding: '24px',
+                            width: '100%',
+                            height: '100%',
+                            p: '10px 24px',
+                        }}
+                        columns={13}
+                        rowGap={{
+                            xs: 1,
+                            sm: 4,
+                            md: 3.5,
+                            lg: 3.5,
+                            xl: 3.5,
+                        }}
+                        columnGap={{
+                            xs: 1,
+                            sm: 4,
+                            md: 3.5,
+                            lg: 3.5,
+                            xl: 3.5,
                         }}
                     >
                         {data?.pages.map((page) => {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
                                     <Grid item
-                                        xs={12} sm={6} md={4} lg={3} xl={2}
+                                        xs={13} sm={6} md={4} lg={3} xl={3}
                                         key={board.boardId}
                                         sx={{
-                                            height: '180px',
-                                            backgroundColor: theme.color.Blue_090,
+
                                         }}
                                         onClick={() => navigate(`/board_info?boardId=${board.boardId}&title=${board.boardName}`)}
                                     >
-                                        {board.boardName}
+                                        <Box
+                                            sx={{
+                                                height: '180px',
+                                                width: '100%',
+                                                backgroundColor: theme.color.Blue_090,
+                                                borderRadius: '8px',
+                                                cursor: 'pointer',
+                                                '&:hover': {
+                                                    backgroundColor: theme.color.Blue_080,
+                                                },
+                                            }}
+                                        >
+                                            {board.boardName}
+                                        </Box>
                                     </Grid>
                                 )
                             })
                         })}
                     </Grid>
                 </Box>
-            </ScrapListContainer>
+            </ScrapListContainer >
         </>
     );
 }
