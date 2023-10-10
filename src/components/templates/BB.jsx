@@ -25,7 +25,6 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
-import scrapCardDataMock from '__mocks__/scrapCardDataMock';
 import { Box, Button } from '@mui/material';
 import Memo from '../molcules/Memo';
 import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
@@ -640,19 +639,6 @@ export function MultipleContainers({
                                     );
                                 })}
                             </SortableContext>
-                            {/* <Button
-                                onClick={() => pasteSticker({
-                                    id: 'memo', 
-                                    content: {
-                                        "memoId":138,
-                                        "memoText":"1번 아티클",
-                                        "memoImageUrl":null,
-                                        "createdDate":1696008962
-                                    }
-                                })}
-                            >
-                                + 메모 추가
-                            </Button> */}
                         </DroppableContainer>
                     ))}
                     {minimal ? undefined : (
