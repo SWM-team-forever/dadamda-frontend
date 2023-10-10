@@ -4,6 +4,7 @@ import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
 import MasonryListTemplate from "@/components/templates/MasonryListTemplate";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
+import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import boardAtom from "@/state/boardAtom";
 import { contentProps } from "@/types/ContentType";
 import { TabContext, TabPanel } from "@mui/lab";
@@ -19,7 +20,7 @@ function ScrapPasteModalElement() {
         setValue(newValue);
     }
 
-    const { pasteScrap } = useBoardAtom();
+    const { pasteScrap } = useBoardContentAtom();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
         ['scraps', value],
