@@ -779,7 +779,7 @@ function Trash({ id }) {
                 borderColor: isOver ? 'red' : '#DDD',
             }}
         >
-            Drop here to delete
+            제거하고 싶은 요소를 드래그 해주세요
         </div>
     );
 }
