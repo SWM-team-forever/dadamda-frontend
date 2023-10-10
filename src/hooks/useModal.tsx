@@ -62,7 +62,7 @@ export const useModal = () => {
             position: 'right',
         },
         stickerPaste: {
-            title: '메모 추가하기',
+            title: '스티커 추가하기',
             element: <StickerPasteModalElement />,
             position: 'center',
         }
