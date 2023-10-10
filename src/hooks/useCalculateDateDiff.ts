@@ -16,3 +16,7 @@ dayjs.locale("ko");
 export function getTimeDiff(publishedDate: number): string {
     return dayjs.unix(publishedDate).fromNow();
 }
+
+export function useGetCurrentTimeInUnixTime() {
+    return dayjs().unix();
+}
