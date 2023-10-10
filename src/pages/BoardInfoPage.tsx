@@ -1,25 +1,9 @@
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
-import { YORKIE_API_KEY } from "@/secret";
 import { Box, Button, Typography } from "@mui/material";
 import { useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import yorkie from "yorkie-js-sdk";
-
-async function connectYorkie() {
-    const client = new yorkie.Client('https://api.yorkie.dev', {
-        apiKey: YORKIE_API_KEY,
-    });
-    await client.activate();
-
-    const doc = new yorkie.Document('my-first-document');
-    await client.attach(doc);
-
-    return doc;
-}
-
-const doc = await connectYorkie();
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -69,7 +53,7 @@ function BoardInfoPage() {
                     justifyContent: 'space-between',
                 }}
             >
-                {boardPageId && <TrashableItems confirmDrop={false} doc={doc} boardId={boardPageId} />}
+                {boardPageId && <TrashableItems confirmDrop={false} />}
                 <Box>
                     <Button
                         onClick={() => openModal('scrapCreateOnBoard')}
