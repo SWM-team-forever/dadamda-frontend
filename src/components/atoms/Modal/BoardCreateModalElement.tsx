@@ -2,16 +2,16 @@ import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { useModal } from "@/hooks/useModal";
 import { MAX_BOARD_DESCRIPTION_LENGTH, MAX_BOARD_TITLE_LENGTH, useIsBlank, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
-import { Typography, TextareaAutosize, Box, Chip, Button } from "@mui/material";
+import { Typography, TextareaAutosize, Box, Chip, Button, FormHelperText } from "@mui/material";
 import { useState } from "react";
 
 function BoardCreateModalElement() {
-    const [title, setTitle] = useState<string>();
+    const [title, setTitle] = useState<string>("");
     const handleTitleValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(e.target.value);
     }
 
-    const [description, setDescription] = useState<string>();
+    const [description, setDescription] = useState<string>("");
     const handleDescriptionValue = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(e.target.value);
     }
@@ -52,16 +52,38 @@ function BoardCreateModalElement() {
     }
 
     const validateTitle = () => {
-        return title && !useIsBlank(title) && useIsLessThanLengthLimitation(title, MAX_BOARD_TITLE_LENGTH);
+        if (useIsBlank(title)) {
+            return '공백만 입력되었습니다.';
+        }
+
+        if (!useIsLessThanLengthLimitation(title, MAX_BOARD_TITLE_LENGTH)) {
+            return `최대 ${MAX_BOARD_TITLE_LENGTH}글자까지만 입력 가능합니다.`;
+        }
+
+        return 'success';
     }
 
     const validateDescription = () => {
-        return description && !useIsBlank(description) && useIsLessThanLengthLimitation(description, MAX_BOARD_DESCRIPTION_LENGTH);
+        if (useIsBlank(description)) {
+            return '공백만 입력되었습니다.';
+        }
+
+        if (!useIsLessThanLengthLimitation(description, MAX_BOARD_DESCRIPTION_LENGTH)) {
+            return `최대 ${MAX_BOARD_DESCRIPTION_LENGTH}글자까지만 입력 가능합니다.`;
+        }
+
+        return 'success';
     }
 
     const validateTag = () => {
-        return selectedTag && !useIsBlank(selectedTag);
+        if (useIsBlank(selectedTag)) {
+            return '태그는 꼭 선택해주셔야 합니다';
+        }
+
+        return 'success';
     }
+
+    const isValidationSuccess = () => [validateTitle(), validateDescription(), validateTag()].every(element => element === 'success');
 
     return (
         <Box>
@@ -91,6 +113,14 @@ function BoardCreateModalElement() {
                 }}
                 onChange={e => handleTitleValue(e)}
             />
+            <FormHelperText
+                sx={{
+                    alignSelf: 'start',
+                    color: '#f44336',
+                }}
+            >
+                {validateTitle() === 'success' ? ' ' : validateTitle()}
+            </FormHelperText>
             <Typography
                 color={theme.color.Gray_090}
                 variant="h3"
@@ -117,6 +147,14 @@ function BoardCreateModalElement() {
                 }}
                 onChange={e => handleDescriptionValue(e)}
             />
+            <FormHelperText
+                sx={{
+                    alignSelf: 'start',
+                    color: '#f44336',
+                }}
+            >
+                {validateDescription() === 'success' ? ' ' : validateDescription()}
+            </FormHelperText>
             <Typography
                 color={theme.color.Gray_090}
                 variant="h3"
@@ -151,11 +189,19 @@ function BoardCreateModalElement() {
                     )
                 })}
             </Box>
+            <FormHelperText
+                sx={{
+                    alignSelf: 'start',
+                    color: '#f44336',
+                }}
+            >
+                {validateTag() === 'success' ? ' ' : validateTag()}
+            </FormHelperText>
             <Button
                 variant="contained"
                 fullWidth
                 onClick={handleCreateButtonClick}
-                disabled={validateTitle() && validateDescription() && validateTag() ? false : true}
+                disabled={!isValidationSuccess()}
             >
                 추가하기
             </Button>
