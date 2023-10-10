@@ -62,7 +62,7 @@ function ScrapCard({ content }: { content: contentProps['content'] }) {
     return (
         <CardContainer>
             <CardWrapper
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'grab' }}
             >
                 <Box
                     component='div'
@@ -73,7 +73,6 @@ function ScrapCard({ content }: { content: contentProps['content'] }) {
                     }}
                 >
                     {content.siteName && <SiteNameElement siteName={content.siteName} varient={varient} />}
-                    <TooltipWrapper menu={menuItemContentList} scrapId={content.scrapId} />
                 </Box>
                 <Box>
                     {content.title && <TitleElement title={content.title} varient={varient} />}
