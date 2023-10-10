@@ -86,7 +86,13 @@ function BoardCreateModalElement() {
     const isValidationSuccess = () => [validateTitle(), validateDescription(), validateTag()].every(element => element === 'success');
 
     return (
-        <Box>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+            }}
+        >
             <Typography
                 color={theme.color.Gray_090}
                 variant="h3"
