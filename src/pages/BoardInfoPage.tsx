@@ -88,7 +88,7 @@ function BoardInfoPage() {
                 <Button
                     onClick={() => openModal('stickerPaste')}
                 >
-                    메모 추가
+                    스티커 추가
                 </Button>
                 <Button>
                     편집 모드
