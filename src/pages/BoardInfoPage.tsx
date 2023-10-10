@@ -61,6 +61,13 @@ function BoardInfoPage() {
                         스크랩 추가
                     </Button>
                 </Box>
+                <Box>
+                    <Button
+                        onClick={() => openModal('memoPaste')}
+                    >
+                        메모 추가
+                    </Button>
+                </Box>
             </Box>
         </Box>
     );
