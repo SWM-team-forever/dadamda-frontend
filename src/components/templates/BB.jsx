@@ -28,6 +28,7 @@ import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
 import scrapCardDataMock from '__mocks__/scrapCardDataMock';
 import { Box, Button } from '@mui/material';
 import Memo from '../molcules/Memo';
+import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -280,17 +281,6 @@ export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
 const empty = [];
 
-function updateRoot(doc, boardId, items) {
-    doc.update((root) => {
-        root[boardId] = {
-            ...root[boardId],
-            items: {
-                ...items,
-            }
-        }
-    });
-}
-
 export function MultipleContainers({
     adjustScale = false,
     itemCount = 3,
@@ -304,42 +294,38 @@ export function MultipleContainers({
     minimal = false,
     modifiers,
     renderItem,
-    doc,
-    boardId,
     strategy = verticalListSortingStrategy,
     trashable = false,
     vertical = false,
     scrollable,
 }) {
-    const [items, setItems] = useState(
-        doc.getRoot()[boardId] ? doc.getRoot()[boardId].items : initialItems
-    );
-    console.log('items', items);
+
+    const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, getNextContainerId} = useBoardContentAtom();
+    // const [items, setItems] = useState(boardContent);
     
-    function pasteScrap(doc, boardId, scrap) {
-        const firstElement = Object.keys(items)[0];
-        setItems((items) => ({
-            ...items,
-            [firstElement]: [...items[firstElement], {...scrap, id: scrap.id + Math.random()}],
-        }));
-    }
+    // function pasteScrap(doc, boardId, scrap) {
+    //     const firstElement = Object.keys(items)[0];
+    //     setItems((items) => ({
+    //         ...items,
+    //         [firstElement]: [...items[firstElement], {...scrap, id: scrap.id + Math.random()}],
+    //     }));
+    // }
 
-    function pasteSticker(memo) {
-        const firstElement = Object.keys(items)[0];
-        setItems((items) => ({
-            ...items,
-            [firstElement]: [...items[firstElement], {...memo, id: memo.id + Math.random()}],
-        })
-        );
-    }
+    // function pasteSticker(memo) {
+    //     const firstElement = Object.keys(items)[0];
+    //     setItems((items) => ({
+    //         ...items,
+    //         [firstElement]: [...items[firstElement], {...memo, id: memo.id + Math.random()}],
+    //     })
+    //     );
+    // }
 
-    const pasteScrapOnBoard = (scrap) => {
-        pasteScrap(doc, boardId, scrap);
-    }
+    // const pasteScrapOnBoard = (scrap) => {
+    //     pasteScrap(doc, boardId, scrap);
+    // }
+    console.log('boardContent', boardContent);
+    console.log('containers', containers);
 
-    const [containers, setContainers] = useState(
-        Object.keys(items)
-    );
     const [activeId, setActiveId] = useState(null);
     const lastOverId = useRef(null);
     const recentlyMovedToNewContainer = useRef(false);
@@ -355,11 +341,11 @@ export function MultipleContainers({
      */
     const collisionDetectionStrategy= useCallback(
         (args) => {
-            if (activeId && activeId in items) {
+            if (activeId && activeId in boardContent) {
                 return closestCenter({
                     ...args,
                     droppableContainers: args.droppableContainers.filter(
-                        (container) => container.id in items
+                        (container) => container.id in boardContent
                     ),
                 });
             }
@@ -380,8 +366,8 @@ export function MultipleContainers({
                     return intersections;
                 }
 
-                if (overId in items) {
-                    const containerItems = items[overId];
+                if (overId in boardContent) {
+                    const containerItems = boardContent[overId];
 
                     // If a container is matched and it contains items (columns 'A', 'B', 'C')
                     if (containerItems.length > 0) {
@@ -413,7 +399,7 @@ export function MultipleContainers({
             // If no droppable is matched, return the last match
             return lastOverId.current ? [{ id: lastOverId.current }] : [];
         },
-        [activeId, items]
+        [activeId, boardContent]
     );
     const [clonedItems, setClonedItems] = useState(null);
     const sensors = useSensors(
@@ -421,12 +407,12 @@ export function MultipleContainers({
         useSensor(TouchSensor),
     );
     const findContainer = (id) => {
-        if (id in items) {
+        if (id in boardContent) {
             return id;
         }
 
-        return Object.keys(items).find((key) => {
-            return items[key].includes(id);
+        return Object.keys(boardContent).find((key) => {
+            return boardContent[key].includes(id);
         });
     };
 
@@ -437,7 +423,7 @@ export function MultipleContainers({
             return -1;
         }
 
-        const index = items[container].indexOf(id);
+        const index = boardContent[container].indexOf(id);
 
         return index;
     };
@@ -446,7 +432,8 @@ export function MultipleContainers({
         if (clonedItems) {
             // Reset items to their original state in case items have been
             // Dragged across containers
-            setItems(clonedItems);
+            // setItems(clonedItems);
+            setBoardContent(clonedItems);
         }
 
         setActiveId(null);
@@ -457,7 +444,7 @@ export function MultipleContainers({
         requestAnimationFrame(() => {
             recentlyMovedToNewContainer.current = false;
         });
-    }, [items]);
+    }, [boardContent]);
 
     return (
         <DndContext
@@ -470,12 +457,12 @@ export function MultipleContainers({
             }}
             onDragStart={({ active }) => {
                 setActiveId(active.id);
-                setClonedItems(items);
+                setClonedItems(boardContent);
             }}
             onDragOver={({ active, over }) => {
                 const overId = over?.id;
 
-                if (overId == null || overId === TRASH_ID || active.id in items) {
+                if (overId == null || overId === TRASH_ID || active.id in boardContent) {
                     return;
                 }
 
@@ -487,15 +474,15 @@ export function MultipleContainers({
                 }
 
                 if (activeContainer !== overContainer) {
-                    setItems((items) => {
-                        const activeItems = items[activeContainer];
-                        const overItems = items[overContainer];
+                    setBoardContent((boardContent) => {
+                        const activeItems = boardContent[activeContainer];
+                        const overItems = boardContent[overContainer];
                         const overIndex = overItems.indexOf(overId);
                         const activeIndex = activeItems.indexOf(active.id);
 
                         let newIndex;
 
-                        if (overId in items) {
+                        if (overId in boardContent) {
                             newIndex = overItems.length + 1;
                         } else {
                             const isBelowOverItem =
@@ -513,16 +500,16 @@ export function MultipleContainers({
                         recentlyMovedToNewContainer.current = true;
 
                         return {
-                            ...items,
-                            [activeContainer]: items[activeContainer].filter(
+                            ...boardContent,
+                            [activeContainer]: boardContent[activeContainer].filter(
                                 (item) => item !== active.id
                             ),
                             [overContainer]: [
-                                ...items[overContainer].slice(0, newIndex),
-                                items[activeContainer][activeIndex],
-                                ...items[overContainer].slice(
+                                ...boardContent[overContainer].slice(0, newIndex),
+                                boardContent[activeContainer][activeIndex],
+                                ...boardContent[overContainer].slice(
                                     newIndex,
-                                    items[overContainer].length
+                                    boardContent[overContainer].length
                                 ),
                             ],
                         };
@@ -530,7 +517,7 @@ export function MultipleContainers({
                 }
             }}
             onDragEnd={({ active, over }) => {
-                if (active.id in items && over?.id) {
+                if (active.id in boardContent && over?.id) {
                     setContainers((containers) => {
                         const activeIndex = containers.indexOf(active.id);
                         const overIndex = containers.indexOf(over.id);
@@ -554,7 +541,7 @@ export function MultipleContainers({
                 }
 
                 if (overId === TRASH_ID) {
-                    setItems((items) => ({
+                    setBoardContent((items) => ({
                         ...items,
                         [activeContainer]: items[activeContainer].filter(
                             (id) => id !== activeId
@@ -569,7 +556,7 @@ export function MultipleContainers({
 
                     unstable_batchedUpdates(() => {
                         setContainers((containers) => [...containers, newContainerId]);
-                        setItems((items) => ({
+                        setBoardContent((items) => ({
                             ...items,
                             [activeContainer]: items[activeContainer].filter(
                                 (id) => id !== activeId
@@ -584,11 +571,11 @@ export function MultipleContainers({
                 const overContainer = findContainer(overId);
 
                 if (overContainer) {
-                    const activeIndex = items[activeContainer].indexOf(active.id);
-                    const overIndex = items[overContainer].indexOf(overId);
+                    const activeIndex = boardContent[activeContainer].indexOf(active.id);
+                    const overIndex = boardContent[overContainer].indexOf(overId);
 
                     if (activeIndex !== overIndex) {
-                        setItems((items) => ({
+                        setBoardContent((items) => ({
                             ...items,
                             [overContainer]: arrayMove(
                                 items[overContainer],
@@ -627,18 +614,16 @@ export function MultipleContainers({
                             id={containerId}
                             label={minimal ? undefined : `Column ${containerId}`}
                             columns={columns}
-                            items={items[containerId]}
+                            items={boardContent[containerId]}
                             scrollable={scrollable}
                             style={containerStyle}
                             unstyled={minimal}
                             onRemove={() => {
                                 handleRemove(containerId)
-                                console.log('items', items);
-                                console.log('containers', containers);
                             }}
                         >
-                            <SortableContext items={items[containerId]} strategy={strategy}>
-                                {items[containerId].map((value, index) => {
+                            <SortableContext items={boardContent[containerId]} strategy={strategy}>
+                                {boardContent[containerId].map((value, index) => {
                                     return (
                                         <SortableItem
                                             disabled={isSortingContainer}
@@ -655,13 +640,7 @@ export function MultipleContainers({
                                     );
                                 })}
                             </SortableContext>
-                            <Button
-                                onClick={() => pasteScrapOnBoard(scrapCardDataMock)}
-                            >
-                                + 스크랩 추가
-                            </Button>
-
-                            <Button
+                            {/* <Button
                                 onClick={() => pasteSticker({
                                     id: 'memo', 
                                     content: {
@@ -673,7 +652,7 @@ export function MultipleContainers({
                                 })}
                             >
                                 + 메모 추가
-                            </Button>
+                            </Button> */}
                         </DroppableContainer>
                     ))}
                     {minimal ? undefined : (
@@ -742,7 +721,7 @@ export function MultipleContainers({
                 shadow
                 unstyled={false}
             >
-                {items[containerId].map((item, index) => (
+                {boardContent[containerId].map((item, index) => (
                     <Item
                         key={item.id}
                         value={item}
@@ -769,31 +748,31 @@ export function MultipleContainers({
         setContainers((containers) =>
             containers.filter((id) => id !== containerID)
         );
-        setItems((items) => {
+        setBoardContent((items) => {
             const newItems = { ...items };
             delete newItems[containerID];
             return newItems;
         });
     }
 
-    function handleAddColumn() {
-        const newContainerId = getNextContainerId();
+    // function handleAddColumn() {
+    //     const newContainerId = getNextContainerId();
 
-        unstable_batchedUpdates(() => {
-            setContainers((containers) => [...containers, newContainerId]);
-            setItems((items) => ({
-                ...items,
-                [newContainerId]: [],
-            }));
-        });
-    }
+    //     unstable_batchedUpdates(() => {
+    //         setContainers((containers) => [...containers, newContainerId]);
+    //         setBoardContent((items) => ({
+    //             ...items,
+    //             [newContainerId]: [],
+    //         }));
+    //     });
+    // }
 
-    function getNextContainerId() {
-        const containerIds = Object.keys(items);
-        const lastContainerId = containerIds[containerIds.length - 1];
+    // function getNextContainerId() {
+    //     const containerIds = Object.keys(boardContent);
+    //     const lastContainerId = containerIds[containerIds.length - 1];
 
-        return lastContainerId ? String.fromCharCode(lastContainerId.charCodeAt(0) + 1): 'A';
-    }
+    //     return lastContainerId ? String.fromCharCode(lastContainerId.charCodeAt(0) + 1): 'A';
+    // }
 }
 
 function getColor(id) {
