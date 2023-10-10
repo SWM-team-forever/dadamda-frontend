@@ -75,7 +75,7 @@ function BoardListTemplate() {
                                 sm: 'repeat(2, 1fr)',
                                 md: 'repeat(3, 1fr)',
                                 lg: 'repeat(4, 1fr)',
-                                xl: 'repeat(6, 1fr)',
+                                xl: 'repeat(4, 1fr)',
                             }
                         }
                     >
@@ -83,7 +83,7 @@ function BoardListTemplate() {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
                                     <Grid item
-                                        xs={12} sm={6} md={4} lg={3} xl={2}
+                                        xs={12} sm={6} md={4} lg={3} xl={3}
                                         key={board.boardId}
                                         onClick={() => navigate(`/board_info?boardId=${board.boardId}&title=${board.boardName}`)}
                                     >
