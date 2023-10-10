@@ -91,7 +91,7 @@ function MemoPasteModalElement() {
                         pasteSticker({
                             memoId: getCurrentTimeInUnixTime,
                             memoText: textAreaValue,
-                            createdDate: getCurrentTimeInUnixTime.toString(),
+                            createdDate: getCurrentTimeInUnixTime,
                         });
                         closeModal();
                     }
