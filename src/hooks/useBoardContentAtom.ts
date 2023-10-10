@@ -1,8 +1,7 @@
 import boardContainersAtom from "@/state/boardContainersAtom";
 import boardContentAtom from "@/state/boardContentAtom";
-import { contentProps } from "@/types/ContentType";
+import { TMemo, contentProps } from "@/types/ContentType";
 import { useAtom } from "jotai"
-import { useState } from "react";
 import { unstable_batchedUpdates } from "react-dom";
 
 export const useBoardContentAtom = () => {
@@ -23,9 +22,22 @@ export const useBoardContentAtom = () => {
 
         setBoardContent(newBoard);
         setContainers(Object.keys(newBoard));
+    }
 
-        console.log('pasteScrap', newBoard);
-        console.log('pasteScrap', Object.keys(newBoard));
+    function pasteSticker(sticker: TMemo) {
+        const firstColumn = Object.keys(boardContent)[0];
+        const newBoard = firstColumn ? {
+            ...boardContent,
+            [firstColumn]: [
+                ...boardContent[firstColumn],
+                { ...sticker, id: `${sticker.memoId + Math.random()}` },
+            ],
+        } : {
+            [getNextContainerId()]: [{ ...sticker, id: `${sticker.memoId + Math.random()}` }],
+        };
+
+        setBoardContent(newBoard);
+        setContainers(Object.keys(newBoard));
     }
 
     function handleAddColumn() {
@@ -55,5 +67,6 @@ export const useBoardContentAtom = () => {
         setContainers,
         getNextContainerId,
         handleAddColumn,
+        pasteSticker,
     }
 }
