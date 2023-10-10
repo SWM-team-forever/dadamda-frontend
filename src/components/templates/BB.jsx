@@ -117,7 +117,7 @@ export const Container = forwardRef(
                         ...style,
                         '--columns': columns,
                         width: '320px',
-                        // backgroundColor: theme.color.Blue_080,
+                        margin: '10px',
                     }
                 }
                 onClick={onClick}
@@ -132,7 +132,14 @@ export const Container = forwardRef(
                         </div>
                     </div>
                 ) : null}
-                {placeholder ? children : <ul>{children}</ul>}
+                {placeholder ? children : <ul
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    padding: '0',
+                }}
+                >{children}</ul>}
             </Component>
         );
     }
