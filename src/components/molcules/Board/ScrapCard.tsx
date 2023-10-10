@@ -142,6 +142,8 @@ function ScrapCard({ content }: { content: contentProps['content'] }) {
                         memoImageURL={memo.memoImageUrl}
                         memoText={memo.memoText}
                         createdDate={memo.createdDate}
+                        scrapId={content.scrapId}
+                        memoId={memo.memoId}
                     />
                 })}
                 <Box
