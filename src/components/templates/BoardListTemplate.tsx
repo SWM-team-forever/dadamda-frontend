@@ -1,38 +1,50 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import NotReadyTemplate from './NotReadyTemplate';
-
-import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
-import ScrapListHeader from '@/components/molcules/ScrapListHeader';
-import ColumnListTemplate from '@/components/templates/ColumnListTemplate';
-import MasonryListTemplate from '@/components/templates/MasonryListTemplate';
-import { Box, CircularProgress } from '@mui/material';
-import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
-import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
-import { useQuery } from '@tanstack/react-query';
-import { useGetScrapCount } from '@/api/count';
+import { Box, Grid } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import BoardTemplate from '@/components/templates/BoardTemplate';
+import { useNavigate } from 'react-router-dom';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useGetBoardList } from '@/api/board';
+
+export interface IBoardListInfo {
+    boardId: number;
+    boardName: string;
+    description: string;
+    isFixed?: string,
+    tag: string,
+    modifiedDate: number,
+}
 
 function BoardListTemplate() {
-    const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const { data, isLoading } = useInfiniteQuery(
+        ['boards'],
+        ({ pageParam = 0 }) => {
+            return useGetBoardList({ pages: pageParam, size: 30 })
+        },
+        {
+            getNextPageParam: (lastPage) => {
+                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
+                return nextPage;
+            },
+        }
+    );
 
-    function isBoardPage() {
-        return searchParams.has('boardId');
-    }
-
-    function getBoardPageId() {
-        return searchParams.get('boardId');
-    }
-
-    if (isBoardPage()) {
-        return (<BoardTemplate boardId={getBoardPageId()} />)
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                }}
+            >
+                로딩중
+            </Box>
+        )
     }
 
     return (
@@ -44,17 +56,31 @@ function BoardListTemplate() {
                         height: 'calc(100% - 145px)',
                     }}
                 >
-                    {/* <MatchTemplateWithTypeAndCount type={type} count={data} /> */}
-                    <Box
+                    <Grid container
+                        // columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
                         sx={{
-                            width: '320px',
-                            height: '180px',
-                            backgroundColor: theme.color.Blue_090,
+                            gap: '16px',
+                            padding: '24px',
                         }}
-                        onClick={() => navigate(`/board?boardId=${1}`)}
                     >
-                        보드 1
-                    </Box>
+                        {data?.pages.map((page) => {
+                            return page.data.content.map((board: IBoardListInfo) => {
+                                return (
+                                    <Grid item
+                                        xs={12} sm={6} md={4} lg={3} xl={2}
+                                        key={board.boardId}
+                                        sx={{
+                                            height: '180px',
+                                            backgroundColor: theme.color.Blue_090,
+                                        }}
+                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}&title=${board.boardName}`)}
+                                    >
+                                        {board.boardName}
+                                    </Grid>
+                                )
+                            })
+                        })}
+                    </Grid>
                 </Box>
             </ScrapListContainer>
         </>
@@ -64,7 +90,6 @@ function BoardListTemplate() {
 const ScrapListContainer = styled.div`
     width: calc(100% - 209px);
     height: calc(100% - 56px);
-    background-color: linear-gradient(114deg, #EBEEF3 12.12%, #D6DEEA 100%);
     position: fixed;
     right: 0;
     top: 56px;

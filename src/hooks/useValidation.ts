@@ -7,6 +7,8 @@ export const MAX_SCRAP_AUTHOR_LENGTH = 100;
 export const MAX_SCRAP_BLOGNAME_LENGTH = 100;
 export const MAX_SCRAP_PRICE_LENGTH = 100;
 export const MAX_SCRAP_CHANNELNAME_LENGTH = 100;
+export const MAX_BOARD_DESCRIPTION_LENGTH = 1000;
+export const MAX_BOARD_TITLE_LENGTH = 50;
 
 export function useIsValidURL(url: string) {
     try {

@@ -9,6 +9,9 @@ import UserDeleteModalElement from "@/components/atoms/Modal/UserDeleteModalElem
 import ScrapDeleteElementModal from "@/components/atoms/Modal/ScrapDeleteModalElement";
 import ScrapEditModalElement from "@/components/atoms/Modal/ScrapEditModalElement";
 import ScrapCreateModalElement from "@/components/atoms/Modal/ScrapCreateModalElement";
+import ScrapPasteModalElement from "@/components/atoms/Modal/ScrapPasteModalElement";
+import BoardCreateModalElement from "@/components/atoms/Modal/BoardCreateModalElement";
+import StickerPasteModalElement from "@/components/atoms/Modal/StickerPasteModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -21,26 +24,47 @@ export const useModal = () => {
         memoCreate: {
             title: '메모 추가하기',
             element: <MemoCreateModalElement />,
+            position: 'center',
         },
         login: {
             title: '소셜 로그인하기',
             element: <LoginModalElement />,
+            position: 'center',
         },
         userDelete: {
             title: '회원 탈퇴하기',
             element: <UserDeleteModalElement />,
+            position: 'center',
         },
         scrapDelete: {
             title: '스크랩 삭제하기',
             element: <ScrapDeleteElementModal />,
+            position: 'center',
         },
         scrapEdit: {
             title: '스크랩 편집하기',
             element: <ScrapEditModalElement />,
+            position: 'center',
         },
         scrapCreate: {
             title: '스크랩 추가하기',
             element: <ScrapCreateModalElement />,
+            position: 'center',
+        },
+        scrapCreateOnBoard: {
+            title: '스크랩 추가하기',
+            element: <ScrapPasteModalElement />,
+            position: 'right',
+        },
+        boardCreate: {
+            title: '보드 추가하기',
+            element: <BoardCreateModalElement />,
+            position: 'right',
+        },
+        stickerPaste: {
+            title: '스티커 추가하기',
+            element: <StickerPasteModalElement />,
+            position: 'center',
         }
     }
 
