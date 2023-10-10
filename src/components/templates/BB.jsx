@@ -119,7 +119,7 @@ export const Container = forwardRef(
                     {
                         ...style,
                         '--columns': columns,
-                        width: '320px',
+                        width: '256px',
                         margin: '10px',
                     }
                 }
