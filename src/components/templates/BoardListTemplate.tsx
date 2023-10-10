@@ -5,10 +5,11 @@ import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useGetBoardList } from '@/api/board';
+import { useGetBoard, useGetBoardList } from '@/api/board';
 import { MenuIcon } from '@/components/atoms/Icon';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
+import { useBoardAtom } from '@/hooks/useBoardAtom';
 
 export interface IBoardListInfo {
     boardId: number;
@@ -35,6 +36,8 @@ function BoardListTemplate() {
             },
         }
     );
+
+    const { setBoard } = useBoardAtom();
 
     if (isLoading) {
         return (
@@ -128,9 +131,15 @@ function BoardListTemplate() {
                                                         sx={{
                                                             cursor: 'pointer',
                                                         }}
-                                                        onClick={(e) => {
+                                                        onClick={async (e) => {
                                                             e.stopPropagation();
-                                                            openModal('boardCreate')
+                                                            const boardInfo = await useGetBoard(board.boardId.toString());
+                                                            setBoard((prev) => ({
+                                                                ...prev,
+                                                                boardId: board.boardId.toString(),
+                                                                ...boardInfo.data,
+                                                            }))
+                                                            openModal('boardEdit');
                                                         }}
                                                     >
                                                         <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
