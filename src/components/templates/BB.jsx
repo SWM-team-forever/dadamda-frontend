@@ -301,30 +301,6 @@ export function MultipleContainers({
 }) {
 
     const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, getNextContainerId} = useBoardContentAtom();
-    // const [items, setItems] = useState(boardContent);
-    
-    // function pasteScrap(doc, boardId, scrap) {
-    //     const firstElement = Object.keys(items)[0];
-    //     setItems((items) => ({
-    //         ...items,
-    //         [firstElement]: [...items[firstElement], {...scrap, id: scrap.id + Math.random()}],
-    //     }));
-    // }
-
-    // function pasteSticker(memo) {
-    //     const firstElement = Object.keys(items)[0];
-    //     setItems((items) => ({
-    //         ...items,
-    //         [firstElement]: [...items[firstElement], {...memo, id: memo.id + Math.random()}],
-    //     })
-    //     );
-    // }
-
-    // const pasteScrapOnBoard = (scrap) => {
-    //     pasteScrap(doc, boardId, scrap);
-    // }
-    console.log('boardContent', boardContent);
-    console.log('containers', containers);
 
     const [activeId, setActiveId] = useState(null);
     const lastOverId = useRef(null);
@@ -741,25 +717,6 @@ export function MultipleContainers({
             return newItems;
         });
     }
-
-    // function handleAddColumn() {
-    //     const newContainerId = getNextContainerId();
-
-    //     unstable_batchedUpdates(() => {
-    //         setContainers((containers) => [...containers, newContainerId]);
-    //         setBoardContent((items) => ({
-    //             ...items,
-    //             [newContainerId]: [],
-    //         }));
-    //     });
-    // }
-
-    // function getNextContainerId() {
-    //     const containerIds = Object.keys(boardContent);
-    //     const lastContainerId = containerIds[containerIds.length - 1];
-
-    //     return lastContainerId ? String.fromCharCode(lastContainerId.charCodeAt(0) + 1): 'A';
-    // }
 }
 
 function getColor(id) {
