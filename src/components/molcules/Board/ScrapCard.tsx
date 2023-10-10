@@ -9,14 +9,13 @@ import { useModal } from '@/hooks/useModal';
 import { useTooltip } from '@/hooks/useTooltip';
 
 import { DescriptionElement } from '@/components/atoms/CategoryItem/DescrptionElement';
-import MemoCreateButton from '@/components/atoms/CategoryItem/MemoCreateButton';
 import { SiteNameElement } from '@/components/atoms/CategoryItem/SiteNameElement';
 import { ThumbnailElement } from '@/components/atoms/CategoryItem/ThumbnailElement';
 import { TitleElement } from '@/components/atoms/CategoryItem/TitleElement';
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import RowContainer from '@/components/atoms/RowContainer';
 import ChannelInfo from '@/components/molcules/CategoryItem/ScrapCard/ChannelInfo';
-import Memo from '@/components/molcules/Memo';
+import Memo from '@/components/molcules/Board/Memo';
 import TooltipWrapper from '@/components/atoms/CategoryItem/TooltipWrapper';
 import { useSelectedScrap } from '@/hooks/useSelectedScrap';
 import { PriceElement } from '@/components/atoms/CategoryItem/PriceElement';
