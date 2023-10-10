@@ -42,7 +42,10 @@ function BoardInfoPage() {
                 sx={{
                     position: 'fixed',
                     left: '0',
-                    width: 'calc(100% - 100px)',
+                    width: {
+                        xs: '100%',
+                        sm: 'calc(100% - 100px)',
+                    },
                     height: '100%',
                     overflow: 'auto',
                     pb: '100px',
@@ -70,7 +73,10 @@ function BoardInfoPage() {
             </Box>
             <Box
                 sx={{
-                    display: 'flex',
+                    display: {
+                        xs: 'none',
+                        sm: 'flex',
+                    },
                     flexDirection: 'column',
                     position: 'fixed',
                     right: '0',
