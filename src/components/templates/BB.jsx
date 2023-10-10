@@ -28,6 +28,7 @@ import ScrapCard from '@/components/molcules/Board/ScrapCard.tsx';
 import { Box, Button } from '@mui/material';
 import Memo from '../molcules/Memo';
 import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
+import Sticker from '../molcules/Board/Sticker';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -267,7 +268,7 @@ export const Item = React.memo(
                         {
                             value.scrapId 
                             ? <ScrapCard content={value} key={value.id}/>
-                            : <Memo content={value} key={value.id}/>
+                            : <Sticker content={value} key={value.id}/>
                         }
                     </div>
                 </Box>
