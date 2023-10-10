@@ -159,9 +159,6 @@ function ScrapCard({ content }: { content: contentProps['content'] }) {
                         justifyContent: 'flex-end',
                     }}
                 >
-                    <MemoCreateButton
-                        showMemoCreateModal={() => openModal('memoCreate')}
-                    />
                 </Box>
             </CardWrapper>
         </CardContainer>
