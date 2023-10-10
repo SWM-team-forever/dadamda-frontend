@@ -4,15 +4,14 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
+import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
+import { useGetCurrentTimeInUnixTime } from '@/hooks/useCalculateDateDiff';
 
 function MemoPasteModalElement() {
-    const [, setToken] = useState<string | null>(null);
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
-
     const { closeModal } = useModal();
     const [textAreaValue, setTextAreaValue] = useState('');
+    const { pasteSticker } = useBoardContentAtom();
+    const getCurrentTimeInUnixTime = useGetCurrentTimeInUnixTime();
 
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         e.preventDefault();
@@ -89,6 +88,11 @@ function MemoPasteModalElement() {
                 }}
                 onClick={
                     () => {
+                        pasteSticker({
+                            memoId: getCurrentTimeInUnixTime,
+                            memoText: textAreaValue,
+                            createdDate: getCurrentTimeInUnixTime.toString(),
+                        });
                         closeModal();
                     }
                 }
