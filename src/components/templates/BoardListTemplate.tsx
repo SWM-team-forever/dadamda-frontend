@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
-import { Box, Grid } from '@mui/material';
+import { Box, Chip, Grid, Typography } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useGetBoardList } from '@/api/board';
+import { MenuIcon } from '@/components/atoms/Icon';
+import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 
 export interface IBoardListInfo {
     boardId: number;
@@ -54,6 +56,7 @@ function BoardListTemplate() {
                 <Box
                     sx={{
                         height: 'calc(100% - 145px)',
+                        width: '100%',
                     }}
                 >
                     <Grid container
@@ -82,7 +85,7 @@ function BoardListTemplate() {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
                                     <Grid item
-                                        xs={13} sm={6} md={4} lg={3} xl={3}
+                                        xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}
                                         key={board.boardId}
                                         sx={{
 
@@ -94,14 +97,49 @@ function BoardListTemplate() {
                                                 height: '180px',
                                                 width: '100%',
                                                 backgroundColor: theme.color.Blue_090,
-                                                borderRadius: '8px',
+                                                borderRadius: '8px 8px 0 0',
                                                 cursor: 'pointer',
                                                 '&:hover': {
                                                     backgroundColor: theme.color.Blue_080,
                                                 },
                                             }}
                                         >
-                                            {board.boardName}
+                                        </Box>
+                                        <Box
+                                            sx={{
+                                                p: '10px',
+                                                backgroundColor: theme.color.Gray_020,
+                                                borderRadius: '0 0 8px 8px',
+                                            }}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'center',
+                                                }}
+                                            >
+                                                <Typography>{board.boardName}</Typography>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        gap: '5px',
+                                                    }}
+                                                >
+                                                    <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                </Box>
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '10px',
+                                                }}
+                                            >
+                                                <Chip label={board.tag} />
+                                                <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
+                                            </Box>
                                         </Box>
                                     </Grid>
                                 )
