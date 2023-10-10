@@ -57,39 +57,34 @@ function BoardListTemplate() {
                     sx={{
                         height: 'calc(100% - 145px)',
                         width: '100%',
+                        p: '10px 24px',
+                        boxSizing: 'border-box',
                     }}
                 >
-                    <Grid container
+                    <Box
                         sx={{
                             width: '100%',
                             height: '100%',
-                            p: '10px 24px',
+                            m: '0',
+                            display: 'grid',
+                            gap: 2,
                         }}
-                        columns={13}
-                        rowGap={{
-                            xs: 1,
-                            sm: 4,
-                            md: 3.5,
-                            lg: 3.5,
-                            xl: 3.5,
-                        }}
-                        columnGap={{
-                            xs: 1,
-                            sm: 4,
-                            md: 3.5,
-                            lg: 3.5,
-                            xl: 3.5,
-                        }}
+                        gridTemplateColumns={
+                            {
+                                xs: 'repeat(1, 1fr)',
+                                sm: 'repeat(2, 1fr)',
+                                md: 'repeat(3, 1fr)',
+                                lg: 'repeat(4, 1fr)',
+                                xl: 'repeat(6, 1fr)',
+                            }
+                        }
                     >
                         {data?.pages.map((page) => {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
                                     <Grid item
-                                        xs={'auto'} sm={'auto'} md={'auto'} lg={'auto'} xl={'auto'}
+                                        xs={12} sm={6} md={4} lg={3} xl={2}
                                         key={board.boardId}
-                                        sx={{
-
-                                        }}
                                         onClick={() => navigate(`/board_info?boardId=${board.boardId}&title=${board.boardName}`)}
                                     >
                                         <Box
@@ -145,7 +140,7 @@ function BoardListTemplate() {
                                 )
                             })
                         })}
-                    </Grid>
+                    </Box>
                 </Box>
             </ScrapListContainer >
         </>
