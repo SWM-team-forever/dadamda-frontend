@@ -45,6 +45,8 @@ function BoardInfoPage() {
                     width: 'calc(100% - 100px)',
                     height: '100%',
                     overflow: 'auto',
+                    pb: '100px',
+                    boxSizing: 'border-box',
                 }}
             >
                 <Typography
