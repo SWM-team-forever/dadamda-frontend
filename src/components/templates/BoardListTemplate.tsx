@@ -133,7 +133,14 @@ function BoardListTemplate() {
                                                         }}
                                                         onClick={async (e) => {
                                                             e.stopPropagation();
-                                                            const boardInfo = await useGetBoard(board.boardId.toString());
+                                                            let boardInfo = await useGetBoard(board.boardId.toString());
+                                                            boardInfo = {
+                                                                ...boardInfo,
+                                                                data: {
+                                                                    ...boardInfo.data,
+                                                                    title: boardInfo.data.name,
+                                                                }
+                                                            }
                                                             setBoard((prev) => ({
                                                                 ...prev,
                                                                 boardId: board.boardId.toString(),
