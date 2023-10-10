@@ -54,14 +54,17 @@ function BoardInfoPage() {
                 }}
             >
                 {boardPageId && <TrashableItems confirmDrop={false} />}
-                <Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                >
                     <Button
                         onClick={() => openModal('scrapCreateOnBoard')}
                     >
                         스크랩 추가
                     </Button>
-                </Box>
-                <Box>
                     <Button
                         onClick={() => openModal('memoPaste')}
                     >
