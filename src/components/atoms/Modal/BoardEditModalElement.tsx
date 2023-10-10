@@ -1,4 +1,4 @@
-import { useDeleteBoard, useEditBoard } from "@/api/board";
+import { useEditBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import DeleteBoardButton from "@/components/atoms/Board/DeleteBoardButton";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
@@ -6,6 +6,25 @@ import { useModal } from "@/hooks/useModal";
 import { MAX_BOARD_DESCRIPTION_LENGTH, MAX_BOARD_TITLE_LENGTH, useIsBlank, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
 import { Typography, TextareaAutosize, Box, Chip, Button, FormHelperText } from "@mui/material";
 import { useState } from "react";
+
+export const chipInformation = [
+    {
+        label: '엔터테인먼트/예술',
+        tagValue: "ENTERTAINMENT_ART",
+    },
+    {
+        label: '취미/여가/여행',
+        tagValue: "HOBBY_TRAVEL",
+    },
+    {
+        label: '생활/노하우/쇼핑',
+        tagValue: "LIFE_SHOPPING",
+    },
+    {
+        label: '지식/동향',
+        tagValue: "KNOWLEDGE_TREND",
+    }
+];
 
 function BoardEditModalElement() {
     const { board } = useBoardAtom();
@@ -24,25 +43,6 @@ function BoardEditModalElement() {
     const handleTagValue = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setSelectedTag(e.currentTarget.getAttribute('data-tagValue') || "");
     }
-
-    const chipInformation = [
-        {
-            label: '엔터테인먼트/예술',
-            tagValue: "ENTERTAINMENT_ART",
-        },
-        {
-            label: '취미/여가/여행',
-            tagValue: "HOBBY_TRAVEL",
-        },
-        {
-            label: '생활/노하우/쇼핑',
-            tagValue: "LIFE_SHOPPING",
-        },
-        {
-            label: '지식/동향',
-            tagValue: "KNOWLEDGE_TREND",
-        }
-    ];
 
     const { mutate } = useEditBoard();
     const { closeModal } = useModal();
