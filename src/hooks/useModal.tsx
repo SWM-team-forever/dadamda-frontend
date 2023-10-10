@@ -59,6 +59,11 @@ export const useModal = () => {
             title: '보드 추가하기',
             element: <BoardCreateModalElement />,
             position: 'right',
+        },
+        MemoPaste: {
+            title: '메모 추가하기',
+            element: <ScrapPasteModalElement />,
+            position: 'center',
         }
     }
 
