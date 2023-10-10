@@ -86,7 +86,7 @@ function BoardInfoPage() {
                     스크랩 추가
                 </Button>
                 <Button
-                    onClick={() => openModal('memoPaste')}
+                    onClick={() => openModal('stickerPaste')}
                 >
                     메모 추가
                 </Button>

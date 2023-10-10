@@ -11,7 +11,7 @@ import ScrapEditModalElement from "@/components/atoms/Modal/ScrapEditModalElemen
 import ScrapCreateModalElement from "@/components/atoms/Modal/ScrapCreateModalElement";
 import ScrapPasteModalElement from "@/components/atoms/Modal/ScrapPasteModalElement";
 import BoardCreateModalElement from "@/components/atoms/Modal/BoardCreateModalElement";
-import MemoPasteModalElement from "@/components/atoms/Modal/MemoPasteModalElement";
+import StickerPasteModalElement from "@/components/atoms/Modal/StickerPasteModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -61,9 +61,9 @@ export const useModal = () => {
             element: <BoardCreateModalElement />,
             position: 'right',
         },
-        memoPaste: {
+        stickerPaste: {
             title: '메모 추가하기',
-            element: <MemoPasteModalElement />,
+            element: <StickerPasteModalElement />,
             position: 'center',
         }
     }

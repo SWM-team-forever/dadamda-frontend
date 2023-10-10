@@ -7,7 +7,7 @@ import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitatio
 import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
 import { useGetCurrentTimeInUnixTime } from '@/hooks/useCalculateDateDiff';
 
-function MemoPasteModalElement() {
+function StickerPasteModalElement() {
     const { closeModal } = useModal();
     const [textAreaValue, setTextAreaValue] = useState('');
     const { pasteSticker } = useBoardContentAtom();
@@ -104,4 +104,4 @@ function MemoPasteModalElement() {
     );
 }
 
-export default MemoPasteModalElement;
+export default StickerPasteModalElement;
