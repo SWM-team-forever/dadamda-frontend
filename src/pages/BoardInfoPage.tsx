@@ -70,6 +70,18 @@ function BoardInfoPage() {
                     >
                         메모 추가
                     </Button>
+                    <Button>
+                        편집 모드
+                    </Button>
+                    <Button>
+                        저장
+                    </Button>
+                    <Button>
+                        공유
+                    </Button>
+                    <Button>
+                        설정
+                    </Button>
                 </Box>
             </Box>
         </Box>
