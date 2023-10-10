@@ -41,10 +41,6 @@ function Sticker({ content }: StickerProps) {
                 >
                     {getTimeDiff(content.createdDate)}
                 </Typography>
-                <Box
-                >
-                    <CloseIcon width='10' height='10' fill={theme.color.Gray_060} />
-                </Box>
             </Box>
             {
                 content.memoText
