@@ -35,54 +35,71 @@ function BoardInfoPage() {
             sx={{
                 width: '100%',
                 height: 'calc(100% - 56px)',
+                position: 'fixed',
             }}
         >
-            <Typography
-                variant="h1"
-                sx={{
-                    fontSize: '24px',
-                    fontWeight: '500',
-                    m: '20px',
-                }}
-            >
-                {board.title}
-            </Typography>
             <Box
                 sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
+                    position: 'fixed',
+                    left: '0',
+                    width: 'calc(100% - 100px)',
+                    height: '100%',
+                    overflow: 'auto',
                 }}
             >
-                {boardPageId && <TrashableItems confirmDrop={false} />}
+                <Typography
+                    variant="h1"
+                    sx={{
+                        fontSize: '24px',
+                        fontWeight: '500',
+                        m: '20px',
+                    }}
+                >
+                    {board.title}
+                </Typography>
                 <Box
                     sx={{
                         display: 'flex',
-                        flexDirection: 'column',
+                        justifyContent: 'space-between',
                     }}
                 >
-                    <Button
-                        onClick={() => openModal('scrapCreateOnBoard')}
-                    >
-                        스크랩 추가
-                    </Button>
-                    <Button
-                        onClick={() => openModal('memoPaste')}
-                    >
-                        메모 추가
-                    </Button>
-                    <Button>
-                        편집 모드
-                    </Button>
-                    <Button>
-                        저장
-                    </Button>
-                    <Button>
-                        공유
-                    </Button>
-                    <Button>
-                        설정
-                    </Button>
+                    {boardPageId && <TrashableItems confirmDrop={false} />}
                 </Box>
+            </Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    position: 'fixed',
+                    right: '0',
+                    width: '100px',
+                    height: '100%',
+                    gap: '16px',
+                    mt: '30px',
+                }}
+            >
+                <Button
+                    onClick={() => openModal('scrapCreateOnBoard')}
+                >
+                    스크랩 추가
+                </Button>
+                <Button
+                    onClick={() => openModal('memoPaste')}
+                >
+                    메모 추가
+                </Button>
+                <Button>
+                    편집 모드
+                </Button>
+                <Button>
+                    저장
+                </Button>
+                <Button>
+                    공유
+                </Button>
+                <Button>
+                    설정
+                </Button>
             </Box>
         </Box>
     );
