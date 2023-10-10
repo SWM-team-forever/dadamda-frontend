@@ -1,7 +1,7 @@
 import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { useModal } from "@/hooks/useModal";
-import { useIsBlank } from "@/hooks/useValidation";
+import { MAX_BOARD_DESCRIPTION_LENGTH, MAX_BOARD_TITLE_LENGTH, useIsBlank, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
 import { Typography, TextareaAutosize, Box, Chip, Button } from "@mui/material";
 import { useState } from "react";
 
@@ -52,11 +52,11 @@ function BoardCreateModalElement() {
     }
 
     const validateTitle = () => {
-        return title && !useIsBlank(title);
+        return title && !useIsBlank(title) && useIsLessThanLengthLimitation(title, MAX_BOARD_TITLE_LENGTH);
     }
 
     const validateDescription = () => {
-        return description && !useIsBlank(description);
+        return description && !useIsBlank(description) && useIsLessThanLengthLimitation(description, MAX_BOARD_DESCRIPTION_LENGTH);
     }
 
     const validateTag = () => {
