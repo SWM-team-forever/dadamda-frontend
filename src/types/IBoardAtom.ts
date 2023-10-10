@@ -1,11 +1,8 @@
 import { TMemo, contentProps } from "@/types/ContentType"
 
 export type Memo = TMemo;
-export type Scrap = contentProps['content'];
-export type ScrapOrMemo = (Memo | Scrap) & {
-    columnId: string,
-    taskId: string,
-};
+export type Scrap = contentProps['content'] & {id: string};
+export type ScrapOrMemo = (Memo | Scrap);
 export type Column = {
     title?: string,
     columnId: string,
@@ -13,8 +10,6 @@ export type Column = {
 
 interface IBoardAtom {
     title: string,
-    columnList: Column[],
-    ScrapOrMemoList: ScrapOrMemo[],
     boardId: string | null,
 }
 
