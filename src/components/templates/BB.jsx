@@ -29,6 +29,7 @@ import { Box, Button } from '@mui/material';
 import Memo from '../molcules/Memo';
 import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
 import Sticker from '../molcules/Board/Sticker';
+import theme from '@/assets/styles/theme';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -595,7 +596,7 @@ export function MultipleContainers({
                         <DroppableContainer
                             key={containerId}
                             id={containerId}
-                            label={minimal ? undefined : `Column ${containerId}`}
+                            label={minimal ? undefined : ` `}
                             columns={columns}
                             items={boardContent[containerId]}
                             scrollable={scrollable}
@@ -633,11 +634,20 @@ export function MultipleContainers({
                             onClick={handleAddColumn}
                             placeholder
                             style={{
-                                backgroundColor: 'transparent',
                                 border: 'none',
+                                height: 'fit-content',
+                                padding: '15px 0',
+                                borderRadius: '8px',
+                                backgroundColor: theme.color.Gray_020,
+                                boxShadow: '0px 2px 16px 0px rgba(19, 48, 74, 0.08)',
+                                cursor: 'pointer',
+                                fontSize: '16px',
+                                fontWeight: '600',
+                                lineHeight: '150%',
+                                color: theme.color.Gray_080,
                             }}
                         >
-                            + Add column
+                            + 열 추가하기
                         </DroppableContainer>
                     )}
                 </SortableContext>
@@ -683,7 +693,7 @@ export function MultipleContainers({
     function renderContainerDragOverlay(containerId) {
         return (
             <Container
-                label={`Column ${containerId}`}
+                label={` `}
                 columns={columns}
                 style={{
                     height: '100%',
