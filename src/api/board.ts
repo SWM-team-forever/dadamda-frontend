@@ -153,7 +153,7 @@ interface editBoardProps {
 
 const editBoard = async ({boardId, description, tag, name}: editBoardProps) => {
     const response = token && await fetch(`${EDIT_BOARD_URL}/${boardId}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
             "X-AUTH-TOKEN": token,
