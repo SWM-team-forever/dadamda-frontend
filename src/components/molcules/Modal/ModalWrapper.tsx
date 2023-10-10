@@ -24,7 +24,7 @@ function ModalWrapper() {
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     width: {
-                        xs: '360px',
+                        xs: '320px',
                         md: '435px',
                     },
                     display: 'flex',

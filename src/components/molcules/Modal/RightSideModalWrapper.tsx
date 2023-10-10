@@ -23,7 +23,7 @@ function RightSideModalWrapper() {
                     top: '0',
                     right: '0',
                     width: {
-                        xs: '360px',
+                        xs: '320px',
                         md: '435px',
                     },
                     height: '100%',
