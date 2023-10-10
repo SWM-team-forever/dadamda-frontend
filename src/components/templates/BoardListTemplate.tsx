@@ -8,6 +8,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useGetBoardList } from '@/api/board';
 import { MenuIcon } from '@/components/atoms/Icon';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
+import { useModal } from '@/hooks/useModal';
 
 export interface IBoardListInfo {
     boardId: number;
@@ -20,6 +21,7 @@ export interface IBoardListInfo {
 
 function BoardListTemplate() {
     const navigate = useNavigate();
+    const { openModal } = useModal();
 
     const { data, isLoading } = useInfiniteQuery(
         ['boards'],
@@ -122,7 +124,17 @@ function BoardListTemplate() {
                                                     }}
                                                 >
                                                     <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
-                                                    <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            openModal('boardCreate')
+                                                        }}
+                                                    >
+                                                        <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    </Box>
                                                 </Box>
                                             </Box>
                                             <Box
