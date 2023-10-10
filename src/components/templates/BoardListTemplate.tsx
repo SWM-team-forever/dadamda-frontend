@@ -10,6 +10,7 @@ import { MenuIcon } from '@/components/atoms/Icon';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
+import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 
 export interface IBoardListInfo {
     boardId: number;
@@ -160,7 +161,9 @@ function BoardListTemplate() {
                                                     gap: '10px',
                                                 }}
                                             >
-                                                <Chip label={board.tag} />
+                                                <Chip label={chipInformation.map((chipInfo) =>
+                                                    chipInfo.tagValue === board.tag && chipInfo.label
+                                                )} />
                                                 <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
                                             </Box>
                                         </Box>
