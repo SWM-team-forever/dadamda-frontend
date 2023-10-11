@@ -91,7 +91,7 @@ function BoardListTemplate() {
                                     <Grid item
                                         xs={12} sm={6} md={4} lg={3} xl={3}
                                         key={board.boardId}
-                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}&title=${board.boardName}`)}
+                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
                                     >
                                         <Box
                                             sx={{
