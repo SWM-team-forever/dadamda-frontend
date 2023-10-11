@@ -30,19 +30,19 @@ export function useLoginState() {
 
 function verifyToken(token: string | null) {
     if (!token) {
-        return true; // 토큰이 존재하지 않는 경우, 만료로 간주
+        return true;
     }
 
-    const tokenData = JSON.parse(atob(token.split('.')[1])); // JWT 디코딩
+    const tokenData = JSON.parse(atob(token.split('.')[1]));
 
     if (tokenData.exp) {
-        const expirationDate = new Date(tokenData.exp * 1000); // JWT의 만료 시간 (밀리초)
+        const expirationDate = new Date(tokenData.exp * 1000);
         const currentDate = new Date();
 
-        return expirationDate < currentDate; // 만료 시간과 현재 시간 비교
+        return expirationDate < currentDate;
     }
 
-    return true; // "exp" 클레임이 없는 경우, 만료로 간주
+    return true;
 }
 
 async function useHandleUnVerifiedTokenUser() {
