@@ -3,31 +3,41 @@ import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
-import { useLayoutEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useLayoutEffect } from "react";
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    function getBoardPageId() {
+    function getBoardPageId(): string | null {
         return searchParams.get('boardId');
-    }
-
-    function getTitle() {
-        return searchParams.get('title');
     }
 
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
-    const boardTitle = getTitle();
 
     useLayoutEffect(() => {
-        (boardTitle && boardPageId) && setBoard({
-            ...board,
-            title: boardTitle,
-            boardId: boardPageId,
-        });
-    }, [])
+        async function fetchBoardInfo() {
+            if (boardPageId === null) {
+                return;
+            }
+            let boardInfo = await useGetBoard(boardPageId.toString());
+            boardInfo = {
+                ...boardInfo,
+                data: {
+                    ...boardInfo.data,
+                    title: boardInfo.data.name,
+                }
+            }
+            setBoard((prev) => ({
+                ...prev,
+                boardId: boardPageId,
+                ...boardInfo.data,
+            }))
+        }
+
+        fetchBoardInfo();
+    }, [boardPageId, setBoard, board])
 
     const { openModal } = useModal();
 
@@ -107,32 +117,12 @@ function BoardInfoPage() {
                     공유
                 </Button>
                 <Button
-                    onClick={async () => {
-                        if (boardPageId === null) {
-                            return;
-                        }
-
-                        let boardInfo = await useGetBoard(boardPageId.toString());
-                        boardInfo = {
-                            ...boardInfo,
-                            data: {
-                                ...boardInfo.data,
-                                title: boardInfo.data.name,
-                            }
-                        }
-                        setBoard((prev) => ({
-                            ...prev,
-                            boardId: boardPageId.toString(),
-                            ...boardInfo.data,
-                        }))
-                        openModal('boardEdit');
-                    }
-                    }
+                    onClick={() => openModal('boardEdit')}
                 >
                     설정
                 </Button>
             </Box>
-        </Box>
+        </Box >
     );
 }
 
