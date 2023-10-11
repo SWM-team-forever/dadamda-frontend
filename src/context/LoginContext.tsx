@@ -45,9 +45,9 @@ function verifyToken(token: string | null) {
     return true; // "exp" 클레임이 없는 경우, 만료로 간주
 }
 
-function useHandleUnVerifiedTokenUser() {
+async function useHandleUnVerifiedTokenUser() {
     const logout = useLogout();
-    useDefaultSnackbar('로그인이 만료되었습니다. 다시 로그인해주세요.', 'error');
+    await useDefaultSnackbar('로그인이 만료되었습니다. 다시 로그인해주세요.', 'error');
     logout();
 }
 
