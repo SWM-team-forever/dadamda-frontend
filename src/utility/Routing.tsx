@@ -41,9 +41,13 @@ function Routing() {
         <Route path='other' element={<ScrapTemplate type={'other'} />}></Route>
         <Route index element={<ScrapTemplate type={'list'} />}></Route>
       </Route>
+      <Route path='/board' element={<RequireAuth><BoardPage /></RequireAuth>}>
+        <Route index element={<BoardListTemplate />} />
+      </Route>
       <Route path='/trending' element={<TrendingPage />}></Route>
       <Route path='/oauth-login' element={<OAuthLoginpage />}></Route>
       <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
+      <Route path='/board_info' element={<RequireAuth><BoardInfoPage /></RequireAuth>}></Route>
     </Routes>
   );
 }
