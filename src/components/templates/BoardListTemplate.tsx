@@ -83,7 +83,6 @@ function BoardListTemplate() {
                                 xl: 'repeat(5, 1fr)',
                             }
                         }
-                        gridAutoRows={'auto'}
                     >
                         {data?.pages.map((page) => {
                             return page.data.content.map((board: IBoardListInfo) => {
