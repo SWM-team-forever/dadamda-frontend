@@ -50,7 +50,7 @@ function BoardListTemplate() {
     return (
         <>
             <ScrapListContainer>
-                <BoardListHeader count={1} />
+                <BoardListHeader />
                 <Box
                     sx={{
                         height: 'calc(100% - 145px)',
