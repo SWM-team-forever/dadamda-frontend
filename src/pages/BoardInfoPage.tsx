@@ -21,14 +21,9 @@ function BoardInfoPage() {
             if (boardPageId === null) {
                 return;
             }
-            let boardInfo = await useGetBoard(boardPageId.toString());
-            boardInfo = {
-                ...boardInfo,
-                data: {
-                    ...boardInfo.data,
-                    title: boardInfo.data.title,
-                }
-            }
+            const
+
+                boardInfo = await useGetBoard(boardPageId.toString());
             setBoard((prev) => ({
                 ...prev,
                 boardId: boardPageId,
