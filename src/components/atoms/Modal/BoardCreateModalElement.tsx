@@ -44,7 +44,7 @@ function BoardCreateModalElement() {
     const { closeModal } = useModal();
     const handleCreateButtonClick = () => {
         (title && description && selectedTag) && mutate({
-            name: title,
+            title: title,
             description: description,
             tag: selectedTag,
         });

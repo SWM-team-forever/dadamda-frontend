@@ -26,7 +26,7 @@ function BoardInfoPage() {
                 ...boardInfo,
                 data: {
                     ...boardInfo.data,
-                    title: boardInfo.data.name,
+                    title: boardInfo.data.title,
                 }
             }
             setBoard((prev) => ({

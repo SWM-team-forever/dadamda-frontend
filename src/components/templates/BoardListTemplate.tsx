@@ -14,7 +14,7 @@ import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement'
 
 export interface IBoardListInfo {
     boardId: number;
-    boardName: string;
+    title: string;
     description: string;
     isFixed?: string,
     tag: string,
@@ -118,7 +118,7 @@ function BoardListTemplate() {
                                                     alignItems: 'center',
                                                 }}
                                             >
-                                                <Typography>{board.boardName}</Typography>
+                                                <Typography>{board.title}</Typography>
                                                 <Box
                                                     sx={{
                                                         display: 'flex',
@@ -137,7 +137,7 @@ function BoardListTemplate() {
                                                                 ...boardInfo,
                                                                 data: {
                                                                     ...boardInfo.data,
-                                                                    title: boardInfo.data.name,
+                                                                    title: boardInfo.data.title,
                                                                 }
                                                             }
                                                             setBoard((prev) => ({

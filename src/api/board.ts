@@ -37,12 +37,12 @@ export const useGetBoardList = async ({ pages, size }: fetchDatasProps) => {
 }
 
 interface fetchPostCreateBoardProps {
-    name: string,
+    title: string,
     description: string,
     tag: string,
 }
 
-const fetchPostCreateBoard = async({name, description, tag}: fetchPostCreateBoardProps) => {
+const fetchPostCreateBoard = async({title, description, tag}: fetchPostCreateBoardProps) => {
     const response = token && await fetch(POST_CREATE_BOARD_URL, {
         method: "POST",
         headers: {
@@ -50,7 +50,7 @@ const fetchPostCreateBoard = async({name, description, tag}: fetchPostCreateBoar
             "X-AUTH-TOKEN": token,
         },
         body: JSON.stringify({
-            name: name,
+            title: title,
             description: description,
             tag: tag,
         }),
@@ -147,12 +147,12 @@ export const useDeleteBoard = () => {
 
 interface editBoardProps {
     boardId: string,
-    name: string,
+    title: string,
     description: string,
     tag: string,
 }
 
-const editBoard = async ({boardId, description, tag, name}: editBoardProps) => {
+const editBoard = async ({boardId, description, tag, title}: editBoardProps) => {
     const response = token && await fetch(`${EDIT_BOARD_URL}/${boardId}`, {
         method: "PATCH",
         headers: {
@@ -160,7 +160,7 @@ const editBoard = async ({boardId, description, tag, name}: editBoardProps) => {
             "X-AUTH-TOKEN": token,
         },
         body: JSON.stringify({
-            name: name,
+            title: title,
             description: description,
             tag: tag,
         }),
