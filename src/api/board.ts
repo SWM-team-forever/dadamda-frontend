@@ -73,6 +73,7 @@ export const usePostCreateBoard = () => {
     return useMutation(fetchPostCreateBoard, {
         onSuccess: () => {
             queryClient.invalidateQueries(['boards']);
+            queryClient.invalidateQueries(['boardListCount']);
             useDefaultSnackbar('보드가 생성되었습니다', 'success');
         },
         onError: (error) => {
