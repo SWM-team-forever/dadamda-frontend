@@ -30,7 +30,7 @@ export function useLoginState() {
 
 function verifyToken(token: string | null) {
     if (!token) {
-        return true;
+        return false;
     }
 
     const tokenData = JSON.parse(atob(token.split('.')[1]));
@@ -39,10 +39,10 @@ function verifyToken(token: string | null) {
         const expirationDate = new Date(tokenData.exp * 1000);
         const currentDate = new Date();
 
-        return expirationDate < currentDate;
+        return expirationDate > currentDate;
     }
 
-    return true;
+    return false;
 }
 
 async function useHandleUnVerifiedTokenUser() {
@@ -55,7 +55,7 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem('token');
     const location = useLocation();
 
-    verifyToken(token) && useHandleUnVerifiedTokenUser();
+    !verifyToken(token) && useHandleUnVerifiedTokenUser();
 
     return token ? (
         children
