@@ -1,3 +1,4 @@
+import { useGetBoard } from "@/api/board";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
@@ -105,7 +106,29 @@ function BoardInfoPage() {
                 <Button>
                     공유
                 </Button>
-                <Button>
+                <Button
+                    onClick={async () => {
+                        if (boardPageId === null) {
+                            return;
+                        }
+
+                        let boardInfo = await useGetBoard(boardPageId.toString());
+                        boardInfo = {
+                            ...boardInfo,
+                            data: {
+                                ...boardInfo.data,
+                                title: boardInfo.data.name,
+                            }
+                        }
+                        setBoard((prev) => ({
+                            ...prev,
+                            boardId: boardPageId.toString(),
+                            ...boardInfo.data,
+                        }))
+                        openModal('boardEdit');
+                    }
+                    }
+                >
                     설정
                 </Button>
             </Box>
