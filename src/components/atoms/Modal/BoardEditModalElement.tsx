@@ -48,7 +48,7 @@ function BoardEditModalElement() {
     const { closeModal } = useModal();
     const handleEditBoardButtonClick = () => {
         (title && description && selectedTag && board.boardId) && mutate({
-            name: title,
+            title: title,
             description: description,
             tag: selectedTag,
             boardId: board.boardId,
