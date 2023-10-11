@@ -37,7 +37,7 @@ function BoardInfoPage() {
         }
 
         fetchBoardInfo();
-    }, [boardPageId, setBoard, board])
+    }, [boardPageId, board.title])
 
     const { openModal } = useModal();
 
