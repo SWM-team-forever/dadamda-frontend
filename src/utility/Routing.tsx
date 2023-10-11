@@ -27,7 +27,9 @@ function Routing() {
 
   return (
     <Routes>
-      <Route path='/' element={<MainPage />}></Route>
+      <Route path='/' element={<RequireAuth><ScrapPage /></RequireAuth>}>
+        <Route index element={<ScrapTemplate type={'list'} />}></Route>
+      </Route>
       <Route path='/main' element={<MainPage />}></Route>
       <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
       <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
