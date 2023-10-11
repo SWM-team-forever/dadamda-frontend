@@ -4,9 +4,7 @@ import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useLayoutEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSnackbar } from "notistack";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 function BoardInfoPage() {
