@@ -33,7 +33,9 @@ function CategoryInfo({ data, scrapId }: { data: any, scrapId: number }) {
                 >
                     <MoveToPageIcon width='16' height='16' fill={theme.color.Gray_070} />
                 </Box>
-                <iframe src={selectedScrap.embedUrl ? selectedScrap.embedUrl : selectedScrap.pageUrl}
+                <iframe
+                    sandbox="allow-scripts allow-forms allow-pointer-lock allow-same-origin"
+                    src={selectedScrap.embedUrl ? selectedScrap.embedUrl : selectedScrap.pageUrl}
                     style={{
                         height: '100%',
                         width: '100%',
