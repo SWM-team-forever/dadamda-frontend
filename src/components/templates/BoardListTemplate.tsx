@@ -70,7 +70,6 @@ function BoardListTemplate() {
                     <Box
                         sx={{
                             width: '100%',
-                            height: '100%',
                             m: '0',
                             display: 'grid',
                             gap: 2,
@@ -84,12 +83,12 @@ function BoardListTemplate() {
                                 xl: 'repeat(5, 1fr)',
                             }
                         }
+                        gridAutoRows={'auto'}
                     >
                         {data?.pages.map((page) => {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
                                     <Grid item
-                                        xs={12} sm={6} md={4} lg={3} xl={3}
                                         key={board.boardId}
                                         onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
                                     >
