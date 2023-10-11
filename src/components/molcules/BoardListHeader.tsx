@@ -8,7 +8,7 @@ import { useGetBoardListCount } from '@/api/count';
 
 function BoardListHeader() {
     const { openModal } = useModal();
-    const { data, isLoading } = useQuery(['boardCount'],
+    const { data, isLoading } = useQuery(['boardListCount'],
         () => {
             return useGetBoardListCount();
         },
