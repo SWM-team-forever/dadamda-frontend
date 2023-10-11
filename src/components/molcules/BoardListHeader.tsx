@@ -3,13 +3,37 @@ import { Box, Button, Typography } from '@mui/material';
 import theme from '../../assets/styles/theme';
 import SearchBar from '@/components/molcules/SearchBar';
 import { useModal } from '@/hooks/useModal';
+import { useQuery } from '@tanstack/react-query';
+import { useGetBoardListCount } from '@/api/count';
 
-interface ScrapListHeaderProps {
-    count: number,
-}
-
-function BoardListHeader({ count }: ScrapListHeaderProps) {
+function BoardListHeader() {
     const { openModal } = useModal();
+    const { data, isLoading } = useQuery(['boardCount'],
+        () => {
+            return useGetBoardListCount();
+        },
+        {
+            refetchOnWindowFocus: false,
+            select: (data) => {
+                return data?.data.count;
+            }
+        }
+    );
+
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                }}
+            >
+                로딩중
+            </Box>
+        )
+    }
 
     return (
         <Box
@@ -49,7 +73,7 @@ function BoardListHeader({ count }: ScrapListHeaderProps) {
                             lineHeight: '150%',
                         }}
                     >
-                        {count} 개
+                        {data} 개
                     </Typography>
                 </Box>
                 <Button
