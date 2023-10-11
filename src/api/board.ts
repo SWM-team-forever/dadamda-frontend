@@ -136,6 +136,7 @@ export const useDeleteBoard = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(['boards']);
             queryClient.invalidateQueries(['boardListCount']);
+            queryClient.invalidateQueries(['board']);
             useDefaultSnackbar('보드가 삭제되었습니다', 'success');
         },
         onError: (error) => {
