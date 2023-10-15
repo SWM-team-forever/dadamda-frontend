@@ -282,7 +282,7 @@ export const Item = React.memo(
                         tabIndex={!handle ? 0 : undefined}
                     >
                         {
-                            value.scrapId 
+                            value.scrapId
                             ? <ScrapCard content={value} key={value.id}/>
                             : <Sticker content={value} key={value.id}/>
                         }
@@ -316,7 +316,7 @@ export function MultipleContainers({
     scrollable,
 }) {
 
-    const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, getNextContainerId} = useBoardContentAtom();
+    const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, handleSaveBoard, getNextContainerId} = useBoardContentAtom();
     const {board} = useBoardAtom();
     const {data, isLoading} = useQuery(
         ['boardContent'],
@@ -453,6 +453,11 @@ export function MultipleContainers({
             recentlyMovedToNewContainer.current = false;
         });
     }, [boardContent]);
+
+    useEffect(() => {
+        const interval = setInterval(() => handleSaveBoard(), 10000);
+        return () => clearInterval(interval);
+    }, [handleSaveBoard])
 
     if (isLoading) {
         return <div>로딩중</div>;
