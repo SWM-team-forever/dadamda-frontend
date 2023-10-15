@@ -730,7 +730,7 @@ export function MultipleContainers({
             )}
             {trashable && activeId && !containers.includes(activeId) ? (
                 <Trash id={TRASH_ID} />
-            ) : <Trash id={TRASH_ID} />}
+            ) : null}
         </DndContext>
     );
 
@@ -817,7 +817,7 @@ function getColor(id) {
     return undefined;
 }
 
-function Trash({ id }) {
+function Trash({ id, mode }) {
     const { setNodeRef, isOver } = useDroppable({
         id,
     });
@@ -841,7 +841,7 @@ function Trash({ id }) {
                 backgroundColor: isOver ? theme.color.Blue_080 : 'none',
             }}
         >
-            <TrashCanIcon width='30' height='30' fill={isOver? 'white' : theme.color.Gray_060}/>
+            {!isViewerMode(mode) && <TrashCanIcon width='30' height='30' fill={isOver? 'white' : theme.color.Gray_060}/>}
         </Box>
     );
 }
