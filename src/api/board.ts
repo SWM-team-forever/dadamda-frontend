@@ -240,7 +240,7 @@ export const useSaveBoard = () => {
     });
 }
 
-const getBoardInfo = async (boardUUID: string) => {
+const getBoardContents = async (boardUUID: string) => {
     const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "GET",
         headers: {
@@ -260,7 +260,7 @@ const getBoardInfo = async (boardUUID: string) => {
     return response;
 }
 
-export const useGetBoardInfo = async (boardUUID: string) => {
-    const boardInfo = await getBoardInfo(boardUUID);
+export const useGetBoardContents = async (boardUUID: string) => {
+    const boardInfo = await getBoardContents(boardUUID);
     return boardInfo;
 }
