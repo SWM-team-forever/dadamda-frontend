@@ -729,7 +729,7 @@ export function MultipleContainers({
             )}
             {trashable && activeId && !containers.includes(activeId) ? (
                 <Trash id={TRASH_ID} />
-            ) : null}
+            ) : <Trash id={TRASH_ID} />}
         </DndContext>
     );
 
@@ -822,25 +822,27 @@ function Trash({ id }) {
     });
 
     return (
-        <div
+        <Box
             ref={setNodeRef}
-            style={{
+            sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'fixed',
-                left: '50%',
-                marginLeft: -150,
-                bottom: 20,
-                width: 300,
+                right: {
+                    xs: '10px',
+                    sm: '100px',
+                },
+                top: '60px',
+                width: 280,
                 height: 60,
                 borderRadius: 5,
                 border: '1px solid',
                 borderColor: isOver ? 'red' : '#DDD',
             }}
         >
-            제거하고 싶은 요소를 드래그 해주세요
-        </div>
+            제거하고 싶은 요소를 이곳에 놓아주세요.
+        </Box>
     );
 }
 
