@@ -229,7 +229,7 @@ export const useSaveBoard = () => {
 
     return useMutation(saveBoard, {
         onSuccess: () => {
-            queryClient.invalidateQueries(['boardInfo']);
+            queryClient.invalidateQueries(['boardContent']);
             useDefaultSnackbar('보드가 저장되었습니다', 'success');
         },
         onError: (error) => {
