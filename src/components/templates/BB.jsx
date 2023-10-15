@@ -663,7 +663,7 @@ export function MultipleContainers({
                             style={containerStyle}
                             unstyled={minimal}
                             onRemove={() => {
-                                handleRemove(containerId)
+                                !isViewerMode && handleRemove(containerId)
                             }}
                         >
                             <SortableContext 
