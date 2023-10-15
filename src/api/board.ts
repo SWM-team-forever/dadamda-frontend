@@ -185,6 +185,7 @@ export const useEditBoard = () => {
     return useMutation(editBoard, {
         onSuccess: () => {
             queryClient.invalidateQueries(['boards']);
+            queryClient.invalidateQueries(['board']);
             useDefaultSnackbar('보드가 수정되었습니다', 'success');
         },
         onError: (error) => {
