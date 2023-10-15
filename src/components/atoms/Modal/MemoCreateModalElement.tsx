@@ -28,7 +28,7 @@ function MemoCreateModalElement() {
 
     const handleCreateMemoButtonClick = () => {
         (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
-        logEvent('create_memo', { scrapId: scrapId, textAreaValue: textAreaValue });
+        logEvent('create_memo');
         closeModal();
     }
 

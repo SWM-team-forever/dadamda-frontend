@@ -49,7 +49,7 @@ function BoardCreateModalElement() {
             description: description,
             tag: selectedTag,
         });
-        logEvent('create_board', { title: title, description: description, tag: selectedTag });
+        logEvent('create_board', { tag: selectedTag });
         closeModal();
     }
 
