@@ -691,7 +691,7 @@ export function MultipleContainers({
                             </SortableContext>
                         </DroppableContainer>
                     ))}
-                    {minimal ? undefined : (
+                    {minimal | isViewerMode(mode) ? undefined : (
                         <DroppableContainer
                             id={PLACEHOLDER_ID}
                             disabled={isSortingContainer}
