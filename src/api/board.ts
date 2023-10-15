@@ -261,6 +261,6 @@ const getBoardContents = async (boardUUID: string) => {
 }
 
 export const useGetBoardContents = async (boardUUID: string) => {
-    const boardInfo = await getBoardContents(boardUUID);
-    return boardInfo;
+    const boardContents = await getBoardContents(boardUUID);
+    return boardContents;
 }
