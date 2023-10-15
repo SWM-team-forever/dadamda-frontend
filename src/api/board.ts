@@ -31,8 +31,8 @@ const fetchDatas = async ({ url, pages, size }: fetchDatasProps) => {
     return response;
 };
 
-export const useGetBoardList = async ({ pages, size }: fetchDatasProps) => {
-    const boards = await fetchDatas({ url: GET_BOARD_LIST_URL, pages: pages, size: size });
+export const useGetBoardList = ({ pages, size }: fetchDatasProps) => {
+    const boards = fetchDatas({ url: GET_BOARD_LIST_URL, pages: pages, size: size });
     return boards;
 }
 
@@ -104,8 +104,8 @@ const getBoard = async (boardUUID: string) => {
     return response;
 }
 
-export const useGetBoard = async (boardUUID: string) => {
-    const board = await getBoard(boardUUID);
+export const useGetBoard = (boardUUID: string) => {
+    const board = getBoard(boardUUID);
     return board;
 }
 
@@ -259,7 +259,7 @@ const getBoardContents = async (boardUUID: string) => {
     return response;
 }
 
-export const useGetBoardContents = async (boardUUID: string) => {
-    const boardContents = await getBoardContents(boardUUID);
+export const useGetBoardContents = (boardUUID: string) => {
+    const boardContents = getBoardContents(boardUUID);
     return boardContents;
 }
