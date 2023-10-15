@@ -194,3 +194,67 @@ export const useEditBoard = () => {
         useErrorBoundary: false,
     });
 }
+
+const saveBoard = async (boardUUID: string, contents: any) => {
+    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+        body: JSON.stringify({
+            contents: 'test',
+        }),
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useSaveBoard = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(saveBoard, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['boardInfo']);
+            useDefaultSnackbar('보드가 저장되었습니다', 'success');
+        },
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('보드 저장에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: true,
+    });
+}
+
+const getBoardInfo = async (boardUUID: string) => {
+    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useGetBoardInfo = async (boardUUID: string) => {
+    const boardInfo = await getBoardInfo(boardUUID);
+    return boardInfo;
+}
