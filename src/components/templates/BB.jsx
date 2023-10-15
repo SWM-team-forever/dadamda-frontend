@@ -832,7 +832,7 @@ function Trash({ id }) {
                 position: 'fixed',
                 right: {
                     xs: '10px',
-                    sm: '100px',
+                    sm: '110px',
                 },
                 top: '60px',
                 width: isOver ? '120px' : '60px',
