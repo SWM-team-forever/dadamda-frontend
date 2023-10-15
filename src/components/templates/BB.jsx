@@ -318,7 +318,16 @@ export function MultipleContainers({
     scrollable,
 }) {
 
-    const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, handleSaveBoard, getNextContainerId} = useBoardContentAtom();
+    const {
+        boardContent, 
+        setBoardContent, 
+        containers, 
+        setContainers, 
+        handleAddColumn, 
+        handleSaveBoard, 
+        getNextContainerId,
+        SAVE_BOARD_INTERVAL,
+    } = useBoardContentAtom();
     const {board} = useBoardAtom();
     function initializeBoard(data) {
         if (!data.data.contents) {
@@ -467,7 +476,7 @@ export function MultipleContainers({
     }, [boardContent]);
 
     useEffect(() => {
-        const interval = setInterval(() => handleSaveBoard(), 10000);
+        const interval = setInterval(() => handleSaveBoard(), SAVE_BOARD_INTERVAL);
         return () => clearInterval(interval);
     }, [handleSaveBoard])
 

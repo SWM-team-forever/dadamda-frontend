@@ -69,6 +69,8 @@ export const useBoardContentAtom = () => {
         boardUUID && mutate({ boardUUID: boardUUID, contents: boardContent });
     }
 
+    const SAVE_BOARD_INTERVAL = 10000; // 10초
+
     return {
         boardContent,
         setBoardContent,
@@ -79,5 +81,6 @@ export const useBoardContentAtom = () => {
         handleAddColumn,
         pasteSticker,
         handleSaveBoard,
+        SAVE_BOARD_INTERVAL,
     }
 }
