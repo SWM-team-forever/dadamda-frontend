@@ -2,6 +2,7 @@ import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL } from "@/secret";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
+import { J } from "vitest/dist/types-198fd1d9.js";
 
 interface fetchDatasProps {
     url?: string;
@@ -208,7 +209,7 @@ const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
             "X-AUTH-TOKEN": token,
         },
         body: JSON.stringify({
-            contents: contents,
+            contents: JSON.stringify(contents),
         }),
     }).then((response) => {
         return response.json().then(body => {
