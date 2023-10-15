@@ -29,6 +29,9 @@ import { Box } from '@mui/material';
 import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
 import Sticker from '../molcules/Board/Sticker';
 import theme from '@/assets/styles/theme';
+import { useQuery } from '@tanstack/react-query';
+import { useGetBoardContents } from '@/api/board';
+import { useBoardAtom } from '@/hooks/useBoardAtom';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -314,6 +317,21 @@ export function MultipleContainers({
 }) {
 
     const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, getNextContainerId} = useBoardContentAtom();
+    const {board} = useBoardAtom();
+    const {data} = useQuery(
+        ['boardContent'],
+        () => board.boardUUID && useGetBoardContents(board.boardUUID),
+        {
+            retry: false,
+            onSuccess: (data) => {
+                setBoardContent(JSON.parse(data.data.contents));
+                setContainers(Object.keys(JSON.parse(data.data.contents)));
+            },
+            onError: (error) => {
+                console.log(error);
+            },
+        }
+    )
 
     const [activeId, setActiveId] = useState(null);
     const lastOverId = useRef(null);
