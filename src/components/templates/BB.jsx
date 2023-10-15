@@ -34,6 +34,7 @@ import { useGetBoardContents } from '@/api/board';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import * as Sentry from '@sentry/react';
+import { TrashCanIcon } from '../atoms/Icon';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -834,14 +835,13 @@ function Trash({ id }) {
                     sm: '100px',
                 },
                 top: '60px',
-                width: 280,
-                height: 60,
-                borderRadius: 5,
-                border: '1px solid',
-                borderColor: isOver ? 'red' : '#DDD',
+                width: isOver ? '120px' : '60px',
+                height: isOver ? '120px' : '60px',
+                borderRadius: '50%',
+                backgroundColor: isOver ? theme.color.Blue_080 : 'none',
             }}
         >
-            제거하고 싶은 요소를 이곳에 놓아주세요.
+            <TrashCanIcon width='30' height='30' fill={isOver? 'white' : theme.color.Gray_060}/>
         </Box>
     );
 }
