@@ -110,6 +110,7 @@ export const Container = forwardRef(
             scrollable,
             shadow,
             unstyled,
+            mode,
             ...props
         },
         ref
@@ -140,8 +141,8 @@ export const Container = forwardRef(
                     gap: '5px',
                 }}
                 >
-                    {onRemove ? <Remove onClick={onRemove} /> : undefined}
-                    <Handle {...handleProps} />
+                    {onRemove && !isViewerMode(mode) ? <Remove onClick={onRemove} /> : undefined}
+                    {!isViewerMode(mode) && <Handle {...handleProps} />}
                 </Box>) : null}
                 {placeholder ? children : <ul
                 style={{
@@ -240,6 +241,7 @@ export const Item = React.memo(
                 transform,
                 value,
                 itemId,
+                mode,
                 wrapperStyle,
                 ...props
             },
@@ -299,9 +301,7 @@ export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
 const empty = [];
 
-function isViewerMode(mode) {
-    return mode === 'view';
-}
+const isViewerMode = (mode) => mode === 'view';
 
 export function MultipleContainers({
     adjustScale = false,
@@ -665,6 +665,7 @@ export function MultipleContainers({
                             onRemove={() => {
                                 !isViewerMode && handleRemove(containerId)
                             }}
+                            mode={mode}
                         >
                             <SortableContext 
                             items={boardContent[containerId]} 
