@@ -318,7 +318,7 @@ export function MultipleContainers({
 
     const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, getNextContainerId} = useBoardContentAtom();
     const {board} = useBoardAtom();
-    const {data} = useQuery(
+    const {data, isLoading} = useQuery(
         ['boardContent'],
         () => board.boardUUID && useGetBoardContents(board.boardUUID),
         {
@@ -330,6 +330,7 @@ export function MultipleContainers({
             onError: (error) => {
                 console.log(error);
             },
+            useErrorBoundary: true,
         }
     )
 
@@ -452,6 +453,10 @@ export function MultipleContainers({
             recentlyMovedToNewContainer.current = false;
         });
     }, [boardContent]);
+
+    if (isLoading) {
+        return <div>로딩중</div>;
+    }
 
     return (
         <DndContext
