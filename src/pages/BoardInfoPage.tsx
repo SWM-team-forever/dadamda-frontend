@@ -4,9 +4,11 @@ import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
+import { useState } from "react";
+
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -17,6 +19,7 @@ function BoardInfoPage() {
 
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
+    const [mode, setMode] = useState<'view' | 'edit'>('view');
 
     const navigate = useNavigate();
 
@@ -109,7 +112,7 @@ function BoardInfoPage() {
                         justifyContent: 'space-between',
                     }}
                 >
-                    {boardPageId && <TrashableItems confirmDrop={false} />}
+                    {boardPageId && <TrashableItems confirmDrop={false} mode={mode} />}
                 </Box>
             </Box>
             <Box
@@ -137,9 +140,21 @@ function BoardInfoPage() {
                 >
                     스티커 추가
                 </Button>
-                <Button>
-                    편집 모드
-                </Button>
+                {mode === 'view' ? (
+                    <Button
+                        onClick={() => setMode('edit')}
+                    >
+                        편집 모드
+                    </Button>
+                )
+                    : (
+                        <Button
+                            onClick={() => setMode('view')}
+                        >
+                            보기 모드
+                        </Button>
+                    )
+                }
                 <Button
                     onClick={handleSaveBoard}
                 >
