@@ -3,43 +3,72 @@ import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
-import { useLayoutEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     function getBoardPageId(): string | null {
-        return searchParams.get('boardId');
+        return searchParams.get('boardUUID');
     }
 
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
 
-    useLayoutEffect(() => {
-        async function fetchBoardInfo() {
-            if (boardPageId === null) {
-                return;
-            }
-            let boardInfo = await useGetBoard(boardPageId.toString());
-            boardInfo = {
-                ...boardInfo,
-                data: {
-                    ...boardInfo.data,
-                    title: boardInfo.data.name,
-                }
-            }
-            setBoard((prev) => ({
-                ...prev,
-                boardId: boardPageId,
-                ...boardInfo.data,
-            }))
-        }
+    const navigate = useNavigate();
 
-        fetchBoardInfo();
-    }, [boardPageId, board.title])
+    const { data, isLoading } = useQuery(
+        ['board', boardPageId],
+        () => boardPageId && useGetBoard(boardPageId.toString()),
+        {
+            enabled: !!boardPageId,
+            onSuccess: (data) => {
+                if (data) {
+                    setBoard((prev) => ({
+                        ...prev,
+                        boardUUID: boardPageId,
+                        ...data.data,
+                    }))
+                }
+            },
+            onError: (error: any) => {
+                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                navigate('/board');
+            },
+            retry: false,
+            useErrorBoundary: error => error.message !== "NF005",
+
+        }
+    )
 
     const { openModal } = useModal();
+
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                    height: 'calc(100% - 56px)',
+                }}
+            >
+                <Typography
+                    variant="h1"
+                    sx={{
+                        fontSize: '24px',
+                        fontWeight: '500',
+                    }}
+                >
+                    Loading...
+                </Typography>
+            </Box>
+        )
+    }
+
 
     return (
         <Box

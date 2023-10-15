@@ -9,7 +9,7 @@ function DeleteBoardButton() {
     const { closeModal } = useModal();
 
     const handleDeleteBoardButtonClick = () => {
-        (board.boardId) && mutate(board.boardId);
+        (board.boardUUID) && mutate(board.boardUUID);
         closeModal();
     }
 

@@ -13,8 +13,8 @@ import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 
 export interface IBoardListInfo {
-    boardId: number;
-    boardName: string;
+    uuid: number;
+    title: string;
     description: string;
     isFixed?: string,
     tag: string,
@@ -88,8 +88,8 @@ function BoardListTemplate() {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
                                     <Grid item
-                                        key={board.boardId}
-                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
+                                        key={board.uuid}
+                                        onClick={() => navigate(`/board_info?boardUUID=${board.uuid}`)}
                                     >
                                         <Box
                                             sx={{
@@ -118,7 +118,7 @@ function BoardListTemplate() {
                                                     alignItems: 'center',
                                                 }}
                                             >
-                                                <Typography>{board.boardName}</Typography>
+                                                <Typography>{board.title}</Typography>
                                                 <Box
                                                     sx={{
                                                         display: 'flex',
@@ -132,17 +132,10 @@ function BoardListTemplate() {
                                                         }}
                                                         onClick={async (e) => {
                                                             e.stopPropagation();
-                                                            let boardInfo = await useGetBoard(board.boardId.toString());
-                                                            boardInfo = {
-                                                                ...boardInfo,
-                                                                data: {
-                                                                    ...boardInfo.data,
-                                                                    title: boardInfo.data.name,
-                                                                }
-                                                            }
+                                                            const boardInfo = await useGetBoard(board.uuid.toString());
                                                             setBoard((prev) => ({
                                                                 ...prev,
-                                                                boardId: board.boardId.toString(),
+                                                                boardUUID: board.uuid.toString(),
                                                                 ...boardInfo.data,
                                                             }))
                                                             openModal('boardEdit');

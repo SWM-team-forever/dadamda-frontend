@@ -37,12 +37,12 @@ export const useGetBoardList = async ({ pages, size }: fetchDatasProps) => {
 }
 
 interface fetchPostCreateBoardProps {
-    name: string,
+    title: string,
     description: string,
     tag: string,
 }
 
-const fetchPostCreateBoard = async({name, description, tag}: fetchPostCreateBoardProps) => {
+const fetchPostCreateBoard = async({title, description, tag}: fetchPostCreateBoardProps) => {
     const response = token && await fetch(POST_CREATE_BOARD_URL, {
         method: "POST",
         headers: {
@@ -50,7 +50,7 @@ const fetchPostCreateBoard = async({name, description, tag}: fetchPostCreateBoar
             "X-AUTH-TOKEN": token,
         },
         body: JSON.stringify({
-            name: name,
+            title: title,
             description: description,
             tag: tag,
         }),
@@ -84,8 +84,8 @@ export const usePostCreateBoard = () => {
     });
 }
 
-const getBoard = async (boardId: string) => {
-    const response = token && await fetch(`${GET_BOARD_URL}/${boardId}`, {
+const getBoard = async (boardUUID: string) => {
+    const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -104,13 +104,13 @@ const getBoard = async (boardId: string) => {
     return response;
 }
 
-export const useGetBoard = async (boardId: string) => {
-    const board = await getBoard(boardId);
+export const useGetBoard = async (boardUUID: string) => {
+    const board = await getBoard(boardUUID);
     return board;
 }
 
-const deleteBoard = async (boardId: string) => {
-    const response = token && await fetch(`${DELETE_BOARD_URL}/${boardId}`, {
+const deleteBoard = async (boardUUID: string) => {
+    const response = token && await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -135,6 +135,8 @@ export const useDeleteBoard = () => {
     return useMutation(deleteBoard, {
         onSuccess: () => {
             queryClient.invalidateQueries(['boards']);
+            queryClient.invalidateQueries(['boardListCount']);
+            queryClient.invalidateQueries(['board']);
             useDefaultSnackbar('보드가 삭제되었습니다', 'success');
         },
         onError: (error) => {
@@ -146,21 +148,21 @@ export const useDeleteBoard = () => {
 }
 
 interface editBoardProps {
-    boardId: string,
-    name: string,
+    boardUUID: string,
+    title: string,
     description: string,
     tag: string,
 }
 
-const editBoard = async ({boardId, description, tag, name}: editBoardProps) => {
-    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardId}`, {
+const editBoard = async ({boardUUID, description, tag, title}: editBoardProps) => {
+    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
             "X-AUTH-TOKEN": token,
         },
         body: JSON.stringify({
-            name: name,
+            title: title,
             description: description,
             tag: tag,
         }),
