@@ -29,6 +29,11 @@ import { Box } from '@mui/material';
 import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
 import Sticker from '../molcules/Board/Sticker';
 import theme from '@/assets/styles/theme';
+import { useQuery } from '@tanstack/react-query';
+import { useGetBoardContents } from '@/api/board';
+import { useBoardAtom } from '@/hooks/useBoardAtom';
+import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
+import * as Sentry from '@sentry/react';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -279,7 +284,7 @@ export const Item = React.memo(
                         tabIndex={!handle ? 0 : undefined}
                     >
                         {
-                            value.scrapId 
+                            value.scrapId
                             ? <ScrapCard content={value} key={value.id}/>
                             : <Sticker content={value} key={value.id}/>
                         }
@@ -313,7 +318,42 @@ export function MultipleContainers({
     scrollable,
 }) {
 
-    const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, getNextContainerId} = useBoardContentAtom();
+    const {
+        boardContent, 
+        setBoardContent, 
+        containers, 
+        setContainers, 
+        handleAddColumn, 
+        handleSaveBoard, 
+        getNextContainerId,
+        SAVE_BOARD_INTERVAL,
+    } = useBoardContentAtom();
+    const {board} = useBoardAtom();
+    function initializeBoard(data) {
+        if (!data.data.contents) {
+            setBoardContent({});
+            setContainers([]);
+        } else {
+            setBoardContent(JSON.parse(data.data.contents));
+            setContainers(Object.keys(JSON.parse(data.data.contents)));
+        }
+    }
+
+    const {data, isLoading} = useQuery(
+        ['boardContent'],
+        () => board.boardUUID && useGetBoardContents(board.boardUUID),
+        {
+            retry: false,
+            onSuccess: (data) => {
+                initializeBoard(data);
+            },
+            onError: (error) => {
+                useDefaultSnackbar('보드를 불러오는 중 오류가 발생했습니다.', 'error');
+                Sentry.captureException(error);
+            },
+            useErrorBoundary: true,
+        }
+    )
 
     const [activeId, setActiveId] = useState(null);
     const lastOverId = useRef(null);
@@ -434,6 +474,15 @@ export function MultipleContainers({
             recentlyMovedToNewContainer.current = false;
         });
     }, [boardContent]);
+
+    useEffect(() => {
+        const interval = setInterval(() => handleSaveBoard(), SAVE_BOARD_INTERVAL);
+        return () => clearInterval(interval);
+    }, [handleSaveBoard])
+
+    if (isLoading) {
+        return <div>로딩중</div>;
+    }
 
     return (
         <DndContext

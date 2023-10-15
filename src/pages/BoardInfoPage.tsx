@@ -1,11 +1,12 @@
-import { useGetBoard } from "@/api/board";
+import { useGetBoard, useGetBoardList, useSaveBoard } from "@/api/board";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -33,17 +34,17 @@ function BoardInfoPage() {
                     }))
                 }
             },
-            onError: (error: any) => {
+            onError: () => {
                 useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
                 navigate('/board');
             },
             retry: false,
-            useErrorBoundary: error => error.message !== "NF005",
-
+            useErrorBoundary: (error: Error) => error.message !== "NF005",
         }
     )
 
     const { openModal } = useModal();
+    const { handleSaveBoard } = useBoardContentAtom();
 
     if (isLoading) {
         return (
@@ -139,7 +140,9 @@ function BoardInfoPage() {
                 <Button>
                     편집 모드
                 </Button>
-                <Button>
+                <Button
+                    onClick={handleSaveBoard}
+                >
                     저장
                 </Button>
                 <Button>

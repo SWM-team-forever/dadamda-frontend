@@ -11,7 +11,7 @@ interface fetchDatasProps {
 
 const token = localStorage.getItem("token");
 
-const fetchDatas = async ({ url, pages, size }: fetchDatasProps) => {
+const getBoardList = async ({ url, pages, size }: fetchDatasProps) => {
     const response = token && await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
         headers: {
@@ -31,8 +31,8 @@ const fetchDatas = async ({ url, pages, size }: fetchDatasProps) => {
     return response;
 };
 
-export const useGetBoardList = async ({ pages, size }: fetchDatasProps) => {
-    const boards = await fetchDatas({ url: GET_BOARD_LIST_URL, pages: pages, size: size });
+export const useGetBoardList = ({ pages, size }: fetchDatasProps) => {
+    const boards = getBoardList({ url: GET_BOARD_LIST_URL, pages: pages, size: size });
     return boards;
 }
 
@@ -104,8 +104,8 @@ const getBoard = async (boardUUID: string) => {
     return response;
 }
 
-export const useGetBoard = async (boardUUID: string) => {
-    const board = await getBoard(boardUUID);
+export const useGetBoard = (boardUUID: string) => {
+    const board = getBoard(boardUUID);
     return board;
 }
 
@@ -194,4 +194,73 @@ export const useEditBoard = () => {
         },
         useErrorBoundary: false,
     });
+}
+
+interface saveBoardProps {
+    boardUUID: string,
+    contents: any,
+}
+
+const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
+    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+        body: JSON.stringify({
+            contents: JSON.stringify(contents),
+        }),
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useSaveBoard = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(saveBoard, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['boardContent']);
+            useDefaultSnackbar('보드가 저장되었습니다', 'success');
+        },
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('보드 저장에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: true,
+    });
+}
+
+const getBoardContents = async (boardUUID: string) => {
+    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useGetBoardContents = (boardUUID: string) => {
+    const boardContents = getBoardContents(boardUUID);
+    return boardContents;
 }
