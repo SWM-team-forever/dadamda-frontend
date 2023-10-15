@@ -32,6 +32,8 @@ import theme from '@/assets/styles/theme';
 import { useQuery } from '@tanstack/react-query';
 import { useGetBoardContents } from '@/api/board';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
+import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
+import * as Sentry from '@sentry/react';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -328,7 +330,8 @@ export function MultipleContainers({
                 setContainers(Object.keys(JSON.parse(data.data.contents)));
             },
             onError: (error) => {
-                console.log(error);
+                useDefaultSnackbar('보드를 불러오는 중 오류가 발생했습니다.', 'error');
+                Sentry.captureException(error);
             },
             useErrorBoundary: true,
         }
