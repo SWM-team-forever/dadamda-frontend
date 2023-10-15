@@ -320,14 +320,23 @@ export function MultipleContainers({
 
     const {boardContent, setBoardContent, containers, setContainers, handleAddColumn, handleSaveBoard, getNextContainerId} = useBoardContentAtom();
     const {board} = useBoardAtom();
+    function initializeBoard(data) {
+        if (!data.data.contents) {
+            setBoardContent({});
+            setContainers([]);
+        } else {
+            setBoardContent(JSON.parse(data.data.contents));
+            setContainers(Object.keys(JSON.parse(data.data.contents)));
+        }
+    }
+
     const {data, isLoading} = useQuery(
         ['boardContent'],
         () => board.boardUUID && useGetBoardContents(board.boardUUID),
         {
             retry: false,
             onSuccess: (data) => {
-                setBoardContent(JSON.parse(data.data.contents));
-                setContainers(Object.keys(JSON.parse(data.data.contents)));
+                initializeBoard(data);
             },
             onError: (error) => {
                 useDefaultSnackbar('보드를 불러오는 중 오류가 발생했습니다.', 'error');
