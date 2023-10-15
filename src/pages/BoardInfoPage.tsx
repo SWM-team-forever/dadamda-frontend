@@ -34,12 +34,12 @@ function BoardInfoPage() {
                     }))
                 }
             },
-            onError: (error: any) => {
+            onError: () => {
                 useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
                 navigate('/board');
             },
             retry: false,
-            useErrorBoundary: error => error.message !== "NF005",
+            useErrorBoundary: (error: Error) => error.message !== "NF005",
         }
     )
 
