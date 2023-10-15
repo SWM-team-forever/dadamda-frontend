@@ -10,7 +10,7 @@ export type Column = {
 
 interface IBoardAtom {
     title: string,
-    boardId: string | null,
+    boardUUID: string | null,
     description?: string,
     tag?: string,
 }

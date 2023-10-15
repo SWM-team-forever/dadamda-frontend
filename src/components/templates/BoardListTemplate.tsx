@@ -13,7 +13,7 @@ import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 
 export interface IBoardListInfo {
-    boardId: number;
+    uuid: number;
     title: string;
     description: string;
     isFixed?: string,
@@ -88,8 +88,8 @@ function BoardListTemplate() {
                             return page.data.content.map((board: IBoardListInfo) => {
                                 return (
                                     <Grid item
-                                        key={board.boardId}
-                                        onClick={() => navigate(`/board_info?boardId=${board.boardId}`)}
+                                        key={board.uuid}
+                                        onClick={() => navigate(`/board_info?boardUUID=${board.uuid}`)}
                                     >
                                         <Box
                                             sx={{
@@ -132,10 +132,10 @@ function BoardListTemplate() {
                                                         }}
                                                         onClick={async (e) => {
                                                             e.stopPropagation();
-                                                            const boardInfo = await useGetBoard(board.boardId.toString());
+                                                            const boardInfo = await useGetBoard(board.uuid.toString());
                                                             setBoard((prev) => ({
                                                                 ...prev,
-                                                                boardId: board.boardId.toString(),
+                                                                boardUUID: board.uuid.toString(),
                                                                 ...boardInfo.data,
                                                             }))
                                                             openModal('boardEdit');

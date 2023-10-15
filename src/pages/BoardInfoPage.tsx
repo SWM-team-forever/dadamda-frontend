@@ -11,7 +11,7 @@ function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     function getBoardPageId(): string | null {
-        return searchParams.get('boardId');
+        return searchParams.get('boardUUID');
     }
 
     const { board, setBoard } = useBoardAtom();
@@ -28,7 +28,7 @@ function BoardInfoPage() {
                 if (data) {
                     setBoard((prev) => ({
                         ...prev,
-                        boardId: boardPageId,
+                        boardUUID: boardPageId,
                         ...data.data,
                     }))
                 }
