@@ -11,7 +11,7 @@ interface fetchDatasProps {
 
 const token = localStorage.getItem("token");
 
-const fetchDatas = async ({ url, pages, size }: fetchDatasProps) => {
+const getBoardList = async ({ url, pages, size }: fetchDatasProps) => {
     const response = token && await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
         headers: {
@@ -32,7 +32,7 @@ const fetchDatas = async ({ url, pages, size }: fetchDatasProps) => {
 };
 
 export const useGetBoardList = ({ pages, size }: fetchDatasProps) => {
-    const boards = fetchDatas({ url: GET_BOARD_LIST_URL, pages: pages, size: size });
+    const boards = getBoardList({ url: GET_BOARD_LIST_URL, pages: pages, size: size });
     return boards;
 }
 
