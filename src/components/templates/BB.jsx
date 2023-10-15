@@ -664,7 +664,7 @@ export function MultipleContainers({
                             style={containerStyle}
                             unstyled={minimal}
                             onRemove={() => {
-                                !isViewerMode && handleRemove(containerId)
+                                !isViewerMode(mode) && handleRemove(containerId)
                             }}
                             mode={mode}
                         >
