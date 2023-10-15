@@ -6,6 +6,7 @@ import { Box, Button, Typography } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,13 +40,11 @@ function BoardInfoPage() {
             },
             retry: false,
             useErrorBoundary: error => error.message !== "NF005",
-
         }
     )
 
-    const { mutate } = useSaveBoard();
-
     const { openModal } = useModal();
+    const { handleSaveBoard } = useBoardContentAtom();
 
     if (isLoading) {
         return (
@@ -142,10 +141,7 @@ function BoardInfoPage() {
                     편집 모드
                 </Button>
                 <Button
-                    onClick={() => (boardPageId) && mutate({
-                        boardUUID: boardPageId,
-                        contents: 'tests',
-                    })}
+                    onClick={handleSaveBoard}
                 >
                     저장
                 </Button>
