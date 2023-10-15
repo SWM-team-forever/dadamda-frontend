@@ -288,7 +288,11 @@ export const Item = React.memo(
                     >
                         {
                             value.scrapId
-                            ? <ScrapCard content={value} key={value.id}/>
+                            ? <Box
+                                onClick={() => !isViewerMode(mode) && window.open(value.pageUrl)}
+                            >
+                                <ScrapCard content={value} key={value.id}/>
+                            </Box>
                             : <Sticker content={value} key={value.id}/>
                         }
                     </div>
