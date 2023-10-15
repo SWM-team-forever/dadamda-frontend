@@ -6,13 +6,23 @@ import { useModal } from '@/hooks/useModal';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
 import { useGetCurrentTimeInUnixTime } from '@/hooks/useCalculateDateDiff';
+import { logEvent } from '@/utility/amplitude';
 
 function StickerPasteModalElement() {
     const { closeModal } = useModal();
     const [textAreaValue, setTextAreaValue] = useState('');
-    const { pasteSticker } = useBoardContentAtom();
     const getCurrentTimeInUnixTime = useGetCurrentTimeInUnixTime();
 
+    const { pasteSticker } = useBoardContentAtom();
+    const handlePasteScrapButtonClick = () => {
+        pasteSticker({
+            memoId: getCurrentTimeInUnixTime,
+            memoText: textAreaValue,
+            createdDate: getCurrentTimeInUnixTime,
+        });
+        logEvent('paste_sticker');
+        closeModal();
+    }
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
@@ -86,16 +96,7 @@ function StickerPasteModalElement() {
                         boxShadow: 'none',
                     }
                 }}
-                onClick={
-                    () => {
-                        pasteSticker({
-                            memoId: getCurrentTimeInUnixTime,
-                            memoText: textAreaValue,
-                            createdDate: getCurrentTimeInUnixTime,
-                        });
-                        closeModal();
-                    }
-                }
+                onClick={handlePasteScrapButtonClick}
                 disabled={!isValidationSuccess()}
             >
                 등록
