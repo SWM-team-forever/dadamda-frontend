@@ -195,7 +195,12 @@ export const useEditBoard = () => {
     });
 }
 
-const saveBoard = async (boardUUID: string, contents: any) => {
+interface saveBoardProps {
+    boardUUID: string,
+    contents: any,
+}
+
+const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
     const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "PATCH",
         headers: {
@@ -203,7 +208,7 @@ const saveBoard = async (boardUUID: string, contents: any) => {
             "X-AUTH-TOKEN": token,
         },
         body: JSON.stringify({
-            contents: 'test',
+            contents: contents,
         }),
     }).then((response) => {
         return response.json().then(body => {

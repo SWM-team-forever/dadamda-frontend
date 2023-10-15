@@ -142,7 +142,10 @@ function BoardInfoPage() {
                     편집 모드
                 </Button>
                 <Button
-                    onClick={() => (boardPageId) && mutate(boardPageId)}
+                    onClick={() => (boardPageId) && mutate({
+                        boardUUID: boardPageId,
+                        contents: 'tests',
+                    })}
                 >
                     저장
                 </Button>
