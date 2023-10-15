@@ -299,6 +299,10 @@ export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
 const empty = [];
 
+function isViewerMode(mode) {
+    return mode === 'view';
+}
+
 export function MultipleContainers({
     adjustScale = false,
     itemCount = 3,
@@ -316,6 +320,7 @@ export function MultipleContainers({
     trashable = false,
     vertical = false,
     scrollable,
+    mode,
 }) {
 
     const {
@@ -645,6 +650,7 @@ export function MultipleContainers({
                             ? verticalListSortingStrategy
                             : horizontalListSortingStrategy
                     }
+                    disabled={isViewerMode(mode)}
                 >
                     {containers.map((containerId) => (
                         <DroppableContainer
@@ -660,7 +666,11 @@ export function MultipleContainers({
                                 handleRemove(containerId)
                             }}
                         >
-                            <SortableContext items={boardContent[containerId]} strategy={strategy}>
+                            <SortableContext 
+                            items={boardContent[containerId]} 
+                            strategy={strategy}
+                            disabled={isViewerMode(mode)}
+                            >
                                 {boardContent[containerId].map((value, index) => {
                                     return (
                                         <SortableItem
