@@ -1,7 +1,7 @@
 import { Box, Button, InputBase } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import theme from "@/assets/styles/theme";
 import { useIsBlank } from "@/hooks/useValidation";
@@ -14,7 +14,6 @@ function SearchBar({ type }: { type: string }) {
     const [searchText, setSearchText] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const navigate = useNavigate();
     useEffect(() => {
         setIsSearched(false);
         setSearchText('');
@@ -27,7 +26,8 @@ function SearchBar({ type }: { type: string }) {
                 logEvent(`erase_search`);
                 setIsSearched(false);
                 setSearchText('');
-                navigate(`/scrap/${type}`);
+                searchParams.delete('keyword');
+                setSearchParams(searchParams);
             }
         },
         isNotSearched: {
