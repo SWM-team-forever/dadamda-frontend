@@ -1,8 +1,7 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-
-const userProfileImage = localStorage.getItem('userProfileImage');
-const token = localStorage.getItem('token');
+import { useLogout } from "@/hooks/useAccount";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 export const LoginContext = createContext({
     profileImageURL: localStorage.getItem('profileImageURL'),
@@ -29,10 +28,34 @@ export function useLoginState() {
     return context;
 }
 
+function verifyToken(token: string | null) {
+    if (!token) {
+        return false;
+    }
+
+    const tokenData = JSON.parse(atob(token.split('.')[1]));
+
+    if (tokenData.exp) {
+        const expirationDate = new Date(tokenData.exp * 1000);
+        const currentDate = new Date();
+
+        return expirationDate > currentDate;
+    }
+
+    return false;
+}
+
+async function useHandleUnVerifiedTokenUser() {
+    const logout = useLogout();
+    await useDefaultSnackbar('로그인이 만료되었습니다. 다시 로그인해주세요.', 'error');
+    logout();
+}
+
 export function RequireAuth({ children }: { children: React.ReactNode }) {
-    // const { profileImageURL, token } = useLoginState();
     const token = localStorage.getItem('token');
     const location = useLocation();
+
+    !verifyToken(token) && useHandleUnVerifiedTokenUser();
 
     return token ? (
         children
