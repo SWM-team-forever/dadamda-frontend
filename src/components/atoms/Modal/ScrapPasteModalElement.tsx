@@ -8,7 +8,7 @@ import { logEvent } from "@/utility/amplitude";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 function ScrapPasteModalElement() {
@@ -45,6 +45,16 @@ function ScrapPasteModalElement() {
             },
         }
     );
+
+    function deleteSearchParams() {
+        searchParams.delete('keyword');
+        setSearchParams(searchParams);
+    }
+
+    useEffect(() => {
+        return () => deleteSearchParams();
+    }, [])
+
 
     if (isLoading) {
         return (
