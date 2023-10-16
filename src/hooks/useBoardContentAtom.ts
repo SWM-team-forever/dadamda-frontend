@@ -45,10 +45,10 @@ export const useBoardContentAtom = () => {
         setContainers(Object.keys(newBoard));
     }
 
-    function handleAddColumn(mode: 'view' | 'edit') {
+    function handleAddColumn() {
         const newContainerId = getNextContainerId();
 
-        mode === 'edit' && unstable_batchedUpdates(() => {
+        unstable_batchedUpdates(() => {
             setContainers((containers) => [...containers, newContainerId]);
             setBoardContent((items) => ({
                 ...items,
