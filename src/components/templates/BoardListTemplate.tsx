@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Box, Chip, Grid, Typography } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useGetBoard, useGetBoardList } from '@/api/board';
+import { useGetBoard, useGetBoardList, useSearchKeywordInBoardList } from '@/api/board';
 import { MenuIcon } from '@/components/atoms/Icon';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
@@ -24,11 +24,23 @@ export interface IBoardListInfo {
 function BoardListTemplate() {
     const navigate = useNavigate();
     const { openModal } = useModal();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    function isSearchTemplate() {
+        return searchParams.has('keyword');
+    }
+
+    function getKeyword() {
+        console.log(searchParams.get('keyword'));
+        return searchParams.get('keyword');
+    }
 
     const { data, isLoading } = useInfiniteQuery(
-        ['boards'],
+        ['boards', getKeyword()],
         ({ pageParam = 0 }) => {
-            return useGetBoardList({ pages: pageParam, size: 30 })
+            return isSearchTemplate()
+                ? useSearchKeywordInBoardList({ pages: pageParam, size: 30, keyword: getKeyword() })
+                : useGetBoardList({ pages: pageParam, size: 30 })
         },
         {
             getNextPageParam: (lastPage) => {
