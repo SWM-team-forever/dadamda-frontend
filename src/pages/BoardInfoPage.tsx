@@ -156,7 +156,7 @@ function BoardInfoPage() {
                     )
                 }
                 <Button
-                    onClick={handleSaveBoard}
+                    onClick={() => handleSaveBoard('edit')}
                 >
                     저장
                 </Button>

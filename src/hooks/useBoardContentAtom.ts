@@ -64,9 +64,14 @@ export const useBoardContentAtom = () => {
         return lastContainerId ? String.fromCharCode(lastContainerId.charCodeAt(0) + 1): 'A';
     }
 
-    function handleSaveBoard() {
+    function isEditMode(mode: 'view' | 'edit') {
+        return mode === 'edit';
+    }
+
+
+    function handleSaveBoard(mode: 'view' | 'edit') {
         const boardUUID = board?.boardUUID;
-        boardUUID && mutate({ boardUUID: boardUUID, contents: boardContent });
+        (boardUUID && isEditMode(mode)) && mutate({ boardUUID: boardUUID, contents: boardContent });
     }
 
     const SAVE_BOARD_INTERVAL = 10000; // 10초
