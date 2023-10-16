@@ -34,6 +34,7 @@ import { useGetBoardContents } from '@/api/board';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import * as Sentry from '@sentry/react';
+import { TrashCanIcon } from '../atoms/Icon';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -110,6 +111,7 @@ export const Container = forwardRef(
             scrollable,
             shadow,
             unstyled,
+            mode,
             ...props
         },
         ref
@@ -140,8 +142,8 @@ export const Container = forwardRef(
                     gap: '5px',
                 }}
                 >
-                    {onRemove ? <Remove onClick={onRemove} /> : undefined}
-                    <Handle {...handleProps} />
+                    {onRemove && !isViewerMode(mode) ? <Remove onClick={onRemove} /> : undefined}
+                    {!isViewerMode(mode) && <Handle {...handleProps} />}
                 </Box>) : null}
                 {placeholder ? children : <ul
                 style={{
@@ -240,6 +242,7 @@ export const Item = React.memo(
                 transform,
                 value,
                 itemId,
+                mode,
                 wrapperStyle,
                 ...props
             },
@@ -285,7 +288,11 @@ export const Item = React.memo(
                     >
                         {
                             value.scrapId
-                            ? <ScrapCard content={value} key={value.id}/>
+                            ? <Box
+                                onClick={() => !isViewerMode(mode) && window.open(value.pageUrl)}
+                            >
+                                <ScrapCard content={value} key={value.id}/>
+                            </Box>
                             : <Sticker content={value} key={value.id}/>
                         }
                     </div>
@@ -298,6 +305,8 @@ export const Item = React.memo(
 export const TRASH_ID = 'void';
 const PLACEHOLDER_ID = 'placeholder';
 const empty = [];
+
+const isViewerMode = (mode) => mode === 'view';
 
 export function MultipleContainers({
     adjustScale = false,
@@ -316,6 +325,7 @@ export function MultipleContainers({
     trashable = false,
     vertical = false,
     scrollable,
+    mode,
 }) {
 
     const {
@@ -645,6 +655,7 @@ export function MultipleContainers({
                             ? verticalListSortingStrategy
                             : horizontalListSortingStrategy
                     }
+                    disabled={isViewerMode(mode)}
                 >
                     {containers.map((containerId) => (
                         <DroppableContainer
@@ -657,10 +668,15 @@ export function MultipleContainers({
                             style={containerStyle}
                             unstyled={minimal}
                             onRemove={() => {
-                                handleRemove(containerId)
+                                !isViewerMode(mode) && handleRemove(containerId)
                             }}
+                            mode={mode}
                         >
-                            <SortableContext items={boardContent[containerId]} strategy={strategy}>
+                            <SortableContext 
+                            items={boardContent[containerId]} 
+                            strategy={strategy}
+                            disabled={isViewerMode(mode)}
+                            >
                                 {boardContent[containerId].map((value, index) => {
                                     return (
                                         <SortableItem
@@ -680,7 +696,7 @@ export function MultipleContainers({
                             </SortableContext>
                         </DroppableContainer>
                     ))}
-                    {minimal ? undefined : (
+                    {minimal | isViewerMode(mode) ? undefined : (
                         <DroppableContainer
                             id={PLACEHOLDER_ID}
                             disabled={isSortingContainer}
@@ -805,31 +821,32 @@ function getColor(id) {
     return undefined;
 }
 
-function Trash({ id }) {
+function Trash({ id, mode }) {
     const { setNodeRef, isOver } = useDroppable({
         id,
     });
 
     return (
-        <div
+        <Box
             ref={setNodeRef}
-            style={{
+            sx={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'fixed',
-                left: '50%',
-                marginLeft: -150,
-                bottom: 20,
-                width: 300,
-                height: 60,
-                borderRadius: 5,
-                border: '1px solid',
-                borderColor: isOver ? 'red' : '#DDD',
+                right: {
+                    xs: '10px',
+                    sm: '110px',
+                },
+                top: '60px',
+                width: isOver ? '120px' : '60px',
+                height: isOver ? '120px' : '60px',
+                borderRadius: '50%',
+                backgroundColor: isOver ? theme.color.Blue_080 : 'none',
             }}
         >
-            제거하고 싶은 요소를 드래그 해주세요
-        </div>
+            {!isViewerMode(mode) && <TrashCanIcon width='30' height='30' fill={isOver? 'white' : theme.color.Gray_060}/>}
+        </Box>
     );
 }
 
