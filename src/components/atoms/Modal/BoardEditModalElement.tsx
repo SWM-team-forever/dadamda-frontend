@@ -4,6 +4,7 @@ import DeleteBoardButton from "@/components/atoms/Board/DeleteBoardButton";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { MAX_BOARD_DESCRIPTION_LENGTH, MAX_BOARD_TITLE_LENGTH, useIsBlank, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
+import { logEvent } from "@/utility/amplitude";
 import { Typography, TextareaAutosize, Box, Chip, Button, FormHelperText } from "@mui/material";
 import { useState } from "react";
 
@@ -53,6 +54,7 @@ function BoardEditModalElement() {
             tag: selectedTag,
             boardUUID: board.boardUUID,
         });
+        logEvent('edit_board');
         closeModal();
     }
 

@@ -1,5 +1,6 @@
 import { useMoveToChromeExtensionInstallLink } from '@/hooks/useCustomNavigation';
 import { useModal } from '@/hooks/useModal';
+import { logEvent } from '@/utility/amplitude';
 import { Box, Button, Typography } from '@mui/material';
 
 function EmptyScrapContainer() {
@@ -10,6 +11,7 @@ function EmptyScrapContainer() {
 
     const { openModal } = useModal();
     const openScrapCreateModalHandler = () => {
+        logEvent('scrapCreate', { from: 'emptyScrapContainer' });
         openModal('scrapCreate');
     }
 

@@ -8,6 +8,7 @@ import kakaoLogo from '@/assets/icons/kakao_logo.png';
 
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import LoginButton from '@/components/atoms/LoginButton';
+import { logEvent } from '@/utility/amplitude';
 
 type TLoginProviderInformationElement = {
     url: string,
@@ -33,6 +34,7 @@ function LoginModalElement() {
     }
 
     const oAuthHandler = (loginProvider: string): void => {
+        logEvent('login', { loginProvider: loginProvider });
         window.location.href = loginProviderInformation[loginProvider].url;
     };
 

@@ -13,6 +13,7 @@ import ScrapPasteModalElement from "@/components/atoms/Modal/ScrapPasteModalElem
 import BoardCreateModalElement from "@/components/atoms/Modal/BoardCreateModalElement";
 import StickerPasteModalElement from "@/components/atoms/Modal/StickerPasteModalElement";
 import BoardEditModalElement from "@/components/atoms/Modal/BoardEditModalElement";
+import { logEvent } from "@/utility/amplitude";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -84,6 +85,7 @@ export const useModal = () => {
         type: string
     ) => {
         setModal((prev) => {
+            logEvent(`open_${type}_modal`);
             return {
                 ...prev,
                 ...modalTypeMatching[type as keyof typeof modalTypeMatching],

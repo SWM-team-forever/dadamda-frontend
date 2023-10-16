@@ -1,12 +1,13 @@
 import { Box, Button, InputBase } from "@mui/material";
 
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 import theme from "@/assets/styles/theme";
+import { useIsBlank } from "@/hooks/useValidation";
+import { logEvent } from "@/utility/amplitude";
 
 import { SearchIcon } from "@/components/atoms/Icon";
-import { useEffect, useRef, useState } from "react";
-import { useGetScrapSearchResultByType } from "@/api/search";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useIsBlank } from "@/hooks/useValidation";
 
 function SearchBar({ type }: { type: string }) {
     const [isSearched, setIsSearched] = useState(false);
@@ -23,6 +24,7 @@ function SearchBar({ type }: { type: string }) {
         isSearched: {
             text: '지우기',
             action: () => {
+                logEvent(`erase_search`);
                 setIsSearched(false);
                 setSearchText('');
                 navigate(`/scrap/${type}`);
@@ -31,6 +33,7 @@ function SearchBar({ type }: { type: string }) {
         isNotSearched: {
             text: '검색',
             action: () => {
+                logEvent(`search_${type}`, { keyword: searchText });
                 searchParams.append('keyword', searchText);
                 setSearchParams(searchParams);
                 setIsSearched(true);

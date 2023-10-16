@@ -5,6 +5,7 @@ import ThumbnailImage from "@/components/atoms/ThumbnailImage";
 import { useModal } from "@/hooks/useModal";
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 import { MAX_SCRAP_AUTHOR_LENGTH, MAX_SCRAP_BLOGNAME_LENGTH, MAX_SCRAP_CHANNELNAME_LENGTH, MAX_SCRAP_DESCRIPTION_LENGTH, MAX_SCRAP_PRICE_LENGTH, MAX_SCRAP_SITENAME_LENGTH, MAX_SCRAP_TITLE_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
+import { logEvent } from "@/utility/amplitude";
 import { Box, Button, FormControl, FormHelperText, TextareaAutosize, Typography } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 
@@ -171,6 +172,12 @@ function ScrapEditModalElement() {
 
     initiateEditableContent();
     const { mutate } = useEditScrap();
+    const handleEditScrapButtonClick = () => {
+        editScrap();
+        removeSelectedScrap();
+        closeModal();
+        logEvent('edit_scrap', { type: content.dtype });
+    }
 
     const editScrap = () => {
         for (const key in editalbeContent) {
@@ -359,11 +366,7 @@ function ScrapEditModalElement() {
                     lineHeight: '150%',
                     p: '8px 0',
                 }}
-                onClick={() => {
-                    closeModal();
-                    removeSelectedScrap();
-                    editScrap()
-                }}
+                onClick={handleEditScrapButtonClick}
                 disabled={!checkIsEveryValidationSuccessed()}
             >
                 변경하기

@@ -2,13 +2,19 @@ import { useDeleteUser } from '@/api/user';
 import theme from '@/assets/styles/theme';
 import { useGetToken } from '@/hooks/useAccount';
 import { useModal } from '@/hooks/useModal';
+import { logEvent } from '@amplitude/analytics-browser';
 import { Box, Button } from '@mui/material';
 import styled from 'styled-components';
 
 function UserDeleteModalElement() {
     const { closeModal } = useModal();
-    const { mutate } = useDeleteUser();
     const token = useGetToken();
+    const { mutate } = useDeleteUser();
+    const handleDeleteUserButtonClick = () => {
+        token && mutate(token);
+        logEvent('delete_user');
+        closeModal();
+    }
 
     const userDeleteModalButtonStyle = {
         backgroundColor: theme.color.Gray_050,
@@ -31,12 +37,7 @@ function UserDeleteModalElement() {
                     <Button
                         variant='contained'
                         sx={userDeleteModalButtonStyle}
-                        onClick={
-                            () => {
-                                token && mutate(token);
-                                closeModal();
-                            }
-                        }
+                        onClick={handleDeleteUserButtonClick}
                     >
                         탈퇴하기
                     </Button>

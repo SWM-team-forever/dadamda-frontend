@@ -1,6 +1,7 @@
 import { useDeleteBoard } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
+import { logEvent } from "@/utility/amplitude";
 import { Button } from "@mui/material";
 
 function DeleteBoardButton() {
@@ -10,6 +11,7 @@ function DeleteBoardButton() {
 
     const handleDeleteBoardButtonClick = () => {
         (board.boardUUID) && mutate(board.boardUUID);
+        logEvent('delete_board');
         closeModal();
     }
 

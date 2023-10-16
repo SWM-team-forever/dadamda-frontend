@@ -6,6 +6,7 @@ import { useModal } from '@/hooks/useModal';
 import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
+import { logEvent } from '@/utility/amplitude';
 
 function MemoCreateModalElement() {
     const [, setToken] = useState<string | null>(null);
@@ -24,6 +25,12 @@ function MemoCreateModalElement() {
     const scrapId = modal.scrapId;
     const token = localStorage.getItem('token');
     const { mutate, isLoading, isError } = usePostCreateMemo();
+
+    const handleCreateMemoButtonClick = () => {
+        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
+        logEvent('create_memo');
+        closeModal();
+    }
 
     if (isLoading) {
         return <CircularProgress
@@ -107,12 +114,7 @@ function MemoCreateModalElement() {
                         boxShadow: 'none',
                     }
                 }}
-                onClick={
-                    () => {
-                        (token && scrapId) && mutate({ token, scrapId, textAreaValue });
-                        closeModal();
-                    }
-                }
+                onClick={handleCreateMemoButtonClick}
                 disabled={!isValidationSuccess()}
             >
                 등록
