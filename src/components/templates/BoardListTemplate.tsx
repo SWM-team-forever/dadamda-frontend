@@ -6,7 +6,7 @@ import theme from '@/assets/styles/theme';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useGetBoard, useGetBoardList, useSearchKeywordInBoardList } from '@/api/board';
-import { MenuIcon } from '@/components/atoms/Icon';
+import { MenuIcon, StarIcon } from '@/components/atoms/Icon';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
@@ -137,7 +137,9 @@ function BoardListTemplate() {
                                                         gap: '5px',
                                                     }}
                                                 >
-                                                    <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    <Box>
+                                                        <StarIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    </Box>
                                                     <Box
                                                         sx={{
                                                             cursor: 'pointer',
