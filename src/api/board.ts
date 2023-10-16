@@ -295,3 +295,40 @@ export const useSearchKeywordInBoardList = ({keyword, size, pages}: searchKeywor
     const boardList = searchKeywordInBoardList({keyword, size, pages});
     return boardList;
 }
+
+const fixBoardList = async (boardUUID: string) => {
+    const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                return new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useFixBoardList = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(fixBoardList, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['boards']);
+            useDefaultSnackbar('보드가 고정되었습니다', 'success');
+        },
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('보드 고정에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
+    });
+}
+
