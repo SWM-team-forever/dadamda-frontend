@@ -1,5 +1,5 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL } from "@/secret";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 
@@ -263,4 +263,35 @@ const getBoardContents = async (boardUUID: string) => {
 export const useGetBoardContents = (boardUUID: string) => {
     const boardContents = getBoardContents(boardUUID);
     return boardContents;
+}
+
+interface searchKeywordInBoardListProps {
+    keyword?: string | null,
+    size: number,
+    pages: number,
+}
+
+const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInBoardListProps) => {
+    const response = token && await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                return new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useSearchKeywordInBoardList = ({keyword, size, pages}: searchKeywordInBoardListProps) => {
+    const boardList = searchKeywordInBoardList({keyword, size, pages});
+    return boardList;
 }
