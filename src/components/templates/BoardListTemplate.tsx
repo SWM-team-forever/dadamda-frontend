@@ -148,7 +148,7 @@ function BoardListTemplate() {
                                                             mutate(board.uuid.toString());
                                                         }}
                                                     >
-                                                        <StarIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                        <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
                                                     </Box>
                                                     <Box
                                                         sx={{
