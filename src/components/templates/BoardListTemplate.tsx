@@ -136,7 +136,18 @@ function BoardListTemplate() {
                                                     alignItems: 'center',
                                                 }}
                                             >
-                                                <Typography>{board.title}</Typography>
+                                                <Typography
+                                                    sx={{
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        display: '-webkit-box',
+                                                        '-webkit-line-clamp': '1',
+                                                        '-webkit-box-orient': 'vertical',
+                                                        wordWrap: 'break-word',
+                                                    }}
+                                                >
+                                                    {board.title}
+                                                </Typography>
                                                 <Box
                                                     sx={{
                                                         display: 'flex',
