@@ -135,11 +135,13 @@ function BoardInfoPage() {
             >
                 <Button
                     onClick={() => openModal('scrapCreateOnBoard')}
+                    disabled={isViewerMode(mode)}
                 >
                     스크랩 추가
                 </Button>
                 <Button
                     onClick={() => openModal('stickerPaste')}
+                    disabled={isViewerMode(mode)}
                 >
                     스티커 추가
                 </Button>
