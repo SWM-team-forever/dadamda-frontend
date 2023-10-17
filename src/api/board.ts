@@ -322,11 +322,10 @@ export const useFixBoardList = () => {
     return useMutation(fixBoardList, {
         onSuccess: () => {
             queryClient.invalidateQueries(['boards']);
-            useDefaultSnackbar('보드가 고정되었습니다', 'success');
         },
         onError: (error) => {
             Sentry.captureException(error);
-            useDefaultSnackbar('보드 고정에 실패하였습니다.', 'error');
+            useDefaultSnackbar('다시 시도해주세요.', 'error');
         },
         useErrorBoundary: false,
     });
