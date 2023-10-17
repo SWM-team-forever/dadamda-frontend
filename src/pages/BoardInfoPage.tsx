@@ -19,7 +19,10 @@ function BoardInfoPage() {
 
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
+
     const [mode, setMode] = useState<'view' | 'edit'>('view');
+    const isViewerMode = (mode: string) => mode === 'view';
+    const isEditMode = (mode: string) => mode === 'edit';
 
     const navigate = useNavigate();
 
@@ -140,7 +143,7 @@ function BoardInfoPage() {
                 >
                     스티커 추가
                 </Button>
-                {mode === 'view' ? (
+                {isViewerMode(mode) ? (
                     <Button
                         onClick={() => setMode('edit')}
                     >
