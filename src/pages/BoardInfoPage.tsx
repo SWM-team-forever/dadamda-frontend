@@ -168,9 +168,6 @@ function BoardInfoPage() {
                 >
                     저장
                 </Button>
-                <Button>
-                    공유
-                </Button>
                 <Button
                     onClick={() => openModal('boardEdit')}
                 >
