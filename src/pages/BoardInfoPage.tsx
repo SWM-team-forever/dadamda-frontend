@@ -19,7 +19,10 @@ function BoardInfoPage() {
 
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
+
     const [mode, setMode] = useState<'view' | 'edit'>('view');
+    const isViewerMode = (mode: string) => mode === 'view';
+    const isEditMode = (mode: string) => mode === 'edit';
 
     const navigate = useNavigate();
 
@@ -132,15 +135,17 @@ function BoardInfoPage() {
             >
                 <Button
                     onClick={() => openModal('scrapCreateOnBoard')}
+                    disabled={isViewerMode(mode)}
                 >
                     스크랩 추가
                 </Button>
                 <Button
                     onClick={() => openModal('stickerPaste')}
+                    disabled={isViewerMode(mode)}
                 >
                     스티커 추가
                 </Button>
-                {mode === 'view' ? (
+                {isViewerMode(mode) ? (
                     <Button
                         onClick={() => setMode('edit')}
                     >
@@ -156,7 +161,7 @@ function BoardInfoPage() {
                     )
                 }
                 <Button
-                    onClick={handleSaveBoard}
+                    onClick={() => handleSaveBoard('edit')}
                 >
                     저장
                 </Button>

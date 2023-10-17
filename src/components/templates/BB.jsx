@@ -486,9 +486,9 @@ export function MultipleContainers({
     }, [boardContent]);
 
     useEffect(() => {
-        const interval = setInterval(() => handleSaveBoard(), SAVE_BOARD_INTERVAL);
+        const interval = setInterval(() => handleSaveBoard(mode), SAVE_BOARD_INTERVAL);
         return () => clearInterval(interval);
-    }, [handleSaveBoard])
+    }, [handleSaveBoard, mode])
 
     if (isLoading) {
         return <div>로딩중</div>;

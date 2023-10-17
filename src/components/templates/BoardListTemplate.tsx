@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Box, Chip, Grid, Typography } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useGetBoard, useGetBoardList } from '@/api/board';
-import { MenuIcon } from '@/components/atoms/Icon';
+import { useFixBoardList, useGetBoard, useGetBoardList, useSearchKeywordInBoardList } from '@/api/board';
+import { MenuIcon, StarIcon } from '@/components/atoms/Icon';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
@@ -24,11 +24,22 @@ export interface IBoardListInfo {
 function BoardListTemplate() {
     const navigate = useNavigate();
     const { openModal } = useModal();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    function isSearchTemplate() {
+        return searchParams.has('keyword');
+    }
+
+    function getKeyword() {
+        return searchParams.get('keyword');
+    }
 
     const { data, isLoading } = useInfiniteQuery(
-        ['boards'],
+        ['boards', getKeyword()],
         ({ pageParam = 0 }) => {
-            return useGetBoardList({ pages: pageParam, size: 30 })
+            return isSearchTemplate()
+                ? useSearchKeywordInBoardList({ pages: pageParam, size: 30, keyword: getKeyword() })
+                : useGetBoardList({ pages: pageParam, size: 30 })
         },
         {
             getNextPageParam: (lastPage) => {
@@ -39,6 +50,8 @@ function BoardListTemplate() {
     );
 
     const { setBoard } = useBoardAtom();
+
+    const { mutate } = useFixBoardList();
 
     if (isLoading) {
         return (
@@ -125,7 +138,17 @@ function BoardListTemplate() {
                                                         gap: '5px',
                                                     }}
                                                 >
-                                                    <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            mutate(board.uuid.toString());
+                                                        }}
+                                                    >
+                                                        <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
+                                                    </Box>
                                                     <Box
                                                         sx={{
                                                             cursor: 'pointer',

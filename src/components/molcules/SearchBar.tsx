@@ -1,7 +1,7 @@
 import { Box, Button, InputBase } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import theme from "@/assets/styles/theme";
 import { useIsBlank } from "@/hooks/useValidation";
@@ -10,24 +10,25 @@ import { logEvent } from "@/utility/amplitude";
 import { SearchIcon } from "@/components/atoms/Icon";
 
 function SearchBar({ type }: { type: string }) {
-    const [isSearched, setIsSearched] = useState(false);
     const [searchText, setSearchText] = useState('');
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const navigate = useNavigate();
-    useEffect(() => {
-        setIsSearched(false);
-        setSearchText('');
-    }, [type])
+    function isSearchTemplate() {
+        return searchParams.has('keyword');
+    }
+
+    function getKeyword() {
+        return searchParams.get('keyword');
+    }
 
     const buttonInfo = {
         isSearched: {
             text: '지우기',
             action: () => {
                 logEvent(`erase_search`);
-                setIsSearched(false);
                 setSearchText('');
-                navigate(`/scrap/${type}`);
+                searchParams.delete('keyword');
+                setSearchParams(searchParams);
             }
         },
         isNotSearched: {
@@ -36,7 +37,6 @@ function SearchBar({ type }: { type: string }) {
                 logEvent(`search_${type}`, { keyword: searchText });
                 searchParams.append('keyword', searchText);
                 setSearchParams(searchParams);
-                setIsSearched(true);
             }
         }
     };
@@ -69,7 +69,7 @@ function SearchBar({ type }: { type: string }) {
                         p: '0',
                     }
                 }}
-                value={searchText}
+                value={isSearchTemplate() ? getKeyword() : searchText}
                 placeholder="검색"
                 inputProps={{ 'aria-label': 'search google maps' }}
                 startAdornment={
@@ -82,10 +82,10 @@ function SearchBar({ type }: { type: string }) {
                             p: '0',
                             color: theme.color.Gray_070,
                         }}
-                        disabled={!isValidationSuccess()}
-                        onClick={isSearched ? buttonInfo.isSearched.action : buttonInfo.isNotSearched.action}
+                        disabled={!isValidationSuccess() && !isSearchTemplate()}
+                        onClick={isSearchTemplate() ? buttonInfo.isSearched.action : buttonInfo.isNotSearched.action}
                     >
-                        {isSearched ? buttonInfo.isSearched.text : buttonInfo.isNotSearched.text}
+                        {isSearchTemplate() ? buttonInfo.isSearched.text : buttonInfo.isNotSearched.text}
                     </Button>
                 }
             />

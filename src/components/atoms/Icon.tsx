@@ -287,3 +287,11 @@ export function TrashCanIcon({ width, height, fill }: IconProps) {
         </svg>
     )
 }
+
+export function StarIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg width={width} height={height} viewBox="0 0 16 15" fill="none">
+            <path d="M8.00004 0.5L10.4 5.8H16L11.2 8.9L13.6 14.2L8.00004 11.1L2.40004 14.2L4.80004 8.9L0.0000396733 5.8H5.60004L8.00004 0.5Z" fill={fill} />
+        </svg>
+    )
+}

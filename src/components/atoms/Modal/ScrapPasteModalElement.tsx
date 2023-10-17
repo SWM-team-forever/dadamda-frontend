@@ -1,4 +1,5 @@
 import { useGetScrapByType } from "@/api/scrap";
+import { useGetScrapSearchResultByType } from "@/api/search";
 import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
@@ -7,7 +8,8 @@ import { logEvent } from "@/utility/amplitude";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function ScrapPasteModalElement() {
     const token = localStorage.getItem('token');
@@ -17,12 +19,24 @@ function ScrapPasteModalElement() {
         setValue(newValue);
     }
 
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    function isSearchTemplate() {
+        return searchParams.has('keyword');
+    }
+
+    function getKeyword() {
+        return searchParams.get('keyword');
+    }
+
     const { pasteScrap } = useBoardContentAtom();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', value],
+        ['scraps', value, getKeyword()],
         ({ pageParam = 0 }) => {
-            return token && useGetScrapByType({ type: value, pages: pageParam, size: size, token: token })
+            return token && (isSearchTemplate()
+                ? useGetScrapSearchResultByType({ type: value, pages: pageParam, size: size, token: token, keyword: getKeyword() })
+                : useGetScrapByType({ type: value, pages: pageParam, size: size, token: token }))
         },
         {
             getNextPageParam: (lastPage) => {
@@ -31,6 +45,16 @@ function ScrapPasteModalElement() {
             },
         }
     );
+
+    function deleteSearchParams() {
+        searchParams.delete('keyword');
+        setSearchParams(searchParams);
+    }
+
+    useEffect(() => {
+        return () => deleteSearchParams();
+    }, [])
+
 
     if (isLoading) {
         return (
