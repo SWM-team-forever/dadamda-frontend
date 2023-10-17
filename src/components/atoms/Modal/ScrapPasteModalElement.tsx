@@ -98,7 +98,6 @@ function ScrapPasteModalElement() {
                     <Tab label="상품" value='product' />
                     <Tab label="아티클" value='article' />
                     <Tab label="비디오" value='video' />
-                    <Tab label="장소" value='place' disabled />
                 </Tabs>
                 <TabPanel
                     value={value}
