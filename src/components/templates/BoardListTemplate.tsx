@@ -31,7 +31,6 @@ function BoardListTemplate() {
     }
 
     function getKeyword() {
-        console.log(searchParams.get('keyword'));
         return searchParams.get('keyword');
     }
 
