@@ -1,6 +1,12 @@
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 
 function BoardShareModalElement() {
+    const [isShared, setIsShared] = useState(false);
+    function toggleIsShared() {
+        setIsShared(!isShared);
+    }
+
     return (
         <>
             <Box
@@ -12,7 +18,10 @@ function BoardShareModalElement() {
                 }}
             >
                 <Typography>공유 허용</Typography>
-                <Switch />
+                <Switch
+                    checked={isShared}
+                    onChange={toggleIsShared}
+                />
             </Box>
             <Box
                 sx={{
@@ -35,6 +44,7 @@ function BoardShareModalElement() {
                         flexShrink: 0,
                         height: '40px',
                     }}
+                    disabled={!isShared}
                 >
                     링크 복사
                 </Button>
