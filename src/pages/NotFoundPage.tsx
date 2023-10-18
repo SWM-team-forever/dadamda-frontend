@@ -27,7 +27,7 @@ function NotFoundPage() {
                 페이지를 찾을 수 없습니다.
             </Typography>
             <Typography>
-                요청하신 페이지를 찾을 수 없습니다. 홈페이지로 돌아가주세요.
+                권한이 없거나 존재하지 않는 페이지입니다. 홈페이지로 돌아가주세요.
             </Typography>
             <Button variant="contained" color="primary" href="/">
                 홈으로 돌아가기
