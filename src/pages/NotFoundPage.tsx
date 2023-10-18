@@ -1,8 +1,38 @@
+import { Box, Button, Typography } from "@mui/material";
+
 function NotFoundPage() {
     return (
-        <div>
-            <h1>404 Not Found</h1>
-        </div>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                textAlign: "center",
+                position: "absolute",
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                gap: '10px',
+            }}
+        >
+            <Typography
+                variant="h1"
+                sx={{
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                }}
+            >
+                페이지를 찾을 수 없습니다.
+            </Typography>
+            <Typography>
+                요청하신 페이지를 찾을 수 없습니다. 홈페이지로 돌아가주세요.
+            </Typography>
+            <Button variant="contained" color="primary" href="/">
+                홈으로 돌아가기
+            </Button>
+        </Box>
     );
 }
 
