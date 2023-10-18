@@ -1,5 +1,6 @@
 import { RequireAuth } from "@/context/LoginContext";
 import BoardInfoPage from "@/pages/BoardInfoPage";
+import OpenBoardPage from "@/pages/OpenBoardPage";
 import { useSearchParams } from "react-router-dom";
 
 function BoardContentsWrapperPage() {
@@ -9,11 +10,13 @@ function BoardContentsWrapperPage() {
         return searchParams.has('bs');
     }
 
-    return (
-        <RequireAuth>
-            <BoardInfoPage />
-        </RequireAuth>
-    );
+    return hasBoardStateInURL()
+        ? <OpenBoardPage />
+        : (
+            <RequireAuth>
+                <BoardInfoPage />
+            </RequireAuth>
+        );
 }
 
 export default BoardContentsWrapperPage;
