@@ -8,8 +8,9 @@ function BoardShareModalElement() {
         setIsShared(!isShared);
     }
 
+    const [link, setLink] = useState(window.location.href);
     function copyLink() {
-        navigator.clipboard.writeText(window.location.href).then(() => {
+        navigator.clipboard.writeText(link).then(() => {
             useDefaultSnackbar('링크가 복사되었습니다.', 'success');
         });
     }
@@ -41,7 +42,7 @@ function BoardShareModalElement() {
             >
                 <TextField
                     size="small"
-                    value={window.location.href}
+                    value={link}
                     fullWidth
                     disabled
                 />
