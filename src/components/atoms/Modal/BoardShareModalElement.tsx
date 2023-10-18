@@ -1,3 +1,4 @@
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
@@ -5,6 +6,12 @@ function BoardShareModalElement() {
     const [isShared, setIsShared] = useState(false);
     function toggleIsShared() {
         setIsShared(!isShared);
+    }
+
+    function copyLink() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            useDefaultSnackbar('링크가 복사되었습니다.', 'success');
+        });
     }
 
     return (
@@ -45,6 +52,7 @@ function BoardShareModalElement() {
                         height: '40px',
                     }}
                     disabled={!isShared}
+                    onClick={copyLink}
                 >
                     링크 복사
                 </Button>
