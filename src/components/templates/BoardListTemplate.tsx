@@ -6,7 +6,7 @@ import theme from '@/assets/styles/theme';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useFixBoardList, useGetBoard, useGetBoardList, useSearchKeywordInBoardList } from '@/api/board';
-import { MenuIcon, StarIcon } from '@/components/atoms/Icon';
+import { MenuIcon, ProfileIcon, StarIcon } from '@/components/atoms/Icon';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
@@ -86,6 +86,7 @@ function BoardListTemplate() {
                             m: '0',
                             display: 'grid',
                             gap: 2,
+                            pb: '24px',
                         }}
                         gridTemplateColumns={
                             {
@@ -114,8 +115,12 @@ function BoardListTemplate() {
                                                 '&:hover': {
                                                     backgroundColor: theme.color.Blue_080,
                                                 },
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
                                             }}
                                         >
+                                            <ProfileIcon size='80' />
                                         </Box>
                                         <Box
                                             sx={{
@@ -131,7 +136,18 @@ function BoardListTemplate() {
                                                     alignItems: 'center',
                                                 }}
                                             >
-                                                <Typography>{board.title}</Typography>
+                                                <Typography
+                                                    sx={{
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        display: '-webkit-box',
+                                                        '-webkit-line-clamp': '1',
+                                                        '-webkit-box-orient': 'vertical',
+                                                        wordWrap: 'break-word',
+                                                    }}
+                                                >
+                                                    {board.title}
+                                                </Typography>
                                                 <Box
                                                     sx={{
                                                         display: 'flex',

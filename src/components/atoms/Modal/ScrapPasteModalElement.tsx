@@ -3,6 +3,7 @@ import { useGetScrapSearchResultByType } from "@/api/search";
 import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { contentProps } from "@/types/ContentType";
 import { logEvent } from "@/utility/amplitude";
 import { TabContext, TabPanel } from "@mui/lab";
@@ -72,6 +73,7 @@ function ScrapPasteModalElement() {
     const handlePasteScrap = (content: contentProps['content']) => {
         logEvent('paste_scrap', { type: content.dtype });
         pasteScrap(content);
+        useDefaultSnackbar('스크랩이 추가되었습니다.', 'success');
     }
 
     return (
@@ -98,7 +100,6 @@ function ScrapPasteModalElement() {
                     <Tab label="상품" value='product' />
                     <Tab label="아티클" value='article' />
                     <Tab label="비디오" value='video' />
-                    <Tab label="장소" value='place' disabled />
                 </Tabs>
                 <TabPanel
                     value={value}

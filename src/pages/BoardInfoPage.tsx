@@ -154,7 +154,10 @@ function BoardInfoPage() {
                 )
                     : (
                         <Button
-                            onClick={() => setMode('view')}
+                            onClick={() => {
+                                setMode('view')
+                                handleSaveBoard('edit')
+                            }}
                         >
                             보기 모드
                         </Button>
@@ -164,9 +167,6 @@ function BoardInfoPage() {
                     onClick={() => handleSaveBoard('edit')}
                 >
                     저장
-                </Button>
-                <Button>
-                    공유
                 </Button>
                 <Button
                     onClick={() => openModal('boardEdit')}
