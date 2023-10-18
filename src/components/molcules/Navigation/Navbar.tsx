@@ -1,10 +1,8 @@
-import styled from 'styled-components';
-
 import theme from '../../../assets/styles/theme';
-import { Link, useLocation } from 'react-router-dom';
-import { Box, MenuItem, Typography } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import { Box, Typography } from '@mui/material';
 
-import { BoardIcon, TotalIcon, ArticleIcon, ProductIcon, VideoIcon, LocationIcon, EtcIcon } from '../../atoms/Icon';
+import { BoardIcon } from '../../atoms/Icon';
 import ColumnContainer from '../../atoms/ColumnContainer';
 import ScrapNaviagtion from './ScrapNaviagtion';
 import NavigationMenuItem from '../../atoms/Navigation/NavigationMenuItem';
@@ -39,6 +37,17 @@ function Navbar() {
                     sx={{
                         fontWeight: '600',
                         mb: '8px',
+                    }}>
+                    보드
+                </Typography>
+                <NavigationMenuItem item={boardMenuItem} isActive={pathname === boardMenuItem.link} />
+                <Typography
+                    variant='h5'
+                    color={theme.color.Gray_080}
+                    sx={{
+                        fontWeight: '600',
+                        mb: '8px',
+                        mt: '32px',
                     }}>
                     스크랩
                 </Typography>

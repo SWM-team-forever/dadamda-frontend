@@ -27,3 +27,11 @@ export interface contentProps {
         dtype: string,
     }
 }
+
+export type TMemo = {
+    memoImageURL?: string,
+    memoText?: string,
+    createdDate: number,
+    scrapId?: number,
+    memoId: number,
+}

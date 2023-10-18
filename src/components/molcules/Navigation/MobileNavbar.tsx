@@ -46,6 +46,13 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
     },
   }, {
     isVisibleWithoutLogin: false,
+    name: '보드',
+    onclick: () => {
+      navigate('/board');
+      toggleMobileNavbar();
+    },
+  }, {
+    isVisibleWithoutLogin: false,
     name: '스크랩',
     onclick: () => toggleMenu(),
     isMenuOpen: true,

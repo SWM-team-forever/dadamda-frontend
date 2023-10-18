@@ -7,6 +7,7 @@ import { useModal } from '@/hooks/useModal';
 
 import { LinkIcon } from '@/components/atoms/Icon';
 import { SCRAP_LINK_MAX_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
+import { logEvent } from '@/utility/amplitude';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -23,6 +24,11 @@ function ScrapCreateModalElement() {
     };
 
     const { mutate } = usePostCreateScrap();
+    const handleCreateScrapButtonClick = () => {
+        (token && textAreaValue) && mutate({ token, textAreaValue });
+        logEvent('create_scrap');
+        closeModal();
+    };
 
     const validation = () => {
         if (!useIsLessThanLengthLimitation(textAreaValue, SCRAP_LINK_MAX_LENGTH)) {
@@ -108,12 +114,7 @@ function ScrapCreateModalElement() {
                         }
                     }}
                     disabled={!isValidationSuccess()}
-                    onClick={
-                        () => {
-                            (token) && mutate({ token, textAreaValue });
-                            closeModal();
-                        }
-                    }
+                    onClick={handleCreateScrapButtonClick}
                 >
                     추가
                 </Button>

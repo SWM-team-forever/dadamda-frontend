@@ -4,7 +4,7 @@ import { useModal } from '@/hooks/useModal';
 import theme from '@/assets/styles/theme';
 import { CloseIcon } from '@/components/atoms/Icon';
 
-function ModalWrapper() {
+function RightSideModalWrapper() {
     const { modal, closeModal } = useModal();
 
     return (
@@ -16,17 +16,17 @@ function ModalWrapper() {
         >
             <Box
                 sx={{
-                    backgroundColor: theme.color.Gray_020,
+                    backgroundColor: theme.color.Gray_030,
                     borderRadius: '8px',
                     p: '16px',
                     position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
+                    top: '0',
+                    right: '0',
                     width: {
                         xs: '320px',
                         md: '435px',
                     },
+                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '16px',
@@ -66,4 +66,5 @@ function ModalWrapper() {
     );
 }
 
-export default ModalWrapper;
+export default RightSideModalWrapper;
+

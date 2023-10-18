@@ -4,6 +4,7 @@ interface ICustomModalInfo {
     element: React.ReactNode,
     callback?: () => void,
     scrapId?: number,
+    position: string,
 }
 
 export type {ICustomModalInfo};

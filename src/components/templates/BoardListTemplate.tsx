@@ -1,62 +1,209 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import NotReadyTemplate from './NotReadyTemplate';
-
-import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
-import ScrapListHeader from '@/components/molcules/ScrapListHeader';
-import ColumnListTemplate from '@/components/templates/ColumnListTemplate';
-import MasonryListTemplate from '@/components/templates/MasonryListTemplate';
-import { Box, CircularProgress } from '@mui/material';
-import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
-import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
-import { useQuery } from '@tanstack/react-query';
-import { useGetScrapCount } from '@/api/count';
+import { Box, Chip, Grid, Typography } from '@mui/material';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import theme from '@/assets/styles/theme';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import BoardTemplate from '@/components/templates/BoardTemplate';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useFixBoardList, useGetBoard, useGetBoardList, useSearchKeywordInBoardList } from '@/api/board';
+import { MenuIcon, ProfileIcon, StarIcon } from '@/components/atoms/Icon';
+import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
+import { useModal } from '@/hooks/useModal';
+import { useBoardAtom } from '@/hooks/useBoardAtom';
+import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
+
+export interface IBoardListInfo {
+    uuid: number;
+    title: string;
+    description: string;
+    isFixed?: string,
+    tag: string,
+    modifiedDate: number,
+}
 
 function BoardListTemplate() {
-    const token = localStorage.getItem('token');
     const navigate = useNavigate();
-
+    const { openModal } = useModal();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    function isBoardPage() {
-        return searchParams.has('boardId');
+    function isSearchTemplate() {
+        return searchParams.has('keyword');
     }
 
-    function getBoardPageId() {
-        return searchParams.get('boardId');
+    function getKeyword() {
+        return searchParams.get('keyword');
     }
 
-    if (isBoardPage()) {
-        return (<BoardTemplate boardId={getBoardPageId()} />)
+    const { data, isLoading } = useInfiniteQuery(
+        ['boards', getKeyword()],
+        ({ pageParam = 0 }) => {
+            return isSearchTemplate()
+                ? useSearchKeywordInBoardList({ pages: pageParam, size: 30, keyword: getKeyword() })
+                : useGetBoardList({ pages: pageParam, size: 30 })
+        },
+        {
+            getNextPageParam: (lastPage) => {
+                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
+                return nextPage;
+            },
+        }
+    );
+
+    const { setBoard } = useBoardAtom();
+
+    const { mutate } = useFixBoardList();
+
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                }}
+            >
+                로딩중
+            </Box>
+        )
     }
 
     return (
         <>
             <ScrapListContainer>
-                <BoardListHeader count={1} />
+                <BoardListHeader />
                 <Box
                     sx={{
                         height: 'calc(100% - 145px)',
+                        width: '100%',
+                        p: '10px 24px',
+                        boxSizing: 'border-box',
                     }}
                 >
-                    {/* <MatchTemplateWithTypeAndCount type={type} count={data} /> */}
                     <Box
                         sx={{
-                            width: '320px',
-                            height: '180px',
-                            backgroundColor: theme.color.Blue_090,
+                            width: '100%',
+                            m: '0',
+                            display: 'grid',
+                            gap: 2,
+                            pb: '24px',
                         }}
-                        onClick={() => navigate(`/board?boardId=${1}`)}
+                        gridTemplateColumns={
+                            {
+                                xs: 'repeat(1, 1fr)',
+                                sm: 'repeat(2, 1fr)',
+                                md: 'repeat(3, 1fr)',
+                                lg: 'repeat(4, 1fr)',
+                                xl: 'repeat(5, 1fr)',
+                            }
+                        }
                     >
-                        보드 1
+                        {data?.pages.map((page) => {
+                            return page.data.content.map((board: IBoardListInfo) => {
+                                return (
+                                    <Grid item
+                                        key={board.uuid}
+                                        onClick={() => navigate(`/board_info?boardUUID=${board.uuid}`)}
+                                    >
+                                        <Box
+                                            sx={{
+                                                height: '180px',
+                                                width: '100%',
+                                                backgroundColor: theme.color.Blue_090,
+                                                borderRadius: '8px 8px 0 0',
+                                                cursor: 'pointer',
+                                                '&:hover': {
+                                                    backgroundColor: theme.color.Blue_080,
+                                                },
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <ProfileIcon size='80' />
+                                        </Box>
+                                        <Box
+                                            sx={{
+                                                p: '10px',
+                                                backgroundColor: theme.color.Gray_020,
+                                                borderRadius: '0 0 8px 8px',
+                                            }}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'center',
+                                                }}
+                                            >
+                                                <Typography
+                                                    sx={{
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        display: '-webkit-box',
+                                                        '-webkit-line-clamp': '1',
+                                                        '-webkit-box-orient': 'vertical',
+                                                        wordWrap: 'break-word',
+                                                    }}
+                                                >
+                                                    {board.title}
+                                                </Typography>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        gap: '5px',
+                                                    }}
+                                                >
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            mutate(board.uuid.toString());
+                                                        }}
+                                                    >
+                                                        <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
+                                                    </Box>
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={async (e) => {
+                                                            e.stopPropagation();
+                                                            const boardInfo = await useGetBoard(board.uuid.toString());
+                                                            setBoard((prev) => ({
+                                                                ...prev,
+                                                                boardUUID: board.uuid.toString(),
+                                                                ...boardInfo.data,
+                                                            }))
+                                                            openModal('boardEdit');
+                                                        }}
+                                                    >
+                                                        <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '10px',
+                                                }}
+                                            >
+                                                <Chip label={chipInformation.map((chipInfo) =>
+                                                    chipInfo.tagValue === board.tag && chipInfo.label
+                                                )} />
+                                                <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
+                                            </Box>
+                                        </Box>
+                                    </Grid>
+                                )
+                            })
+                        })}
                     </Box>
                 </Box>
-            </ScrapListContainer>
+            </ScrapListContainer >
         </>
     );
 }
@@ -64,7 +211,6 @@ function BoardListTemplate() {
 const ScrapListContainer = styled.div`
     width: calc(100% - 209px);
     height: calc(100% - 56px);
-    background-color: linear-gradient(114deg, #EBEEF3 12.12%, #D6DEEA 100%);
     position: fixed;
     right: 0;
     top: 56px;

@@ -1,49 +1,31 @@
-import { Box, Button, CircularProgress, FormControl, FormHelperText, OutlinedInput, Typography } from '@mui/material';
+import { Box, Button, FormControl, FormHelperText, OutlinedInput, Typography } from '@mui/material';
 import { useState, useEffect, ChangeEvent } from 'react';
 
 import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
-import { usePostCreateMemo } from '@/api/memo';
-import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
+import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
+import { useGetCurrentTimeInUnixTime } from '@/hooks/useCalculateDateDiff';
 import { logEvent } from '@/utility/amplitude';
 
-function MemoCreateModalElement() {
-    const [, setToken] = useState<string | null>(null);
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
-
-    const { modal, closeModal } = useModal();
+function StickerPasteModalElement() {
+    const { closeModal } = useModal();
     const [textAreaValue, setTextAreaValue] = useState('');
+    const getCurrentTimeInUnixTime = useGetCurrentTimeInUnixTime();
 
+    const { pasteSticker } = useBoardContentAtom();
+    const handlePasteScrapButtonClick = () => {
+        pasteSticker({
+            memoId: getCurrentTimeInUnixTime,
+            memoText: textAreaValue,
+            createdDate: getCurrentTimeInUnixTime,
+        });
+        logEvent('paste_sticker');
+        closeModal();
+    }
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
-    }
-
-    const scrapId = modal.scrapId;
-    const token = localStorage.getItem('token');
-    const { mutate, isLoading, isError } = usePostCreateMemo();
-
-    const handleCreateMemoButtonClick = () => {
-        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
-        logEvent('create_memo');
-        closeModal();
-    }
-
-    if (isLoading) {
-        return <CircularProgress
-            sx={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-            }} />;
-    }
-
-    if (isError) {
-        useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
     }
 
     const validation = () => {
@@ -114,7 +96,7 @@ function MemoCreateModalElement() {
                         boxShadow: 'none',
                     }
                 }}
-                onClick={handleCreateMemoButtonClick}
+                onClick={handlePasteScrapButtonClick}
                 disabled={!isValidationSuccess()}
             >
                 등록
@@ -123,4 +105,4 @@ function MemoCreateModalElement() {
     );
 }
 
-export default MemoCreateModalElement;
+export default StickerPasteModalElement;

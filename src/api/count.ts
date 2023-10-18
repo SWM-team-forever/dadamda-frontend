@@ -1,4 +1,4 @@
-import { GET_OTHER_SCRAP_URL, GET_LIST_SCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from "@/secret";
+import { GET_OTHER_SCRAP_URL, GET_LIST_SCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, GET_BOARD_LIST_COUNT_URL } from "@/secret";
 
 const urlMatching: { [key: string]: string } = {
     'other': GET_OTHER_SCRAP_URL,
@@ -7,6 +7,8 @@ const urlMatching: { [key: string]: string } = {
     'product': GET_PRODUCT_SCRAP_URL,
     'video': GET_VIDEO_SCRAP_URL,
 }
+
+const token = localStorage.getItem("token");
 
 interface fetchGetScrapCountProps {
     type: string,
@@ -32,5 +34,27 @@ const fetchGetScrapCount = async({type, token}: fetchGetScrapCountProps) => {
 
 export const useGetScrapCount = async({type, token}: fetchGetScrapCountProps) => {
     const count = await fetchGetScrapCount({type: type, token: token});
+    return count;
+}
+
+const getBoardListCount = async() => {
+    const response = token && await fetch(GET_BOARD_LIST_COUNT_URL, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    })
+
+    const body = response && await response.json();
+    if (response && response.ok) {
+        return body;
+    } else {
+        throw new Error(body.resultCode);
+    }
+}
+
+export const useGetBoardListCount = async() => {
+    const count = await getBoardListCount();
     return count;
 }

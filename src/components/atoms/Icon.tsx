@@ -277,3 +277,21 @@ export function DownIcon({ width, height, fill }: IconProps) {
         </svg>
     )
 }
+
+export function TrashCanIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 18 18" fill={fill}>
+            <path d="M14.8981 7L14.0137 16.0968C13.9638 16.6092 13.5332 17 13.0183 17H4.98165C4.46685 17 4.03616 16.6092 3.98634 16.0968L3.10194 7H14.8981Z" fill={fill} stroke={fill} stroke-width="2" stroke-linecap="round" />
+            <line x1="1" y1="5" x2="17" y2="5" stroke={fill} stroke-width="2" stroke-linecap="round" />
+            <line x1="6" y1="1" x2="12" y2="0.999999" stroke={fill} stroke-width="2" stroke-linecap="round" />
+        </svg>
+    )
+}
+
+export function StarIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg width={width} height={height} viewBox="0 0 16 15" fill="none">
+            <path d="M8.00004 0.5L10.4 5.8H16L11.2 8.9L13.6 14.2L8.00004 11.1L2.40004 14.2L4.80004 8.9L0.0000396733 5.8H5.60004L8.00004 0.5Z" fill={fill} />
+        </svg>
+    )
+}

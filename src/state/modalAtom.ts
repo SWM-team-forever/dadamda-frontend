@@ -7,6 +7,7 @@ const modalAtom = atom<ICustomModalInfo>(
         title: '',
         isOpen: false,
         element: '',
+        position: '',
     }
 );
 

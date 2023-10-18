@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/react';
+import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SnackbarProvider } from 'notistack';
@@ -8,18 +10,16 @@ import { ErrorBoundary } from 'react-error-boundary';
 import theme from '@/assets/styles/themeMuiStyle';
 import { LoginProvider, RequireAuth } from '@/context/LoginContext';
 import { useModal } from '@/hooks/useModal';
+import { SENTRY_DSN } from '@/secret';
 
 import ModalWrapper from '@/components/molcules/Modal/ModalWrapper';
 import Header from '@/components/molcules/Navigation/Header';
 import ErrorPage from '@/pages/ErrorPage';
-
-import * as Sentry from '@sentry/react';
-import React from 'react';
-import { AMPLITUDE_API_KEY, SENTRY_DSN } from '@/secret';
 import RouteChangeTracker from '@/utility/RouteChangeTracker';
 import { initAmplitude } from '@/utility/amplitude';
 import { logEvent } from '@amplitude/analytics-browser';
 import Routing from '@/utility/Routing';
+import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
 
 const queryClient = new QueryClient();
 Sentry.init({
@@ -57,7 +57,9 @@ function App() {
         <SnackbarProvider maxSnack={3}>
           <LoginProvider>
             <Header />
-            {modal.isOpen && <ModalWrapper />}
+            {modal.isOpen && (
+              modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
+            )}
             <ErrorBoundary
               FallbackComponent={ErrorPage}
               onReset={() => {

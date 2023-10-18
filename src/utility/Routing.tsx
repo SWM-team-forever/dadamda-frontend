@@ -13,6 +13,7 @@ import BoardListTemplate from '@/components/templates/BoardListTemplate';
 import { RequireAuth } from '@/context/LoginContext';
 import { useEffect } from 'react';
 import { logEvent } from '@/utility/amplitude';
+import BoardInfoPage from '@/pages/BoardInfoPage';
 
 function Routing() {
   const location = useLocation();
@@ -26,7 +27,9 @@ function Routing() {
 
   return (
     <Routes>
-      <Route path='/' element={<MainPage />}></Route>
+      <Route path='/' element={<RequireAuth><ScrapPage /></RequireAuth>}>
+        <Route index element={<ScrapTemplate type={'list'} />}></Route>
+      </Route>
       <Route path='/main' element={<MainPage />}></Route>
       <Route path='/user' element={<RequireAuth><UserPage /></RequireAuth>}></Route>
       <Route path='/scrap' element={<RequireAuth><ScrapPage /></RequireAuth>}>
@@ -44,6 +47,7 @@ function Routing() {
       <Route path='/trending' element={<TrendingPage />}></Route>
       <Route path='/oauth-login' element={<OAuthLoginpage />}></Route>
       <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
+      <Route path='/board_info' element={<RequireAuth><BoardInfoPage /></RequireAuth>}></Route>
     </Routes>
   );
 }
