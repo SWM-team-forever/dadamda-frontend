@@ -1,8 +1,11 @@
+import { RequireAuth } from "@/context/LoginContext";
+import BoardInfoPage from "@/pages/BoardInfoPage";
+
 function BoardContentsWrapperPage() {
     return (
-        <div>
-
-        </div>
+        <RequireAuth>
+            <BoardInfoPage />
+        </RequireAuth>
     );
 }
 
