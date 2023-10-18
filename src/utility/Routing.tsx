@@ -14,6 +14,8 @@ import { RequireAuth } from '@/context/LoginContext';
 import { useEffect } from 'react';
 import { logEvent } from '@/utility/amplitude';
 import BoardInfoPage from '@/pages/BoardInfoPage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import BoardContentsWrapperPage from '@/pages/BoardContentsWrapperPage';
 
 function Routing() {
   const location = useLocation();
@@ -47,7 +49,8 @@ function Routing() {
       <Route path='/trending' element={<TrendingPage />}></Route>
       <Route path='/oauth-login' element={<OAuthLoginpage />}></Route>
       <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
-      <Route path='/board_info' element={<RequireAuth><BoardInfoPage /></RequireAuth>}></Route>
+      <Route path='/board-contents' element={<BoardContentsWrapperPage />}></Route>
+      <Route path='*' element={<NotFoundPage />}></Route>
     </Routes>
   );
 }
