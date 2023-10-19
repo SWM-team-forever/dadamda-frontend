@@ -14,6 +14,7 @@ import BoardCreateModalElement from "@/components/atoms/Modal/BoardCreateModalEl
 import StickerPasteModalElement from "@/components/atoms/Modal/StickerPasteModalElement";
 import BoardEditModalElement from "@/components/atoms/Modal/BoardEditModalElement";
 import { logEvent } from "@/utility/amplitude";
+import BoardShareModalElement from "@/components/atoms/Modal/BoardShareModalElement";
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -72,6 +73,11 @@ export const useModal = () => {
             title: '보드 수정하기',
             element: <BoardEditModalElement />,
             position: 'right',
+        },
+        boardShare: {
+            title: '보드 공유하기',
+            element: <BoardShareModalElement />,
+            position: 'center',
         }
     }
 
