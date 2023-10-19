@@ -7,8 +7,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
-import { useState } from "react";
-
+import { useRef, useState } from "react";
+import html2canvas from 'html2canvas';
+import * as htmlToImage from 'html-to-image';
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +20,7 @@ function BoardInfoPage() {
 
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
+    const boardRef = useRef();
 
     const [mode, setMode] = useState<'view' | 'edit'>('view');
     const isViewerMode = (mode: string) => mode === 'view';
@@ -51,6 +53,20 @@ function BoardInfoPage() {
 
     const { openModal } = useModal();
     const { handleSaveBoard } = useBoardContentAtom();
+
+    function getScreenshots() {
+        if (!boardRef.current) {
+            return;
+        }
+
+        htmlToImage.toPng(boardRef.current)
+            .then(function (dataUrl) {
+                const link = document.createElement('a');
+                link.download = 'my-image-name.jpeg';
+                link.href = dataUrl;
+                link.click();
+            });
+    }
 
     if (isLoading) {
         return (
@@ -115,7 +131,16 @@ function BoardInfoPage() {
                         justifyContent: 'space-between',
                     }}
                 >
-                    {boardPageId && <TrashableItems confirmDrop={false} mode={mode} />}
+                    {boardPageId &&
+                        <Box
+                            ref={boardRef}
+                        >
+                            <TrashableItems
+                                confirmDrop={false}
+                                mode={mode}
+                            />
+                        </Box>
+                    }
                 </Box>
             </Box>
             <Box
@@ -164,7 +189,7 @@ function BoardInfoPage() {
                     )
                 }
                 <Button
-                    onClick={() => handleSaveBoard('edit')}
+                    onClick={() => getScreenshots()}
                 >
                     저장
                 </Button>
