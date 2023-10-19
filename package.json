@@ -32,6 +32,7 @@
     "@types/react-infinite-scroller": "^1.2.3",
     "dayjs": "^1.11.9",
     "html-entities": "^2.4.0",
+    "html2canvas": "^1.4.1",
     "jotai": "^2.4.2",
     "jotai-utils": "^0.0.0",
     "notistack": "^3.0.1",
