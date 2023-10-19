@@ -10,6 +10,7 @@ import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import { useRef, useState } from "react";
 import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
+import { useScreenshot } from 'use-react-screenshot';
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -54,18 +55,26 @@ function BoardInfoPage() {
     const { openModal } = useModal();
     const { handleSaveBoard } = useBoardContentAtom();
 
+    const [image, takeScreenshot] = useScreenshot({
+        type: 'image/png',
+        quality: 1.0
+    });
+
+    const download = (image: string, extension: string) => {
+        const a = document.createElement("a");
+        a.href = image;
+        a.download = `board.${extension}`;
+        a.click();
+    }
+
     function getScreenshots() {
         if (!boardRef.current) {
             return;
         }
 
-        htmlToImage.toPng(boardRef.current)
-            .then(function (dataUrl) {
-                const link = document.createElement('a');
-                link.download = 'my-image-name.jpeg';
-                link.href = dataUrl;
-                link.click();
-            });
+        takeScreenshot(boardRef.current).then((image) => {
+            download(image, 'png');
+        });
     }
 
     if (isLoading) {
