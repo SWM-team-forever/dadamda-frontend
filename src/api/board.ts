@@ -1,5 +1,5 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 
@@ -331,3 +331,27 @@ export const useFixBoardList = () => {
     });
 }
 
+const getBoardIsShared = async (boardUUID: string) => {
+    const response = token && await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                return new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useGetBoardIsShared = (boardUUID: string) => {
+    const boardIsShared = getBoardIsShared(boardUUID);
+    return boardIsShared;
+}
