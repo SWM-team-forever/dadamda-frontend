@@ -355,3 +355,38 @@ export const useGetBoardIsShared = (boardUUID: string) => {
     const boardIsShared = getBoardIsShared(boardUUID);
     return boardIsShared;
 }
+
+const toggleBoardIsShared = async (boardUUID: string) => {
+    const response = token && await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                return new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useToggleBoardIsShared = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(toggleBoardIsShared, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['boardIsShared']);
+        },
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('보드 공유 상태 변경에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
+    });
+}
