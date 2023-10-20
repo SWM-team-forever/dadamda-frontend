@@ -1,8 +1,29 @@
+import { useGetBoardIsShared } from "@/api/board";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function BoardShareModalElement() {
+    const { board, setBoard } = useBoardAtom();
+    const navigate = useNavigate();
+    const { data, isLoading } = useQuery(
+        ['boardToggle'],
+        () => board.boardUUID && useGetBoardIsShared(board.boardUUID),
+        {
+            select: (data) => {
+                return data?.data.isShared;
+            },
+            onError: () => {
+                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                navigate('/main');
+            },
+            retry: false,
+            useErrorBoundary: (error: Error) => error.message !== "NF005",
+        }
+    )
     const [isShared, setIsShared] = useState(false);
     function toggleIsShared() {
         setIsShared(!isShared);
@@ -27,7 +48,7 @@ function BoardShareModalElement() {
             >
                 <Typography>공유 허용</Typography>
                 <Switch
-                    checked={isShared}
+                    checked={data}
                     onChange={toggleIsShared}
                 />
             </Box>
@@ -52,7 +73,7 @@ function BoardShareModalElement() {
                         flexShrink: 0,
                         height: '40px',
                     }}
-                    disabled={!isShared}
+                    disabled={!data}
                     onClick={copyLink}
                 >
                     링크 복사
