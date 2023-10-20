@@ -11,6 +11,7 @@ import { useRef, useState } from "react";
 import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
 import { ScreenCapture } from 'react-screen-capture';
+import { domToPng } from 'modern-screenshot';
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -59,22 +60,19 @@ function BoardInfoPage() {
             return;
         }
 
-        html2canvas(boardRef.current, {
-            useCORS: true,
-            allowTaint: true,
-            scrollX: 0,
-            scrollY: -window.scrollY,
-            windowWidth: document.documentElement.clientWidth,
-            windowHeight: document.documentElement.clientHeight,
-        }).then((canvas) => {
-            const dataURL = canvas.toDataURL('image/png');
+        domToPng(boardRef.current, {
+            fetch: {
+                requestInit: {
+                    mode: 'cors',
+                }
+            }
+        }).then((dataUrl) => {
             const link = document.createElement('a');
             link.download = 'board.png';
-            link.href = dataURL;
+            link.href = dataUrl;
             link.click();
         });
     }
-
 
     if (isLoading) {
         return (
