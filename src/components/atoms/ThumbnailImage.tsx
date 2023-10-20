@@ -6,29 +6,9 @@ interface ThumbnailImageProps {
 }
 
 function ThumbnailImage({ thumbnailUrl }: ThumbnailImageProps) {
-    const [base64Image, setBase64Image] = useState<string | null>(null);
-
-    useEffect(() => {
-        async function loadImage() {
-            try {
-                const response = await fetch(thumbnailUrl);
-                const blob = await response.blob();
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setBase64Image(reader.result as string);
-                };
-                reader.readAsDataURL(blob);
-            } catch (error) {
-                console.error("Error loading image:", error);
-            }
-        }
-
-        loadImage();
-    }, [thumbnailUrl]);
-
     return (
         <CardImageWrapper>
-            {base64Image && <CardImage src={base64Image} crossOrigin="anonymous" />}
+            <CardImage src={thumbnailUrl} />
         </CardImageWrapper>
     );
 }

@@ -1,4 +1,4 @@
-import { useGetBoard, useGetBoardList, useSaveBoard } from "@/api/board";
+import { useGetBoard } from "@/api/board";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
@@ -8,10 +8,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import { useRef, useState } from "react";
-import html2canvas from 'html2canvas';
-import * as htmlToImage from 'html-to-image';
-import { ScreenCapture } from 'react-screen-capture';
-import { domToPng } from 'modern-screenshot';
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -55,24 +51,6 @@ function BoardInfoPage() {
 
     const { openModal } = useModal();
     const { handleSaveBoard } = useBoardContentAtom();
-    function getScreenshots() {
-        if (!boardRef.current) {
-            return;
-        }
-
-        domToPng(boardRef.current, {
-            fetch: {
-                requestInit: {
-                    mode: 'cors',
-                }
-            }
-        }).then((dataUrl) => {
-            const link = document.createElement('a');
-            link.download = 'board.png';
-            link.href = dataUrl;
-            link.click();
-        });
-    }
 
     if (isLoading) {
         return (
@@ -196,7 +174,10 @@ function BoardInfoPage() {
                     )
                 }
                 <Button
-                    onClick={() => getScreenshots()}
+                    onClick={() => {
+                        setMode('view')
+                        handleSaveBoard('edit')
+                    }}
                 >
                     저장
                 </Button>
