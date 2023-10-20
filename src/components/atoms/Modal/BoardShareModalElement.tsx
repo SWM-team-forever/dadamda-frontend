@@ -1,8 +1,8 @@
-import { useGetBoardIsShared } from "@/api/board";
+import { useGetBoardIsShared, useToggleBoardIsShared } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function BoardShareModalElement() {
     const { board, setBoard } = useBoardAtom();
     const navigate = useNavigate();
     const { data, isLoading } = useQuery(
-        ['boardToggle'],
+        ['boardIsShared'],
         () => board.boardUUID && useGetBoardIsShared(board.boardUUID),
         {
             select: (data) => {
@@ -24,10 +24,7 @@ function BoardShareModalElement() {
             useErrorBoundary: (error: Error) => error.message !== "NF005",
         }
     )
-    const [isShared, setIsShared] = useState(false);
-    function toggleIsShared() {
-        setIsShared(!isShared);
-    }
+    const { mutate } = useToggleBoardIsShared();
 
     const [link, setLink] = useState(window.location.href);
     function copyLink() {
@@ -49,7 +46,7 @@ function BoardShareModalElement() {
                 <Typography>공유 허용</Typography>
                 <Switch
                     checked={data}
-                    onChange={toggleIsShared}
+                    onChange={() => board.boardUUID && mutate(board.boardUUID)}
                 />
             </Box>
             <Box
