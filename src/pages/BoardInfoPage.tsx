@@ -18,7 +18,6 @@ function BoardInfoPage() {
 
     const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
-    const boardRef = useRef();
 
     const [mode, setMode] = useState<'view' | 'edit'>('view');
     const isViewerMode = (mode: string) => mode === 'view';
@@ -116,15 +115,10 @@ function BoardInfoPage() {
                     }}
                 >
                     {boardPageId &&
-
-                        <Box
-                            ref={boardRef}
-                        >
-                            <TrashableItems
-                                confirmDrop={false}
-                                mode={mode}
-                            />
-                        </Box>
+                        <TrashableItems
+                            confirmDrop={false}
+                            mode={mode}
+                        />
                     }
                 </Box>
             </Box>
