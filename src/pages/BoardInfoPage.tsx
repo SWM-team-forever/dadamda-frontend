@@ -54,18 +54,27 @@ function BoardInfoPage() {
 
     const { openModal } = useModal();
     const { handleSaveBoard } = useBoardContentAtom();
-    const [screenShot, setScreenShot] = useState<string>('');
-    const handleScreenCapture = (screenCapture) => {
-        setScreenShot(screenCapture);
+    function getScreenshots() {
+        if (!boardRef.current) {
+            return;
+        }
+
+        html2canvas(boardRef.current, {
+            useCORS: true,
+            allowTaint: true,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            windowWidth: document.documentElement.clientWidth,
+            windowHeight: document.documentElement.clientHeight,
+        }).then((canvas) => {
+            const dataURL = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = 'board.png';
+            link.href = dataURL;
+            link.click();
+        });
     }
 
-    function getScreenshots() {
-        const a = document.createElement("a");
-        const screenshotSource = screenShot;
-        a.download = 'board.png';
-        a.href = screenshotSource;
-        a.click();
-    }
 
     if (isLoading) {
         return (
@@ -131,23 +140,15 @@ function BoardInfoPage() {
                     }}
                 >
                     {boardPageId &&
-                        <ScreenCapture onEndCapture={handleScreenCapture}>
-                            {({ onStartCapture }) => (
-                                <>
-                                    <Button
-                                        onClick={onStartCapture}
-                                        disabled={isViewerMode(mode)}
-                                    >
-                                        스크린샷
-                                    </Button>
-                                    <TrashableItems
-                                        confirmDrop={false}
-                                        mode={mode}
-                                    />
-                                    <img src={screenShot} />
-                                </>
-                            )}
-                        </ScreenCapture>
+
+                        <Box
+                            ref={boardRef}
+                        >
+                            <TrashableItems
+                                confirmDrop={false}
+                                mode={mode}
+                            />
+                        </Box>
                     }
                 </Box>
             </Box>
