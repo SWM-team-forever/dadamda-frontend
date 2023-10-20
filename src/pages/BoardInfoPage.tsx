@@ -10,7 +10,7 @@ import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import { useRef, useState } from "react";
 import html2canvas from 'html2canvas';
 import * as htmlToImage from 'html-to-image';
-import { useScreenshot } from 'use-react-screenshot';
+import { ScreenCapture } from 'react-screen-capture';
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -54,27 +54,17 @@ function BoardInfoPage() {
 
     const { openModal } = useModal();
     const { handleSaveBoard } = useBoardContentAtom();
-
-    const [image, takeScreenshot] = useScreenshot({
-        type: 'image/png',
-        quality: 1.0
-    });
-
-    const download = (image: string, extension: string) => {
-        const a = document.createElement("a");
-        a.href = image;
-        a.download = `board.${extension}`;
-        a.click();
+    const [screenShot, setScreenShot] = useState<string>('');
+    const handleScreenCapture = (screenCapture) => {
+        setScreenShot(screenCapture);
     }
 
     function getScreenshots() {
-        if (!boardRef.current) {
-            return;
-        }
-
-        takeScreenshot(boardRef.current).then((image) => {
-            download(image, 'png');
-        });
+        const a = document.createElement("a");
+        const screenshotSource = screenShot;
+        a.download = 'board.png';
+        a.href = screenshotSource;
+        a.click();
     }
 
     if (isLoading) {
@@ -141,14 +131,23 @@ function BoardInfoPage() {
                     }}
                 >
                     {boardPageId &&
-                        <Box
-                            ref={boardRef}
-                        >
-                            <TrashableItems
-                                confirmDrop={false}
-                                mode={mode}
-                            />
-                        </Box>
+                        <ScreenCapture onEndCapture={handleScreenCapture}>
+                            {({ onStartCapture }) => (
+                                <>
+                                    <Button
+                                        onClick={onStartCapture}
+                                        disabled={isViewerMode(mode)}
+                                    >
+                                        스크린샷
+                                    </Button>
+                                    <TrashableItems
+                                        confirmDrop={false}
+                                        mode={mode}
+                                    />
+                                    <img src={screenShot} />
+                                </>
+                            )}
+                        </ScreenCapture>
                     }
                 </Box>
             </Box>
