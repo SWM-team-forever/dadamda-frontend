@@ -1,5 +1,5 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 
@@ -9,9 +9,8 @@ interface fetchDatasProps {
     size: number;
 }
 
-const token = localStorage.getItem("token");
-
-const getBoardList = async ({ url, pages, size }: fetchDatasProps) => {
+const getBoardList = async ({  url, pages, size }: fetchDatasProps) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
         headers: {
@@ -43,6 +42,7 @@ interface fetchPostCreateBoardProps {
 }
 
 const fetchPostCreateBoard = async({title, description, tag}: fetchPostCreateBoardProps) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(POST_CREATE_BOARD_URL, {
         method: "POST",
         headers: {
@@ -85,6 +85,7 @@ export const usePostCreateBoard = () => {
 }
 
 const getBoard = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
         method: "GET",
         headers: {
@@ -110,6 +111,7 @@ export const useGetBoard = (boardUUID: string) => {
 }
 
 const deleteBoard = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
         method: "DELETE",
         headers: {
@@ -155,6 +157,7 @@ interface editBoardProps {
 }
 
 const editBoard = async ({boardUUID, description, tag, title}: editBoardProps) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
         method: "PATCH",
         headers: {
@@ -202,6 +205,7 @@ interface saveBoardProps {
 }
 
 const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "PATCH",
         headers: {
@@ -241,6 +245,7 @@ export const useSaveBoard = () => {
 }
 
 const getBoardContents = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "GET",
         headers: {
@@ -272,6 +277,7 @@ interface searchKeywordInBoardListProps {
 }
 
 const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInBoardListProps) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
         method: "GET",
         headers: {
@@ -297,6 +303,7 @@ export const useSearchKeywordInBoardList = ({keyword, size, pages}: searchKeywor
 }
 
 const fixBoardList = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
         method: "PATCH",
         headers: {
@@ -332,6 +339,7 @@ export const useFixBoardList = () => {
 }
 
 const getBoardIsShared = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "GET",
         headers: {
@@ -357,6 +365,7 @@ export const useGetBoardIsShared = (boardUUID: string) => {
 }
 
 const toggleBoardIsShared = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
     const response = token && await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "PATCH",
         headers: {
@@ -389,4 +398,28 @@ export const useToggleBoardIsShared = () => {
         },
         useErrorBoundary: false,
     });
+}
+
+const getOpenBoardContents = async (boardUUID: string) => {
+    const response = await fetch(`${GET_OPEN_BOARD_CONTENTS_URL}/${boardUUID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                return new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+};
+
+export const useGetOpenBoardContents = (boardUUID: string) => {
+    const openBoardContents = getOpenBoardContents(boardUUID);
+    return openBoardContents;
 }
