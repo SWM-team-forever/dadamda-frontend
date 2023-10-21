@@ -1,4 +1,4 @@
-import { useGetBoard } from "@/api/board";
+import { useGetBoardIsShared, useGetOpenBoardTitle } from "@/api/board";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
@@ -8,19 +8,20 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 function OpenBoardPage() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const { setBoard } = useBoardAtom();
 
     function getBoardPageId(): string | null {
         return searchParams.get('boardUUID');
     }
 
-    const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
 
+    const { isBoardShared, isLoadingGetIsBoardShared } = useGetBoardIsShared(boardPageId);
     const navigate = useNavigate();
 
     const { data, isLoading } = useQuery(
-        ['board', boardPageId],
-        () => boardPageId && useGetBoard(boardPageId.toString()),
+        ['boardTitle', boardPageId],
+        () => boardPageId && useGetOpenBoardTitle(boardPageId.toString()),
         {
             enabled: !!boardPageId,
             onSuccess: (data) => {
@@ -28,20 +29,22 @@ function OpenBoardPage() {
                     setBoard((prev) => ({
                         ...prev,
                         boardUUID: boardPageId,
-                        ...data.data,
                     }))
                 }
             },
             onError: () => {
                 useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
-                navigate('/board');
+                navigate('not-found');
+            },
+            select: (data) => {
+                return data?.data.title;
             },
             retry: false,
             useErrorBoundary: (error: Error) => error.message !== "NF005",
         }
     )
 
-    if (isLoading) {
+    if (isLoadingGetIsBoardShared || isLoading) {
         return (
             <Box
                 sx={{
@@ -65,6 +68,9 @@ function OpenBoardPage() {
         )
     }
 
+    if (!isBoardShared) {
+        navigate('/not-found');
+    }
 
     return (
         <Box
@@ -93,9 +99,9 @@ function OpenBoardPage() {
                         m: '20px',
                     }}
                 >
-                    {board.title}
+                    {data}
                 </Typography>
-                {boardPageId && <TrashableItems confirmDrop={false} mode={'view'} />}
+                {boardPageId && <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={isBoardShared} />}
             </Box>
         </Box >
     );
