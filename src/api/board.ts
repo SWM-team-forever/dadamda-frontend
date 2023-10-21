@@ -1,5 +1,5 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 
