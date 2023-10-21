@@ -2,28 +2,11 @@ import { useGetBoardIsShared, useToggleBoardIsShared } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function BoardShareModalElement() {
     const { board, setBoard } = useBoardAtom();
-    const navigate = useNavigate();
-    const { data, isLoading } = useQuery(
-        ['boardIsShared'],
-        () => board.boardUUID && useGetBoardIsShared(board.boardUUID),
-        {
-            select: (data) => {
-                return data?.data.isShared;
-            },
-            onError: () => {
-                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
-                navigate('/main');
-            },
-            retry: false,
-            useErrorBoundary: (error: Error) => error.message !== "NF005",
-        }
-    )
+    const { isBoardShared } = useGetBoardIsShared(board.boardUUID);
     const { mutate } = useToggleBoardIsShared();
 
     const [link, setLink] = useState(window.location.href);
@@ -45,7 +28,7 @@ function BoardShareModalElement() {
             >
                 <Typography>공유 허용</Typography>
                 <Switch
-                    checked={data}
+                    checked={isBoardShared}
                     onChange={() => board.boardUUID && mutate(board.boardUUID)}
                 />
             </Box>
@@ -70,7 +53,7 @@ function BoardShareModalElement() {
                         flexShrink: 0,
                         height: '40px',
                     }}
-                    disabled={!data}
+                    disabled={!isBoardShared}
                     onClick={copyLink}
                 >
                     링크 복사
