@@ -175,11 +175,11 @@ function BoardInfoPage() {
                 >
                     저장
                 </Button>
-                <Button
+                {/* <Button
                     onClick={() => openModal('boardShare')}
                 >
                     공유
-                </Button>
+                </Button> */}
                 <Button
                     onClick={() => openModal('boardEdit')}
                 >
