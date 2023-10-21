@@ -8,6 +8,8 @@ const urlMatching: { [key: string]: string } = {
     'video': GET_VIDEO_SCRAP_URL,
 }
 
+const token = localStorage.getItem("token");
+
 interface fetchGetScrapCountProps {
     type: string,
     token: string,
@@ -36,7 +38,6 @@ export const useGetScrapCount = async({type, token}: fetchGetScrapCountProps) =>
 }
 
 const getBoardListCount = async() => {
-    const token = localStorage.getItem("token");
     const response = token && await fetch(GET_BOARD_LIST_COUNT_URL, {
         method: "GET",
         headers: {
