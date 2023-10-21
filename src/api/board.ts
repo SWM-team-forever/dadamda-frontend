@@ -1,7 +1,8 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, GET_OPEN_BOARD_TITLE_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
+import { useNavigate } from "react-router-dom";
 
 interface fetchDatasProps {
     url?: string;
@@ -359,9 +360,28 @@ const getBoardIsShared = async (boardUUID: string) => {
     return response;
 }
 
-export const useGetBoardIsShared = (boardUUID: string) => {
-    const boardIsShared = getBoardIsShared(boardUUID);
-    return boardIsShared;
+export const useGetBoardIsShared = (boardUUID: string | null) => {
+    const navigate = useNavigate();
+
+    const { data, isLoading } = useQuery(
+        ['boardIsShared'],
+        () => boardUUID && getBoardIsShared(boardUUID),
+        {
+            select: (data) => {
+                return data?.data.isShared;
+            },
+            onError: () => {
+                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                navigate('/not-found');
+            },
+            retry: false,
+            useErrorBoundary: (error: Error) => error.message !== "NF005",
+        }
+    );
+
+    const [isBoardShared, isLoadingGetIsBoardShared] = [data, isLoading];
+
+    return { isBoardShared, isLoadingGetIsBoardShared };
 }
 
 const toggleBoardIsShared = async (boardUUID: string) => {
@@ -421,5 +441,29 @@ const getOpenBoardContents = async (boardUUID: string) => {
 
 export const useGetOpenBoardContents = (boardUUID: string) => {
     const openBoardContents = getOpenBoardContents(boardUUID);
+    return openBoardContents;
+}
+
+const getOpenBoardTitle = async (boardUUID: string) => {
+    const response = await fetch(`${GET_OPEN_BOARD_TITLE_URL}/${boardUUID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                return new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+};
+
+export const useGetOpenBoardTitle = (boardUUID: string) => {
+    const openBoardContents = getOpenBoardTitle(boardUUID);
     return openBoardContents;
 }
