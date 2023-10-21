@@ -1,4 +1,4 @@
-import { useGetBoard, useGetBoardList, useSaveBoard } from "@/api/board";
+import { useGetBoard } from "@/api/board";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
@@ -7,8 +7,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
-import { useState } from "react";
-
+import { useRef, useState } from "react";
 
 function BoardInfoPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -115,7 +114,12 @@ function BoardInfoPage() {
                         justifyContent: 'space-between',
                     }}
                 >
-                    {boardPageId && <TrashableItems confirmDrop={false} mode={mode} />}
+                    {boardPageId &&
+                        <TrashableItems
+                            confirmDrop={false}
+                            mode={mode}
+                        />
+                    }
                 </Box>
             </Box>
             <Box
@@ -164,9 +168,17 @@ function BoardInfoPage() {
                     )
                 }
                 <Button
-                    onClick={() => handleSaveBoard('edit')}
+                    onClick={() => {
+                        setMode('view')
+                        handleSaveBoard('edit')
+                    }}
                 >
                     저장
+                </Button>
+                <Button
+                    onClick={() => openModal('boardShare')}
+                >
+                    공유
                 </Button>
                 <Button
                     onClick={() => openModal('boardEdit')}

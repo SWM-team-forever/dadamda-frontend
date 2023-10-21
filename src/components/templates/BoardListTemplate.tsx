@@ -103,7 +103,7 @@ function BoardListTemplate() {
                                 return (
                                     <Grid item
                                         key={board.uuid}
-                                        onClick={() => navigate(`/board_info?boardUUID=${board.uuid}`)}
+                                        onClick={() => navigate(`/board-contents?boardUUID=${board.uuid}`)}
                                     >
                                         <Box
                                             sx={{
