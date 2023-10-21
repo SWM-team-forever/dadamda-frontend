@@ -30,7 +30,7 @@ import { useBoardContentAtom } from '@/hooks/useBoardContentAtom';
 import Sticker from '../molcules/Board/Sticker';
 import theme from '@/assets/styles/theme';
 import { useQuery } from '@tanstack/react-query';
-import { useGetBoardContents } from '@/api/board';
+import { useGetBoardContents, useGetOpenBoardContents } from '@/api/board';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import * as Sentry from '@sentry/react';
@@ -326,6 +326,7 @@ export function MultipleContainers({
     vertical = false,
     scrollable,
     mode,
+    isBoardShared,
 }) {
 
     const {
@@ -349,9 +350,11 @@ export function MultipleContainers({
         }
     }
 
+    const boardUUID = board.boardUUID;
+
     const {data, isLoading} = useQuery(
-        ['boardContent'],
-        () => board.boardUUID && useGetBoardContents(board.boardUUID),
+        ['boardContent', boardUUID],
+        () => isBoardShared ? useGetOpenBoardContents(boardUUID) : useGetBoardContents(boardUUID),
         {
             retry: false,
             onSuccess: (data) => {
