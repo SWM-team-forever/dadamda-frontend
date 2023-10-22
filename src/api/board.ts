@@ -207,7 +207,11 @@ interface saveBoardProps {
 
 const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -247,7 +251,11 @@ export const useSaveBoard = () => {
 
 const getBoardContents = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -290,7 +298,7 @@ const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInB
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
@@ -316,7 +324,7 @@ const fixBoardList = async (boardUUID: string) => {
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
@@ -341,6 +349,10 @@ export const useFixBoardList = () => {
 
 const getBoardIsShared = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
+    if (!token) {
+        return new Error('로그인이 필요합니다.');
+    }
+
     const response = token && await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "GET",
         headers: {
@@ -352,7 +364,7 @@ const getBoardIsShared = async (boardUUID: string) => {
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
@@ -386,7 +398,11 @@ export const useGetBoardIsShared = (boardUUID: string | null) => {
 
 const toggleBoardIsShared = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
+    if (!token) {
+        throw new Error('로그인이 필요합니다.');
+    }
+
+    const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -397,7 +413,7 @@ const toggleBoardIsShared = async (boardUUID: string) => {
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
@@ -431,7 +447,7 @@ const getOpenBoardContents = async (boardUUID: string) => {
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
@@ -455,7 +471,7 @@ const getOpenBoardTitle = async (boardUUID: string) => {
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
