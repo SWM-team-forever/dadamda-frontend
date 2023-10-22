@@ -1,5 +1,6 @@
 import { RequireAuth } from "@/context/LoginContext";
 import BoardInfoPage from "@/pages/BoardInfoPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 import OpenBoardPage from "@/pages/OpenBoardPage";
 import { useSearchParams } from "react-router-dom";
 
@@ -10,8 +11,12 @@ function BoardContentsWrapperPage() {
         return searchParams.has('bs');
     }
 
+    function isBoardStateShared() {
+        return searchParams.get('bs') === 'shared';
+    }
+
     return hasBoardStateInURL()
-        ? <OpenBoardPage />
+        ? (isBoardStateShared() ? <OpenBoardPage /> : <NotFoundPage />)
         : (
             <RequireAuth>
                 <BoardInfoPage />
