@@ -35,6 +35,7 @@ import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import * as Sentry from '@sentry/react';
 import { TrashCanIcon } from '../atoms/Icon';
+import { useNavigate } from 'react-router-dom';
 
 const animateLayoutChanges = (args) =>
     defaultAnimateLayoutChanges({ ...args, wasDragging: true });
@@ -351,6 +352,7 @@ export function MultipleContainers({
     }
 
     const boardUUID = board.boardUUID;
+    const navigate = useNavigate();
 
     const {data, isLoading} = useQuery(
         ['boardContent', boardUUID],
@@ -361,9 +363,15 @@ export function MultipleContainers({
                 initializeBoard(data);
             },
             onError: (error) => {
-                useDefaultSnackbar('보드를 불러오는 중 오류가 발생했습니다.', 'error');
-                Sentry.captureException(error);
+                if (error.message === 'NF005') {
+                    useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                    navigate('/not-found');
+                } else {
+                    useDefaultSnackbar('보드를 불러오는 중 오류가 발생했습니다.', 'error');
+                    Sentry.captureException(error);
+                }
             },
+            refetchOnWindowFocus: true,
             useErrorBoundary: true,
         }
     )
