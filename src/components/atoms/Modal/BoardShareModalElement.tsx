@@ -9,7 +9,7 @@ function BoardShareModalElement() {
     const { isBoardShared } = useGetBoardIsShared(board.boardUUID);
     const { mutate } = useToggleBoardIsShared();
 
-    const [link, setLink] = useState(window.location.href);
+    const [link, setLink] = useState(window.location.href + `&bs=shared`);
     function copyLink() {
         navigator.clipboard.writeText(link).then(() => {
             useDefaultSnackbar('링크가 복사되었습니다.', 'success');
