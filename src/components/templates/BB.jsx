@@ -371,7 +371,6 @@ export function MultipleContainers({
                     Sentry.captureException(error);
                 }
             },
-            refetchOnWindowFocus: true,
             useErrorBoundary: true,
         }
     )
