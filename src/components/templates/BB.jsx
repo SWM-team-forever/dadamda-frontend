@@ -657,6 +657,7 @@ export function MultipleContainers({
                     boxSizing: 'border-box',
                     padding: 20,
                     gridAutoFlow: vertical ? 'row' : 'column',
+                    overflow: 'auto',
                 }}
             >
                 <SortableContext

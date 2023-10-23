@@ -2,12 +2,14 @@ import theme from "@/assets/styles/theme";
 import { Box, Button, Typography } from "@mui/material";
 import { useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import * as Sentry from "@sentry/react";
 
-function ErrorPage({ resetErrorBoundary }: any) {
+function ErrorPage({ resetErrorBoundary, error }: any) {
     const navigate = useNavigate();
     const location = useLocation();
     const errorLocation = useRef(location.pathname);
     useEffect(() => {
+        Sentry.captureException(error);
         if (location.pathname !== errorLocation.current) {
             resetErrorBoundary();
         }
