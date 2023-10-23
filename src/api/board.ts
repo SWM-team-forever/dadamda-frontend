@@ -1,7 +1,8 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, GET_OPEN_BOARD_TITLE_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
+import { useNavigate } from "react-router-dom";
 
 interface fetchDatasProps {
     url?: string;
@@ -11,7 +12,11 @@ interface fetchDatasProps {
 
 const getBoardList = async ({  url, pages, size }: fetchDatasProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(url + `?page=${pages}&size=${size}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -43,7 +48,11 @@ interface fetchPostCreateBoardProps {
 
 const fetchPostCreateBoard = async({title, description, tag}: fetchPostCreateBoardProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(POST_CREATE_BOARD_URL, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(POST_CREATE_BOARD_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -86,7 +95,11 @@ export const usePostCreateBoard = () => {
 
 const getBoard = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -112,7 +125,11 @@ export const useGetBoard = (boardUUID: string) => {
 
 const deleteBoard = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -158,7 +175,11 @@ interface editBoardProps {
 
 const editBoard = async ({boardUUID, description, tag, title}: editBoardProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -206,7 +227,11 @@ interface saveBoardProps {
 
 const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -246,7 +271,11 @@ export const useSaveBoard = () => {
 
 const getBoardContents = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -278,7 +307,11 @@ interface searchKeywordInBoardListProps {
 
 const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInBoardListProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -289,7 +322,7 @@ const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInB
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
@@ -304,7 +337,11 @@ export const useSearchKeywordInBoardList = ({keyword, size, pages}: searchKeywor
 
 const fixBoardList = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -315,7 +352,7 @@ const fixBoardList = async (boardUUID: string) => {
             if (response.ok) {
                 return body;
             } else {
-                return new Error(body.resultCode);
+                throw new Error(body.resultCode);
             }
         })
     });
@@ -336,4 +373,141 @@ export const useFixBoardList = () => {
         },
         useErrorBoundary: false,
     });
+}
+
+const getBoardIsShared = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        return new Error('로그인이 필요합니다.');
+    }
+
+    const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useGetBoardIsShared = (boardUUID: string | null) => {
+    const navigate = useNavigate();
+
+    const { data, isLoading } = useQuery(
+        ['boardIsShared'],
+        () => boardUUID && getBoardIsShared(boardUUID),
+        {
+            select: (data) => {
+                return data?.data.isShared;
+            },
+            onError: () => {
+                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                navigate('/not-found');
+            },
+            retry: false,
+            useErrorBoundary: (error: Error) => error.message !== "NF005",
+        }
+    );
+
+    const [isBoardShared, isLoadingGetIsBoardShared] = [data, isLoading];
+
+    return { isBoardShared, isLoadingGetIsBoardShared };
+}
+
+const toggleBoardIsShared = async (boardUUID: string) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        throw new Error('로그인이 필요합니다.');
+    }
+
+    const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "X-AUTH-TOKEN": token,
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+}
+
+export const useToggleBoardIsShared = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation(toggleBoardIsShared, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['boardIsShared']);
+        },
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('보드 공유 상태 변경에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: false,
+    });
+}
+
+const getOpenBoardContents = async (boardUUID: string) => {
+    const response = await fetch(`${GET_OPEN_BOARD_CONTENTS_URL}/${boardUUID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+};
+
+export const useGetOpenBoardContents = (boardUUID: string) => {
+    const openBoardContents = getOpenBoardContents(boardUUID);
+    return openBoardContents;
+}
+
+const getOpenBoardTitle = async (boardUUID: string) => {
+    const response = await fetch(`${GET_OPEN_BOARD_TITLE_URL}/${boardUUID}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+
+    return response;
+};
+
+export const useGetOpenBoardTitle = (boardUUID: string) => {
+    const openBoardContents = getOpenBoardTitle(boardUUID);
+    return openBoardContents;
 }

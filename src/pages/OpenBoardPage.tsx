@@ -1,4 +1,4 @@
-import { useGetBoard } from "@/api/board";
+import { useGetOpenBoardTitle } from "@/api/board";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
@@ -8,33 +8,34 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 function OpenBoardPage() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const { setBoard } = useBoardAtom();
 
     function getBoardPageId(): string | null {
         return searchParams.get('boardUUID');
     }
 
-    const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
-
     const navigate = useNavigate();
 
     const { data, isLoading } = useQuery(
-        ['board', boardPageId],
-        () => boardPageId && useGetBoard(boardPageId.toString()),
+        ['boardTitle', boardPageId],
+        () => boardPageId && useGetOpenBoardTitle(boardPageId),
         {
             enabled: !!boardPageId,
-            onSuccess: (data) => {
-                if (data) {
-                    setBoard((prev) => ({
-                        ...prev,
-                        boardUUID: boardPageId,
-                        ...data.data,
-                    }))
+            onError: (error: Error) => {
+                if (error.message === "NF005") {
+                    useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                    navigate('/not-found');
                 }
             },
-            onError: () => {
-                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
-                navigate('/board');
+            onSuccess: () => {
+                setBoard((prev) => ({
+                    ...prev,
+                    boardUUID: boardPageId,
+                }))
+            },
+            select: (data) => {
+                return data?.data.title;
             },
             retry: false,
             useErrorBoundary: (error: Error) => error.message !== "NF005",
@@ -65,7 +66,6 @@ function OpenBoardPage() {
         )
     }
 
-
     return (
         <Box
             sx={{
@@ -93,9 +93,9 @@ function OpenBoardPage() {
                         m: '20px',
                     }}
                 >
-                    {board.title}
+                    {data}
                 </Typography>
-                {boardPageId && <TrashableItems confirmDrop={false} mode={'view'} />}
+                {boardPageId && <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />}
             </Box>
         </Box >
     );

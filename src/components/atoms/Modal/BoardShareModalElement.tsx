@@ -1,14 +1,15 @@
+import { useGetBoardIsShared, useToggleBoardIsShared } from "@/api/board";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 
 function BoardShareModalElement() {
-    const [isShared, setIsShared] = useState(false);
-    function toggleIsShared() {
-        setIsShared(!isShared);
-    }
+    const { board, setBoard } = useBoardAtom();
+    const { isBoardShared } = useGetBoardIsShared(board.boardUUID);
+    const { mutate } = useToggleBoardIsShared();
 
-    const [link, setLink] = useState(window.location.href);
+    const [link, setLink] = useState(window.location.href + `&bs=shared`);
     function copyLink() {
         navigator.clipboard.writeText(link).then(() => {
             useDefaultSnackbar('링크가 복사되었습니다.', 'success');
@@ -27,8 +28,8 @@ function BoardShareModalElement() {
             >
                 <Typography>공유 허용</Typography>
                 <Switch
-                    checked={isShared}
-                    onChange={toggleIsShared}
+                    checked={isBoardShared}
+                    onChange={() => board.boardUUID && mutate(board.boardUUID)}
                 />
             </Box>
             <Box
@@ -52,7 +53,7 @@ function BoardShareModalElement() {
                         flexShrink: 0,
                         height: '40px',
                     }}
-                    disabled={!isShared}
+                    disabled={!isBoardShared}
                     onClick={copyLink}
                 >
                     링크 복사
