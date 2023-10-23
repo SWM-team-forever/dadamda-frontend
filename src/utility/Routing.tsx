@@ -50,7 +50,7 @@ function Routing() {
       <Route path='/oauth-login' element={<OAuthLoginpage />}></Route>
       <Route path='/privacy' element={<PrivacyPolicyPage />}></Route>
       <Route path='/board-contents' element={<BoardContentsWrapperPage />}></Route>
-      <Route path='not-found' element={<NotFoundPage />} />
+      <Route path='/not-found' element={<NotFoundPage />} />
       <Route path='*' element={<NotFoundPage />}></Route>
     </Routes>
   );
