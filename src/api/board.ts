@@ -12,7 +12,11 @@ interface fetchDatasProps {
 
 const getBoardList = async ({  url, pages, size }: fetchDatasProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(url + `?page=${pages}&size=${size}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -44,7 +48,11 @@ interface fetchPostCreateBoardProps {
 
 const fetchPostCreateBoard = async({title, description, tag}: fetchPostCreateBoardProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(POST_CREATE_BOARD_URL, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(POST_CREATE_BOARD_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -87,7 +95,11 @@ export const usePostCreateBoard = () => {
 
 const getBoard = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -113,7 +125,11 @@ export const useGetBoard = (boardUUID: string) => {
 
 const deleteBoard = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -159,7 +175,11 @@ interface editBoardProps {
 
 const editBoard = async ({boardUUID, description, tag, title}: editBoardProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -251,7 +271,6 @@ export const useSaveBoard = () => {
 
 const getBoardContents = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-  
     if (!token) {
         throw new Error('NF005');
     }
@@ -288,7 +307,11 @@ interface searchKeywordInBoardListProps {
 
 const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInBoardListProps) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -314,7 +337,11 @@ export const useSearchKeywordInBoardList = ({keyword, size, pages}: searchKeywor
 
 const fixBoardList = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
-    const response = token && await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
+    if (!token) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -354,7 +381,7 @@ const getBoardIsShared = async (boardUUID: string) => {
         return new Error('로그인이 필요합니다.');
     }
 
-    const response = token && await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
+    const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
