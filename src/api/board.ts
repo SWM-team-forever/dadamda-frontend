@@ -251,6 +251,7 @@ export const useSaveBoard = () => {
 
 const getBoardContents = async (boardUUID: string) => {
     const token = localStorage.getItem("token");
+  
     if (!token) {
         throw new Error('NF005');
     }
