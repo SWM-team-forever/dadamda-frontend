@@ -1,5 +1,5 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, GET_OPEN_BOARD_TITLE_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, GET_OPEN_BOARD_TITLE_URL, GET_SHORTENED_SHARING_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 import { useNavigate } from "react-router-dom";
@@ -510,4 +510,44 @@ const getOpenBoardTitle = async (boardUUID: string) => {
 export const useGetOpenBoardTitle = (boardUUID: string) => {
     const openBoardContents = getOpenBoardTitle(boardUUID);
     return openBoardContents;
+}
+
+const getShortenedSharingBoardUrl = async (nativeUrl: string) => {
+    if (!nativeUrl) {
+        throw new Error('NF005');
+    }
+
+    const response = await fetch(GET_SHORTENED_SHARING_BOARD_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            'native_url': nativeUrl,
+        }),
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+    
+    return response;
+}
+
+export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
+    const { data, isLoading } = useQuery(
+        ['shortenedSharingBoardUrl'],
+        () => getShortenedSharingBoardUrl(nativeUrl),
+        {
+            retry: false,
+            useErrorBoundary: true,
+        }
+    );
+
+    const [shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl] = [`${data.forward_url}/${data.short_id}`, isLoading];
+    return { shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl };
 }
