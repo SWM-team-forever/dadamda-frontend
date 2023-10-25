@@ -10,7 +10,7 @@ function BoardShareModalElement() {
     const { shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl } = useGetShortenedSharingBoardUrl(sharingBoardUrl);
     const { mutate } = useToggleBoardIsShared();
     function copyLink() {
-        navigator.clipboard.writeText(shortenedSharingBoardUrl).then(() => {
+        navigator.clipboard.writeText(shortenedSharingBoardUrl || "").then(() => {
             useDefaultSnackbar('링크가 복사되었습니다.', 'success');
         });
     }
