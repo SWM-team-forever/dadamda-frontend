@@ -107,7 +107,7 @@ export const usePostCreateScrap = () => {
             ? useDefaultSnackbar('이미 존재하는 스크랩입니다.', 'error')
             : useDefaultSnackbar('스크랩 생성에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -146,7 +146,7 @@ export const useDeleteScrap = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('스크랩 삭제에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -185,6 +185,6 @@ export const useEditScrap = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('스크랩 변경에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }

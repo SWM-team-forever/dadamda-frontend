@@ -41,7 +41,7 @@ export const usePostCreateMemo = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -83,6 +83,6 @@ export const useDeleteMemo = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('메모 삭제에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }

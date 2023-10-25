@@ -84,7 +84,7 @@ export const usePostCreateBoard = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 생성에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -151,7 +151,7 @@ export const useDeleteBoard = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 삭제에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -202,7 +202,7 @@ export const useEditBoard = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 수정에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -345,7 +345,7 @@ export const useFixBoardList = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('다시 시도해주세요.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -428,7 +428,7 @@ export const useToggleBoardIsShared = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 공유 상태 변경에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
