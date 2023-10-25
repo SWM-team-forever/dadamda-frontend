@@ -9,7 +9,7 @@ import { useGetToken } from '@/hooks/useAccount';
 
 const Hero = () => {
     const navigate = useNavigate();
-    const token = useGetToken();
+    const token = localStorage.getItem('token');
     const { openModal } = useModal();
 
     const startButtonHandler = () => {
