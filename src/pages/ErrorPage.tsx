@@ -3,6 +3,8 @@ import { Box, Button, Typography } from "@mui/material";
 import { useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as Sentry from "@sentry/react";
+import { HAS_NO_ACCESS_ERROR } from "@/hooks/useAccount";
+import { useHandleUnVerifiedTokenUser } from "@/context/LoginContext";
 
 function ErrorPage({ resetErrorBoundary, error }: any) {
     const navigate = useNavigate();
@@ -18,6 +20,10 @@ function ErrorPage({ resetErrorBoundary, error }: any) {
     const goBack = () => {
         navigate(-1);
     };
+
+    if (error.message === HAS_NO_ACCESS_ERROR) {
+        useHandleUnVerifiedTokenUser();
+    }
 
     return (
         <Box
