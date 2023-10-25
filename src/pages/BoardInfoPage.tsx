@@ -3,17 +3,17 @@ import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import { useRef, useState } from "react";
 
 function BoardInfoPage() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const params = useParams();
 
     function getBoardPageId(): string | null {
-        return searchParams.get('boardUUID');
+        return params['boardUUID'] || null;
     }
 
     const { board, setBoard } = useBoardAtom();
