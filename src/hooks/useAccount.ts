@@ -25,14 +25,14 @@ function isTokenExpired(token: string) {
         const expirationDate = new Date(tokenData.exp * 1000);
         const currentDate = new Date();
 
-        return expirationDate >= currentDate;
+        return expirationDate <= currentDate;
     }
 
     return true;
 }
 
 export function useVerifyToken(token: string | null) {
-    if (!token || !isTokenExpired(token)) {
+    if (!token || isTokenExpired(token)) {
         throw new Error(HAS_NO_ACCESS_ERROR);
     }
 }
