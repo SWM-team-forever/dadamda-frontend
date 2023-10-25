@@ -14,10 +14,11 @@ import { logEvent } from "@/utility/amplitude";
 
 import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
+import InfiniteScroll from "react-infinite-scroller";
 
 function ScrapPasteModalElement() {
     const token = useGetToken();
-    const size = 30;
+    const size = 2;
     const [value, setValue] = useState('list');
     const handleTabValueChange = (_event: SyntheticEvent<Element, Event>, newValue: string) => {
         setValue(newValue);
@@ -113,26 +114,38 @@ function ScrapPasteModalElement() {
                         overflowY: 'auto',
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '10px',
-                        }}
-                    >
-                        {data?.pages.map((page) => {
-                            return page.data.content.map((content: contentProps['content']) => {
-                                return (
-                                    <Box
-                                        onClick={() => handlePasteScrap(content)}
-                                    >
-                                        <ScrapCard content={content} key={content.scrapId} />
-                                    </Box>
-                                )
-                            })
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={() => fetchNextPage()}
+                        hasMore={hasNextPage}
+                        loader={
+                            <div className="loader" key={0}>
+                                <CircularProgress />
+                            </div>
                         }
-                        ) || []}
-                    </Box>
+                        useWindow={false}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '10px',
+                            }}
+                        >
+                            {data?.pages.map((page) => {
+                                return page.data.content.map((content: contentProps['content']) => {
+                                    return (
+                                        <Box
+                                            onClick={() => handlePasteScrap(content)}
+                                        >
+                                            <ScrapCard content={content} key={content.scrapId} />
+                                        </Box>
+                                    )
+                                })
+                            }
+                            ) || []}
+                        </Box>
+                    </InfiniteScroll>
                 </TabPanel>
             </TabContext>
         </Box>
