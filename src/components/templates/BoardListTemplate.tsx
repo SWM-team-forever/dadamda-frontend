@@ -11,6 +11,8 @@ import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
+import InfiniteScroll from 'react-infinite-scroller';
+import { useRef } from 'react';
 
 export interface IBoardListInfo {
     uuid: number;
@@ -34,23 +36,21 @@ function BoardListTemplate() {
         return searchParams.get('keyword');
     }
 
-    const { data, isLoading } = useInfiniteQuery(
+    const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(
         ['boards', getKeyword()],
         ({ pageParam = 0 }) => {
             return isSearchTemplate()
                 ? useSearchKeywordInBoardList({ pages: pageParam, size: 30, keyword: getKeyword() })
-                : useGetBoardList({ pages: pageParam, size: 30 })
+                : useGetBoardList({ pages: pageParam, size: 2 })
         },
         {
             getNextPageParam: (lastPage) => {
-                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
-                return nextPage;
+                return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
         }
     );
 
     const { setBoard } = useBoardAtom();
-
     const { mutate } = useFixBoardList();
 
     if (isLoading) {
@@ -78,130 +78,139 @@ function BoardListTemplate() {
                         width: '100%',
                         p: '10px 24px',
                         boxSizing: 'border-box',
+                        overflow: 'auto',
                     }}
                 >
-                    <Box
-                        sx={{
-                            width: '100%',
-                            m: '0',
-                            display: 'grid',
-                            gap: 2,
-                            pb: '24px',
-                        }}
-                        gridTemplateColumns={
-                            {
-                                xs: 'repeat(1, 1fr)',
-                                sm: 'repeat(2, 1fr)',
-                                md: 'repeat(3, 1fr)',
-                                lg: 'repeat(4, 1fr)',
-                                xl: 'repeat(5, 1fr)',
-                            }
-                        }
+                    <InfiniteScroll
+                        hasMore={hasNextPage}
+                        loadMore={() => fetchNextPage()}
+                        useWindow={false}
+                        loader={<div key={0}>Loading ...</div>}
                     >
-                        {data?.pages.map((page) => {
-                            return page.data.content.map((board: IBoardListInfo) => {
-                                return (
-                                    <Grid item
-                                        key={board.uuid}
-                                        onClick={() => navigate(`/board-contents/${board.uuid}`)}
-                                    >
-                                        <Box
-                                            sx={{
-                                                height: '180px',
-                                                width: '100%',
-                                                backgroundColor: theme.color.Blue_090,
-                                                borderRadius: '8px 8px 0 0',
-                                                cursor: 'pointer',
-                                                '&:hover': {
-                                                    backgroundColor: theme.color.Blue_080,
-                                                },
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                            }}
-                                        >
-                                            <ProfileIcon size='80' />
-                                        </Box>
-                                        <Box
-                                            sx={{
-                                                p: '10px',
-                                                backgroundColor: theme.color.Gray_020,
-                                                borderRadius: '0 0 8px 8px',
-                                            }}
+                        <Box
+                            sx={{
+                                width: '100%',
+                                m: '0',
+                                display: 'grid',
+                                gap: 2,
+                                pb: '24px',
+                            }}
+                            gridTemplateColumns={
+                                {
+                                    xs: 'repeat(1, 1fr)',
+                                    sm: 'repeat(2, 1fr)',
+                                    md: 'repeat(3, 1fr)',
+                                    lg: 'repeat(4, 1fr)',
+                                    xl: 'repeat(5, 1fr)',
+                                }
+                            }
+                        >
+                            {data?.pages.map((page) => {
+                                return page.data.content.map((board: IBoardListInfo) => {
+                                    return (
+                                        <Grid item
+                                            key={board.uuid}
+                                            onClick={() => navigate(`/board-contents/${board.uuid}`)}
                                         >
                                             <Box
                                                 sx={{
+                                                    height: '180px',
+                                                    width: '100%',
+                                                    backgroundColor: theme.color.Blue_090,
+                                                    borderRadius: '8px 8px 0 0',
+                                                    cursor: 'pointer',
+                                                    '&:hover': {
+                                                        backgroundColor: theme.color.Blue_080,
+                                                    },
                                                     display: 'flex',
-                                                    justifyContent: 'space-between',
+                                                    justifyContent: 'center',
                                                     alignItems: 'center',
                                                 }}
                                             >
-                                                <Typography
-                                                    sx={{
-                                                        overflow: 'hidden',
-                                                        textOverflow: 'ellipsis',
-                                                        display: '-webkit-box',
-                                                        '-webkit-line-clamp': '1',
-                                                        '-webkit-box-orient': 'vertical',
-                                                        wordWrap: 'break-word',
-                                                    }}
-                                                >
-                                                    {board.title}
-                                                </Typography>
+                                                <ProfileIcon size='80' />
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    p: '10px',
+                                                    backgroundColor: theme.color.Gray_020,
+                                                    borderRadius: '0 0 8px 8px',
+                                                }}
+                                            >
                                                 <Box
                                                     sx={{
                                                         display: 'flex',
-                                                        gap: '5px',
+                                                        justifyContent: 'space-between',
+                                                        alignItems: 'center',
                                                     }}
                                                 >
-                                                    <Box
+                                                    <Typography
                                                         sx={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            mutate(board.uuid.toString());
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                            display: '-webkit-box',
+                                                            '-webkit-line-clamp': '1',
+                                                            '-webkit-box-orient': 'vertical',
+                                                            wordWrap: 'break-word',
                                                         }}
                                                     >
-                                                        <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
-                                                    </Box>
+                                                        {board.title}
+                                                    </Typography>
                                                     <Box
                                                         sx={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        onClick={async (e) => {
-                                                            e.stopPropagation();
-                                                            const boardInfo = await useGetBoard(board.uuid.toString());
-                                                            setBoard((prev) => ({
-                                                                ...prev,
-                                                                boardUUID: board.uuid.toString(),
-                                                                ...boardInfo.data,
-                                                            }))
-                                                            openModal('boardEdit');
+                                                            display: 'flex',
+                                                            gap: '5px',
                                                         }}
                                                     >
-                                                        <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                        <Box
+                                                            sx={{
+                                                                cursor: 'pointer',
+                                                            }}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                mutate(board.uuid.toString());
+                                                            }}
+                                                        >
+                                                            <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
+                                                        </Box>
+                                                        <Box
+                                                            sx={{
+                                                                cursor: 'pointer',
+                                                            }}
+                                                            onClick={async (e) => {
+                                                                e.stopPropagation();
+                                                                const boardInfo = await useGetBoard(board.uuid.toString());
+                                                                setBoard((prev) => ({
+                                                                    ...prev,
+                                                                    boardUUID: board.uuid.toString(),
+                                                                    ...boardInfo.data,
+                                                                }))
+                                                                openModal('boardEdit');
+                                                            }}
+                                                        >
+                                                            <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                        </Box>
                                                     </Box>
                                                 </Box>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '10px',
+                                                    }}
+                                                >
+                                                    <Chip label={chipInformation.map((chipInfo) =>
+                                                        chipInfo.tagValue === board.tag && chipInfo.label
+                                                    )} />
+                                                    <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
+                                                </Box>
                                             </Box>
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    gap: '10px',
-                                                }}
-                                            >
-                                                <Chip label={chipInformation.map((chipInfo) =>
-                                                    chipInfo.tagValue === board.tag && chipInfo.label
-                                                )} />
-                                                <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
-                                            </Box>
-                                        </Box>
-                                    </Grid>
-                                )
-                            })
-                        })}
-                    </Box>
+                                        </Grid>
+                                    )
+                                })
+                            })}
+
+                        </Box>
+                    </InfiniteScroll>
                 </Box>
             </ScrapListContainer >
         </>
