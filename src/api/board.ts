@@ -501,7 +501,7 @@ export const useGetOpenBoardTitle = (boardUUID: string) => {
 
 const getShortenedSharingBoardUrl = async (nativeUrl: string) => {
     if (!nativeUrl) {
-        throw new Error('NF005');
+        throw new Error('NOT_KNOWN_ERROR');
     }
 
     const token = useGetToken();

@@ -69,14 +69,23 @@ export const useBoardContentAtom = () => {
         return mode === 'edit';
     }
 
-    function handleAutoSaveBoard(mode: 'view' | 'edit') {
+    function useGetBoardUUIDIfExist() {
         const boardUUID = board?.boardUUID;
-        (boardUUID && isEditMode(mode)) && autoSaveBoardMutate({ boardUUID: boardUUID, contents: boardContent });
+        if (!boardUUID) {
+            throw new Error('NOT_KNOWN_ERROR');
+        }
+
+        return boardUUID;
+    }
+
+    function handleAutoSaveBoard(mode: 'view' | 'edit') {
+        const boardUUID = useGetBoardUUIDIfExist();
+        (isEditMode(mode)) && autoSaveBoardMutate({ boardUUID: boardUUID, contents: boardContent });
     }
 
     function handleSaveBoard() {
-        const boardUUID = board?.boardUUID;
-        boardUUID && mutate({ boardUUID: boardUUID, contents: boardContent });
+        const boardUUID = useGetBoardUUIDIfExist();
+        mutate({ boardUUID: boardUUID, contents: boardContent });
     }
 
     const SAVE_BOARD_INTERVAL = 10000; // 10초
