@@ -1,22 +1,19 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { Box, Button, FormControl, FormHelperText, OutlinedInput } from '@mui/material';
 
 import { usePostCreateScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
+import { SCRAP_LINK_MAX_LENGTH, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
+import { logEvent } from '@/utility/amplitude';
+import { useGetToken } from '@/hooks/useAccount';
 
 import { LinkIcon } from '@/components/atoms/Icon';
-import { SCRAP_LINK_MAX_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
-import { logEvent } from '@/utility/amplitude';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');
-    const [token, setToken] = useState<string | null>(null);
+    const token = useGetToken();
     const { closeModal } = useModal();
-
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
 
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         e.preventDefault();
@@ -25,7 +22,7 @@ function ScrapCreateModalElement() {
 
     const { mutate } = usePostCreateScrap();
     const handleCreateScrapButtonClick = () => {
-        (token && textAreaValue) && mutate({ token, textAreaValue });
+        (textAreaValue) && mutate({ token, textAreaValue });
         logEvent('create_scrap');
         closeModal();
     };

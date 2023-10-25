@@ -1,73 +1,45 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
 
-import Button from '../components/atoms/DefaultButton';
-import RowContainer from '../components/atoms/RowContainer';
-
-import theme from '../assets/styles/theme';
-import { GET_USER_INFORMATION_URL } from '../secret';
-import defaultUserImage from '../assets/images/Avatar.png';
-import useWarningSnackbar from '../hooks/useWarningSnackbar';
+import theme from '@/assets/styles/theme';
+import defaultUserImage from '@/assets/images/Avatar.png';
 import { useLogout } from '@/hooks/useAccount';
 import { useModal } from '@/hooks/useModal';
+import { useGetUserInformation } from '@/api/user';
 
 function UserPage() {
-    const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState('');
-    const [accountProvider, setAccountProvider] = useState('');
-    const [profileImageUrl, setProfileImageUrl] = useState('');
+    const { userInformation, isGetUserInformationLoading } = useGetUserInformation();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const url = GET_USER_INFORMATION_URL;
-        token && fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "X-AUTH-TOKEN": token,
-            },
-        })
-            .then((response) => {
-                return response.json().then(body => {
-                    if (response.ok) {
-                        return body;
-                    } else {
-                        throw new Error(body.resultCode);
-                    }
-                })
-            })
-            .then((data) => {
-                setUserName(data.data.name);
-                setUserEmail(data.data.email);
-                setAccountProvider(data.data.provider);
-                setProfileImageUrl(data.data.profileUrl);
-            });
-    }, []);
+    const { openModal } = useModal();
+    const handleLogout = useLogout();
+
+    if (isGetUserInformationLoading) {
+        return <div>로딩중</div>;
+    }
+
+    const { profileUrl, name, email, provider } = userInformation;
 
     const userPageMenu = [
         {
             name: '이름',
-            content: userName,
+            content: name,
         },
         {
             name: '이메일',
-            content: userEmail,
+            content: email,
         },
         {
             name: '연결된 소셜 계정',
-            content: `${accountProvider} 계정으로 가입되셨습니다.`
+            content: `${provider} 계정으로 가입되셨습니다.`
         }];
-
-    const { openModal } = useModal();
-    const handleLogout = useLogout();
 
     return (
         <>
             <Wrapper>
                 <UserInfoWrapper>
                     <ProfileContainer>
-                        {profileImageUrl
-                            ? <ProfileImage src={profileImageUrl} />
+                        {profileUrl
+                            ? <ProfileImage src={profileUrl} />
                             : <ProfileImage src={defaultUserImage} />
                         }
                     </ProfileContainer>
@@ -81,12 +53,22 @@ function UserPage() {
                             )
                         })}
                     </Content>
-                    <RowContainer>
-                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={handleLogout} />
-                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={() => openModal('userDelete')} />
-                    </RowContainer>
+                    <Box>
+                        <Button
+                            onClick={handleLogout}
+                            color={'inherit'}
+                        >
+                            로그아웃
+                        </Button>
+                        <Button
+                            onClick={() => openModal('userDelete')}
+                            color={'inherit'}
+                        >
+                            탈퇴하기
+                        </Button>
+                    </Box>
                 </UserInfoWrapper>
-            </Wrapper>
+            </Wrapper >
         </>
     );
 }

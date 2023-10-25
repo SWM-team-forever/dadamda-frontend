@@ -1,18 +1,20 @@
-import { useGetOpenBoardTitle } from "@/api/board";
-import { TrashableItems } from "@/components/templates/TrashableItems";
-import { useBoardAtom } from "@/hooks/useBoardAtom";
-import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { useGetOpenBoardTitle } from "@/api/board";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+
+import { TrashableItems } from "@/components/templates/TrashableItems";
 
 function OpenBoardPage() {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const { setBoard } = useBoardAtom();
+    const params = useParams();
 
     function getBoardPageId(): string | null {
-        return searchParams.get('boardUUID');
+        return params['boardUUID'] || null;
     }
+    const { setBoard } = useBoardAtom();
 
     const boardPageId = getBoardPageId();
     const navigate = useNavigate();

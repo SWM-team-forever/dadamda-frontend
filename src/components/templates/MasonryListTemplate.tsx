@@ -1,19 +1,19 @@
 import { Masonry } from '@mui/lab';
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { useGetScrapByType } from '@/api/scrap';
 import { useGetScrapSearchResultByType } from '@/api/search';
 import { contentProps } from '@/types/ContentType';
+import { useGetToken } from '@/hooks/useAccount';
 
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import ScrapCard from '@/components/organisms/ScrapCard';
 
 function MasonryListTemplate({ type }: { type: string }) {
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const size = 30;
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -35,8 +35,7 @@ function MasonryListTemplate({ type }: { type: string }) {
         },
         {
             getNextPageParam: (lastPage) => {
-                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
-                return nextPage;
+                return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
         }
     );
@@ -54,50 +53,43 @@ function MasonryListTemplate({ type }: { type: string }) {
         )
     }
 
-    if (data?.pages[0].data.content.length === 0) {
+    if (!data || data?.pages[0].data.content.length === 0) {
         return <EmptyScrapContainer />
     }
 
     return (
-        <ScrapList>
+        <Box
+            sx={{
+                display: 'flex',
+                flex: '1',
+                padding: '0 24px',
+                boxSizing: 'border-box',
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                overflow: 'auto',
+            }}
+        >
             <InfiniteScroll
                 hasMore={hasNextPage}
                 loadMore={() => fetchNextPage()}
-                pageStart={0}
-                loader={<CircularProgress
-                    key={0}
-                />}
                 useWindow={false}
-                style={{
-                    width: '100%',
-                    margin: '0',
-                }}
             >
                 <Masonry
                     columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
-
                 >
-                    {data?.pages.map((page) => {
+                    {data.pages?.map((page) => {
                         return page.data.content.map((content: contentProps['content']) => {
                             return (
                                 <ScrapCard content={content} key={content.scrapId} />
                             )
                         })
-                    }
-                    ) || []}
+                    })}
                 </Masonry>
             </InfiniteScroll>
-        </ScrapList >
+        </Box >
     )
 }
-
-const ScrapList = styled.div`
-    display: flex;
-    flex: 1;
-    padding: 0 24px;
-    box-sizing: border-box;
-    flex-direction: column;
-    align-items: center;
-`
 
 export default MasonryListTemplate;

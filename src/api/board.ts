@@ -1,8 +1,9 @@
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, GET_OPEN_BOARD_TITLE_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
+import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_OPEN_BOARD_CONTENTS_URL, GET_OPEN_BOARD_TITLE_URL, GET_SHORTENED_SHARING_BOARD_URL, POST_CREATE_BOARD_URL, SEARCH_BOARD_LIST_URL } from "@/secret";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 import { useNavigate } from "react-router-dom";
+import { useGetToken } from "@/hooks/useAccount";
 
 interface fetchDatasProps {
     url?: string;
@@ -11,10 +12,7 @@ interface fetchDatasProps {
 }
 
 const getBoardList = async ({  url, pages, size }: fetchDatasProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
@@ -47,10 +45,7 @@ interface fetchPostCreateBoardProps {
 }
 
 const fetchPostCreateBoard = async({title, description, tag}: fetchPostCreateBoardProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(POST_CREATE_BOARD_URL, {
         method: "POST",
@@ -89,15 +84,12 @@ export const usePostCreateBoard = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 생성에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
 const getBoard = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
         method: "GET",
@@ -124,10 +116,7 @@ export const useGetBoard = (boardUUID: string) => {
 }
 
 const deleteBoard = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
         method: "DELETE",
@@ -162,7 +151,7 @@ export const useDeleteBoard = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 삭제에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -174,10 +163,7 @@ interface editBoardProps {
 }
 
 const editBoard = async ({boardUUID, description, tag, title}: editBoardProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
         method: "PATCH",
@@ -216,7 +202,7 @@ export const useEditBoard = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 수정에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -226,10 +212,7 @@ interface saveBoardProps {
 }
 
 const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "PATCH",
@@ -270,10 +253,7 @@ export const useSaveBoard = () => {
 }
 
 const getBoardContents = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "GET",
@@ -306,10 +286,7 @@ interface searchKeywordInBoardListProps {
 }
 
 const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInBoardListProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
         method: "GET",
@@ -336,10 +313,7 @@ export const useSearchKeywordInBoardList = ({keyword, size, pages}: searchKeywor
 }
 
 const fixBoardList = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
         method: "PATCH",
@@ -371,15 +345,12 @@ export const useFixBoardList = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('다시 시도해주세요.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
 const getBoardIsShared = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        return new Error('로그인이 필요합니다.');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "GET",
@@ -425,10 +396,7 @@ export const useGetBoardIsShared = (boardUUID: string | null) => {
 }
 
 const toggleBoardIsShared = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('로그인이 필요합니다.');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "PATCH",
@@ -460,7 +428,7 @@ export const useToggleBoardIsShared = () => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 공유 상태 변경에 실패하였습니다.', 'error');
         },
-        useErrorBoundary: false,
+        useErrorBoundary: true,
     });
 }
 
@@ -510,4 +478,49 @@ const getOpenBoardTitle = async (boardUUID: string) => {
 export const useGetOpenBoardTitle = (boardUUID: string) => {
     const openBoardContents = getOpenBoardTitle(boardUUID);
     return openBoardContents;
+}
+
+const getShortenedSharingBoardUrl = async (nativeUrl: string) => {
+    if (!nativeUrl) {
+        throw new Error('NF005');
+    }
+
+    const token = useGetToken();
+
+    const response = await fetch(GET_SHORTENED_SHARING_BOARD_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            'native_url': nativeUrl,
+        }),
+    }).then((response) => {
+        return response.json().then(body => {
+            if (response.ok) {
+                return body;
+            } else {
+                throw new Error(body.resultCode);
+            }
+        })
+    });
+    
+    return response;
+}
+
+export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
+    const { data, isLoading } = useQuery(
+        ['shortenedSharingBoardUrl'],
+        () => getShortenedSharingBoardUrl(nativeUrl),
+        {
+            retry: false,
+            select: (data) => {
+                return `${data?.forward_url}/${data?.short_id}`;
+            },
+            useErrorBoundary: true,
+        }
+    );
+
+    const [shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl] = [data, isLoading];
+    return { shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl };
 }

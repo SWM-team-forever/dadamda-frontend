@@ -1,19 +1,25 @@
-import { useGetBoardIsShared, useToggleBoardIsShared } from "@/api/board";
+import { Box, Button, Switch, TextField, Typography } from "@mui/material";
+
+import { useGetBoardIsShared, useGetShortenedSharingBoardUrl, useToggleBoardIsShared } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { Box, Button, Switch, TextField, Typography } from "@mui/material";
-import { useState } from "react";
 
 function BoardShareModalElement() {
     const { board, setBoard } = useBoardAtom();
+    const sharingBoardUrl = window.location.href + `?bs=shared`;
     const { isBoardShared } = useGetBoardIsShared(board.boardUUID);
+    const { shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl } = useGetShortenedSharingBoardUrl(sharingBoardUrl);
     const { mutate } = useToggleBoardIsShared();
-
-    const [link, setLink] = useState(window.location.href + `&bs=shared`);
     function copyLink() {
-        navigator.clipboard.writeText(link).then(() => {
+        navigator.clipboard.writeText(shortenedSharingBoardUrl || "").then(() => {
             useDefaultSnackbar('링크가 복사되었습니다.', 'success');
         });
+    }
+
+    if (isLoadingGetShortenedSharingBoardUrl) {
+        return (
+            <Typography>링크를 불러오는 중입니다...</Typography>
+        )
     }
 
     return (
@@ -43,7 +49,7 @@ function BoardShareModalElement() {
             >
                 <TextField
                     size="small"
-                    value={link}
+                    value={shortenedSharingBoardUrl}
                     fullWidth
                     disabled
                 />

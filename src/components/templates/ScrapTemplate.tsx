@@ -1,24 +1,19 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import NotReadyTemplate from './NotReadyTemplate';
-
-import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
-import ScrapListHeader from '@/components/molcules/ScrapListHeader';
-import ColumnListTemplate from '@/components/templates/ColumnListTemplate';
-import MasonryListTemplate from '@/components/templates/MasonryListTemplate';
 import { Box, CircularProgress } from '@mui/material';
-import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
-import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
 import { useQuery } from '@tanstack/react-query';
+
 import { useGetScrapCount } from '@/api/count';
+import { useGetToken } from '@/hooks/useAccount';
+
+import ScrapListHeader from '@/components/molcules/ScrapListHeader';
+import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
 
 interface ScrapTemplateProps {
     type: string,
 }
 
 function ScrapTemplate({ type }: ScrapTemplateProps) {
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
 
     const { data, isLoading, isFetched } = useQuery(['scrapCount', type],

@@ -1,19 +1,22 @@
-import { useGetScrapByType } from "@/api/scrap";
-import { useGetScrapSearchResultByType } from "@/api/search";
-import ScrapCard from "@/components/molcules/Board/ScrapCard";
-import SearchBar from "@/components/molcules/SearchBar";
-import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
-import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { contentProps } from "@/types/ContentType";
-import { logEvent } from "@/utility/amplitude";
 import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
+import { useGetScrapByType } from "@/api/scrap";
+import { useGetScrapSearchResultByType } from "@/api/search";
+import { useGetToken } from "@/hooks/useAccount";
+import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+import { contentProps } from "@/types/ContentType";
+import { logEvent } from "@/utility/amplitude";
+
+import ScrapCard from "@/components/molcules/Board/ScrapCard";
+import SearchBar from "@/components/molcules/SearchBar";
+
 function ScrapPasteModalElement() {
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const size = 30;
     const [value, setValue] = useState('list');
     const handleTabValueChange = (_event: SyntheticEvent<Element, Event>, newValue: string) => {

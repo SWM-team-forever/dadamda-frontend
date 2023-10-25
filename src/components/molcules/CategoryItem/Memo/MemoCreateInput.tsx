@@ -5,6 +5,7 @@ import theme from '@/assets/styles/theme';
 import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
+import { useGetToken } from '@/hooks/useAccount';
 
 function MemoCreateInput({ scrapId }: { scrapId: number }) {
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -14,7 +15,7 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
         setTextAreaValue(e.target.value);
     }
 
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const { mutate, isLoading, isError } = usePostCreateMemo();
 
     if (isLoading) {
