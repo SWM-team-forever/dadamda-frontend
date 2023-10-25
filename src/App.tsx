@@ -55,21 +55,21 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={3}>
-          <LoginProvider>
-            <Header />
-            {modal.isOpen && (
-              modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
-            )}
-            <ErrorBoundary
-              FallbackComponent={ErrorPage}
-              onReset={() => {
-                window.location.reload();
-              }}
-            >
+          <ErrorBoundary
+            FallbackComponent={ErrorPage}
+            onReset={() => {
+              window.location.reload();
+            }}
+          >
+            <LoginProvider>
+              <Header />
+              {modal.isOpen && (
+                modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
+              )}
               <Routing />
-            </ErrorBoundary>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </LoginProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </LoginProvider>
+          </ErrorBoundary>
         </SnackbarProvider>
       </ThemeProvider>
     </QueryClientProvider >
