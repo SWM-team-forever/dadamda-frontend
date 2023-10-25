@@ -18,8 +18,8 @@ export const useBoardContentAtom = () => {
         const newBoard = firstColumn ? {
             ...boardContent,
             [firstColumn]: [
-                ...boardContent[firstColumn],
                 { ...scrap, id: `${scrap.scrapId + Math.random()}` },
+                ...boardContent[firstColumn],
             ],
         } : {
             [getNextContainerId()]: [{ ...scrap, id: `${scrap.scrapId + Math.random()}` }],
@@ -34,8 +34,8 @@ export const useBoardContentAtom = () => {
         const newBoard = firstColumn ? {
             ...boardContent,
             [firstColumn]: [
-                ...boardContent[firstColumn],
                 { ...sticker, id: `${sticker.memoId + Math.random()}` },
+                ...boardContent[firstColumn],
             ],
         } : {
             [getNextContainerId()]: [{ ...sticker, id: `${sticker.memoId + Math.random()}` }],
