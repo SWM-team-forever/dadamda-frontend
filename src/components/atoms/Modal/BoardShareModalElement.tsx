@@ -5,7 +5,7 @@ import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 
 function BoardShareModalElement() {
     const { board, setBoard } = useBoardAtom();
-    const sharingBoardUrl = window.location.href + `&bs=shared`;
+    const sharingBoardUrl = window.location.href + `?bs=shared`;
     const { isBoardShared } = useGetBoardIsShared(board.boardUUID);
     const { shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl } = useGetShortenedSharingBoardUrl(sharingBoardUrl);
     const { mutate } = useToggleBoardIsShared();
