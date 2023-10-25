@@ -47,7 +47,7 @@ function verifyToken(token: string | null) {
 
 export async function useHandleUnVerifiedTokenUser() {
     const logout = useLogout();
-    await useDefaultSnackbar('로그인이 만료되었습니다. 다시 로그인해주세요.', 'error');
+    await useDefaultSnackbar('다시 로그인해주세요.', 'error');
     logout();
 }
 
