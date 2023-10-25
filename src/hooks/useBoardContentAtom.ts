@@ -1,4 +1,4 @@
-import { useSaveBoard } from "@/api/board";
+import { useAutoSaveBoard, useSaveBoard } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import boardContainersAtom from "@/state/boardContainersAtom";
 import boardContentAtom from "@/state/boardContentAtom";
@@ -12,6 +12,7 @@ export const useBoardContentAtom = () => {
     const {board} = useBoardAtom();
 
     const { mutate } = useSaveBoard();
+    const {autoSaveBoardMutate} = useAutoSaveBoard();
 
     function pasteScrap(scrap: contentProps['content']) {
         const firstColumn = Object.keys(boardContent)[0];
@@ -68,10 +69,14 @@ export const useBoardContentAtom = () => {
         return mode === 'edit';
     }
 
-
-    function handleSaveBoard(mode: 'view' | 'edit') {
+    function handleAutoSaveBoard(mode: 'view' | 'edit') {
         const boardUUID = board?.boardUUID;
-        (boardUUID && isEditMode(mode)) && mutate({ boardUUID: boardUUID, contents: boardContent });
+        (boardUUID && isEditMode(mode)) && autoSaveBoardMutate({ boardUUID: boardUUID, contents: boardContent });
+    }
+
+    function handleSaveBoard() {
+        const boardUUID = board?.boardUUID;
+        boardUUID && mutate({ boardUUID: boardUUID, contents: boardContent });
     }
 
     const SAVE_BOARD_INTERVAL = 10000; // 10초
@@ -86,6 +91,7 @@ export const useBoardContentAtom = () => {
         handleAddColumn,
         pasteSticker,
         handleSaveBoard,
+        handleAutoSaveBoard,
         SAVE_BOARD_INTERVAL,
     }
 }

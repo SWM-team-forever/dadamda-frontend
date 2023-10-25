@@ -336,7 +336,7 @@ export function MultipleContainers({
         containers, 
         setContainers, 
         handleAddColumn, 
-        handleSaveBoard, 
+        handleAutoSaveBoard,
         getNextContainerId,
         SAVE_BOARD_INTERVAL,
     } = useBoardContentAtom();
@@ -496,9 +496,9 @@ export function MultipleContainers({
     }, [boardContent]);
 
     useEffect(() => {
-        const interval = setInterval(() => handleSaveBoard(mode), SAVE_BOARD_INTERVAL);
+        const interval = setInterval(() => handleAutoSaveBoard(mode), SAVE_BOARD_INTERVAL);
         return () => clearInterval(interval);
-    }, [handleSaveBoard, mode])
+    }, [handleAutoSaveBoard, mode])
 
     if (isLoading) {
         return <div>로딩중</div>;
