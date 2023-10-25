@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { CloseIcon } from '@/components/atoms/Icon';
 import { useDeleteMemo } from '@/api/memo';
+import { useGetToken } from '@/hooks/useAccount';
 
 interface MemoProps {
     memoImageURL?: string,
@@ -15,7 +16,7 @@ interface MemoProps {
 
 function Memo({ memoImageURL, memoText, createdDate, scrapId, memoId }: MemoProps) {
     const { mutate } = useDeleteMemo();
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
 
     return (
         <Box

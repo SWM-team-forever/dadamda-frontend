@@ -12,13 +12,14 @@ import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
 import { useQuery } from '@tanstack/react-query';
 import { useGetScrapCount } from '@/api/count';
+import { useGetToken } from '@/hooks/useAccount';
 
 interface ScrapTemplateProps {
     type: string,
 }
 
 function ScrapTemplate({ type }: ScrapTemplateProps) {
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
 
     const { data, isLoading, isFetched } = useQuery(['scrapCount', type],

@@ -11,9 +11,10 @@ import { contentProps } from '@/types/ContentType';
 
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import ScrapCard from '@/components/organisms/ScrapCard';
+import { useGetToken } from '@/hooks/useAccount';
 
 function MasonryListTemplate({ type }: { type: string }) {
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const size = 30;
     const [searchParams, setSearchParams] = useSearchParams();
 

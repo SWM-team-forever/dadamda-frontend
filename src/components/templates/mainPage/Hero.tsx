@@ -5,10 +5,11 @@ import heroImage from '@/assets/images/heroImage.png';
 import heroText from '@/assets/images/heroText.png'
 import { useModal } from '@/hooks/useModal';
 import { useMoveToChromeExtensionInstallLink } from '@/hooks/useCustomNavigation';
+import { useGetToken } from '@/hooks/useAccount';
 
 const Hero = () => {
     const navigate = useNavigate();
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const { openModal } = useModal();
 
     const startButtonHandler = () => {

@@ -2,6 +2,7 @@ import { useEditScrap } from "@/api/scrap";
 import theme from "@/assets/styles/theme";
 import { MinusCircleIcon, PlusCircleIcon } from "@/components/atoms/Icon";
 import ThumbnailImage from "@/components/atoms/ThumbnailImage";
+import { useGetToken } from "@/hooks/useAccount";
 import { useModal } from "@/hooks/useModal";
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 import { MAX_SCRAP_AUTHOR_LENGTH, MAX_SCRAP_BLOGNAME_LENGTH, MAX_SCRAP_CHANNELNAME_LENGTH, MAX_SCRAP_DESCRIPTION_LENGTH, MAX_SCRAP_PRICE_LENGTH, MAX_SCRAP_SITENAME_LENGTH, MAX_SCRAP_TITLE_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
@@ -149,7 +150,7 @@ function ScrapEditModalElement() {
         return true;
     }
 
-    const [token, setToken] = useState<string | null>(null);
+    const token = useGetToken();
     function initiateEditableContent() {
         const defaultContentMenu = {
             other: ['title', 'description'],
@@ -165,10 +166,6 @@ function ScrapEditModalElement() {
             }
         });
     }
-
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    });
 
     initiateEditableContent();
     const { mutate } = useEditScrap();

@@ -10,9 +10,10 @@ import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
 import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
 import { useEffect, useState } from "react";
+import { useGetToken } from "@/hooks/useAccount";
 
 function ColumnListTemplate({ type }: { type: string }) {
-    const token = localStorage.getItem('token');
+    const token = useGetToken();
     const size = 30;
     const [searchParams, setSearchParams] = useSearchParams();
 

@@ -1,3 +1,4 @@
+import { useGetToken } from "@/hooks/useAccount";
 import { GET_OTHER_SCRAP_URL, GET_LIST_SCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, GET_BOARD_LIST_COUNT_URL } from "@/secret";
 
 const urlMatching: { [key: string]: string } = {
@@ -36,8 +37,9 @@ export const useGetScrapCount = async({type, token}: fetchGetScrapCountProps) =>
 }
 
 const getBoardListCount = async() => {
-    const token = localStorage.getItem("token");
-    const response = token && await fetch(GET_BOARD_LIST_COUNT_URL, {
+    const token = useGetToken();
+    
+    const response = await fetch(GET_BOARD_LIST_COUNT_URL, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

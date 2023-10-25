@@ -7,12 +7,10 @@ import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 import { logEvent } from '@/utility/amplitude';
+import { useGetToken } from '@/hooks/useAccount';
 
 function MemoCreateModalElement() {
-    const [, setToken] = useState<string | null>(null);
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
+    const token = useGetToken();
 
     const { modal, closeModal } = useModal();
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -23,7 +21,6 @@ function MemoCreateModalElement() {
     }
 
     const scrapId = modal.scrapId;
-    const token = localStorage.getItem('token');
     const { mutate, isLoading, isError } = usePostCreateMemo();
 
     const handleCreateMemoButtonClick = () => {
