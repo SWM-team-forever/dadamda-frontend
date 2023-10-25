@@ -47,7 +47,7 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
                 {isFetched && <ScrapListHeader type={type} count={data} />}
                 <Box
                     sx={{
-                        height: 'calc(100% - 145px)',
+                        height: 'calc(100% - 125px)',
                     }}
                 >
                     {isFetched && <MatchTemplateWithTypeAndCount type={type} count={data} />}
@@ -70,7 +70,7 @@ const ScrapListContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow: auto;
-    padding: 24px;
+    padding: 24px 24px 0 24px;
     box-sizing: border-box;
 `
 
