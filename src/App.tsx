@@ -54,7 +54,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <SnackbarProvider maxSnack={3}>
+        <SnackbarProvider maxSnack={1}>
           <ErrorBoundary
             FallbackComponent={ErrorPage}
             onReset={() => {
