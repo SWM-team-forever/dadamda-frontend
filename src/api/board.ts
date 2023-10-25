@@ -3,6 +3,7 @@ import { DELETE_BOARD_URL, EDIT_BOARD_URL, GET_BOARD_IS_SHARED_URL, GET_BOARD_LI
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 import { useNavigate } from "react-router-dom";
+import { useGetToken } from "@/hooks/useAccount";
 
 interface fetchDatasProps {
     url?: string;
@@ -11,10 +12,7 @@ interface fetchDatasProps {
 }
 
 const getBoardList = async ({  url, pages, size }: fetchDatasProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
@@ -47,10 +45,7 @@ interface fetchPostCreateBoardProps {
 }
 
 const fetchPostCreateBoard = async({title, description, tag}: fetchPostCreateBoardProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(POST_CREATE_BOARD_URL, {
         method: "POST",
@@ -94,10 +89,7 @@ export const usePostCreateBoard = () => {
 }
 
 const getBoard = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_URL}/${boardUUID}`, {
         method: "GET",
@@ -124,10 +116,7 @@ export const useGetBoard = (boardUUID: string) => {
 }
 
 const deleteBoard = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${DELETE_BOARD_URL}/${boardUUID}`, {
         method: "DELETE",
@@ -174,10 +163,7 @@ interface editBoardProps {
 }
 
 const editBoard = async ({boardUUID, description, tag, title}: editBoardProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}`, {
         method: "PATCH",
@@ -226,10 +212,7 @@ interface saveBoardProps {
 }
 
 const saveBoard = async ({boardUUID, contents}: saveBoardProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "PATCH",
@@ -270,10 +253,7 @@ export const useSaveBoard = () => {
 }
 
 const getBoardContents = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${EDIT_BOARD_URL}/${boardUUID}/contents`, {
         method: "GET",
@@ -306,10 +286,7 @@ interface searchKeywordInBoardListProps {
 }
 
 const searchKeywordInBoardList = async ({keyword, size, pages}: searchKeywordInBoardListProps) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${SEARCH_BOARD_LIST_URL}?page=${pages}&size=${size}&keyword=${keyword}`, {
         method: "GET",
@@ -336,10 +313,7 @@ export const useSearchKeywordInBoardList = ({keyword, size, pages}: searchKeywor
 }
 
 const fixBoardList = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('NF005');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_URL}/${boardUUID}/fix`, {
         method: "PATCH",
@@ -376,10 +350,7 @@ export const useFixBoardList = () => {
 }
 
 const getBoardIsShared = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        return new Error('로그인이 필요합니다.');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "GET",
@@ -425,10 +396,7 @@ export const useGetBoardIsShared = (boardUUID: string | null) => {
 }
 
 const toggleBoardIsShared = async (boardUUID: string) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('로그인이 필요합니다.');
-    }
+    const token = useGetToken();
 
     const response = await fetch(`${GET_BOARD_IS_SHARED_URL}/${boardUUID}`, {
         method: "PATCH",
@@ -517,10 +485,7 @@ const getShortenedSharingBoardUrl = async (nativeUrl: string) => {
         throw new Error('NF005');
     }
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-        throw new Error('로그인이 필요합니다.');
-    }
+    const token = useGetToken();
 
     const response = await fetch(GET_SHORTENED_SHARING_BOARD_URL, {
         method: "POST",
