@@ -1,9 +1,10 @@
+import { Box, Typography, Button } from '@mui/material';
+
 import { useDeleteScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
 import { useGetToken } from '@/hooks/useAccount';
 import { useModal } from '@/hooks/useModal';
 import { logEvent } from '@/utility/amplitude';
-import { Box, Typography, Button } from '@mui/material';
 
 const scrapDeleteModalButtonStyle = {
     backgroundColor: theme.color.Gray_050,

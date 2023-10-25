@@ -1,13 +1,15 @@
-import { useGetBoard } from "@/api/board";
-import { TrashableItems } from "@/components/templates/TrashableItems";
-import { useBoardAtom } from "@/hooks/useBoardAtom";
-import { useModal } from "@/hooks/useModal";
 import { Box, Button, Typography } from "@mui/material";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
-import { useRef, useState } from "react";
+import { useGetBoard } from "@/api/board";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
+import { useModal } from "@/hooks/useModal";
+
+import { TrashableItems } from "@/components/templates/TrashableItems";
 
 function BoardInfoPage() {
     const params = useParams();
@@ -21,7 +23,6 @@ function BoardInfoPage() {
 
     const [mode, setMode] = useState<'view' | 'edit'>('view');
     const isViewerMode = (mode: string) => mode === 'view';
-    const isEditMode = (mode: string) => mode === 'edit';
 
     const navigate = useNavigate();
 

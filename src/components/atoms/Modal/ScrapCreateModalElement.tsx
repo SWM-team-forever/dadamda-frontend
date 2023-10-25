@@ -1,14 +1,14 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { Box, Button, FormControl, FormHelperText, OutlinedInput } from '@mui/material';
 
 import { usePostCreateScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
-
-import { LinkIcon } from '@/components/atoms/Icon';
-import { SCRAP_LINK_MAX_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
+import { SCRAP_LINK_MAX_LENGTH, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
 import { logEvent } from '@/utility/amplitude';
 import { useGetToken } from '@/hooks/useAccount';
+
+import { LinkIcon } from '@/components/atoms/Icon';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');

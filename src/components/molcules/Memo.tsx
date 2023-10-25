@@ -1,10 +1,12 @@
-import styled from 'styled-components';
-import theme from '../../assets/styles/theme';
 import { Box, Typography } from '@mui/material';
+import styled from 'styled-components';
+
+import theme from '@/assets/styles/theme';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
-import { CloseIcon } from '@/components/atoms/Icon';
 import { useDeleteMemo } from '@/api/memo';
 import { useGetToken } from '@/hooks/useAccount';
+
+import { CloseIcon } from '@/components/atoms/Icon';
 
 interface MemoProps {
     memoImageURL?: string,

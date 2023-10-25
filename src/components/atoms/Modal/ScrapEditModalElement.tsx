@@ -1,14 +1,16 @@
+import { Box, Button, FormControl, FormHelperText, TextareaAutosize, Typography } from "@mui/material";
+import { ChangeEvent, useState } from "react";
+
 import { useEditScrap } from "@/api/scrap";
 import theme from "@/assets/styles/theme";
-import { MinusCircleIcon, PlusCircleIcon } from "@/components/atoms/Icon";
-import ThumbnailImage from "@/components/atoms/ThumbnailImage";
 import { useGetToken } from "@/hooks/useAccount";
 import { useModal } from "@/hooks/useModal";
 import { useSelectedScrap } from "@/hooks/useSelectedScrap";
 import { MAX_SCRAP_AUTHOR_LENGTH, MAX_SCRAP_BLOGNAME_LENGTH, MAX_SCRAP_CHANNELNAME_LENGTH, MAX_SCRAP_DESCRIPTION_LENGTH, MAX_SCRAP_PRICE_LENGTH, MAX_SCRAP_SITENAME_LENGTH, MAX_SCRAP_TITLE_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
 import { logEvent } from "@/utility/amplitude";
-import { Box, Button, FormControl, FormHelperText, TextareaAutosize, Typography } from "@mui/material";
-import { ChangeEvent, useEffect, useState } from "react";
+
+import { MinusCircleIcon, PlusCircleIcon } from "@/components/atoms/Icon";
+import ThumbnailImage from "@/components/atoms/ThumbnailImage";
 
 function ScrapEditModalElement() {
     const { selectedScrap, removeSelectedScrap } = useSelectedScrap();

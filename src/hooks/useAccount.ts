@@ -1,5 +1,6 @@
-import { logEvent } from "@/utility/amplitude";
 import { useNavigate } from "react-router-dom";
+
+import { logEvent } from "@/utility/amplitude";
 
 export const HAS_NO_ACCESS_ERROR = 'HAS_NO_ACCESS_ERROR';
 

@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import ScrapTemplate from '@/components/templates/ScrapTemplate';
+import BoardListTemplate from '@/components/templates/BoardListTemplate';
 import BoardPage from '@/pages/BoardPage';
 import OAuthLoginpage from '@/pages/OAuthLoginPage';
 import MainPage from '@/pages/MainPage';
@@ -8,14 +10,11 @@ import PrivacyPolicyPage from '@/pages/PrivacyPolicyPage';
 import ScrapPage from '@/pages/ScrapPage';
 import TrendingPage from '@/pages/TrendingPage';
 import UserPage from '@/pages/UserPage';
-import BoardListTemplate from '@/components/templates/BoardListTemplate';
-
-import { RequireAuth } from '@/context/LoginContext';
-import { useEffect } from 'react';
-import { logEvent } from '@/utility/amplitude';
-import BoardInfoPage from '@/pages/BoardInfoPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import BoardContentsWrapperPage from '@/pages/BoardContentsWrapperPage';
+
+import { RequireAuth } from '@/context/LoginContext';
+import { logEvent } from '@/utility/amplitude';
 
 function Routing() {
   const location = useLocation();

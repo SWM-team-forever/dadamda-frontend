@@ -2,15 +2,15 @@ import { Box, CircularProgress } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 import { useGetScrapByType } from "@/api/scrap";
 import { useGetScrapSearchResultByType } from "@/api/search";
+import { useGetToken } from "@/hooks/useAccount";
 
 import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
 import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
-import { useEffect, useState } from "react";
-import { useGetToken } from "@/hooks/useAccount";
 
 function ColumnListTemplate({ type }: { type: string }) {
     const token = useGetToken();

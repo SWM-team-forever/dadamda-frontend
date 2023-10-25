@@ -1,10 +1,8 @@
 import styled from 'styled-components';
+import { Box, Button } from '@mui/material';
 
-import Button from '../components/atoms/DefaultButton';
-import RowContainer from '../components/atoms/RowContainer';
-
-import theme from '../assets/styles/theme';
-import defaultUserImage from '../assets/images/Avatar.png';
+import theme from '@/assets/styles/theme';
+import defaultUserImage from '@/assets/images/Avatar.png';
 import { useLogout } from '@/hooks/useAccount';
 import { useModal } from '@/hooks/useModal';
 import { useGetUserInformation } from '@/api/user';
@@ -55,12 +53,22 @@ function UserPage() {
                             )
                         })}
                     </Content>
-                    <RowContainer>
-                        <Button buttonStyle={'gray'} label={'로그아웃'} isRound onClick={handleLogout} />
-                        <Button buttonStyle={'text-only'} label={'탈퇴하기'} onClick={() => openModal('userDelete')} />
-                    </RowContainer>
+                    <Box>
+                        <Button
+                            onClick={handleLogout}
+                            color={'inherit'}
+                        >
+                            로그아웃
+                        </Button>
+                        <Button
+                            onClick={() => openModal('userDelete')}
+                            color={'inherit'}
+                        >
+                            탈퇴하기
+                        </Button>
+                    </Box>
                 </UserInfoWrapper>
-            </Wrapper>
+            </Wrapper >
         </>
     );
 }

@@ -1,7 +1,8 @@
+import { Box, Button, Switch, TextField, Typography } from "@mui/material";
+
 import { useGetBoardIsShared, useGetShortenedSharingBoardUrl, useToggleBoardIsShared } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
-import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 
 function BoardShareModalElement() {
     const { board, setBoard } = useBoardAtom();

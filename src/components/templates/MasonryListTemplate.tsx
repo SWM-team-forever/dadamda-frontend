@@ -3,16 +3,14 @@ import { Box, CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { useGetScrapByType } from '@/api/scrap';
 import { useGetScrapSearchResultByType } from '@/api/search';
 import { contentProps } from '@/types/ContentType';
+import { useGetToken } from '@/hooks/useAccount';
 
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import ScrapCard from '@/components/organisms/ScrapCard';
-import { useGetToken } from '@/hooks/useAccount';
-import { useMemo } from 'react';
 
 function MasonryListTemplate({ type }: { type: string }) {
     const token = useGetToken();
@@ -42,8 +40,6 @@ function MasonryListTemplate({ type }: { type: string }) {
         }
     );
 
-    const memoizedData = useMemo(() => data?.pages, [data]);
-
     if (isLoading) {
         return (
             <CircularProgress
@@ -57,7 +53,7 @@ function MasonryListTemplate({ type }: { type: string }) {
         )
     }
 
-    if (!memoizedData || data?.pages[0].data.content.length === 0) {
+    if (!data || data?.pages[0].data.content.length === 0) {
         return <EmptyScrapContainer />
     }
 
@@ -83,7 +79,7 @@ function MasonryListTemplate({ type }: { type: string }) {
                 <Masonry
                     columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
                 >
-                    {memoizedData?.map((page) => {
+                    {data.pages?.map((page) => {
                         return page.data.content.map((content: contentProps['content']) => {
                             return (
                                 <ScrapCard content={content} key={content.scrapId} />

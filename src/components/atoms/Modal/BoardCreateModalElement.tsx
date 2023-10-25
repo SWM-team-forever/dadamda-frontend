@@ -1,10 +1,11 @@
+import { Typography, TextareaAutosize, Box, Chip, Button, FormHelperText } from "@mui/material";
+import { useState } from "react";
+
 import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { useModal } from "@/hooks/useModal";
 import { MAX_BOARD_DESCRIPTION_LENGTH, MAX_BOARD_TITLE_LENGTH, useIsBlank, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
 import { logEvent } from "@/utility/amplitude";
-import { Typography, TextareaAutosize, Box, Chip, Button, FormHelperText } from "@mui/material";
-import { useState } from "react";
 
 function BoardCreateModalElement() {
     const [title, setTitle] = useState<string>("");

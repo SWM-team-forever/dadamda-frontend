@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useGetToken, useLogout, useVerifyToken } from "@/hooks/useAccount";
+
+import { useGetToken, useLogout } from "@/hooks/useAccount";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 export const LoginContext = createContext({

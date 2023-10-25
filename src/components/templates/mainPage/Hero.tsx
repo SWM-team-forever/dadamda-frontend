@@ -1,11 +1,10 @@
-import { Grid, Button, Box, Typography, ButtonGroup } from '@mui/material';
+import { Grid, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import heroImage from '@/assets/images/heroImage.png';
 import heroText from '@/assets/images/heroText.png'
 import { useModal } from '@/hooks/useModal';
 import { useMoveToChromeExtensionInstallLink } from '@/hooks/useCustomNavigation';
-import { useGetToken } from '@/hooks/useAccount';
 
 const Hero = () => {
     const navigate = useNavigate();
