@@ -91,7 +91,6 @@ function ColumnListTemplate({ type }: { type: string }) {
 }
 
 const Desktop = styled.div`
-    padding: 0 24px;
     gap: 24px;
     box-sizing: border-box;
     height: 100%;

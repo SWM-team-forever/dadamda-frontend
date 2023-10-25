@@ -70,6 +70,8 @@ const ScrapListContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow: auto;
+    padding: 24px;
+    box-sizing: border-box;
 `
 
 export default ScrapTemplate;

@@ -62,7 +62,6 @@ function MasonryListTemplate({ type }: { type: string }) {
             sx={{
                 display: 'flex',
                 flex: '1',
-                padding: '0 24px',
                 boxSizing: 'border-box',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -75,9 +74,20 @@ function MasonryListTemplate({ type }: { type: string }) {
                 hasMore={hasNextPage}
                 loadMore={() => fetchNextPage()}
                 useWindow={false}
+                style={{
+                    width: '100%'
+                }}
             >
                 <Masonry
-                    columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
+                    columns={{
+                        xs: 1, sm: 2, md: 3, lg: 4, xl: 5
+                    }}
+                    sx={{
+                        m: 0,
+                        width: '100%',
+                        boxSizing: 'border-box',
+                    }}
+                    spacing={1}
                 >
                     {data.pages?.map((page) => {
                         return page.data.content.map((content: contentProps['content']) => {
