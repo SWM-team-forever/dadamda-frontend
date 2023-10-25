@@ -1,5 +1,5 @@
 import { Masonry } from '@mui/lab';
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useSearchParams } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { contentProps } from '@/types/ContentType';
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import ScrapCard from '@/components/organisms/ScrapCard';
 import { useGetToken } from '@/hooks/useAccount';
+import { useMemo } from 'react';
 
 function MasonryListTemplate({ type }: { type: string }) {
     const token = useGetToken();
@@ -36,11 +37,12 @@ function MasonryListTemplate({ type }: { type: string }) {
         },
         {
             getNextPageParam: (lastPage) => {
-                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
-                return nextPage;
+                return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
         }
     );
+
+    const memoizedData = useMemo(() => data?.pages, [data]);
 
     if (isLoading) {
         return (
@@ -55,50 +57,43 @@ function MasonryListTemplate({ type }: { type: string }) {
         )
     }
 
-    if (data?.pages[0].data.content.length === 0) {
+    if (!memoizedData || data?.pages[0].data.content.length === 0) {
         return <EmptyScrapContainer />
     }
 
     return (
-        <ScrapList>
+        <Box
+            sx={{
+                display: 'flex',
+                flex: '1',
+                padding: '0 24px',
+                boxSizing: 'border-box',
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                overflow: 'auto',
+            }}
+        >
             <InfiniteScroll
                 hasMore={hasNextPage}
                 loadMore={() => fetchNextPage()}
-                pageStart={0}
-                loader={<CircularProgress
-                    key={0}
-                />}
                 useWindow={false}
-                style={{
-                    width: '100%',
-                    margin: '0',
-                }}
             >
                 <Masonry
                     columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
-
                 >
-                    {data?.pages.map((page) => {
+                    {memoizedData?.map((page) => {
                         return page.data.content.map((content: contentProps['content']) => {
                             return (
                                 <ScrapCard content={content} key={content.scrapId} />
                             )
                         })
-                    }
-                    ) || []}
+                    })}
                 </Masonry>
             </InfiniteScroll>
-        </ScrapList >
+        </Box >
     )
 }
-
-const ScrapList = styled.div`
-    display: flex;
-    flex: 1;
-    padding: 0 24px;
-    box-sizing: border-box;
-    flex-direction: column;
-    align-items: center;
-`
 
 export default MasonryListTemplate;
