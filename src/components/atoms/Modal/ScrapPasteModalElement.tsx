@@ -92,7 +92,8 @@ function ScrapPasteModalElement() {
                     sx={{
                         '& .MuiButtonBase-root': {
                             minWidth: 'auto',
-                        }
+                            p: '12px 0',
+                        },
                     }}
                     onChange={handleTabValueChange}
                     visibleScrollbar
@@ -103,6 +104,7 @@ function ScrapPasteModalElement() {
                     <Tab label="상품" value='product' />
                     <Tab label="아티클" value='article' />
                     <Tab label="비디오" value='video' />
+                    <Tab label="기타" value='other' />
                 </Tabs>
                 <TabPanel
                     value={value}
