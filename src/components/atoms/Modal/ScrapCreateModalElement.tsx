@@ -97,7 +97,6 @@ function ScrapCreateModalElement() {
                 <Button
                     variant='contained'
                     sx={{
-                        backgroundColor: theme.color.Gray_050,
                         borderRadius: '8px',
                         boxShadow: 'none',
                         width: 'fit-content',

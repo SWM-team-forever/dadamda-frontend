@@ -86,7 +86,6 @@ function StickerPasteModalElement() {
             <Button
                 variant='contained'
                 sx={{
-                    backgroundColor: theme.color.Gray_050,
                     borderRadius: '4px',
                     boxShadow: 'none',
                     width: 'fit-content',
