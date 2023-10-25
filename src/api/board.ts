@@ -517,6 +517,11 @@ const getShortenedSharingBoardUrl = async (nativeUrl: string) => {
         throw new Error('NF005');
     }
 
+    const token = localStorage.getItem("token");
+    if (!token) {
+        throw new Error('로그인이 필요합니다.');
+    }
+
     const response = await fetch(GET_SHORTENED_SHARING_BOARD_URL, {
         method: "POST",
         headers: {
@@ -544,10 +549,13 @@ export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
         () => getShortenedSharingBoardUrl(nativeUrl),
         {
             retry: false,
+            select: (data) => {
+                return `${data?.forward_url}/${data?.short_id}`;
+            },
             useErrorBoundary: true,
         }
     );
 
-    const [shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl] = [`${data.forward_url}/${data.short_id}`, isLoading];
+    const [shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl] = [data, isLoading];
     return { shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl };
 }
