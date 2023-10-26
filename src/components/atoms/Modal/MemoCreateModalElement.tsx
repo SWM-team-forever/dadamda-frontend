@@ -24,7 +24,7 @@ function MemoCreateModalElement() {
     const { mutate, isLoading, isError } = usePostCreateMemo();
 
     const handleCreateMemo = () => {
-        (token && scrapId && textAreaValue && isValidationSuccess()) && mutate({ token, scrapId, textAreaValue });
+        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
         logEvent('create_memo');
         isValidationSuccess() && closeModal();
     }
@@ -34,7 +34,7 @@ function MemoCreateModalElement() {
             return;
         } else if (e.key === 'Enter') {
             e.preventDefault();
-            handleCreateMemo();
+            isValidationSuccess() && handleCreateMemo();
         }
     }
 
