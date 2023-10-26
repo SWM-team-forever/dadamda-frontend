@@ -24,15 +24,16 @@ function MemoCreateModalElement() {
     const { mutate, isLoading, isError } = usePostCreateMemo();
 
     const handleCreateMemo = () => {
-        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
+        (token && scrapId && textAreaValue && isValidationSuccess()) && mutate({ token, scrapId, textAreaValue });
         logEvent('create_memo');
-        closeModal();
+        isValidationSuccess() && closeModal();
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         if (e.shiftKey) {
             return;
         } else if (e.key === 'Enter') {
+            e.preventDefault();
             handleCreateMemo();
         }
     }

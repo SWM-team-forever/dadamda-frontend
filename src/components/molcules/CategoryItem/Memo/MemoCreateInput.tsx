@@ -6,6 +6,7 @@ import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 import { useGetToken } from '@/hooks/useAccount';
+import { logEvent } from '@/utility/amplitude';
 
 function MemoCreateInput({ scrapId }: { scrapId: number }) {
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -18,7 +19,8 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
     const token = useGetToken();
     const { mutate, isLoading, isError } = usePostCreateMemo();
     const handleCreateMemo = () => {
-        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
+        (token && scrapId && textAreaValue && isValidationSuccess()) && mutate({ token, scrapId, textAreaValue });
+        logEvent('create_memo');
         setTextAreaValue('');
     }
 
@@ -26,7 +28,8 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
         if (e.shiftKey) {
             return;
         } else if (e.key === 'Enter') {
-            handleCreateMemo();
+            e.preventDefault();
+            isValidationSuccess() && handleCreateMemo();
         }
     }
 
