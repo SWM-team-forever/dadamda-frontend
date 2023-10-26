@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, FormControl, FormHelperText, OutlinedInput, Typography } from '@mui/material';
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
@@ -23,10 +23,18 @@ function MemoCreateModalElement() {
     const scrapId = modal.scrapId;
     const { mutate, isLoading, isError } = usePostCreateMemo();
 
-    const handleCreateMemoButtonClick = () => {
+    const handleCreateMemo = () => {
         (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
         logEvent('create_memo');
         closeModal();
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.shiftKey) {
+            return;
+        } else if (e.key === 'Enter') {
+            handleCreateMemo();
+        }
     }
 
     if (isLoading) {
@@ -71,7 +79,8 @@ function MemoCreateModalElement() {
             <FormControl>
                 <OutlinedInput
                     placeholder="추가할 메모를 입력하세요."
-                    onChange={(e) => handleSetValue(e)}
+                    onChange={handleSetValue}
+                    onKeyDown={handleKeyDown}
                     sx={{
                         width: '100%',
                         fontWeight: '500',
@@ -110,7 +119,7 @@ function MemoCreateModalElement() {
                         boxShadow: 'none',
                     }
                 }}
-                onClick={handleCreateMemoButtonClick}
+                onClick={handleCreateMemo}
                 disabled={!isValidationSuccess()}
             >
                 등록

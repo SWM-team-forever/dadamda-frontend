@@ -17,6 +17,18 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
 
     const token = useGetToken();
     const { mutate, isLoading, isError } = usePostCreateMemo();
+    const handleCreateMemo = () => {
+        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
+        setTextAreaValue('');
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.shiftKey) {
+            return;
+        } else if (e.key === 'Enter') {
+            handleCreateMemo();
+        }
+    }
 
     if (isLoading) {
         return <CircularProgress
@@ -60,6 +72,7 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
             <FormControl>
                 <OutlinedInput
                     placeholder="추가할 메모를 입력하세요."
+                    onKeyDown={(e) => handleKeyDown(e)}
                     onChange={(e) => handleSetValue(e)}
                     sx={{
                         width: '100%',
@@ -90,7 +103,6 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
             <Button
                 variant='contained'
                 sx={{
-                    backgroundColor: theme.color.Gray_050,
                     borderRadius: '4px',
                     boxShadow: 'none',
                     width: 'fit-content',
