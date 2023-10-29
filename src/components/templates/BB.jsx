@@ -504,9 +504,6 @@ export function MultipleContainers({
         return <div>로딩중</div>;
     }
 
-    console.log('boardContent', boardContent)
-    console.log('containers', containers)
-
     return (
         <DndContext
             sensors={sensors}
