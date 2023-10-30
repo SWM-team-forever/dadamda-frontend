@@ -15,6 +15,7 @@ import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement'
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import { useSearch } from '@/hooks/useSearch';
 import { useEffect } from 'react';
+import EmptyBoardContainer from '@/components/organisms/board/EmptyBoardContainer';
 
 export interface IBoardListInfo {
     uuid: number;
@@ -65,6 +66,25 @@ function BoardListTemplate() {
                 로딩중
             </Box>
         )
+    }
+
+    if (data?.pages[0].data.content.length === 0) {
+        return (
+            <Box
+                sx={{
+                    width: {
+                        xs: '100vw',
+                        sm: 'calc(100% - 209px)',
+                    },
+                    height: 'calc(100% - 56px)',
+                    position: 'fixed',
+                    right: '0',
+                    top: '56px',
+                }}
+            >
+                <EmptyBoardContainer />
+            </Box >
+        );
     }
 
     return (
