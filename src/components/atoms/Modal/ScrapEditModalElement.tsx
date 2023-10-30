@@ -186,7 +186,7 @@ function ScrapEditModalElement() {
             }
         }
 
-        token && mutate({ token, content });
+        mutate(content);
     }
 
     const contentRendering = () => {

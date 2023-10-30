@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 import { useGetScrapByType } from "@/api/scrap";
 import { useGetScrapSearchResultByType } from "@/api/search";
-import { useGetToken } from "@/hooks/useAccount";
 
 import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
@@ -14,7 +13,6 @@ import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/Cat
 import { useSearch } from "@/hooks/useSearch";
 
 function ColumnListTemplate({ type }: { type: string }) {
-    const token = useGetToken();
     const size = 30;
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -23,9 +21,9 @@ function ColumnListTemplate({ type }: { type: string }) {
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
         ['scraps', type, search.keyword],
         ({ pageParam = 0 }) => {
-            return token && (search.isSearched
-                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: search.keyword })
-                : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            return (search.isSearched
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, keyword: search.keyword })
+                : useGetScrapByType({ type: type, pages: pageParam, size: size })
             )
         },
         {

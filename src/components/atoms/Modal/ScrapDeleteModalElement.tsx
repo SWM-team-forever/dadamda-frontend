@@ -20,13 +20,11 @@ const scrapDeleteModalButtonStyle = {
 }
 
 function ScrapDeleteElementModal() {
-    const token = useGetToken();
-
     const { modal, closeModal } = useModal();
     const { mutate } = useDeleteScrap();
     const handleDeleteScrapButtonClick = () => {
         const scrapId = modal.scrapId;
-        (scrapId) && mutate({ token, scrapId });
+        mutate(scrapId);
         logEvent('delete_scrap');
         closeModal();
     }

@@ -3,16 +3,19 @@ import { DELETE_SCRAP_URL, EDIT_sCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { contentProps } from "@/types/ContentType";
 import * as Sentry from '@sentry/react';
+import { useGetToken } from "@/hooks/useAccount";
+import { NOT_KNOWN_ERROR } from "@/utility/constants";
 
 export interface fetchDatasProps {
     url?: string,
     pages: number,
     size: number,
-    token: string,
     keyword?: string | null,
 }
 
-const fetchDatas = async ({ url, pages, size, token }: fetchDatasProps) => {
+const fetchDatas = async ({ url, pages, size }: fetchDatasProps) => {
+    const token = useGetToken();
+
     const response = await fetch(url + `?page=${pages}&size=${size}`, {
         method: "GET",
         headers: {
@@ -32,23 +35,23 @@ const fetchDatas = async ({ url, pages, size, token }: fetchDatasProps) => {
     return response;
 };
 
-export const uesGetProductScrap = async({pages, size, token}: fetchDatasProps) => {
-    const scraps = await fetchDatas({url: GET_PRODUCT_SCRAP_URL, pages: pages, size: size, token: token});
+export const uesGetProductScrap = async({pages, size}: fetchDatasProps) => {
+    const scraps = await fetchDatas({url: GET_PRODUCT_SCRAP_URL, pages: pages, size: size});
     return scraps;
 };
 
-export const useGetVideoScrap = async({pages, size, token}: fetchDatasProps) => {
-    const scraps = await fetchDatas({url: GET_VIDEO_SCRAP_URL, pages: pages, size: size, token: token});
+export const useGetVideoScrap = async({pages, size}: fetchDatasProps) => {
+    const scraps = await fetchDatas({url: GET_VIDEO_SCRAP_URL, pages: pages, size: size});
     return scraps;
 };
 
-export const useGetArticleScrap = async({pages, size, token}: fetchDatasProps) => {
-    const scraps = await fetchDatas({url: GET_ARTICLE_SCRAP_URL, pages: pages, size: size, token: token});
+export const useGetArticleScrap = async({pages, size}: fetchDatasProps) => {
+    const scraps = await fetchDatas({url: GET_ARTICLE_SCRAP_URL, pages: pages, size: size});
     return scraps;
 }
 
-export const useGetListScrap = async({pages, size, token}: fetchDatasProps) => {
-    const scraps = await fetchDatas({url: GET_LIST_SCRAP_URL, pages: pages, size: size, token: token});
+export const useGetListScrap = async({pages, size}: fetchDatasProps) => {
+    const scraps = await fetchDatas({url: GET_LIST_SCRAP_URL, pages: pages, size: size});
     return scraps;
 }
 
@@ -60,17 +63,14 @@ const findURLByType = {
     'other': GET_OTHER_SCRAP_URL,
 }
 
-export const useGetScrapByType = async({pages, size, token, type}: fetchDatasProps & {type: string}) => {
-    const scraps = await fetchDatas({url: findURLByType[type as keyof typeof findURLByType], pages: pages, size: size, token: token});
+export const useGetScrapByType = async({pages, size, type}: fetchDatasProps & {type: string}) => {
+    const scraps = await fetchDatas({url: findURLByType[type as keyof typeof findURLByType], pages: pages, size: size});
     return scraps;
 }
 
-interface fetchPostCreateScrapProps {
-    token: string,
-    textAreaValue: string,
-}
+const fetchPostCreateScrap = async(textAreaValue: string) => {
+    const token = useGetToken();
 
-const fetchPostCreateScrap = async({token, textAreaValue}: fetchPostCreateScrapProps) => {
     return await fetch(POST_CREATE_OTHER_SCRAP_URL, {
         method: "POST",
         headers: {
@@ -108,15 +108,17 @@ export const usePostCreateScrap = () => {
             : useDefaultSnackbar('스크랩 생성에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
-interface fetchDeleteScrapProps {
-    scrapId: number,
-    token: string,
-}
+const fetchDeleteScrap = async(scrapId: number | undefined) => {
+    const token = useGetToken();
 
-const fetchDeleteScrap = async({scrapId, token}: fetchDeleteScrapProps) => {
+    if (!scrapId) {
+        throw new Error(NOT_KNOWN_ERROR);
+    }
+
     return await fetch(DELETE_SCRAP_URL + `/${scrapId}`, {
         method: "DELETE",
         headers: {
@@ -147,15 +149,13 @@ export const useDeleteScrap = () => {
             useDefaultSnackbar('스크랩 삭제에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
-interface fetchEditScrapProps {
-    token: string,
-    content: contentProps['content'],
-}
+const fetchEditScrap = async(content: contentProps['content']) => {
+    const token = useGetToken();
 
-const fetchEditScrap = async({token, content}: fetchEditScrapProps) => {
     return await fetch(EDIT_sCRAP_URL, {
         method: "PATCH",
         headers: {
@@ -186,5 +186,6 @@ export const useEditScrap = () => {
             useDefaultSnackbar('스크랩 변경에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }

@@ -6,13 +6,11 @@ import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 import { SCRAP_LINK_MAX_LENGTH, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
 import { logEvent } from '@/utility/amplitude';
-import { useGetToken } from '@/hooks/useAccount';
 
 import { LinkIcon } from '@/components/atoms/Icon';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');
-    const token = useGetToken();
     const { closeModal } = useModal();
 
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -22,7 +20,7 @@ function ScrapCreateModalElement() {
 
     const { mutate } = usePostCreateScrap();
     const handleCreateScrapButtonClick = () => {
-        (textAreaValue) && mutate({ token, textAreaValue });
+        mutate(textAreaValue);
         logEvent('create_scrap');
         closeModal();
     };

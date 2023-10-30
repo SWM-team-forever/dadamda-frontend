@@ -2,23 +2,21 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { SyntheticEvent, useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroller";
 
 import { useGetScrapByType } from "@/api/scrap";
 import { useGetScrapSearchResultByType } from "@/api/search";
-import { useGetToken } from "@/hooks/useAccount";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { contentProps } from "@/types/ContentType";
 import { logEvent } from "@/utility/amplitude";
+import { useSearch } from "@/hooks/useSearch";
 
 import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
-import InfiniteScroll from "react-infinite-scroller";
-import { useSearch } from "@/hooks/useSearch";
 import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 
 function ScrapPasteModalElement() {
-    const token = useGetToken();
     const size = 2;
     const [value, setValue] = useState('list');
     const handleTabValueChange = (_event: SyntheticEvent<Element, Event>, newValue: string) => {
@@ -32,9 +30,9 @@ function ScrapPasteModalElement() {
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
         ['scraps', value, search.keyword],
         ({ pageParam = 0 }) => {
-            return token && (search.isSearched
-                ? useGetScrapSearchResultByType({ type: value, pages: pageParam, size: size, token: token, keyword: search.keyword })
-                : useGetScrapByType({ type: value, pages: pageParam, size: size, token: token }))
+            return (search.isSearched
+                ? useGetScrapSearchResultByType({ type: value, pages: pageParam, size: size, keyword: search.keyword })
+                : useGetScrapByType({ type: value, pages: pageParam, size: size }))
         },
         {
             getNextPageParam: (lastPage) => {
