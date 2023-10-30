@@ -6,6 +6,7 @@ import { SnackbarProvider } from 'notistack';
 import { useLocation, createRoutesFromChildren, matchRoutes, useNavigationType } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material';
 import { ErrorBoundary } from 'react-error-boundary';
+import { HelmetProvider } from 'react-helmet-async';
 
 import theme from '@/assets/styles/themeMuiStyle';
 import { LoginProvider } from '@/context/LoginContext';
@@ -60,14 +61,16 @@ function App() {
               window.location.reload();
             }}
           >
-            <LoginProvider>
-              <Header />
-              {modal.isOpen && (
-                modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
-              )}
-              <Routing />
-              <ReactQueryDevtools initialIsOpen={false} />
-            </LoginProvider>
+            <HelmetProvider>
+              <LoginProvider>
+                <Header />
+                {modal.isOpen && (
+                  modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
+                )}
+                <Routing />
+                <ReactQueryDevtools initialIsOpen={false} />
+              </LoginProvider>
+            </HelmetProvider>
           </ErrorBoundary>
         </SnackbarProvider>
       </ThemeProvider>
