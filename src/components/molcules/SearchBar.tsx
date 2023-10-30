@@ -27,6 +27,12 @@ function SearchBar({ type }: { type: string }) {
         return useIsBlank(searchText) ? false : true;
     }
 
+    function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        if (e.key === 'Enter') {
+            isValidationSuccess() && handleSearchButton();
+        }
+    }
+
     return (
         <Box
             sx={{
@@ -70,6 +76,7 @@ function SearchBar({ type }: { type: string }) {
                             p: '0',
                         }
                     }}
+                    onKeyDown={handleKeyDown}
                     value={searchText}
                     placeholder="검색어를 입력하세요."
                     inputProps={{ 'aria-label': 'search google maps' }}
