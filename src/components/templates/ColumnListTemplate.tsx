@@ -11,6 +11,7 @@ import { useGetToken } from "@/hooks/useAccount";
 import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
 import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
+import { useSearch } from "@/hooks/useSearch";
 
 function ColumnListTemplate({ type }: { type: string }) {
     const token = useGetToken();
@@ -25,11 +26,13 @@ function ColumnListTemplate({ type }: { type: string }) {
         return searchParams.get('keyword');
     }
 
+    const { search, undoSearch } = useSearch();
+
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type, getKeyword()],
+        ['scraps', type, search.keyword, search.isSearched],
         ({ pageParam = 0 }) => {
-            return token && (isSearchTemplate()
-                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: getKeyword() })
+            return token && (search.isSearched
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: search.keyword })
                 : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
             )
         },
@@ -38,6 +41,8 @@ function ColumnListTemplate({ type }: { type: string }) {
                 const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
                 return nextPage;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
 
@@ -45,6 +50,7 @@ function ColumnListTemplate({ type }: { type: string }) {
 
     useEffect(() => {
         setScrapId(searchParams.get('scrapId'));
+        return () => undoSearch();
     }, [searchParams])
 
     if (isLoading) {

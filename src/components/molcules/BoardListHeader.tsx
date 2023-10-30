@@ -16,7 +16,9 @@ function BoardListHeader() {
             refetchOnWindowFocus: false,
             select: (data) => {
                 return data?.data.count;
-            }
+            },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
 

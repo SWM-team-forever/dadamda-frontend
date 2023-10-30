@@ -2,7 +2,6 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 
 import { useGetScrapByType } from "@/api/scrap";
 import { useGetScrapSearchResultByType } from "@/api/search";
@@ -15,6 +14,7 @@ import { logEvent } from "@/utility/amplitude";
 import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
 import InfiniteScroll from "react-infinite-scroller";
+import { useSearch } from "@/hooks/useSearch";
 
 function ScrapPasteModalElement() {
     const token = useGetToken();
@@ -24,23 +24,15 @@ function ScrapPasteModalElement() {
         setValue(newValue);
     }
 
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
+    const { search, undoSearch } = useSearch();
 
     const { pasteScrap } = useBoardContentAtom();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', value, getKeyword()],
+        ['scraps', value, search.keyword],
         ({ pageParam = 0 }) => {
-            return token && (isSearchTemplate()
-                ? useGetScrapSearchResultByType({ type: value, pages: pageParam, size: size, token: token, keyword: getKeyword() })
+            return token && (search.isSearched
+                ? useGetScrapSearchResultByType({ type: value, pages: pageParam, size: size, token: token, keyword: search.keyword })
                 : useGetScrapByType({ type: value, pages: pageParam, size: size, token: token }))
         },
         {
@@ -53,13 +45,8 @@ function ScrapPasteModalElement() {
         }
     );
 
-    function deleteSearchParams() {
-        searchParams.delete('keyword');
-        setSearchParams(searchParams);
-    }
-
     useEffect(() => {
-        return () => deleteSearchParams();
+        return () => undoSearch();
     }, [])
 
 

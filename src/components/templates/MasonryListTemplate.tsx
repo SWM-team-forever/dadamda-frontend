@@ -2,7 +2,6 @@ import { Masonry } from '@mui/lab';
 import { Box, CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
-import { useSearchParams } from 'react-router-dom';
 
 import { useGetScrapByType } from '@/api/scrap';
 import { useGetScrapSearchResultByType } from '@/api/search';
@@ -11,25 +10,19 @@ import { useGetToken } from '@/hooks/useAccount';
 
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import ScrapCard from '@/components/organisms/ScrapCard';
+import { useSearch } from '@/hooks/useSearch';
+import { useEffect } from 'react';
 
 function MasonryListTemplate({ type }: { type: string }) {
     const token = useGetToken();
     const size = 30;
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
+    const { search, undoSearch } = useSearch();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type, getKeyword()],
+        ['scraps', type, search.keyword, search.isSearched],
         ({ pageParam = 0 }) => {
-            return token && (isSearchTemplate()
-                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: getKeyword() })
+            return token && (search.isSearched
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: search.keyword })
                 : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
             )
         },
@@ -37,8 +30,14 @@ function MasonryListTemplate({ type }: { type: string }) {
             getNextPageParam: (lastPage) => {
                 return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
+
+    useEffect(() => {
+        return () => undoSearch();
+    }, []);
 
     if (isLoading) {
         return (

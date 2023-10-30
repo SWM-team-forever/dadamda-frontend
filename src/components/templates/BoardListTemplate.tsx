@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Box, Chip, Grid, Typography } from '@mui/material';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -13,6 +13,8 @@ import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { MenuIcon, ProfileIcon, StarIcon } from '@/components/atoms/Icon';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
+import { useSearch } from '@/hooks/useSearch';
+import { useEffect } from 'react';
 
 export interface IBoardListInfo {
     uuid: number;
@@ -26,32 +28,29 @@ export interface IBoardListInfo {
 function BoardListTemplate() {
     const navigate = useNavigate();
     const { openModal } = useModal();
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
-
+    const { search, undoSearch } = useSearch();
     const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(
-        ['boards', getKeyword()],
+        ['boards', search.keyword],
         ({ pageParam = 0 }) => {
-            return isSearchTemplate()
-                ? useSearchKeywordInBoardList({ pages: pageParam, size: 30, keyword: getKeyword() })
+            return search.isSearched
+                ? useSearchKeywordInBoardList({ pages: pageParam, size: 30, keyword: search.keyword })
                 : useGetBoardList({ pages: pageParam, size: 30 })
         },
         {
             getNextPageParam: (lastPage) => {
                 return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
 
     const { setBoard } = useBoardAtom();
     const { mutate } = useFixBoardList();
+
+    useEffect(() => {
+        return () => undoSearch();
+    }, []);
 
     if (isLoading) {
         return (
