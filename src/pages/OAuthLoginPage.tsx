@@ -6,6 +6,7 @@ import { GET_USER_PROFILE_IMAGE } from "../secret";
 
 import RowContainer from "../components/atoms/RowContainer";
 import { logEvent } from "@/utility/amplitude";
+import { HAS_NO_ACCESS_ERROR } from "@/hooks/useAccount";
 
 function OAuthLoginpage() {
     const navigate = useNavigate();
@@ -25,18 +26,21 @@ function OAuthLoginpage() {
                     throw new Error(body.resultCode);
                 }
             })
-        })
-            .then(data => (data.data.profileUrl))
+        }).then(data => (data.data.profileUrl))
     }
 
     useEffect(() => {
         const token = new URL(window.location.href).searchParams.get("token");
-        token && localStorage.setItem('token', token);
-        token && getUserProfileImage(token)
+        if (!token) {
+            throw new Error(HAS_NO_ACCESS_ERROR);
+        }
+
+        localStorage.setItem('token', token);
+        getUserProfileImage(token)
             .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage))
         logEvent('login');
         return navigate('/scrap/list');
-    }, [navigate])
+    }, [])
     return (
         <RowContainer style={{
             width: '100vw',
