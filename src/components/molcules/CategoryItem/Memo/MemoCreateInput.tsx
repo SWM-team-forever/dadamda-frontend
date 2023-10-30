@@ -75,8 +75,8 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
             <FormControl>
                 <OutlinedInput
                     placeholder="추가할 메모를 입력하세요."
-                    onKeyDown={(e) => handleKeyDown(e)}
-                    onChange={(e) => handleSetValue(e)}
+                    onKeyDown={handleKeyDown}
+                    onChange={handleSetValue}
                     sx={{
                         width: '100%',
                         fontWeight: '500',
