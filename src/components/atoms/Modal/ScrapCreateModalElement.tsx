@@ -27,6 +27,15 @@ function ScrapCreateModalElement() {
         closeModal();
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.shiftKey) {
+            return;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            isValidationSuccess() && handleCreateScrapButtonClick();
+        }
+    }
+
     const validation = () => {
         if (!useIsLessThanLengthLimitation(textAreaValue, SCRAP_LINK_MAX_LENGTH)) {
             return `최대 ${SCRAP_LINK_MAX_LENGTH}글자까지만 입력 가능합니다.`;
@@ -64,6 +73,7 @@ function ScrapCreateModalElement() {
                     placeholder="추가할 스크랩 주소를 입력하세요."
                     onChange={(e) => handleSetValue(e)}
                     error={!isValidationSuccess()}
+                    onKeyDown={handleKeyDown}
                     sx={{
                         width: '100%',
                         fontSize: '14px',
