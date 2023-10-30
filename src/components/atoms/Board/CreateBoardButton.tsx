@@ -1,8 +1,9 @@
-import { useModal } from "@/hooks/useModal";
 import { Button } from "@mui/material";
 
+import { useModal } from "@/hooks/useModal";
+
 function CreateBoardButton() {
-    const { modal, openModal } = useModal();
+    const { openModal } = useModal();
     const handleOpenCreateBoardModal = () => {
         openModal('boardCreate');
     }
