@@ -1,8 +1,8 @@
-import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 import {ISearchAtom} from "@/types/ISearchAtom";
 
-const searchAtom = atom<ISearchAtom>({
+const searchAtom = atomWithStorage<ISearchAtom>('searchAtom', {
     keyword: '',
     isSearched: false,
 });
