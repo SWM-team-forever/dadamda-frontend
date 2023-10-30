@@ -27,7 +27,9 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
             refetchOnWindowFocus: false,
             select: (data) => {
                 return data?.data.count;
-            }
+            },
+            useErrorBoundary: true,
+            retry: false,
         }
     );
 
