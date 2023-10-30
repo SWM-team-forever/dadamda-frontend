@@ -16,7 +16,7 @@ import BoardContentsWrapperPage from '@/pages/BoardContentsWrapperPage';
 
 import { RequireAuth } from '@/context/LoginContext';
 import { logEvent } from '@/utility/amplitude';
-import metaImage from 'public/dadamda_img.png';
+import MetaTag from '@/utility/MetaTag';
 
 function Routing() {
   const location = useLocation();
@@ -28,35 +28,9 @@ function Routing() {
     logEvent(`enter_${location.pathname}`);
   }
 
-  function getCurrentUrl() {
-    return window.location.href;
-  }
-
-  const metaProperties = {
-    title: '세상의 모든 URL, 다담다',
-    description: '내용에 따라 자동으로 북마크를 구성하는 신개념 컨텐츠 맞춤 스크랩 서비스, 다담다',
-    image: metaImage,
-    url: getCurrentUrl(),
-    siteName: '다담다',
-    type: 'website',
-  }
-
   return (
     <>
-      <Helmet>
-        <title>{metaProperties.title}</title>
-        <meta name="description" content={metaProperties.description} />
-        <meta property="og:title" content={metaProperties.title} />
-        <meta property="og:description" content={metaProperties.description} />
-        <meta property="og:image" content={metaProperties.image} />
-        <meta property="og:url" content={metaProperties.url} />
-        <meta property="og:site_name" content={metaProperties.siteName} />
-        <meta property="og:type" content={metaProperties.type} />
-        <meta property="twitter:title" content={metaProperties.title} />
-        <meta property="twitter:description" content={metaProperties.description} />
-        <meta property="twitter:image" content={metaProperties.image} />
-        <meta property="twitter:url" content={metaProperties.url} />
-      </Helmet>
+      <MetaTag />
       <Routes>
         <Route path='/' element={<RequireAuth><ScrapPage /></RequireAuth>}>
           <Route index element={<ScrapTemplate type={'list'} />}></Route>
