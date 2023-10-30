@@ -4,7 +4,9 @@ import { DELETE_USER_URL, GET_USER_INFORMATION_URL } from "@/secret";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 
-const fetchDeleteUser = async (token: string) => {
+const fetchDeleteUser = async () => {
+    const token = useGetToken();
+
     const response = await fetch(DELETE_USER_URL, {
         method: "DELETE",
         headers: {
