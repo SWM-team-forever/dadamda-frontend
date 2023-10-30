@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 import { EmptyBoardIcon } from "@/components/atoms/Icon";
 import CreateBoardButton from "@/components/atoms/Board/CreateBoardButton";
+import theme from "@/assets/styles/theme";
 
 function EmptyBoardContainer() {
     return (
@@ -18,7 +19,13 @@ function EmptyBoardContainer() {
             }}
         >
             <EmptyBoardIcon width="86" height="78" />
-            <Typography>보드를 추가해주세요!</Typography>
+            <Typography
+                variant="h1"
+                fontWeight="600"
+                color={theme.color.Gray_090}
+            >
+                보드를 추가해주세요!
+            </Typography>
             <CreateBoardButton />
         </Box>
     );
