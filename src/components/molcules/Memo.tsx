@@ -53,7 +53,7 @@ function Memo({ memoImageURL, memoText, createdDate, scrapId, memoId }: MemoProp
                 </Typography>
                 <Box
                     onClick={
-                        () => (token) && mutate({ token, scrapId, memoId })
+                        () => (token) && mutate({ scrapId, memoId })
                     }
                 >
                     <CloseIcon width='10' height='10' fill={theme.color.Gray_060} />

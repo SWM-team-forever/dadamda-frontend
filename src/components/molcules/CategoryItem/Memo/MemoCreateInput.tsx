@@ -19,7 +19,7 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
     const token = useGetToken();
     const { mutate, isLoading, isError } = usePostCreateMemo();
     const handleCreateMemo = () => {
-        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
+        (token && scrapId && textAreaValue) && mutate({ scrapId, textAreaValue });
         logEvent('create_memo');
         setTextAreaValue('');
     }
@@ -117,7 +117,7 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
                 }}
                 onClick={
                     () => {
-                        (token && scrapId) && mutate({ token, scrapId, textAreaValue });
+                        (token && scrapId) && mutate({ scrapId, textAreaValue });
                         setTextAreaValue('');
                     }
                 }
