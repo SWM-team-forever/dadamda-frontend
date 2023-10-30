@@ -24,7 +24,7 @@ function SearchBar({ type }: { type: string }) {
     }
 
     const isValidationSuccess = () => {
-        return useIsBlank(searchText) ? false : true;
+        return !useIsBlank(searchText);
     }
 
     function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
