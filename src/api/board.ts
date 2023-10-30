@@ -576,7 +576,7 @@ export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
         {
             retry: false,
             select: (data) => {
-                return `${data?.forward_url}/${data?.short_id}`;
+                return `https://${data?.forward_url}/${data?.short_id}`;
             },
             useErrorBoundary: true,
         }
