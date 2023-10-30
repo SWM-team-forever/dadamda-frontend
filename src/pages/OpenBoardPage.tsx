@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useGetOpenBoardTitle } from "@/api/board";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
+import MetaTag from "@/utility/MetaTag";
 
 function OpenBoardPage() {
     const params = useParams();
@@ -41,37 +42,40 @@ function OpenBoardPage() {
     }
 
     return (
-        <Box
-            sx={{
-                width: '100%',
-                height: 'calc(100% - 56px)',
-                position: 'fixed',
-            }}
-        >
+        <>
+            <MetaTag title={title} />
             <Box
                 sx={{
-                    position: 'fixed',
-                    left: '0',
                     width: '100%',
-                    height: '100%',
-                    overflow: 'auto',
-                    pb: '100px',
-                    boxSizing: 'border-box',
+                    height: 'calc(100% - 56px)',
+                    position: 'fixed',
                 }}
             >
-                <Typography
-                    variant="h1"
+                <Box
                     sx={{
-                        fontSize: '24px',
-                        fontWeight: '500',
-                        m: '20px',
+                        position: 'fixed',
+                        left: '0',
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'auto',
+                        pb: '100px',
+                        boxSizing: 'border-box',
                     }}
                 >
-                    {title}
-                </Typography>
-                <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
-            </Box>
-        </Box >
+                    <Typography
+                        variant="h1"
+                        sx={{
+                            fontSize: '24px',
+                            fontWeight: '500',
+                            m: '20px',
+                        }}
+                    >
+                        {title}
+                    </Typography>
+                    <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
+                </Box>
+            </Box >
+        </>
     );
 }
 
