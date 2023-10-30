@@ -1,8 +1,20 @@
-function CreateBoardButton() {
-    return (
-        <div>
+import { useModal } from "@/hooks/useModal";
+import { Button } from "@mui/material";
 
-        </div>
+function CreateBoardButton() {
+    const { modal, openModal } = useModal();
+    const handleOpenCreateBoardModal = () => {
+        openModal('boardCreate');
+    }
+
+    return (
+        <Button
+            color='primary'
+            variant='contained'
+            onClick={handleOpenCreateBoardModal}
+        >
+            + 보드 추가하기
+        </Button>
     )
 }
 
