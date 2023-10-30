@@ -15,6 +15,7 @@ import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
 import InfiniteScroll from "react-infinite-scroller";
 import { useSearch } from "@/hooks/useSearch";
+import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 
 function ScrapPasteModalElement() {
     const token = useGetToken();
@@ -61,6 +62,12 @@ function ScrapPasteModalElement() {
                 }}
             />
         )
+    }
+
+    if (data?.pages[0].data.content.length === 0) {
+        return (
+            <EmptyScrapContainer />
+        );
     }
 
     const handlePasteScrap = (content: contentProps['content']) => {
