@@ -1,5 +1,6 @@
 import { useGetToken } from "@/hooks/useAccount";
 import { GET_OTHER_SCRAP_URL, GET_LIST_SCRAP_URL, GET_ARTICLE_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL, GET_BOARD_LIST_COUNT_URL } from "@/secret";
+import { useQuery } from "@tanstack/react-query";
 
 const urlMatching: { [key: string]: string } = {
     'other': GET_OTHER_SCRAP_URL,
@@ -14,7 +15,9 @@ interface fetchGetScrapCountProps {
     token: string,
 }
 
-const fetchGetScrapCount = async({type, token}: fetchGetScrapCountProps) => {
+const fetchGetScrapCount = async(type: string) => {
+    const token = useGetToken();
+
     const response = await fetch(urlMatching[type] + `/count`, {
         method: "GET",
         headers: {
@@ -31,9 +34,21 @@ const fetchGetScrapCount = async({type, token}: fetchGetScrapCountProps) => {
     }
 }
 
-export const useGetScrapCount = async({type, token}: fetchGetScrapCountProps) => {
-    const count = await fetchGetScrapCount({type: type, token: token});
-    return count;
+export const useGetScrapCount = (type: string) => {
+    const { data, isLoading, isFetched } = useQuery(['scrapCount', type],
+        () => fetchGetScrapCount(type),
+        {
+            refetchOnWindowFocus: false,
+            select: (data) => {
+                return data?.data.count;
+            },
+            useErrorBoundary: true,
+            retry: false,
+        }
+    );
+
+    const [count, isCountLoading, isCountFetched] = [data, isLoading, isFetched];
+    return { count, isCountLoading, isCountFetched };
 }
 
 const getBoardListCount = async() => {
@@ -55,7 +70,20 @@ const getBoardListCount = async() => {
     }
 }
 
-export const useGetBoardListCount = async() => {
-    const count = await getBoardListCount();
-    return count;
+export const useGetBoardListCount = () => {
+    const {data, isLoading} = useQuery(
+        ['boardListCount'],
+        () => getBoardListCount(),
+        {
+            refetchOnWindowFocus: false,
+            select: (data) => {
+                return data?.data.count;
+            },
+            retry: false,
+            useErrorBoundary: true,
+        }
+    );
+
+    const [count, isCountLoading] = [data, isLoading];
+    return { count, isCountLoading };
 }

@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { Box, CircularProgress } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 
 import { useGetScrapCount } from '@/api/count';
-import { useGetToken } from '@/hooks/useAccount';
 
 import ScrapListHeader from '@/components/molcules/ScrapListHeader';
 import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
@@ -13,27 +11,9 @@ interface ScrapTemplateProps {
 }
 
 function ScrapTemplate({ type }: ScrapTemplateProps) {
-    const token = useGetToken();
-    const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
+    const { count, isCountLoading, isCountFetched } = useGetScrapCount(type);
 
-    const { data, isLoading, isFetched } = useQuery(['scrapCount', type],
-        () => {
-            return providingTemplates.includes(type)
-                ? (token && useGetScrapCount({ type: type, token: token }))
-                : { data: { count: 0 } };
-        },
-        {
-            enabled: !!token,
-            refetchOnWindowFocus: false,
-            select: (data) => {
-                return data?.data.count;
-            },
-            useErrorBoundary: true,
-            retry: false,
-        }
-    );
-
-    if (isLoading) {
+    if (isCountLoading) {
         return <CircularProgress
             sx={{
                 position: 'absolute',
@@ -46,13 +26,13 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     return (
         <>
             <ScrapListContainer>
-                {isFetched && <ScrapListHeader type={type} count={data} />}
+                {isCountFetched && <ScrapListHeader type={type} count={count} />}
                 <Box
                     sx={{
                         height: 'calc(100% - 125px)',
                     }}
                 >
-                    {isFetched && <MatchTemplateWithTypeAndCount type={type} count={data} />}
+                    {isCountFetched && <MatchTemplateWithTypeAndCount type={type} count={count} />}
                 </Box>
             </ScrapListContainer>
         </>

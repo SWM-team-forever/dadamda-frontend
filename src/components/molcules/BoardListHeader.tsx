@@ -3,26 +3,13 @@ import { Box, Button, Typography } from '@mui/material';
 import theme from '../../assets/styles/theme';
 import SearchBar from '@/components/molcules/SearchBar';
 import { useModal } from '@/hooks/useModal';
-import { useQuery } from '@tanstack/react-query';
 import { useGetBoardListCount } from '@/api/count';
 
 function BoardListHeader() {
     const { openModal } = useModal();
-    const { data, isLoading } = useQuery(['boardListCount'],
-        () => {
-            return useGetBoardListCount();
-        },
-        {
-            refetchOnWindowFocus: false,
-            select: (data) => {
-                return data?.data.count;
-            },
-            retry: false,
-            useErrorBoundary: true,
-        }
-    );
+    const { count, isCountLoading } = useGetBoardListCount();
 
-    if (isLoading) {
+    if (isCountLoading) {
         return (
             <Box
                 sx={{
@@ -75,7 +62,7 @@ function BoardListHeader() {
                             lineHeight: '150%',
                         }}
                     >
-                        {data} 개
+                        {count} 개
                     </Typography>
                 </Box>
                 <Button
