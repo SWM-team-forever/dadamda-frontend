@@ -26,7 +26,7 @@ function MemoCreateModalElement() {
     const handleCreateMemo = () => {
         (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
         logEvent('create_memo');
-        isValidationSuccess() && closeModal();
+        closeModal();
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
