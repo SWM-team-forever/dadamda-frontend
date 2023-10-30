@@ -1,10 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useGetOpenBoardTitle } from "@/api/board";
-import { useBoardAtom } from "@/hooks/useBoardAtom";
-import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
 
@@ -14,37 +11,12 @@ function OpenBoardPage() {
     function getBoardPageId(): string | null {
         return params['boardUUID'] || null;
     }
-    const { setBoard } = useBoardAtom();
 
     const boardPageId = getBoardPageId();
-    const navigate = useNavigate();
 
-    const { data, isLoading } = useQuery(
-        ['boardTitle', boardPageId],
-        () => boardPageId && useGetOpenBoardTitle(boardPageId),
-        {
-            enabled: !!boardPageId,
-            onError: (error: Error) => {
-                if (error.message === "NF005") {
-                    useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
-                    navigate('/not-found');
-                }
-            },
-            onSuccess: () => {
-                setBoard((prev) => ({
-                    ...prev,
-                    boardUUID: boardPageId,
-                }))
-            },
-            select: (data) => {
-                return data?.data.title;
-            },
-            retry: false,
-            useErrorBoundary: (error: Error) => error.message !== "NF005",
-        }
-    )
+    const { title, isTitleLoading } = useGetOpenBoardTitle(boardPageId);
 
-    if (isLoading) {
+    if (isTitleLoading) {
         return (
             <Box
                 sx={{
@@ -95,9 +67,9 @@ function OpenBoardPage() {
                         m: '20px',
                     }}
                 >
-                    {data}
+                    {title}
                 </Typography>
-                {boardPageId && <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />}
+                <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
             </Box>
         </Box >
     );
