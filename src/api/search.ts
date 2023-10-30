@@ -1,4 +1,5 @@
 import { fetchDatasProps } from "@/api/scrap";
+import { useGetToken } from "@/hooks/useAccount";
 import { GET_ARTICLE_SCRAP_SEARCH_URL, GET_LIST_SCRAP_SEARCH_URL, GET_OTHER_SCRAP_SEARCH_URL, GET_PRODUCT_SCRAP_SEARCH_URL, GET_VIDEO_SCRAP_SEARCH_URL } from "@/secret";
 
 const fetchGetSearchResult = async ({ url, pages, size, keyword }: fetchDatasProps) => {
