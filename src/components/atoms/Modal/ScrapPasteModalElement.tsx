@@ -64,10 +64,53 @@ function ScrapPasteModalElement() {
         )
     }
 
-    if (data?.pages[0].data.content.length === 0) {
+    const isResultsExist = () => data?.pages[0].data.content.length > 0;
+
+    function EmptyResults() {
         return (
             <EmptyScrapContainer />
         );
+    }
+
+    function ExistResults() {
+        return (
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={() => fetchNextPage()}
+                hasMore={hasNextPage}
+                loader={
+                    <div className="loader" key={0}>
+                        <CircularProgress />
+                    </div>
+                }
+                useWindow={false}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                    }}
+                >
+                    {data?.pages.map((page) => {
+                        return page.data.content.map((content: contentProps['content']) => {
+                            return (
+                                <Box
+                                    onClick={() => handlePasteScrap(content)}
+                                >
+                                    <ScrapCard content={content} key={content.scrapId} />
+                                </Box>
+                            )
+                        })
+                    }
+                    ) || []}
+                </Box>
+            </InfiniteScroll>
+        );
+    }
+
+    function RenderingResults() {
+        return isResultsExist() ? <ExistResults /> : <EmptyResults />;
     }
 
     const handlePasteScrap = (content: contentProps['content']) => {
@@ -110,38 +153,7 @@ function ScrapPasteModalElement() {
                         overflowY: 'auto',
                     }}
                 >
-                    <InfiniteScroll
-                        pageStart={0}
-                        loadMore={() => fetchNextPage()}
-                        hasMore={hasNextPage}
-                        loader={
-                            <div className="loader" key={0}>
-                                <CircularProgress />
-                            </div>
-                        }
-                        useWindow={false}
-                    >
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '10px',
-                            }}
-                        >
-                            {data?.pages.map((page) => {
-                                return page.data.content.map((content: contentProps['content']) => {
-                                    return (
-                                        <Box
-                                            onClick={() => handlePasteScrap(content)}
-                                        >
-                                            <ScrapCard content={content} key={content.scrapId} />
-                                        </Box>
-                                    )
-                                })
-                            }
-                            ) || []}
-                        </Box>
-                    </InfiniteScroll>
+                    <RenderingResults />
                 </TabPanel>
             </TabContext>
         </Box>
