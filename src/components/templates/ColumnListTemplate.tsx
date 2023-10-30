@@ -18,18 +18,10 @@ function ColumnListTemplate({ type }: { type: string }) {
     const size = 30;
     const [searchParams, setSearchParams] = useSearchParams();
 
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
-
     const { search, undoSearch } = useSearch();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type, search.keyword, search.isSearched],
+        ['scraps', type, search.keyword],
         ({ pageParam = 0 }) => {
             return token && (search.isSearched
                 ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: search.keyword })
@@ -51,7 +43,7 @@ function ColumnListTemplate({ type }: { type: string }) {
     useEffect(() => {
         setScrapId(searchParams.get('scrapId'));
         return () => undoSearch();
-    }, [searchParams])
+    }, [])
 
     if (isLoading) {
         return (
