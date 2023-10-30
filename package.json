@@ -45,6 +45,7 @@
     "react-infinite-scroller": "^1.2.6",
     "react-router-dom": "^6.14.1",
     "react-scripts": "^5.0.1",
+    "react-snap": "^1.23.0",
     "react-snap-carousel": "^0.3.2",
     "react-social-login-buttons": "^3.9.1",
     "storybook": "^7.4.5",
