@@ -48,6 +48,8 @@ function ScrapPasteModalElement() {
                 const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
                 return nextPage;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
 
@@ -87,7 +89,7 @@ function ScrapPasteModalElement() {
             }}
         >
             <TabContext value={value}>
-                <SearchBar type="list" />
+                <SearchBar type={value} />
                 <Tabs
                     variant="fullWidth"
                     sx={{
