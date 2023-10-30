@@ -2,43 +2,40 @@ import { Masonry } from '@mui/lab';
 import { Box, CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { useGetScrapByType } from '@/api/scrap';
 import { useGetScrapSearchResultByType } from '@/api/search';
 import { contentProps } from '@/types/ContentType';
-import { useGetToken } from '@/hooks/useAccount';
 
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import ScrapCard from '@/components/organisms/ScrapCard';
+import { useSearch } from '@/hooks/useSearch';
 
 function MasonryListTemplate({ type }: { type: string }) {
-    const token = useGetToken();
     const size = 30;
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
+    const { search, undoSearch } = useSearch();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type, getKeyword()],
+        ['scraps', type, search.keyword, search.isSearched],
         ({ pageParam = 0 }) => {
-            return token && (isSearchTemplate()
-                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: getKeyword() })
-                : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            return (search.isSearched
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, keyword: search.keyword })
+                : useGetScrapByType({ type: type, pages: pageParam, size: size })
             )
         },
         {
             getNextPageParam: (lastPage) => {
                 return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
+
+    useEffect(() => {
+        return () => undoSearch();
+    }, []);
 
     if (isLoading) {
         return (
@@ -62,7 +59,6 @@ function MasonryListTemplate({ type }: { type: string }) {
             sx={{
                 display: 'flex',
                 flex: '1',
-                padding: '0 24px',
                 boxSizing: 'border-box',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -75,9 +71,20 @@ function MasonryListTemplate({ type }: { type: string }) {
                 hasMore={hasNextPage}
                 loadMore={() => fetchNextPage()}
                 useWindow={false}
+                style={{
+                    width: '100%'
+                }}
             >
                 <Masonry
-                    columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
+                    columns={{
+                        xs: 1, sm: 2, md: 3, lg: 4, xl: 5
+                    }}
+                    sx={{
+                        m: 0,
+                        width: '100%',
+                        boxSizing: 'border-box',
+                    }}
+                    spacing={1}
                 >
                     {data.pages?.map((page) => {
                         return page.data.content.map((content: contentProps['content']) => {

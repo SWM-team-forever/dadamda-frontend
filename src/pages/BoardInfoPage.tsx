@@ -161,7 +161,7 @@ function BoardInfoPage() {
                         <Button
                             onClick={() => {
                                 setMode('view')
-                                handleSaveBoard('edit')
+                                handleSaveBoard()
                             }}
                         >
                             보기 모드
@@ -171,7 +171,7 @@ function BoardInfoPage() {
                 <Button
                     onClick={() => {
                         setMode('view')
-                        handleSaveBoard('edit')
+                        handleSaveBoard()
                     }}
                 >
                     저장

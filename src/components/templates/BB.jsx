@@ -336,7 +336,7 @@ export function MultipleContainers({
         containers, 
         setContainers, 
         handleAddColumn, 
-        handleSaveBoard, 
+        handleAutoSaveBoard,
         getNextContainerId,
         SAVE_BOARD_INTERVAL,
     } = useBoardContentAtom();
@@ -496,9 +496,9 @@ export function MultipleContainers({
     }, [boardContent]);
 
     useEffect(() => {
-        const interval = setInterval(() => handleSaveBoard(mode), SAVE_BOARD_INTERVAL);
+        const interval = setInterval(() => handleAutoSaveBoard(mode), SAVE_BOARD_INTERVAL);
         return () => clearInterval(interval);
-    }, [handleSaveBoard, mode])
+    }, [handleAutoSaveBoard, mode])
 
     if (isLoading) {
         return <div>로딩중</div>;
@@ -579,7 +579,7 @@ export function MultipleContainers({
                     setContainers((containers) => {
                         const activeIndex = containers.indexOf(active.id);
                         const overIndex = containers.indexOf(over.id);
-
+                        
                         return arrayMove(containers, activeIndex, overIndex);
                     });
                 }
@@ -631,7 +631,6 @@ export function MultipleContainers({
                 if (overContainer) {
                     const activeIndex = boardContent[activeContainer].indexOf(active.id);
                     const overIndex = boardContent[overContainer].indexOf(overId);
-
                     if (activeIndex !== overIndex) {
                         setBoardContent((items) => ({
                             ...items,
@@ -641,6 +640,33 @@ export function MultipleContainers({
                                 overIndex
                             ),
                         }));
+                    }
+
+                    if (activeContainer !== overContainer) {
+                        const activeItems = boardContent[activeContainer];
+                        const overItems = boardContent[overContainer];
+                        let newBoardContent = {}
+                        for (let item in boardContent) {
+                            const key = Object.keys(boardContent).find(key => boardContent[key] === boardContent[item]);
+                            if (key === active.id) {
+                                newBoardContent = {
+                                    ...newBoardContent,
+                                    [overId]: overItems,
+                                }
+                            } else if (key === overId) {
+                                newBoardContent = {
+                                    ...newBoardContent,
+                                    [active.id]: activeItems,
+                                }
+                            } else {
+                                newBoardContent = {
+                                    ...newBoardContent,
+                                    [key]: boardContent[key],
+                                }
+                            }
+                        }
+    
+                        setBoardContent(newBoardContent);
                     }
                 }
 

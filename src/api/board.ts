@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from '@sentry/react';
 import { useNavigate } from "react-router-dom";
 import { useGetToken } from "@/hooks/useAccount";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
 
 interface fetchDatasProps {
     url?: string;
@@ -85,6 +86,7 @@ export const usePostCreateBoard = () => {
             useDefaultSnackbar('보드 생성에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
@@ -152,6 +154,7 @@ export const useDeleteBoard = () => {
             useDefaultSnackbar('보드 삭제에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
@@ -203,6 +206,7 @@ export const useEditBoard = () => {
             useDefaultSnackbar('보드 수정에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
@@ -249,7 +253,28 @@ export const useSaveBoard = () => {
             useDefaultSnackbar('보드 저장에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
+}
+
+export const useAutoSaveBoard = () => {
+    const queryClient = useQueryClient();
+
+    const {mutate} = useMutation(saveBoard, {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['boardContent']);
+        },
+        onError: (error) => {
+            Sentry.captureException(error);
+            useDefaultSnackbar('보드 저장에 실패하였습니다.', 'error');
+        },
+        useErrorBoundary: true,
+        retry: false,
+    });
+
+    const autoSaveBoardMutate = mutate;
+
+    return {autoSaveBoardMutate};
 }
 
 const getBoardContents = async (boardUUID: string) => {
@@ -346,6 +371,7 @@ export const useFixBoardList = () => {
             useDefaultSnackbar('다시 시도해주세요.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
@@ -381,9 +407,11 @@ export const useGetBoardIsShared = (boardUUID: string | null) => {
             select: (data) => {
                 return data?.data.isShared;
             },
-            onError: () => {
-                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
-                navigate('/not-found');
+            onError: (error) => {
+                if (error.message === "NF005") {
+                    useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                    navigate('/not-found');
+                }
             },
             retry: false,
             useErrorBoundary: (error: Error) => error.message !== "NF005",
@@ -429,6 +457,7 @@ export const useToggleBoardIsShared = () => {
             useDefaultSnackbar('보드 공유 상태 변경에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
@@ -475,14 +504,46 @@ const getOpenBoardTitle = async (boardUUID: string) => {
     return response;
 };
 
-export const useGetOpenBoardTitle = (boardUUID: string) => {
-    const openBoardContents = getOpenBoardTitle(boardUUID);
-    return openBoardContents;
+export const useGetOpenBoardTitle = (boardUUID: string | null) => {
+    if (!boardUUID) {
+        throw new Error('NOT_KNOWN_ERROR');
+    }
+
+    const navigate = useNavigate();
+    const {setBoard} = useBoardAtom();
+
+    const {data, isLoading} = useQuery(
+        ['boardTitle', boardUUID],
+        () => getOpenBoardTitle(boardUUID),
+        {
+            enabled: !!boardUUID,
+            onError: (error: Error) => {
+                if (error.message === "NF005") {
+                    useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+                    navigate('/not-found');
+                }
+            },
+            onSuccess: () => {
+                setBoard((prev) => ({
+                    ...prev,
+                    boardUUID: boardUUID,
+                }))
+            },
+            select: (data) => {
+                return data?.data.title;
+            },
+            retry: false,
+            useErrorBoundary: (error: Error) => error.message !== "NF005",
+        }
+    );
+
+    const [title, isTitleLoading] = [data, isLoading];
+    return {title, isTitleLoading};
 }
 
 const getShortenedSharingBoardUrl = async (nativeUrl: string) => {
     if (!nativeUrl) {
-        throw new Error('NF005');
+        throw new Error('NOT_KNOWN_ERROR');
     }
 
     const token = useGetToken();

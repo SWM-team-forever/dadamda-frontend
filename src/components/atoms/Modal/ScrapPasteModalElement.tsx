@@ -2,61 +2,50 @@ import { TabContext, TabPanel } from "@mui/lab";
 import { Box, CircularProgress, Tab, Tabs } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { SyntheticEvent, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroller";
 
 import { useGetScrapByType } from "@/api/scrap";
 import { useGetScrapSearchResultByType } from "@/api/search";
-import { useGetToken } from "@/hooks/useAccount";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { contentProps } from "@/types/ContentType";
 import { logEvent } from "@/utility/amplitude";
+import { useSearch } from "@/hooks/useSearch";
 
 import ScrapCard from "@/components/molcules/Board/ScrapCard";
 import SearchBar from "@/components/molcules/SearchBar";
+import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 
 function ScrapPasteModalElement() {
-    const token = useGetToken();
-    const size = 30;
+    const size = 2;
     const [value, setValue] = useState('list');
     const handleTabValueChange = (_event: SyntheticEvent<Element, Event>, newValue: string) => {
         setValue(newValue);
     }
 
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
+    const { search, undoSearch } = useSearch();
 
     const { pasteScrap } = useBoardContentAtom();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', value, getKeyword()],
+        ['scraps', value, search.keyword],
         ({ pageParam = 0 }) => {
-            return token && (isSearchTemplate()
-                ? useGetScrapSearchResultByType({ type: value, pages: pageParam, size: size, token: token, keyword: getKeyword() })
-                : useGetScrapByType({ type: value, pages: pageParam, size: size, token: token }))
+            return (search.isSearched
+                ? useGetScrapSearchResultByType({ type: value, pages: pageParam, size: size, keyword: search.keyword })
+                : useGetScrapByType({ type: value, pages: pageParam, size: size }))
         },
         {
             getNextPageParam: (lastPage) => {
                 const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
                 return nextPage;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
 
-    function deleteSearchParams() {
-        searchParams.delete('keyword');
-        setSearchParams(searchParams);
-    }
-
     useEffect(() => {
-        return () => deleteSearchParams();
+        return () => undoSearch();
     }, [])
 
 
@@ -73,6 +62,55 @@ function ScrapPasteModalElement() {
         )
     }
 
+    const isResultsExist = () => data?.pages[0].data.content.length > 0;
+
+    function EmptyResults() {
+        return (
+            <EmptyScrapContainer />
+        );
+    }
+
+    function ExistResults() {
+        return (
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={() => fetchNextPage()}
+                hasMore={hasNextPage}
+                loader={
+                    <div className="loader" key={0}>
+                        <CircularProgress />
+                    </div>
+                }
+                useWindow={false}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '10px',
+                    }}
+                >
+                    {data?.pages.map((page) => {
+                        return page.data.content.map((content: contentProps['content']) => {
+                            return (
+                                <Box
+                                    onClick={() => handlePasteScrap(content)}
+                                >
+                                    <ScrapCard content={content} key={content.scrapId} />
+                                </Box>
+                            )
+                        })
+                    }
+                    ) || []}
+                </Box>
+            </InfiniteScroll>
+        );
+    }
+
+    function RenderingResults() {
+        return isResultsExist() ? <ExistResults /> : <EmptyResults />;
+    }
+
     const handlePasteScrap = (content: contentProps['content']) => {
         logEvent('paste_scrap', { type: content.dtype });
         pasteScrap(content);
@@ -86,13 +124,14 @@ function ScrapPasteModalElement() {
             }}
         >
             <TabContext value={value}>
-                <SearchBar type="list" />
+                <SearchBar type={value} />
                 <Tabs
                     variant="fullWidth"
                     sx={{
                         '& .MuiButtonBase-root': {
                             minWidth: 'auto',
-                        }
+                            p: '12px 0',
+                        },
                     }}
                     onChange={handleTabValueChange}
                     visibleScrollbar
@@ -103,6 +142,7 @@ function ScrapPasteModalElement() {
                     <Tab label="상품" value='product' />
                     <Tab label="아티클" value='article' />
                     <Tab label="비디오" value='video' />
+                    <Tab label="기타" value='other' />
                 </Tabs>
                 <TabPanel
                     value={value}
@@ -111,26 +151,7 @@ function ScrapPasteModalElement() {
                         overflowY: 'auto',
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '10px',
-                        }}
-                    >
-                        {data?.pages.map((page) => {
-                            return page.data.content.map((content: contentProps['content']) => {
-                                return (
-                                    <Box
-                                        onClick={() => handlePasteScrap(content)}
-                                    >
-                                        <ScrapCard content={content} key={content.scrapId} />
-                                    </Box>
-                                )
-                            })
-                        }
-                        ) || []}
-                    </Box>
+                    <RenderingResults />
                 </TabPanel>
             </TabContext>
         </Box>

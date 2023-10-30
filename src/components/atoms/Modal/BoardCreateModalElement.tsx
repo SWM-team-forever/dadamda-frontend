@@ -4,7 +4,7 @@ import { useState } from "react";
 import { usePostCreateBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { useModal } from "@/hooks/useModal";
-import { MAX_BOARD_DESCRIPTION_LENGTH, MAX_BOARD_TITLE_LENGTH, useIsBlank, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
+import { MAX_BOARD_DESCRIPTION_LENGTH, MAX_BOARD_TITLE_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
 import { logEvent } from "@/utility/amplitude";
 
 function BoardCreateModalElement() {
@@ -55,6 +55,10 @@ function BoardCreateModalElement() {
     }
 
     const validateTitle = () => {
+        if (!useIsEntered(title)) {
+            return ' ';
+        }
+
         if (useIsBlank(title)) {
             return '공백만 입력되었습니다.';
         }
@@ -67,6 +71,10 @@ function BoardCreateModalElement() {
     }
 
     const validateDescription = () => {
+        if (!useIsEntered(description)) {
+            return ' ';
+        }
+
         if (useIsBlank(description)) {
             return '공백만 입력되었습니다.';
         }
@@ -80,7 +88,7 @@ function BoardCreateModalElement() {
 
     const validateTag = () => {
         if (useIsBlank(selectedTag)) {
-            return '태그는 꼭 선택해주셔야 합니다';
+            return ' ';
         }
 
         return 'success';

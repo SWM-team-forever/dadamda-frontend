@@ -1,4 +1,4 @@
-import { useSaveBoard } from "@/api/board";
+import { useAutoSaveBoard, useSaveBoard } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import boardContainersAtom from "@/state/boardContainersAtom";
 import boardContentAtom from "@/state/boardContentAtom";
@@ -12,14 +12,15 @@ export const useBoardContentAtom = () => {
     const {board} = useBoardAtom();
 
     const { mutate } = useSaveBoard();
+    const {autoSaveBoardMutate} = useAutoSaveBoard();
 
     function pasteScrap(scrap: contentProps['content']) {
         const firstColumn = Object.keys(boardContent)[0];
         const newBoard = firstColumn ? {
             ...boardContent,
             [firstColumn]: [
-                ...boardContent[firstColumn],
                 { ...scrap, id: `${scrap.scrapId + Math.random()}` },
+                ...boardContent[firstColumn],
             ],
         } : {
             [getNextContainerId()]: [{ ...scrap, id: `${scrap.scrapId + Math.random()}` }],
@@ -34,8 +35,8 @@ export const useBoardContentAtom = () => {
         const newBoard = firstColumn ? {
             ...boardContent,
             [firstColumn]: [
-                ...boardContent[firstColumn],
                 { ...sticker, id: `${sticker.memoId + Math.random()}` },
+                ...boardContent[firstColumn],
             ],
         } : {
             [getNextContainerId()]: [{ ...sticker, id: `${sticker.memoId + Math.random()}` }],
@@ -68,10 +69,23 @@ export const useBoardContentAtom = () => {
         return mode === 'edit';
     }
 
-
-    function handleSaveBoard(mode: 'view' | 'edit') {
+    function useGetBoardUUIDIfExist() {
         const boardUUID = board?.boardUUID;
-        (boardUUID && isEditMode(mode)) && mutate({ boardUUID: boardUUID, contents: boardContent });
+        if (!boardUUID) {
+            throw new Error('NOT_KNOWN_ERROR');
+        }
+
+        return boardUUID;
+    }
+
+    function handleAutoSaveBoard(mode: 'view' | 'edit') {
+        const boardUUID = useGetBoardUUIDIfExist();
+        (isEditMode(mode)) && autoSaveBoardMutate({ boardUUID: boardUUID, contents: boardContent });
+    }
+
+    function handleSaveBoard() {
+        const boardUUID = useGetBoardUUIDIfExist();
+        mutate({ boardUUID: boardUUID, contents: boardContent });
     }
 
     const SAVE_BOARD_INTERVAL = 10000; // 10초
@@ -86,6 +100,7 @@ export const useBoardContentAtom = () => {
         handleAddColumn,
         pasteSticker,
         handleSaveBoard,
+        handleAutoSaveBoard,
         SAVE_BOARD_INTERVAL,
     }
 }

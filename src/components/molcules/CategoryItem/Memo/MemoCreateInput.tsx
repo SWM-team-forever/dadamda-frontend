@@ -6,6 +6,7 @@ import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 import { useGetToken } from '@/hooks/useAccount';
+import { logEvent } from '@/utility/amplitude';
 
 function MemoCreateInput({ scrapId }: { scrapId: number }) {
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -17,6 +18,20 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
 
     const token = useGetToken();
     const { mutate, isLoading, isError } = usePostCreateMemo();
+    const handleCreateMemo = () => {
+        (token && scrapId && textAreaValue) && mutate({ scrapId, textAreaValue });
+        logEvent('create_memo');
+        setTextAreaValue('');
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.shiftKey) {
+            return;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            isValidationSuccess() && handleCreateMemo();
+        }
+    }
 
     if (isLoading) {
         return <CircularProgress
@@ -60,7 +75,8 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
             <FormControl>
                 <OutlinedInput
                     placeholder="추가할 메모를 입력하세요."
-                    onChange={(e) => handleSetValue(e)}
+                    onKeyDown={handleKeyDown}
+                    onChange={handleSetValue}
                     sx={{
                         width: '100%',
                         fontWeight: '500',
@@ -90,7 +106,6 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
             <Button
                 variant='contained'
                 sx={{
-                    backgroundColor: theme.color.Gray_050,
                     borderRadius: '4px',
                     boxShadow: 'none',
                     width: 'fit-content',
@@ -102,7 +117,7 @@ function MemoCreateInput({ scrapId }: { scrapId: number }) {
                 }}
                 onClick={
                     () => {
-                        (token && scrapId) && mutate({ token, scrapId, textAreaValue });
+                        (token && scrapId) && mutate({ scrapId, textAreaValue });
                         setTextAreaValue('');
                     }
                 }

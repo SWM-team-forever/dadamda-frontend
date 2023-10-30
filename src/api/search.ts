@@ -1,7 +1,10 @@
 import { fetchDatasProps } from "@/api/scrap";
+import { useGetToken } from "@/hooks/useAccount";
 import { GET_ARTICLE_SCRAP_SEARCH_URL, GET_LIST_SCRAP_SEARCH_URL, GET_OTHER_SCRAP_SEARCH_URL, GET_PRODUCT_SCRAP_SEARCH_URL, GET_VIDEO_SCRAP_SEARCH_URL } from "@/secret";
 
-const fetchGetSearchResult = async ({ url, pages, size, token, keyword }: fetchDatasProps) => {
+const fetchGetSearchResult = async ({ url, pages, size, keyword }: fetchDatasProps) => {
+    const token = useGetToken();
+
     const response = await fetch(url + `?page=${pages}&size=${size}&keyword=${keyword}`, {
         method: "GET",
         headers: {
@@ -29,7 +32,7 @@ const findURLByType = {
     'other': GET_OTHER_SCRAP_SEARCH_URL,
 }
 
-export const useGetScrapSearchResultByType = async({pages, size, token, type, keyword}: fetchDatasProps & {type: string}) => {
-    const scraps = await fetchGetSearchResult({url: findURLByType[type as keyof typeof findURLByType], pages: pages, size: size, token: token, keyword: keyword});
+export const useGetScrapSearchResultByType = async({pages, size, type, keyword}: fetchDatasProps & {type: string}) => {
+    const scraps = await fetchGetSearchResult({url: findURLByType[type as keyof typeof findURLByType], pages: pages, size: size, keyword: keyword});
     return scraps;
 }

@@ -6,13 +6,11 @@ import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
 import { SCRAP_LINK_MAX_LENGTH, useIsEntered, useIsLessThanLengthLimitation, useIsValidURL, useIsWhiteSpaceExist } from '@/hooks/useValidation';
 import { logEvent } from '@/utility/amplitude';
-import { useGetToken } from '@/hooks/useAccount';
 
 import { LinkIcon } from '@/components/atoms/Icon';
 
 function ScrapCreateModalElement() {
     const [textAreaValue, setTextAreaValue] = useState('');
-    const token = useGetToken();
     const { closeModal } = useModal();
 
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -22,10 +20,19 @@ function ScrapCreateModalElement() {
 
     const { mutate } = usePostCreateScrap();
     const handleCreateScrapButtonClick = () => {
-        (textAreaValue) && mutate({ token, textAreaValue });
+        mutate(textAreaValue);
         logEvent('create_scrap');
         closeModal();
     };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.shiftKey) {
+            return;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            isValidationSuccess() && handleCreateScrapButtonClick();
+        }
+    }
 
     const validation = () => {
         if (!useIsLessThanLengthLimitation(textAreaValue, SCRAP_LINK_MAX_LENGTH)) {
@@ -64,6 +71,7 @@ function ScrapCreateModalElement() {
                     placeholder="추가할 스크랩 주소를 입력하세요."
                     onChange={(e) => handleSetValue(e)}
                     error={!isValidationSuccess()}
+                    onKeyDown={handleKeyDown}
                     sx={{
                         width: '100%',
                         fontSize: '14px',
@@ -97,7 +105,6 @@ function ScrapCreateModalElement() {
                 <Button
                     variant='contained'
                     sx={{
-                        backgroundColor: theme.color.Gray_050,
                         borderRadius: '8px',
                         boxShadow: 'none',
                         width: 'fit-content',

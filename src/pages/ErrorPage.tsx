@@ -23,7 +23,7 @@ function ErrorPage({ resetErrorBoundary, error }: any) {
         navigate(-1);
     };
 
-    if (error.message === HAS_NO_ACCESS_ERROR) {
+    if (error.message === HAS_NO_ACCESS_ERROR || error.message === 'BR001') {
         useHandleUnVerifiedTokenUser();
     }
 

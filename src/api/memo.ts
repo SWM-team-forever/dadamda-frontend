@@ -2,14 +2,16 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DELETE_MEMO_URL, POST_CREATE_MEMO_URL } from "../secret";
 import { useDefaultSnackbar } from "../hooks/useWarningSnackbar";
 import * as Sentry from '@sentry/react';
+import { useGetToken } from "@/hooks/useAccount";
 
 export interface fetchPostCreateMemoProps {
-    token: string,
     scrapId: number,
     textAreaValue: string,
 }
 
-const fetchPostCreateMemo = async({token, scrapId, textAreaValue}: fetchPostCreateMemoProps) => {
+const fetchPostCreateMemo = async({scrapId, textAreaValue}: fetchPostCreateMemoProps) => {
+    const token = useGetToken();
+
     const response = await fetch(POST_CREATE_MEMO_URL, {
         method: "POST",
         headers: {
@@ -42,16 +44,18 @@ export const usePostCreateMemo = () => {
             useDefaultSnackbar('메모 생성에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
 
 export interface fetchDeleteMemoProps {
-    token: string,
     scrapId: number,
     memoId: number,
 }
 
-const fetchDeleteMemo = async({token, memoId, scrapId}: fetchDeleteMemoProps) => {
+const fetchDeleteMemo = async({memoId, scrapId}: fetchDeleteMemoProps) => {
+    const token = useGetToken();
+    
     const response = await fetch(DELETE_MEMO_URL, {
         method: "DELETE",
         headers: {
@@ -84,5 +88,6 @@ export const useDeleteMemo = () => {
             useDefaultSnackbar('메모 삭제에 실패하였습니다.', 'error');
         },
         useErrorBoundary: true,
+        retry: false,
     });
 }
