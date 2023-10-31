@@ -333,3 +333,11 @@ export function EmptyBoardIcon({ width, height }: IconProps) {
         </svg>
     )
 }
+
+export function PasteIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 14 14" fill="none">
+            <path d="M0 1.75C0 0.783502 0.783502 0 1.75 0H8.75C9.7165 0 10.5 0.783502 10.5 1.75V3.5H12.25C13.2165 3.5 14 4.2835 14 5.25V12.25C14 13.2165 13.2165 14 12.25 14H5.25C4.2835 14 3.5 13.2165 3.5 12.25V10.5H1.75C0.783502 10.5 0 9.7165 0 8.75V1.75ZM1.75 0.875C1.26675 0.875 0.875 1.26675 0.875 1.75V8.75C0.875 9.23325 1.26675 9.625 1.75 9.625H8.75C9.23325 9.625 9.625 9.23325 9.625 8.75V1.75C9.625 1.26675 9.23325 0.875 8.75 0.875H1.75Z" fill={fill} />
+        </svg>
+    )
+}
