@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useGetOpenBoardTitle } from "@/api/board";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
-import MetaTag from "@/utility/MetaTag";
 
 function OpenBoardPage() {
     const params = useParams();
@@ -43,7 +42,6 @@ function OpenBoardPage() {
 
     return (
         <>
-            <MetaTag title={title} />
             <Box
                 sx={{
                     width: '100%',
