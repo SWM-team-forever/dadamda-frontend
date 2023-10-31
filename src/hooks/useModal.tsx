@@ -87,14 +87,13 @@ export const useModal = () => {
         })
     }, [setModal, modal]);
 
-    const openModal = useCallback((
-        type: string
-    ) => {
+    const openModal = useCallback((type: string, redirectURL?: string) => {
+        logEvent(`open_${type}_modal`);
         setModal((prev) => {
-            logEvent(`open_${type}_modal`);
             return {
                 ...prev,
                 ...modalTypeMatching[type as keyof typeof modalTypeMatching],
+                redirectURL: redirectURL,
                 isOpen: true,
             }
         })
