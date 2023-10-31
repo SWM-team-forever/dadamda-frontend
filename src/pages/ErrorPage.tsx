@@ -1,8 +1,12 @@
-import theme from "@/assets/styles/theme";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import { useRef, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import * as Sentry from "@sentry/react";
+
+import { HAS_NO_ACCESS_ERROR } from "@/hooks/useAccount";
+import { useHandleUnVerifiedTokenUser } from "@/context/LoginContext";
+
+import theme from "@/assets/styles/theme";
 
 function ErrorPage({ resetErrorBoundary, error }: any) {
     const navigate = useNavigate();
@@ -18,6 +22,10 @@ function ErrorPage({ resetErrorBoundary, error }: any) {
     const goBack = () => {
         navigate(-1);
     };
+
+    if (error.message === HAS_NO_ACCESS_ERROR || error.message === 'BR001') {
+        useHandleUnVerifiedTokenUser();
+    }
 
     return (
         <Box

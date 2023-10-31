@@ -1,4 +1,4 @@
-import { Grid, Button, Box, Typography, ButtonGroup } from '@mui/material';
+import { Grid, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import heroImage from '@/assets/images/heroImage.png';

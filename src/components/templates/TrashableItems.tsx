@@ -2,7 +2,7 @@ import { TRASH_ID, MultipleContainers } from "@/components/templates/BB.jsx";
 import { UniqueIdentifier, CancelDrop } from "@dnd-kit/core";
 import { useState, useRef } from "react";
 
-export const TrashableItems = ({ confirmDrop, mode }: { confirmDrop: boolean, mode: string }) => {
+export const TrashableItems = ({ confirmDrop, mode, isBoardShared }: { confirmDrop: boolean, mode: string, isBoardShared?: boolean }) => {
     const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
     const resolveRef = useRef<(value: boolean) => void>();
 
@@ -34,6 +34,7 @@ export const TrashableItems = ({ confirmDrop, mode }: { confirmDrop: boolean, mo
                 renderItem={undefined}
                 scrollable={undefined}
                 mode={mode}
+                isBoardShared={isBoardShared}
             />
         </>
     );

@@ -14,7 +14,7 @@ function StickerPasteModalElement() {
     const getCurrentTimeInUnixTime = useGetCurrentTimeInUnixTime();
 
     const { pasteSticker } = useBoardContentAtom();
-    const handlePasteScrapButtonClick = () => {
+    const handlePasteStickerButtonClick = () => {
         pasteSticker({
             memoId: getCurrentTimeInUnixTime,
             memoText: textAreaValue,
@@ -23,6 +23,16 @@ function StickerPasteModalElement() {
         logEvent('paste_sticker');
         closeModal();
     }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.shiftKey) {
+            return;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            isValidationSuccess() && handlePasteStickerButtonClick();
+        }
+    }
+
     const handleSetValue = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         e.preventDefault();
         setTextAreaValue(e.target.value);
@@ -68,6 +78,7 @@ function StickerPasteModalElement() {
                     }}
                     multiline
                     rows={5}
+                    onKeyDown={handleKeyDown}
                 />
                 <FormHelperText>
                     <Typography
@@ -86,7 +97,6 @@ function StickerPasteModalElement() {
             <Button
                 variant='contained'
                 sx={{
-                    backgroundColor: theme.color.Gray_050,
                     borderRadius: '4px',
                     boxShadow: 'none',
                     width: 'fit-content',
@@ -96,7 +106,7 @@ function StickerPasteModalElement() {
                         boxShadow: 'none',
                     }
                 }}
-                onClick={handlePasteScrapButtonClick}
+                onClick={handlePasteStickerButtonClick}
                 disabled={!isValidationSuccess()}
             >
                 등록

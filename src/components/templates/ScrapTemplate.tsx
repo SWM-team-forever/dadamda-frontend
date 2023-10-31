@@ -1,42 +1,19 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import NotReadyTemplate from './NotReadyTemplate';
-
-import { GET_ARTICLE_SCRAP_URL, GET_LIST_SCRAP_URL, GET_OTHER_SCRAP_URL, GET_PRODUCT_SCRAP_URL, GET_VIDEO_SCRAP_URL } from '../../secret';
-import ScrapListHeader from '@/components/molcules/ScrapListHeader';
-import ColumnListTemplate from '@/components/templates/ColumnListTemplate';
-import MasonryListTemplate from '@/components/templates/MasonryListTemplate';
 import { Box, CircularProgress } from '@mui/material';
-import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
-import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
-import { useQuery } from '@tanstack/react-query';
+
 import { useGetScrapCount } from '@/api/count';
+
+import ScrapListHeader from '@/components/molcules/ScrapListHeader';
+import MatchTemplateWithTypeAndCount from '@/components/templates/MatchTemplateWithTypeAndCount';
 
 interface ScrapTemplateProps {
     type: string,
 }
 
 function ScrapTemplate({ type }: ScrapTemplateProps) {
-    const token = localStorage.getItem('token');
-    const providingTemplates = ['other', 'list', 'video', 'product', 'article'];
+    const { count, isCountLoading, isCountFetched } = useGetScrapCount(type);
 
-    const { data, isLoading, isFetched } = useQuery(['scrapCount', type],
-        () => {
-            return providingTemplates.includes(type)
-                ? (token && useGetScrapCount({ type: type, token: token }))
-                : { data: { count: 0 } };
-        },
-        {
-            enabled: !!token,
-            refetchOnWindowFocus: false,
-            select: (data) => {
-                return data?.data.count;
-            }
-        }
-    );
-
-    if (isLoading) {
+    if (isCountLoading) {
         return <CircularProgress
             sx={{
                 position: 'absolute',
@@ -49,13 +26,13 @@ function ScrapTemplate({ type }: ScrapTemplateProps) {
     return (
         <>
             <ScrapListContainer>
-                {isFetched && <ScrapListHeader type={type} count={data} />}
+                {isCountFetched && <ScrapListHeader type={type} count={count} />}
                 <Box
                     sx={{
-                        height: 'calc(100% - 145px)',
+                        height: 'calc(100% - 125px)',
                     }}
                 >
-                    {isFetched && <MatchTemplateWithTypeAndCount type={type} count={data} />}
+                    {isCountFetched && <MatchTemplateWithTypeAndCount type={type} count={count} />}
                 </Box>
             </ScrapListContainer>
         </>
@@ -75,6 +52,8 @@ const ScrapListContainer = styled.div`
     display: flex;
     flex-direction: column;
     overflow: auto;
+    padding: 24px 24px 0 24px;
+    box-sizing: border-box;
 `
 
 export default ScrapTemplate;

@@ -5,6 +5,7 @@ interface ICustomModalInfo {
     callback?: () => void,
     scrapId?: number,
     position: string,
+    redirectURL?: string,
 }
 
 export type {ICustomModalInfo};

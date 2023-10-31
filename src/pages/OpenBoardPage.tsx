@@ -1,47 +1,23 @@
-import { useGetBoard } from "@/api/board";
-import { TrashableItems } from "@/components/templates/TrashableItems";
-import { useBoardAtom } from "@/hooks/useBoardAtom";
-import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
+import { useGetOpenBoardTitle } from "@/api/board";
+
+import { TrashableItems } from "@/components/templates/TrashableItems";
+import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
 
 function OpenBoardPage() {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const params = useParams();
 
     function getBoardPageId(): string | null {
-        return searchParams.get('boardUUID');
+        return params['boardUUID'] || null;
     }
 
-    const { board, setBoard } = useBoardAtom();
     const boardPageId = getBoardPageId();
 
-    const navigate = useNavigate();
+    const { title, isTitleLoading } = useGetOpenBoardTitle(boardPageId);
 
-    const { data, isLoading } = useQuery(
-        ['board', boardPageId],
-        () => boardPageId && useGetBoard(boardPageId.toString()),
-        {
-            enabled: !!boardPageId,
-            onSuccess: (data) => {
-                if (data) {
-                    setBoard((prev) => ({
-                        ...prev,
-                        boardUUID: boardPageId,
-                        ...data.data,
-                    }))
-                }
-            },
-            onError: () => {
-                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
-                navigate('/board');
-            },
-            retry: false,
-            useErrorBoundary: (error: Error) => error.message !== "NF005",
-        }
-    )
-
-    if (isLoading) {
+    if (isTitleLoading) {
         return (
             <Box
                 sx={{
@@ -65,39 +41,55 @@ function OpenBoardPage() {
         )
     }
 
-
     return (
-        <Box
-            sx={{
-                width: '100%',
-                height: 'calc(100% - 56px)',
-                position: 'fixed',
-            }}
-        >
+        <>
             <Box
                 sx={{
-                    position: 'fixed',
-                    left: '0',
                     width: '100%',
-                    height: '100%',
-                    overflow: 'auto',
-                    pb: '100px',
-                    boxSizing: 'border-box',
+                    height: 'calc(100% - 56px)',
+                    position: 'fixed',
                 }}
             >
-                <Typography
-                    variant="h1"
+                <Box
                     sx={{
-                        fontSize: '24px',
-                        fontWeight: '500',
-                        m: '20px',
+                        position: 'fixed',
+                        left: '0',
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'auto',
+                        pb: '100px',
+                        boxSizing: 'border-box',
                     }}
                 >
-                    {board.title}
-                </Typography>
-                {boardPageId && <TrashableItems confirmDrop={false} mode={'view'} />}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
+                        }}
+                    >
+                        <Typography
+                            variant="h1"
+                            sx={{
+                                fontSize: '24px',
+                                fontWeight: '500',
+                                m: '20px 0 20px 20px',
+                            }}
+                        >
+                            {title}
+                        </Typography>
+                        <CopyBoardButton boardId={getBoardPageId()} />
+                    </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                        }}
+                    >
+                        <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
+                    </Box>
+                </Box>
             </Box>
-        </Box >
+        </>
     );
 }
 

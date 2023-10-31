@@ -22,7 +22,7 @@ function ScrapListHeader({ count, type }: ScrapListHeaderProps) {
     return (
         <Box
             sx={{
-                padding: '24px',
+                pb: '24px',
             }}
         >
             <Box

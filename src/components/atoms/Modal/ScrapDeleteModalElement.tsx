@@ -1,9 +1,10 @@
+import { Box, Typography, Button } from '@mui/material';
+
 import { useDeleteScrap } from '@/api/scrap';
 import theme from '@/assets/styles/theme';
+import { useGetToken } from '@/hooks/useAccount';
 import { useModal } from '@/hooks/useModal';
 import { logEvent } from '@/utility/amplitude';
-import { Box, Typography, Button } from '@mui/material';
-import { useState, useEffect } from 'react';
 
 const scrapDeleteModalButtonStyle = {
     backgroundColor: theme.color.Gray_050,
@@ -19,16 +20,11 @@ const scrapDeleteModalButtonStyle = {
 }
 
 function ScrapDeleteElementModal() {
-    const [token, setToken] = useState<string | null>(null);
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
-
     const { modal, closeModal } = useModal();
     const { mutate } = useDeleteScrap();
     const handleDeleteScrapButtonClick = () => {
         const scrapId = modal.scrapId;
-        (token && scrapId) && mutate({ token, scrapId });
+        mutate(scrapId);
         logEvent('delete_scrap');
         closeModal();
     }

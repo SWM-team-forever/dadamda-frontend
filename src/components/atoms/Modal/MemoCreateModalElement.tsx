@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, FormControl, FormHelperText, OutlinedInput, Typography } from '@mui/material';
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 import theme from '@/assets/styles/theme';
 import { useModal } from '@/hooks/useModal';
@@ -7,12 +7,10 @@ import { usePostCreateMemo } from '@/api/memo';
 import { useDefaultSnackbar } from '@/hooks/useWarningSnackbar';
 import { MAX_MEMO_LENGTH, useIsBlank, useIsEntered, useIsLessThanLengthLimitation } from '@/hooks/useValidation';
 import { logEvent } from '@/utility/amplitude';
+import { useGetToken } from '@/hooks/useAccount';
 
 function MemoCreateModalElement() {
-    const [, setToken] = useState<string | null>(null);
-    useEffect(() => {
-        setToken(localStorage.getItem('token'));
-    }, []);
+    const token = useGetToken();
 
     const { modal, closeModal } = useModal();
     const [textAreaValue, setTextAreaValue] = useState('');
@@ -23,13 +21,21 @@ function MemoCreateModalElement() {
     }
 
     const scrapId = modal.scrapId;
-    const token = localStorage.getItem('token');
     const { mutate, isLoading, isError } = usePostCreateMemo();
 
-    const handleCreateMemoButtonClick = () => {
-        (token && scrapId && textAreaValue) && mutate({ token, scrapId, textAreaValue });
+    const handleCreateMemo = () => {
+        (token && scrapId && textAreaValue) && mutate({ scrapId, textAreaValue });
         logEvent('create_memo');
         closeModal();
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        if (e.shiftKey) {
+            return;
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            isValidationSuccess() && handleCreateMemo();
+        }
     }
 
     if (isLoading) {
@@ -74,7 +80,8 @@ function MemoCreateModalElement() {
             <FormControl>
                 <OutlinedInput
                     placeholder="추가할 메모를 입력하세요."
-                    onChange={(e) => handleSetValue(e)}
+                    onChange={handleSetValue}
+                    onKeyDown={handleKeyDown}
                     sx={{
                         width: '100%',
                         fontWeight: '500',
@@ -104,7 +111,6 @@ function MemoCreateModalElement() {
             <Button
                 variant='contained'
                 sx={{
-                    backgroundColor: theme.color.Gray_050,
                     borderRadius: '4px',
                     boxShadow: 'none',
                     width: 'fit-content',
@@ -114,7 +120,7 @@ function MemoCreateModalElement() {
                         boxShadow: 'none',
                     }
                 }}
-                onClick={handleCreateMemoButtonClick}
+                onClick={handleCreateMemo}
                 disabled={!isValidationSuccess()}
             >
                 등록

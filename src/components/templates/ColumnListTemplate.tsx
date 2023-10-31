@@ -2,6 +2,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 import { useGetScrapByType } from "@/api/scrap";
 import { useGetScrapSearchResultByType } from "@/api/search";
@@ -9,27 +10,20 @@ import { useGetScrapSearchResultByType } from "@/api/search";
 import EmptyScrapContainer from "@/components/organisms/EmptyScrapContainer";
 import CategoryInfo from "@/components/organisms/ExistCategoryScrapContainer/CategoryInfo";
 import CategoryList from "@/components/organisms/ExistCategoryScrapContainer/CategoryList";
-import { useEffect, useState } from "react";
+import { useSearch } from "@/hooks/useSearch";
 
 function ColumnListTemplate({ type }: { type: string }) {
-    const token = localStorage.getItem('token');
     const size = 30;
     const [searchParams, setSearchParams] = useSearchParams();
 
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
+    const { search, undoSearch } = useSearch();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type, getKeyword()],
+        ['scraps', type, search.keyword],
         ({ pageParam = 0 }) => {
-            return token && (isSearchTemplate()
-                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: getKeyword() })
-                : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            return (search.isSearched
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, keyword: search.keyword })
+                : useGetScrapByType({ type: type, pages: pageParam, size: size })
             )
         },
         {
@@ -37,6 +31,8 @@ function ColumnListTemplate({ type }: { type: string }) {
                 const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
                 return nextPage;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
 
@@ -44,7 +40,8 @@ function ColumnListTemplate({ type }: { type: string }) {
 
     useEffect(() => {
         setScrapId(searchParams.get('scrapId'));
-    }, [searchParams])
+        return () => undoSearch();
+    }, [])
 
     if (isLoading) {
         return (
@@ -90,7 +87,6 @@ function ColumnListTemplate({ type }: { type: string }) {
 }
 
 const Desktop = styled.div`
-    padding: 0 24px;
     gap: 24px;
     box-sizing: border-box;
     height: 100%;

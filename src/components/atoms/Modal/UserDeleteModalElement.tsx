@@ -1,17 +1,16 @@
-import { useDeleteUser } from '@/api/user';
-import theme from '@/assets/styles/theme';
-import { useGetToken } from '@/hooks/useAccount';
-import { useModal } from '@/hooks/useModal';
 import { logEvent } from '@amplitude/analytics-browser';
 import { Box, Button } from '@mui/material';
 import styled from 'styled-components';
 
+import { useDeleteUser } from '@/api/user';
+import theme from '@/assets/styles/theme';
+import { useModal } from '@/hooks/useModal';
+
 function UserDeleteModalElement() {
     const { closeModal } = useModal();
-    const token = useGetToken();
     const { mutate } = useDeleteUser();
     const handleDeleteUserButtonClick = () => {
-        token && mutate(token);
+        mutate();
         logEvent('delete_user');
         closeModal();
     }

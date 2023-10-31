@@ -1,18 +1,25 @@
-import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+
+import { useGetBoardIsShared, useGetShortenedSharingBoardUrl, useToggleBoardIsShared } from "@/api/board";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 function BoardShareModalElement() {
-    const [isShared, setIsShared] = useState(false);
-    function toggleIsShared() {
-        setIsShared(!isShared);
-    }
-
-    const [link, setLink] = useState(window.location.href);
+    const { board, setBoard } = useBoardAtom();
+    const sharingBoardUrl = window.location.href + `?bs=shared`;
+    const { isBoardShared } = useGetBoardIsShared(board.boardUUID);
+    const { shortenedSharingBoardUrl, isLoadingGetShortenedSharingBoardUrl } = useGetShortenedSharingBoardUrl(sharingBoardUrl);
+    const { mutate } = useToggleBoardIsShared();
     function copyLink() {
-        navigator.clipboard.writeText(link).then(() => {
+        navigator.clipboard.writeText(shortenedSharingBoardUrl || "").then(() => {
             useDefaultSnackbar('링크가 복사되었습니다.', 'success');
         });
+    }
+
+    if (isLoadingGetShortenedSharingBoardUrl) {
+        return (
+            <Typography>링크를 불러오는 중입니다...</Typography>
+        )
     }
 
     return (
@@ -27,8 +34,8 @@ function BoardShareModalElement() {
             >
                 <Typography>공유 허용</Typography>
                 <Switch
-                    checked={isShared}
-                    onChange={toggleIsShared}
+                    checked={isBoardShared}
+                    onChange={() => board.boardUUID && mutate(board.boardUUID)}
                 />
             </Box>
             <Box
@@ -42,7 +49,7 @@ function BoardShareModalElement() {
             >
                 <TextField
                     size="small"
-                    value={link}
+                    value={shortenedSharingBoardUrl}
                     fullWidth
                     disabled
                 />
@@ -52,7 +59,7 @@ function BoardShareModalElement() {
                         flexShrink: 0,
                         height: '40px',
                     }}
-                    disabled={!isShared}
+                    disabled={!isBoardShared}
                     onClick={copyLink}
                 >
                     링크 복사

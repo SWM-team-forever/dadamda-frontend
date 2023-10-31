@@ -1,9 +1,8 @@
 import { Masonry } from '@mui/lab';
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
-import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { useEffect } from 'react';
 
 import { useGetScrapByType } from '@/api/scrap';
 import { useGetScrapSearchResultByType } from '@/api/search';
@@ -11,35 +10,32 @@ import { contentProps } from '@/types/ContentType';
 
 import EmptyScrapContainer from '@/components/organisms/EmptyScrapContainer';
 import ScrapCard from '@/components/organisms/ScrapCard';
+import { useSearch } from '@/hooks/useSearch';
 
 function MasonryListTemplate({ type }: { type: string }) {
-    const token = localStorage.getItem('token');
     const size = 30;
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    function isSearchTemplate() {
-        return searchParams.has('keyword');
-    }
-
-    function getKeyword() {
-        return searchParams.get('keyword');
-    }
+    const { search, undoSearch } = useSearch();
 
     const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery(
-        ['scraps', type, getKeyword()],
+        ['scraps', type, search.keyword, search.isSearched],
         ({ pageParam = 0 }) => {
-            return token && (isSearchTemplate()
-                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, token: token, keyword: getKeyword() })
-                : useGetScrapByType({ type: type, pages: pageParam, size: size, token: token })
+            return (search.isSearched
+                ? useGetScrapSearchResultByType({ type: type, pages: pageParam, size: size, keyword: search.keyword })
+                : useGetScrapByType({ type: type, pages: pageParam, size: size })
             )
         },
         {
             getNextPageParam: (lastPage) => {
-                const nextPage = !lastPage.data.last ? lastPage.data.pageable.pageNumber + 1 : undefined;
-                return nextPage;
+                return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
+            retry: false,
+            useErrorBoundary: true,
         }
     );
+
+    useEffect(() => {
+        return () => undoSearch();
+    }, []);
 
     if (isLoading) {
         return (
@@ -54,50 +50,53 @@ function MasonryListTemplate({ type }: { type: string }) {
         )
     }
 
-    if (data?.pages[0].data.content.length === 0) {
+    if (!data || data?.pages[0].data.content.length === 0) {
         return <EmptyScrapContainer />
     }
 
     return (
-        <ScrapList>
+        <Box
+            sx={{
+                display: 'flex',
+                flex: '1',
+                boxSizing: 'border-box',
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                overflow: 'auto',
+            }}
+        >
             <InfiniteScroll
                 hasMore={hasNextPage}
                 loadMore={() => fetchNextPage()}
-                pageStart={0}
-                loader={<CircularProgress
-                    key={0}
-                />}
                 useWindow={false}
                 style={{
-                    width: '100%',
-                    margin: '0',
+                    width: '100%'
                 }}
             >
                 <Masonry
-                    columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
-
+                    columns={{
+                        xs: 1, sm: 2, md: 3, lg: 4, xl: 5
+                    }}
+                    sx={{
+                        m: 0,
+                        width: '100%',
+                        boxSizing: 'border-box',
+                    }}
+                    spacing={1}
                 >
-                    {data?.pages.map((page) => {
+                    {data.pages?.map((page) => {
                         return page.data.content.map((content: contentProps['content']) => {
                             return (
                                 <ScrapCard content={content} key={content.scrapId} />
                             )
                         })
-                    }
-                    ) || []}
+                    })}
                 </Masonry>
             </InfiniteScroll>
-        </ScrapList >
+        </Box >
     )
 }
-
-const ScrapList = styled.div`
-    display: flex;
-    flex: 1;
-    padding: 0 24px;
-    box-sizing: border-box;
-    flex-direction: column;
-    align-items: center;
-`
 
 export default MasonryListTemplate;
