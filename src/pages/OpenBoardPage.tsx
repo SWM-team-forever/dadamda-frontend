@@ -2,9 +2,10 @@ import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import { useGetOpenBoardTitle } from "@/api/board";
+import MetaTag from "@/utility/MetaTag";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
-import MetaTag from "@/utility/MetaTag";
+import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
 
 function OpenBoardPage() {
     const params = useParams();
@@ -62,19 +63,34 @@ function OpenBoardPage() {
                         boxSizing: 'border-box',
                     }}
                 >
-                    <Typography
-                        variant="h1"
+                    <Box
                         sx={{
-                            fontSize: '24px',
-                            fontWeight: '500',
-                            m: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
                         }}
                     >
-                        {title}
-                    </Typography>
-                    <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
+                        <Typography
+                            variant="h1"
+                            sx={{
+                                fontSize: '24px',
+                                fontWeight: '500',
+                                m: '20px 0 20px 20px',
+                            }}
+                        >
+                            {title}
+                        </Typography>
+                        <CopyBoardButton boardId={getBoardPageId()} />
+                    </Box>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                        }}
+                    >
+                        <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
+                    </Box>
                 </Box>
-            </Box >
+            </Box>
         </>
     );
 }
