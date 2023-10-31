@@ -612,7 +612,7 @@ const copyOpenBoard = (boardUUID: string | null) => {
     return response;
 }
 
-export const useCopyOpenBoard = (boardId: string | null) => {
+export const useCopyOpenBoard = () => {
     const queryClient = useQueryClient();
 
     return useMutation(copyOpenBoard, {
