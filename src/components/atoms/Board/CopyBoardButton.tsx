@@ -3,7 +3,7 @@ import theme from "@/assets/styles/theme";
 import { PasteIcon } from "@/components/atoms/Icon";
 import { Box, Tooltip, Typography } from "@mui/material";
 
-function PasteBoardButton({ boardId }: { boardId: string | null }) {
+function CopyBoardButton({ boardId }: { boardId: string | null }) {
     const { mutate } = useCopyOpenBoard(boardId);
 
     return (
@@ -33,4 +33,4 @@ function PasteBoardButton({ boardId }: { boardId: string | null }) {
     );
 }
 
-export default PasteBoardButton;
+export default CopyBoardButton;

@@ -5,7 +5,7 @@ import { useGetOpenBoardTitle } from "@/api/board";
 import MetaTag from "@/utility/MetaTag";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
-import PasteBoardButton from "@/components/atoms/Board/PasteBoardButton";
+import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
 
 function OpenBoardPage() {
     const params = useParams();
@@ -80,7 +80,7 @@ function OpenBoardPage() {
                         >
                             {title}
                         </Typography>
-                        <PasteBoardButton boardId={getBoardPageId()} />
+                        <CopyBoardButton boardId={getBoardPageId()} />
                     </Box>
                     <Box
                         sx={{
