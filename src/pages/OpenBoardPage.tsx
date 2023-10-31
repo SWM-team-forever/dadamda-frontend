@@ -80,11 +80,17 @@ function OpenBoardPage() {
                         >
                             {title}
                         </Typography>
-                        <PasteBoardButton />
+                        <PasteBoardButton boardId={getBoardPageId()} />
                     </Box>
-                    <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
+                    <Box
+                        sx={{
+                            display: 'flex',
+                        }}
+                    >
+                        <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
+                    </Box>
                 </Box>
-            </Box >
+            </Box>
         </>
     );
 }
