@@ -5,6 +5,9 @@ import { useGetOpenBoardTitle } from "@/api/board";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import MetaTag from "@/utility/MetaTag";
+import { PasteIcon } from "@/components/atoms/Icon";
+import theme from "@/assets/styles/theme";
+import PasteBoardButton from "@/components/atoms/Board/PasteBoardButton";
 
 function OpenBoardPage() {
     const params = useParams();
@@ -62,16 +65,25 @@ function OpenBoardPage() {
                         boxSizing: 'border-box',
                     }}
                 >
-                    <Typography
-                        variant="h1"
+                    <Box
                         sx={{
-                            fontSize: '24px',
-                            fontWeight: '500',
-                            m: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
                         }}
                     >
-                        {title}
-                    </Typography>
+                        <Typography
+                            variant="h1"
+                            sx={{
+                                fontSize: '24px',
+                                fontWeight: '500',
+                                m: '20px 0 20px 20px',
+                            }}
+                        >
+                            {title}
+                        </Typography>
+                        <PasteBoardButton />
+                    </Box>
                     <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
                 </Box>
             </Box >
