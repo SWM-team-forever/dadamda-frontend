@@ -44,7 +44,6 @@ function OpenBoardPage() {
 
     return (
         <>
-            <MetaTag title={title} />
             <Box
                 sx={{
                     width: '100%',

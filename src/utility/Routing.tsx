@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 
 import ScrapTemplate from '@/components/templates/ScrapTemplate';
 import BoardListTemplate from '@/components/templates/BoardListTemplate';
@@ -16,7 +15,6 @@ import BoardContentsWrapperPage from '@/pages/BoardContentsWrapperPage';
 
 import { RequireAuth } from '@/context/LoginContext';
 import { logEvent } from '@/utility/amplitude';
-import MetaTag from '@/utility/MetaTag';
 
 function Routing() {
   const location = useLocation();
@@ -30,7 +28,6 @@ function Routing() {
 
   return (
     <>
-      <MetaTag />
       <Routes>
         <Route path='/' element={<RequireAuth><ScrapPage /></RequireAuth>}>
           <Route index element={<ScrapTemplate type={'list'} />}></Route>
