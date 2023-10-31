@@ -2,11 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import { useGetOpenBoardTitle } from "@/api/board";
+import MetaTag from "@/utility/MetaTag";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
-import MetaTag from "@/utility/MetaTag";
-import { PasteIcon } from "@/components/atoms/Icon";
-import theme from "@/assets/styles/theme";
 import PasteBoardButton from "@/components/atoms/Board/PasteBoardButton";
 
 function OpenBoardPage() {
