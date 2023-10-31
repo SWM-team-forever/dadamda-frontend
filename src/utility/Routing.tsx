@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 
 import ScrapTemplate from '@/components/templates/ScrapTemplate';
 import BoardListTemplate from '@/components/templates/BoardListTemplate';
