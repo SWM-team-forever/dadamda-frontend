@@ -9,6 +9,7 @@ import kakaoLogo from '@/assets/icons/kakao_logo.png';
 import ColumnContainer from '@/components/atoms/ColumnContainer';
 import LoginButton from '@/components/atoms/LoginButton';
 import { logEvent } from '@/utility/amplitude';
+import { useModal } from '@/hooks/useModal';
 
 type TLoginProviderInformationElement = {
     url: string,
@@ -18,15 +19,20 @@ type TLoginProviderInformationElement = {
 }
 
 function LoginModalElement() {
+    const { modal } = useModal();
+    const redirectURL = modal.redirectURL;
+    function getFullURL(socialLoginURL: string): string {
+        return socialLoginURL + (redirectURL ? `?redirect_uri=${redirectURL}` : '');
+    }
     const loginProviderInformation: { [key: string]: TLoginProviderInformationElement } = {
         google: {
-            url: googleLoginURL,
+            url: getFullURL(googleLoginURL),
             source: googleLogo,
             style: { color: theme.color.icon_color, backgroundColor: 'white' },
             label: '구글로 시작하기',
         },
         kakao: {
-            url: kakaoLoginURL,
+            url: getFullURL(kakaoLoginURL),
             source: kakaoLogo,
             style: { color: 'rgba(0, 0, 0, 0.85)', backgroundColor: '#FEE500' },
             label: '카카오로 시작하기',

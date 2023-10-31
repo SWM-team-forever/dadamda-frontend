@@ -29,6 +29,10 @@ function OAuthLoginpage() {
         }).then(data => (data.data.profileUrl))
     }
 
+    const changeCurrentURL = (redirectURL: string) => {
+        window.location.href = redirectURL;
+    }
+
     useEffect(() => {
         const token = new URL(window.location.href).searchParams.get("token");
         if (!token) {
@@ -36,10 +40,13 @@ function OAuthLoginpage() {
         }
 
         localStorage.setItem('token', token);
+
         getUserProfileImage(token)
-            .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage))
+            .then(userProfileImage => localStorage.setItem('profileImageURL', userProfileImage));
+
         logEvent('login');
-        return navigate('/scrap/list');
+        const redirectURL = new URL(window.location.href).searchParams.get("redirect_uri");
+        return redirectURL ? changeCurrentURL(redirectURL) : navigate('/scrap/list');
     }, [])
     return (
         <RowContainer style={{
