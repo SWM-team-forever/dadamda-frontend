@@ -1,10 +1,26 @@
 import { useCopyOpenBoard } from "@/api/board";
 import theme from "@/assets/styles/theme";
 import { PasteIcon } from "@/components/atoms/Icon";
+import { useModal } from "@/hooks/useModal";
 import { Box, Tooltip, Typography } from "@mui/material";
 
 function CopyBoardButton({ boardId }: { boardId: string | null }) {
-    const { mutate } = useCopyOpenBoard(boardId);
+    const { mutate } = useCopyOpenBoard();
+
+    const { openModal } = useModal();
+    const currentURL = window.location.href;
+    function isTokenExist() {
+        return localStorage.getItem('token') !== null;
+    }
+
+    const handleCopyBoard = () => {
+        if (!isTokenExist()) {
+            openModal('login', currentURL);
+            return;
+        }
+
+        mutate(boardId);
+    }
 
     return (
         <Tooltip
@@ -24,7 +40,7 @@ function CopyBoardButton({ boardId }: { boardId: string | null }) {
                     alignItems: 'center',
                     cursor: 'pointer',
                 }}
-                onClick={() => mutate(boardId)}
+                onClick={handleCopyBoard}
             >
                 <PasteIcon width="20" height="20" fill={theme.color.Gray_070} />
                 <Typography variant="h5">내 보드에 담기</Typography>
