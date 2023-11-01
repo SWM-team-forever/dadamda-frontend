@@ -60,7 +60,8 @@ export const useBoardContentAtom = () => {
 
     function getNextContainerId() {
         const containerIds = Object.keys(boardContent);
-        const lastContainerId = containerIds[containerIds.length - 1];
+        const sortedContainerIds = containerIds.sort((a, b) => b.charCodeAt(0) - a.charCodeAt(0));
+        const lastContainerId = sortedContainerIds[0];
 
         return lastContainerId ? String.fromCharCode(lastContainerId.charCodeAt(0) + 1): 'A';
     }

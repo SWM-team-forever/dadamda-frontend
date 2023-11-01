@@ -40,8 +40,11 @@ function ColumnListTemplate({ type }: { type: string }) {
 
     useEffect(() => {
         setScrapId(searchParams.get('scrapId'));
+    }, [searchParams]);
+
+    useEffect(() => {
         return () => undoSearch();
-    }, [])
+    }, []);
 
     if (isLoading) {
         return (
