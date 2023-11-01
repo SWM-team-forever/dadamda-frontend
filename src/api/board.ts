@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/react';
 import { useNavigate } from "react-router-dom";
 import { useGetToken } from "@/hooks/useAccount";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
+import { logEvent } from "@amplitude/analytics-browser";
 
 interface fetchDatasProps {
     url?: string;
@@ -258,12 +259,7 @@ export const useSaveBoard = () => {
 }
 
 export const useAutoSaveBoard = () => {
-    const queryClient = useQueryClient();
-
     const {mutate} = useMutation(saveBoard, {
-        onSuccess: () => {
-            queryClient.invalidateQueries(['boardContent']);
-        },
         onError: (error) => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 저장에 실패하였습니다.', 'error');
@@ -451,6 +447,7 @@ export const useToggleBoardIsShared = () => {
     return useMutation(toggleBoardIsShared, {
         onSuccess: () => {
             queryClient.invalidateQueries(['boardIsShared']);
+            logEvent('is_board_shared_toggle_clicked');
         },
         onError: (error) => {
             Sentry.captureException(error);

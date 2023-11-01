@@ -1,8 +1,11 @@
 import { useCopyOpenBoard } from "@/api/board";
-import theme from "@/assets/styles/theme";
-import { PasteIcon } from "@/components/atoms/Icon";
-import { useModal } from "@/hooks/useModal";
+import { logEvent } from "@amplitude/analytics-browser";
 import { Box, Tooltip, Typography } from "@mui/material";
+
+import { PasteIcon } from "@/components/atoms/Icon";
+
+import theme from "@/assets/styles/theme";
+import { useModal } from "@/hooks/useModal";
 
 function CopyBoardButton({ boardId }: { boardId: string | null }) {
     const { mutate } = useCopyOpenBoard();
@@ -20,6 +23,8 @@ function CopyBoardButton({ boardId }: { boardId: string | null }) {
         }
 
         mutate(boardId);
+
+        logEvent('copy_board_click');
     }
 
     return (

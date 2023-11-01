@@ -3,6 +3,7 @@ import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 import { useGetBoardIsShared, useGetShortenedSharingBoardUrl, useToggleBoardIsShared } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+import { logEvent } from "@amplitude/analytics-browser";
 
 function BoardShareModalElement() {
     const { board, setBoard } = useBoardAtom();
@@ -13,6 +14,9 @@ function BoardShareModalElement() {
     function copyLink() {
         navigator.clipboard.writeText(shortenedSharingBoardUrl || "").then(() => {
             useDefaultSnackbar('링크가 복사되었습니다.', 'success');
+        });
+        logEvent('copy_link_click', {
+            boardUUID: board.boardUUID,
         });
     }
 
