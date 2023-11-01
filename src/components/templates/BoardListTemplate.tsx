@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { Box, Chip, Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -9,12 +10,12 @@ import theme from '@/assets/styles/theme';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
+import { useSearch } from '@/hooks/useSearch';
 
-import { MenuIcon, ProfileIcon, StarIcon } from '@/components/atoms/Icon';
+import { MenuIcon, StarIcon } from '@/components/atoms/Icon';
+import DefaultBoardThumbnail from '@/components/atoms/Board/DefaultBoardThumbnail';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
-import { useSearch } from '@/hooks/useSearch';
-import { useEffect } from 'react';
 import EmptyBoardContainer from '@/components/organisms/board/EmptyBoardContainer';
 
 export interface IBoardListInfo {
@@ -113,94 +114,84 @@ function BoardListTemplate() {
                                 >
                                     <Box
                                         sx={{
-                                            height: '180px',
-                                            width: '100%',
-                                            backgroundColor: theme.color.Blue_090,
-                                            borderRadius: '8px 8px 0 0',
-                                            cursor: 'pointer',
-                                            '&:hover': {
-                                                backgroundColor: theme.color.Blue_080,
-                                            },
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
+                                            borderRadius: '8px',
+                                            overflow: 'hidden',
                                         }}
                                     >
-                                        <ProfileIcon size='80' />
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            p: '10px',
-                                            backgroundColor: theme.color.Gray_020,
-                                            borderRadius: '0 0 8px 8px',
-                                        }}
-                                    >
+                                        <DefaultBoardThumbnail />
                                         <Box
                                             sx={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
+                                                p: '10px',
+                                                backgroundColor: theme.color.Gray_020,
                                             }}
                                         >
-                                            <Typography
-                                                sx={{
-                                                    overflow: 'hidden',
-                                                    textOverflow: 'ellipsis',
-                                                    display: '-webkit-box',
-                                                    '-webkit-line-clamp': '1',
-                                                    '-webkit-box-orient': 'vertical',
-                                                    wordWrap: 'break-word',
-                                                }}
-                                            >
-                                                {board.title}
-                                            </Typography>
                                             <Box
                                                 sx={{
                                                     display: 'flex',
-                                                    gap: '5px',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'center',
                                                 }}
                                             >
-                                                <Box
+                                                <Typography
                                                     sx={{
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        mutate(board.uuid.toString());
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        display: '-webkit-box',
+                                                        '-webkit-line-clamp': '1',
+                                                        '-webkit-box-orient': 'vertical',
+                                                        wordWrap: 'break-word',
                                                     }}
                                                 >
-                                                    <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
-                                                </Box>
+                                                    {board.title}
+                                                </Typography>
                                                 <Box
                                                     sx={{
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    onClick={async (e) => {
-                                                        e.stopPropagation();
-                                                        const boardInfo = await useGetBoard(board.uuid.toString());
-                                                        setBoard((prev) => ({
-                                                            ...prev,
-                                                            boardUUID: board.uuid.toString(),
-                                                            ...boardInfo.data,
-                                                        }))
-                                                        openModal('boardEdit');
+                                                        display: 'flex',
+                                                        gap: '5px',
                                                     }}
                                                 >
-                                                    <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            mutate(board.uuid.toString());
+                                                        }}
+                                                    >
+                                                        <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
+                                                    </Box>
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={async (e) => {
+                                                            e.stopPropagation();
+                                                            const boardInfo = await useGetBoard(board.uuid.toString());
+                                                            setBoard((prev) => ({
+                                                                ...prev,
+                                                                boardUUID: board.uuid.toString(),
+                                                                ...boardInfo.data,
+                                                            }))
+                                                            openModal('boardEdit');
+                                                        }}
+                                                    >
+                                                        <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                    </Box>
                                                 </Box>
                                             </Box>
-                                        </Box>
-                                        <Box
-                                            sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '10px',
-                                            }}
-                                        >
-                                            <Chip label={chipInformation.map((chipInfo) =>
-                                                chipInfo.tagValue === board.tag && chipInfo.label
-                                            )} />
-                                            <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '10px',
+                                                }}
+                                            >
+                                                <Chip label={chipInformation.map((chipInfo) =>
+                                                    chipInfo.tagValue === board.tag && chipInfo.label
+                                                )} />
+                                                <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
+                                            </Box>
                                         </Box>
                                     </Box>
                                 </Grid>
