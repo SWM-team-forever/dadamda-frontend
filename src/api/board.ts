@@ -258,12 +258,7 @@ export const useSaveBoard = () => {
 }
 
 export const useAutoSaveBoard = () => {
-    const queryClient = useQueryClient();
-
     const {mutate} = useMutation(saveBoard, {
-        onSuccess: () => {
-            queryClient.invalidateQueries(['boardContent']);
-        },
         onError: (error) => {
             Sentry.captureException(error);
             useDefaultSnackbar('보드 저장에 실패하였습니다.', 'error');
