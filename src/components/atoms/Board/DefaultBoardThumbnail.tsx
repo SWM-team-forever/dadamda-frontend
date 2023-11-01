@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 
 import { DefaultBoardThumbnailIcon } from "@/components/atoms/Icon";
 
-function DefaultBoardThumbnail() {
+function DefaultBoardThumbnail({ ...props }) {
     return (
         <Box
             sx={{
@@ -13,6 +13,7 @@ function DefaultBoardThumbnail() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                ...props.sx,
             }}
         >
             <DefaultBoardThumbnailIcon width="138" height="122" />

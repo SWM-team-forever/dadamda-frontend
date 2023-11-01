@@ -2,7 +2,7 @@ import theme from "@/assets/styles/theme";
 import DefaultBoardThumbnail from "@/components/atoms/Board/DefaultBoardThumbnail";
 import useGetPreviewFile from "@/hooks/useGetPrevieFile";
 import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileTypeImage } from "@/hooks/useValidation";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 interface ImageUploadButtonProps {
@@ -91,8 +91,34 @@ function ImageUploadButton({ imageURL }: ImageUploadButtonProps) {
                 )
                 : <Box
                     onClick={requestPrevieFile}
+                    sx={{
+                        position: 'relative',
+                        cursor: 'pointer',
+                        '&:hover .MuiTypography-root': {
+                            display: 'block',
+                        }
+                    }}
                 >
-                    <DefaultBoardThumbnail />
+                    <DefaultBoardThumbnail
+                        sx={{
+                            '&:hover': {
+                                filter: 'brightness(0.5)',
+                            },
+                        }}
+                    />
+                    <Typography
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            display: 'none',
+                            zIndex: 1,
+                            color: theme.color.Blue_050,
+                        }}
+                    >
+                        이미지 추가하기
+                    </Typography>
                 </Box>
             }
         </>
