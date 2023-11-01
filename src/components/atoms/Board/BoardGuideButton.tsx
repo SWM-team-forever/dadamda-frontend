@@ -1,12 +1,10 @@
 import theme from "@/assets/styles/theme";
 import { BoardGuideIcon } from "@/components/atoms/Icon";
+import { useMoveToBoardGuideLink } from "@/hooks/useCustomNavigation";
 import { Button } from "@mui/material";
 
 function BoardGuideButton() {
-    const BOARD_GUIDE_LINK = 'https://gapyeong.notion.site/DADAMDA-c31a77d5d49f49898d965ee7e705442a?pvs=4';
-    const handleOpenBoardGuide = () => {
-        window.open(BOARD_GUIDE_LINK, '_blank');
-    }
+    const handleOpenBoardGuide = useMoveToBoardGuideLink;
 
     return (
         <Button
