@@ -1,7 +1,8 @@
+import theme from "@/assets/styles/theme";
 import DefaultBoardThumbnail from "@/components/atoms/Board/DefaultBoardThumbnail";
 import useGetPreviewFile from "@/hooks/useGetPrevieFile";
 import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileTypeImage } from "@/hooks/useValidation";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 
 interface ImageUploadButtonProps {
@@ -47,16 +48,47 @@ function ImageUploadButton({ imageURL }: ImageUploadButtonProps) {
         }
     }
 
+    const handleRemoveImage = () => {
+        setImage('');
+    }
+
+    const textButtonStyle = {
+        color: theme.color.Gray_080,
+    }
+
     return (
         <>
             {image
-                ? <img
-                    src={image}
-                    style={{
-                        width: '100%',
-                        aspectRatio: '16/9',
-                    }}
-                />
+                ? (
+                    <Box>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: 'flex-end',
+                            }}
+                        >
+                            <Button
+                                onClick={requestPrevieFile}
+                                style={textButtonStyle}
+                            >
+                                재업로드
+                            </Button>
+                            <Button
+                                onClick={handleRemoveImage}
+                                style={textButtonStyle}
+                            >
+                                제거
+                            </Button>
+                        </Box>
+                        <img
+                            src={image}
+                            style={{
+                                width: '100%',
+                                aspectRatio: '16/9',
+                            }}
+                        />
+                    </Box>
+                )
                 : <Box
                     onClick={requestPrevieFile}
                 >
