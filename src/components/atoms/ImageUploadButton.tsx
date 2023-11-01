@@ -96,16 +96,13 @@ function ImageUploadButton({ imageURL }: ImageUploadButtonProps) {
                         cursor: 'pointer',
                         '&:hover .MuiTypography-root': {
                             display: 'block',
-                        }
+                        },
+                        '&:hover .MuiBox-root': {
+                            filter: 'brightness(0.5)',
+                        },
                     }}
                 >
-                    <DefaultBoardThumbnail
-                        sx={{
-                            '&:hover': {
-                                filter: 'brightness(0.5)',
-                            },
-                        }}
-                    />
+                    <DefaultBoardThumbnail />
                     <Typography
                         sx={{
                             position: 'absolute',
