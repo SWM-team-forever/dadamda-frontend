@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { EmptyBoardIcon } from "@/components/atoms/Icon";
 import CreateBoardButton from "@/components/atoms/Board/CreateBoardButton";
 import theme from "@/assets/styles/theme";
+import BoardGuideButton from "@/components/atoms/Board/BoardGuideButton";
 
 function EmptyBoardContainer() {
     return (
@@ -26,7 +27,15 @@ function EmptyBoardContainer() {
             >
                 보드를 추가해주세요!
             </Typography>
-            <CreateBoardButton />
+            <Box
+                sx={{
+                    display: 'flex',
+                    gap: '10px',
+                }}
+            >
+                <CreateBoardButton />
+                <BoardGuideButton />
+            </Box>
         </Box>
     );
 }
