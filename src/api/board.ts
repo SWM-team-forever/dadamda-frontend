@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/react';
 import { useNavigate } from "react-router-dom";
 import { useGetToken } from "@/hooks/useAccount";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
+import { logEvent } from "@amplitude/analytics-browser";
 
 interface fetchDatasProps {
     url?: string;
@@ -446,6 +447,7 @@ export const useToggleBoardIsShared = () => {
     return useMutation(toggleBoardIsShared, {
         onSuccess: () => {
             queryClient.invalidateQueries(['boardIsShared']);
+            logEvent('is_board_shared_toggle_clicked');
         },
         onError: (error) => {
             Sentry.captureException(error);
