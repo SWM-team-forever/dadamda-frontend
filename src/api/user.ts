@@ -138,7 +138,7 @@ const uploadUserProfileImage = (file: File) => {
 	return response;
 };
 
-export const useUploadUserProfileImage = (file: File) => {
+export const useUploadUserProfileImage = () => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation(uploadUserProfileImage, {
 		onSuccess: () => {

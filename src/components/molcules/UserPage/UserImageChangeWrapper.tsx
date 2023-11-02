@@ -53,7 +53,6 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
     const { deleteUserProfileImageMutate } = useDeleteUserProfileImage();
     const handleRemoveImage = () => {
         deleteUserProfileImageMutate();
-        // setImage('');
     }
 
     const handleUploadUserProfileImage = (file: File | null) => {
