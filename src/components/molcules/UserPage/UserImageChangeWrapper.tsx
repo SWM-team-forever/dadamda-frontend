@@ -9,6 +9,7 @@ import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileT
 import theme from "@/assets/styles/theme";
 import { useDeleteUserProfileImage, useUploadUserProfileImage } from "@/api/user";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+import { ProfileIcon } from "@/components/atoms/Icon";
 
 function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl?: string }) {
     const [requestPrevieFile, file] = useGetPreviewFile();
@@ -50,9 +51,12 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
     }
 
     const { uploadUserProfileImageMutate } = useUploadUserProfileImage();
-    const { deleteUserProfileImageMutate } = useDeleteUserProfileImage();
+    const { deleteUserProfileImageMutate, isDeleteUserProfileImageMutateSuccess } = useDeleteUserProfileImage();
     const handleRemoveImage = () => {
         deleteUserProfileImageMutate();
+        if (isDeleteUserProfileImageMutateSuccess) {
+            setImage(undefined);
+        }
     }
 
     const handleUploadUserProfileImage = (file: File | null) => {
@@ -64,7 +68,7 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
         uploadUserProfileImageMutate(file);
     }
 
-    function ProfileImage({ src }: { src: string }) {
+    function ProfileImage({ src }: { src?: string }) {
         return <Box
             onClick={requestPrevieFile}
             sx={{
@@ -78,16 +82,24 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
                 },
             }}
         >
-            <img
-                src={src}
-                alt="프로필 이미지"
-                style={{
-                    width: '200px',
-                    height: '200px',
-                    borderRadius: '100%',
-                }}
-                className="profile-image"
-            />
+            {
+                src
+                    ? <img
+                        src={src}
+                        alt="프로필 이미지"
+                        style={{
+                            width: '200px',
+                            height: '200px',
+                            borderRadius: '100%',
+                        }}
+                        className="profile-image"
+                    />
+                    : <Box
+                        className="profile-image"
+                    >
+                        <ProfileIcon size="200" />
+                    </Box>
+            }
             <Typography
                 sx={{
                     position: 'absolute',
@@ -111,10 +123,7 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
             }}
         >
             <Box>
-                {image
-                    ? <ProfileImage src={image} />
-                    : <ProfileImage src={defaultUserImage} />
-                }
+                <ProfileImage src={image} />
                 {useIsUserPageEditMode(mode) &&
                     <Box
                         sx={{

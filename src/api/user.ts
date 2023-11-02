@@ -236,7 +236,7 @@ const deleteUserProfileImage = async () => {
 
 export const useDeleteUserProfileImage = () => {
 	const queryClient = useQueryClient();
-	const { mutate } = useMutation(deleteUserProfileImage, {
+	const { mutate, isSuccess } = useMutation(deleteUserProfileImage, {
 		onSuccess: () => {
 			queryClient.invalidateQueries(["userInformation"]);
 			useDefaultSnackbar(
@@ -256,6 +256,12 @@ export const useDeleteUserProfileImage = () => {
 		retry: false,
 	});
 
-	const deleteUserProfileImageMutate = mutate;
-	return { deleteUserProfileImageMutate };
+	const [
+		deleteUserProfileImageMutate,
+		isDeleteUserProfileImageMutateSuccess,
+	] = [mutate, isSuccess];
+	return {
+		deleteUserProfileImageMutate,
+		isDeleteUserProfileImageMutateSuccess,
+	};
 };
