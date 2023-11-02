@@ -7,7 +7,7 @@ import useGetPreviewFile from "@/hooks/useGetPrevieFile";
 import { grayOutlinedButtonStyle, grayFullfilledButtonStyle, useIsUserPageEditMode } from "@/pages/UserPage";
 import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileTypeImage } from "@/hooks/useValidation";
 import theme from "@/assets/styles/theme";
-import { useUploadUserProfileImage } from "@/api/user";
+import { useDeleteUserProfileImage, useUploadUserProfileImage } from "@/api/user";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl?: string }) {
@@ -50,9 +50,10 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
     }
 
     const { uploadUserProfileImageMutate } = useUploadUserProfileImage();
-
+    const { deleteUserProfileImageMutate } = useDeleteUserProfileImage();
     const handleRemoveImage = () => {
-        setImage('');
+        deleteUserProfileImageMutate();
+        // setImage('');
     }
 
     const handleUploadUserProfileImage = (file: File | null) => {
