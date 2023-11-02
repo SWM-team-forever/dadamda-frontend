@@ -1,6 +1,7 @@
 import { useGetToken, useLogout } from "@/hooks/useAccount";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import {
+	DELETE_USER_PROFILE_IMAGE_URL,
 	DELETE_USER_URL,
 	EDIT_USER_NICKNAME_URL,
 	GET_USER_INFORMATION_URL,
@@ -200,4 +201,50 @@ export const useEditUserNickname = () => {
 		},
 		retry: false,
 	});
+};
+
+const deleteUserProfileImage = async () => {
+	const token = useGetToken();
+
+	const response = await fetch(DELETE_USER_PROFILE_IMAGE_URL, {
+		method: "DELETE",
+		headers: {
+			"X-AUTH-TOKEN": token,
+		},
+	}).then((response) => {
+		return response.json().then((body) => {
+			if (response.ok) {
+				return body;
+			} else {
+				throw new Error(body.resultCode);
+			}
+		});
+	});
+
+	return response;
+};
+
+export const useDeleteUserProfileImage = () => {
+	const queryClient = useQueryClient();
+	const { mutate } = useMutation(deleteUserProfileImage, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["userInformation"]);
+			useDefaultSnackbar(
+				"프로필 이미지가 삭제되었습니다.",
+				"success"
+			);
+		},
+		onError: (error) => {
+			Sentry.captureException(error);
+			useDefaultSnackbar(
+				"프로필 이미지 삭제에 실패했습니다",
+				"error"
+			);
+		},
+		useErrorBoundary: true,
+		retry: false,
+	});
+
+	const deleteUserProfileImageMutate = mutate;
+	return { deleteUserProfileImageMutate };
 };
