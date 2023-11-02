@@ -12,6 +12,7 @@ import { DarkWaveVector, EditPencilSquareIcon, LightWaveVector } from '@/compone
 import UserInfoTable from '@/components/molcules/UserPage/UserInfoTable';
 import LogoutButton from '@/components/atoms/User/LogoutButton';
 import DeleteUserButton from '@/components/atoms/User/DeleteUserButton';
+import UserActionButtonGroup from '@/components/molcules/UserPage/UserActionButtonGroup';
 
 export const useIsUserPageEditMode = (mode: string) => {
     return mode === 'edit';
@@ -197,21 +198,7 @@ function UserPage() {
                         </Button>
                     }
                 </UserInfoWrapper>
-                {
-                    useIsUserPageViewMode(mode)
-                    && <Box
-                        sx={{
-                            display: 'flex',
-                            gap: '8px',
-                            mt: '20px',
-                            width: '100%',
-                            justifyContent: 'flex-end',
-                        }}
-                    >
-                        <LogoutButton />
-                        <DeleteUserButton />
-                    </Box>
-                }
+                <UserActionButtonGroup mode={mode} />
             </Box >
         </Wrapper >
     );
