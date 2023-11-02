@@ -1,6 +1,8 @@
+import { useEditUserNickname } from "@/api/user";
 import theme from "@/assets/styles/theme";
 import { useIsUserPageViewMode } from "@/pages/UserPage";
 import { Box, Typography, OutlinedInput, Button } from "@mui/material";
+import { useState } from "react";
 
 interface UserNicknameChangeWrapperProps {
     mode: string;
@@ -9,9 +11,21 @@ interface UserNicknameChangeWrapperProps {
 }
 
 function UserNicknameChangeWrapper({ mode, nickname, changeModeIntoView }: UserNicknameChangeWrapperProps) {
-    if (useIsUserPageViewMode(mode)) {
-        return null;
+    const [nicknameInput, setNicknameInput] = useState(nickname);
+    const handleNicknameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNicknameInput(event.target.value);
     }
+
+    const { editUserNicknameMutate } = useEditUserNickname();
+    const handleEditUserNickname = () => {
+        changeModeIntoView();
+        editUserNicknameMutate(nicknameInput);
+    }
+
+    if (useIsUserPageViewMode(mode)) {
+        return;
+    }
+
     return (
         <Box
             sx={{
@@ -42,7 +56,7 @@ function UserNicknameChangeWrapper({ mode, nickname, changeModeIntoView }: UserN
                     닉네임:
                 </Typography>
                 <OutlinedInput
-                    value={nickname}
+                    value={nicknameInput}
                     sx={{
                         maxWidth: {
                             xs: '215px',
@@ -54,7 +68,9 @@ function UserNicknameChangeWrapper({ mode, nickname, changeModeIntoView }: UserN
                             borderRadius: '8px',
                             border: `1px solid ${theme.color.Gray_040}`
                         }
-                    }} />
+                    }}
+                    onChange={handleNicknameInputChange}
+                />
             </Box>
             <Button
                 variant='contained'
@@ -62,7 +78,7 @@ function UserNicknameChangeWrapper({ mode, nickname, changeModeIntoView }: UserN
                     m: '60px 0 32px 0',
                     width: '180px',
                 }}
-                onClick={changeModeIntoView}
+                onClick={handleEditUserNickname}
             >
                 프로필 변경하기
             </Button>
