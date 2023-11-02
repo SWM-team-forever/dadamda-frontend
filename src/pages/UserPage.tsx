@@ -10,6 +10,8 @@ import { useGetUserInformation } from '@/api/user';
 
 import { DarkWaveVector, EditPencilSquareIcon, LightWaveVector } from '@/components/atoms/Icon';
 import UserInfoTable from '@/components/molcules/UserPage/UserInfoTable';
+import LogoutButton from '@/components/atoms/User/LogoutButton';
+import DeleteUserButton from '@/components/atoms/User/DeleteUserButton';
 
 export const useIsUserPageEditMode = (mode: string) => {
     return mode === 'edit';
@@ -19,11 +21,23 @@ export const useIsUserPageViewMode = (mode: string) => {
     return mode === 'view';
 }
 
+export const grayFullfilledButtonStyle = {
+    color: 'white',
+    backgroundColor: theme.color.Gray_070,
+    '&:hover': {
+        backgroundColor: theme.color.Gray_080,
+    }
+}
+
+export const grayOutlinedButtonStyle = {
+    color: theme.color.Gray_080,
+    backgroundColor: 'transparent',
+    border: `1px solid ${theme.color.Gray_060}`,
+}
+
 function UserPage() {
     const { userInformation, isGetUserInformationLoading } = useGetUserInformation();
 
-    const { openModal } = useModal();
-    const handleLogout = useLogout();
     const [mode, setMode] = useState('view');
 
     if (isGetUserInformationLoading) {
@@ -40,19 +54,7 @@ function UserPage() {
         setMode('view');
     }
 
-    const grayFullfilledButtonStyle = {
-        color: 'white',
-        backgroundColor: theme.color.Gray_070,
-        '&:hover': {
-            backgroundColor: theme.color.Gray_080,
-        }
-    }
 
-    const grayOutlinedButtonStyle = {
-        color: theme.color.Gray_080,
-        backgroundColor: 'transparent',
-        border: `1px solid ${theme.color.Gray_060}`,
-    }
 
     function UserImage({ mode }) {
         return (
@@ -206,18 +208,8 @@ function UserPage() {
                             justifyContent: 'flex-end',
                         }}
                     >
-                        <Button
-                            onClick={handleLogout}
-                            sx={grayFullfilledButtonStyle}
-                        >
-                            로그아웃
-                        </Button>
-                        <Button
-                            onClick={() => openModal('userDelete')}
-                            sx={grayOutlinedButtonStyle}
-                        >
-                            탈퇴하기
-                        </Button>
+                        <LogoutButton />
+                        <DeleteUserButton />
                     </Box>
                 }
             </Box >
