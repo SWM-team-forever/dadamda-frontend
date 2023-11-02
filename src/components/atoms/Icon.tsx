@@ -367,3 +367,29 @@ export function DefaultBoardThumbnailIcon({ width, height }: IconProps) {
         </svg>
     )
 }
+
+export function EditPencilSquareIcon({ width, height, fill }: IconProps) {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 17 17" fill="none">
+            <path d="M16.0016 2.43934C16.1969 2.6346 16.1969 2.95118 16.0016 3.14645L14.9587 4.18933L12.9587 2.18933L14.0016 1.14645C14.1969 0.951184 14.5134 0.951185 14.7087 1.14645L16.0016 2.43934Z" fill={fill} />
+            <path d="M14.2516 4.89644L12.2516 2.89644L5.43861 9.70943C5.38372 9.76432 5.34237 9.83123 5.31782 9.90487L4.51326 12.3186C4.44812 12.514 4.63405 12.6999 4.82949 12.6348L7.24317 11.8302C7.31681 11.8057 7.38372 11.7643 7.43861 11.7094L14.2516 4.89644Z" fill={fill} />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 14C1.5 14.8284 2.17157 15.5 3 15.5H14C14.8284 15.5 15.5 14.8284 15.5 14V8C15.5 7.72386 15.2761 7.5 15 7.5C14.7239 7.5 14.5 7.72386 14.5 8V14C14.5 14.2761 14.2761 14.5 14 14.5H3C2.72386 14.5 2.5 14.2761 2.5 14V3C2.5 2.72386 2.72386 2.5 3 2.5H9.5C9.77614 2.5 10 2.27614 10 2C10 1.72386 9.77614 1.5 9.5 1.5H3C2.17157 1.5 1.5 2.17157 1.5 3V14Z" fill={fill} />
+        </svg>
+    )
+}
+
+export function LightWaveVector() {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="140" viewBox="0 0 1920 140" fill="none">
+            <path opacity="0.1" d="M1443.13 61.3656C1661.33 61.3656 1813.87 22.4229 1920 12.188V140H0V49.1336C105.971 30.4944 331.689 0 517.812 0C862.218 0 1004.8 61.3656 1443.13 61.3656Z" fill="#6D88B4" />
+        </svg>
+    )
+}
+
+export function DarkWaveVector() {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="1920" height="140" viewBox="0 0 1920 140" fill="none">
+            <path opacity="0.1" d="M476.869 61.3656C258.665 61.3656 106.131 22.4229 0 12.188V140H1920V49.1336C1814.03 30.4944 1588.31 0 1402.19 0C1057.78 0 915.203 61.3656 476.869 61.3656Z" fill="#6D88B4" />
+        </svg>
+    )
+}
