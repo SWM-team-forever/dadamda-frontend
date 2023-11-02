@@ -1,5 +1,6 @@
 import theme from "@/assets/styles/theme";
 import { useConvertUnixTimeToDateFormat, useGetDaysDiff } from "@/hooks/useCalculateDateDiff";
+import { useIsUserPageEditMode, useIsUserPageViewMode } from "@/pages/UserPage";
 import { TableContainer, Box, Table, TableBody, TableRow, TableCell, Typography } from "@mui/material";
 
 interface UserInfoTableProps {
@@ -9,7 +10,7 @@ interface UserInfoTableProps {
     provider: string;
 }
 
-function UserInfoTable({ userInformation }: { userInformation: UserInfoTableProps }) {
+function UserInfoTable({ userInformation, mode }: { userInformation: UserInfoTableProps, mode: string }) {
     const { name, nickname, createdAt, provider } = userInformation;
     const createdDateInDateFormat = useConvertUnixTimeToDateFormat(createdAt);
     const daysDiffFromCreatedDate = useGetDaysDiff(createdAt);
@@ -77,6 +78,10 @@ function UserInfoTable({ userInformation }: { userInformation: UserInfoTableProp
         </Box>
     }
 
+    if (useIsUserPageEditMode(mode)) {
+        return;
+    }
+
     return (
         <TableContainer component={Box}
             sx={{
@@ -96,7 +101,10 @@ function UserInfoTable({ userInformation }: { userInformation: UserInfoTableProp
                                     ...userPageMenuTypographyStyle,
                                     fontWeight: '600',
                                     border: 'none',
-                                    p: '7px 20px 7px 0',
+                                    p: {
+                                        xs: '7px 20px 7px 20px',
+                                        sm: '7px 20px 7px 80px'
+                                    },
                                     width: 'max-content',
                                 }}
                             >
