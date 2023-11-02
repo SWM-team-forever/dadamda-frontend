@@ -1,15 +1,14 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
-import defaultUserImage from '@/assets/images/Avatar.png';
 import useGetPreviewFile from "@/hooks/useGetPrevieFile";
-
-import { grayOutlinedButtonStyle, grayFullfilledButtonStyle, useIsUserPageEditMode } from "@/pages/UserPage";
 import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileTypeImage } from "@/hooks/useValidation";
 import theme from "@/assets/styles/theme";
 import { useDeleteUserProfileImage, useUploadUserProfileImage } from "@/api/user";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+
 import { ProfileIcon } from "@/components/atoms/Icon";
+import { grayOutlinedButtonStyle, grayFullfilledButtonStyle, useIsUserPageEditMode } from "@/pages/UserPage";
 
 function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl?: string }) {
     const [requestPrevieFile, file] = useGetPreviewFile();

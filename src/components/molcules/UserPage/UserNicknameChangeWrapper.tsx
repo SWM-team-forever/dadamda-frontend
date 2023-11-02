@@ -1,9 +1,11 @@
+import { Box, Typography, OutlinedInput, Button, FormHelperText } from "@mui/material";
+import { useState } from "react";
+
 import { useEditUserNickname } from "@/api/user";
 import theme from "@/assets/styles/theme";
 import { MAX_USER_NICKNAME_LENGTH, useIsBlank, useIsLessThanLengthLimitation } from "@/hooks/useValidation";
+
 import { useIsUserPageViewMode } from "@/pages/UserPage";
-import { Box, Typography, OutlinedInput, Button, FormHelperText } from "@mui/material";
-import { useState } from "react";
 
 interface UserNicknameChangeWrapperProps {
     mode: string;

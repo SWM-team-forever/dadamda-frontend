@@ -155,7 +155,7 @@ export const useUploadUserProfileImage = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
+		useErrorBoundary: false,
 		retry: false,
 	});
 
@@ -252,7 +252,7 @@ export const useDeleteUserProfileImage = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
+		useErrorBoundary: false,
 		retry: false,
 	});
 
