@@ -3,12 +3,12 @@ import { Box, Button, OutlinedInput, Typography } from '@mui/material';
 import { useState } from 'react';
 
 import theme from '@/assets/styles/theme';
-import defaultUserImage from '@/assets/images/Avatar.png';
 import { useGetUserInformation } from '@/api/user';
 
 import { DarkWaveVector, EditPencilSquareIcon, LightWaveVector } from '@/components/atoms/Icon';
 import UserInfoTable from '@/components/molcules/UserPage/UserInfoTable';
 import UserActionButtonGroup from '@/components/molcules/UserPage/UserActionButtonGroup';
+import UserImageChangeWrapper from '@/components/molcules/UserPage/UserImageChangeWrapper';
 
 export const useIsUserPageEditMode = (mode: string) => {
     return mode === 'edit';
@@ -51,38 +51,6 @@ function UserPage() {
         setMode('view');
     }
 
-    function UserImage({ mode }: { mode: string }) {
-        return (
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: '-25%',
-                }}
-            >
-                <Box>
-                    {profileUrl
-                        ? <ProfileImage src={profileUrl} />
-                        : <ProfileImage src={defaultUserImage} />
-                    }
-                    {mode === 'edit' &&
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                width: '100%',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                mt: '24px',
-                            }}
-                        >
-                            <Button sx={grayOutlinedButtonStyle}>이미지 변경</Button>
-                            <Button sx={grayFullfilledButtonStyle}>이미지 삭제</Button>
-                        </Box>
-                    }
-                </Box>
-            </Box>
-        )
-    }
-
     return (
         <Wrapper>
             <Box
@@ -110,7 +78,7 @@ function UserPage() {
                 }}
             >
                 <UserInfoWrapper>
-                    <UserImage mode={mode} />
+                    <UserImageChangeWrapper mode={mode} profileUrl={profileUrl} />
                     <Box
                         sx={{
                             display: 'flex',
@@ -202,12 +170,6 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 24px;
     box-sizing: border-box;
-`
-
-const ProfileImage = styled.img`
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
 `
 
 const UserInfoWrapper = styled.div`
