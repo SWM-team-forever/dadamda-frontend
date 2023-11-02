@@ -102,6 +102,17 @@ const changeFileToMultiPartFormData = (file: File) => {
 	return formData;
 };
 
+const previewUploadImage = (file: File) => {
+	const reader = new FileReader();
+	reader.readAsDataURL(file);
+	reader.onloadend = () => {
+		localStorage.setItem(
+			"profileImageURL",
+			reader.result as string
+		);
+	};
+};
+
 const uploadUserProfileImage = (file: File) => {
 	const token = useGetToken();
 
@@ -116,6 +127,7 @@ const uploadUserProfileImage = (file: File) => {
 	}).then((response) => {
 		return response.json().then((body) => {
 			if (response.ok) {
+				previewUploadImage(file);
 				return body;
 			} else {
 				throw new Error(body.resultCode);
@@ -126,7 +138,7 @@ const uploadUserProfileImage = (file: File) => {
 	return response;
 };
 
-export const useUploadUserProfileImage = () => {
+export const useUploadUserProfileImage = (file: File) => {
 	const queryClient = useQueryClient();
 	const { mutate } = useMutation(uploadUserProfileImage, {
 		onSuccess: () => {
@@ -206,7 +218,7 @@ export const useEditUserNickname = () => {
 const deleteUserProfileImage = async () => {
 	const token = useGetToken();
 
-	const response = await fetch(DELETE_USER_PROFILE_IMAGE_URL, {
+	return await fetch(DELETE_USER_PROFILE_IMAGE_URL, {
 		method: "DELETE",
 		headers: {
 			"X-AUTH-TOKEN": token,
@@ -220,8 +232,6 @@ const deleteUserProfileImage = async () => {
 			}
 		});
 	});
-
-	return response;
 };
 
 export const useDeleteUserProfileImage = () => {
@@ -233,6 +243,7 @@ export const useDeleteUserProfileImage = () => {
 				"프로필 이미지가 삭제되었습니다.",
 				"success"
 			);
+			localStorage.setItem("profileImageURL", "");
 		},
 		onError: (error) => {
 			Sentry.captureException(error);
