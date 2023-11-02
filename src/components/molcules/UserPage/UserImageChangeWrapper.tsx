@@ -7,6 +7,8 @@ import useGetPreviewFile from "@/hooks/useGetPrevieFile";
 import { grayOutlinedButtonStyle, grayFullfilledButtonStyle, useIsUserPageEditMode } from "@/pages/UserPage";
 import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileTypeImage } from "@/hooks/useValidation";
 import theme from "@/assets/styles/theme";
+import { useUploadUserProfileImage } from "@/api/user";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl?: string }) {
     const [requestPrevieFile, file] = useGetPreviewFile();
@@ -47,8 +49,19 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
         }
     }
 
+    const { uploadUserProfileImageMutate } = useUploadUserProfileImage();
+
     const handleRemoveImage = () => {
         setImage('');
+    }
+
+    const handleUploadUserProfileImage = (file: File | null) => {
+        if (!file) {
+            useDefaultSnackbar('이미지를 선택해주세요.', 'error');
+            return;
+        }
+
+        uploadUserProfileImageMutate(file);
     }
 
     function ProfileImage({ src }: { src: string }) {
@@ -114,6 +127,7 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
                     >
                         <Button
                             sx={grayOutlinedButtonStyle}
+                            onClick={() => handleUploadUserProfileImage(file)}
                         >
                             이미지 변경
                         </Button>
