@@ -1,17 +1,13 @@
 import styled from 'styled-components';
-import { Box, Button, OutlinedInput, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
+import { Box, Button, OutlinedInput, Typography } from '@mui/material';
 import { useState } from 'react';
 
 import theme from '@/assets/styles/theme';
 import defaultUserImage from '@/assets/images/Avatar.png';
-import { useLogout } from '@/hooks/useAccount';
-import { useModal } from '@/hooks/useModal';
 import { useGetUserInformation } from '@/api/user';
 
 import { DarkWaveVector, EditPencilSquareIcon, LightWaveVector } from '@/components/atoms/Icon';
 import UserInfoTable from '@/components/molcules/UserPage/UserInfoTable';
-import LogoutButton from '@/components/atoms/User/LogoutButton';
-import DeleteUserButton from '@/components/atoms/User/DeleteUserButton';
 import UserActionButtonGroup from '@/components/molcules/UserPage/UserActionButtonGroup';
 
 export const useIsUserPageEditMode = (mode: string) => {
@@ -45,7 +41,7 @@ function UserPage() {
         return <div>로딩중</div>;
     }
 
-    const { profileUrl, name, provider, nickname, createdAt } = userInformation;
+    const { profileUrl, nickname } = userInformation;
 
     const changeModeIntoEdit = () => {
         setMode('edit');
@@ -55,9 +51,7 @@ function UserPage() {
         setMode('view');
     }
 
-
-
-    function UserImage({ mode }) {
+    function UserImage({ mode }: { mode: string }) {
         return (
             <Box
                 sx={{
@@ -65,11 +59,7 @@ function UserPage() {
                     top: '-25%',
                 }}
             >
-                <Box
-                    sx={{
-
-                    }}
-                >
+                <Box>
                     {profileUrl
                         ? <ProfileImage src={profileUrl} />
                         : <ProfileImage src={defaultUserImage} />
@@ -172,19 +162,6 @@ function UserPage() {
                         }
                     </Box>
                     {
-                        useIsUserPageViewMode(mode)
-                        && <Button
-                            variant='outlined'
-                            startIcon={<EditPencilSquareIcon width='17' height='17' fill={theme.color.Blue_080} />}
-                            sx={{
-                                mb: '32px',
-                            }}
-                            onClick={changeModeIntoEdit}
-                        >
-                            프로필 수정하기
-                        </Button>
-                    }
-                    {
                         useIsUserPageEditMode(mode)
                         && <Button
                             variant='contained'
@@ -195,6 +172,19 @@ function UserPage() {
                             onClick={changeModeIntoView}
                         >
                             프로필 변경하기
+                        </Button>
+                    }
+                    {
+                        useIsUserPageViewMode(mode)
+                        && <Button
+                            variant='outlined'
+                            startIcon={<EditPencilSquareIcon width='17' height='17' fill={theme.color.Blue_080} />}
+                            sx={{
+                                mb: '32px',
+                            }}
+                            onClick={changeModeIntoEdit}
+                        >
+                            프로필 수정하기
                         </Button>
                     }
                 </UserInfoWrapper>
