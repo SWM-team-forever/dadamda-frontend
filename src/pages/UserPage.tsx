@@ -9,6 +9,7 @@ import { DarkWaveVector, EditPencilSquareIcon, LightWaveVector } from '@/compone
 import UserInfoTable from '@/components/molcules/UserPage/UserInfoTable';
 import UserActionButtonGroup from '@/components/molcules/UserPage/UserActionButtonGroup';
 import UserImageChangeWrapper from '@/components/molcules/UserPage/UserImageChangeWrapper';
+import UserNicknameChangeWrapper from '@/components/molcules/UserPage/UserNicknameChangeWrapper';
 
 export const useIsUserPageEditMode = (mode: string) => {
     return mode === 'edit';
@@ -93,55 +94,8 @@ function UserPage() {
                         }}
                     >
                         <UserInfoTable userInformation={userInformation} mode={mode} />
-                        {useIsUserPageEditMode(mode) &&
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '13px',
-                                    mt: '100px',
-                                    width: '100%',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontWeight: '600',
-                                        fontSize: '16px',
-                                        lineHeight: '150%',
-                                        color: theme.color.Gray_090,
-                                    }}
-                                >닉네임: </Typography>
-                                <OutlinedInput
-                                    value={nickname}
-                                    sx={{
-                                        width: {
-                                            xs: '217px',
-                                            sm: '260px',
-                                        },
-                                        'input': {
-                                            p: '8px 0 8px 12px',
-                                            backgroundColor: '#FFF',
-                                            borderRadius: '8px',
-                                            border: `1px solid ${theme.color.Gray_040}`
-                                        }
-                                    }} />
-                            </Box>
-                        }
+                        <UserNicknameChangeWrapper mode={mode} nickname={nickname} changeModeIntoView={changeModeIntoView} />
                     </Box>
-                    {
-                        useIsUserPageEditMode(mode)
-                        && <Button
-                            variant='contained'
-                            sx={{
-                                m: '60px 0 32px 0',
-                                width: '180px',
-                            }}
-                            onClick={changeModeIntoView}
-                        >
-                            프로필 변경하기
-                        </Button>
-                    }
                     {
                         useIsUserPageViewMode(mode)
                         && <Button
