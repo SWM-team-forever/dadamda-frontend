@@ -2,6 +2,7 @@ import { useGetToken, useLogout } from "@/hooks/useAccount";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import {
 	DELETE_USER_URL,
+	EDIT_USER_NICKNAME_URL,
 	GET_USER_INFORMATION_URL,
 	UPLOAD_USER_PROFILE_IMAGE_URL,
 } from "@/secret";
@@ -147,4 +148,56 @@ export const useUploadUserProfileImage = () => {
 
 	const uploadUserProfileImageMutate = mutate;
 	return { uploadUserProfileImageMutate };
+};
+
+const editUserNickname = async (nickname: string) => {
+	const token = useGetToken();
+
+	const response = await fetch(EDIT_USER_NICKNAME_URL, {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json",
+			"X-AUTH-TOKEN": token,
+		},
+		body: JSON.stringify({
+			nickname: nickname,
+		}),
+	}).then((response) => {
+		return response.json().then((body) => {
+			if (response.ok) {
+				return body;
+			} else {
+				throw new Error(body.resultCode);
+			}
+		});
+	});
+
+	return response;
+};
+
+export const useEditUserNickname = () => {
+	const queryClient = useQueryClient();
+	const isExistName = (error: any) => error.message === "BR003";
+
+	return useMutation(editUserNickname, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["userInformation"]);
+			useDefaultSnackbar(
+				"닉네임이 변경되었습니다.",
+				"success"
+			);
+		},
+		onError: (error: any) => {
+			isExistName(error)
+				? useDefaultSnackbar(
+						"이미 존재하는 닉네임입니다.",
+						"error"
+				  )
+				: useDefaultSnackbar(
+						"닉네임 변경에 실패했습니다",
+						"error"
+				  );
+		},
+		retry: false,
+	});
 };
