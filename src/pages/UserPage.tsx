@@ -1,11 +1,14 @@
 import styled from 'styled-components';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 
 import theme from '@/assets/styles/theme';
 import defaultUserImage from '@/assets/images/Avatar.png';
 import { useLogout } from '@/hooks/useAccount';
 import { useModal } from '@/hooks/useModal';
 import { useGetUserInformation } from '@/api/user';
+import { useConvertUnixTimeToDateFormat, useGetDaysDiff } from '@/hooks/useCalculateDateDiff';
+
+import { DarkWaveVector, EditPencilSquareIcon, LightWaveVector } from '@/components/atoms/Icon';
 
 function UserPage() {
     const { userInformation, isGetUserInformationLoading } = useGetUserInformation();
@@ -17,25 +20,100 @@ function UserPage() {
         return <div>로딩중</div>;
     }
 
-    const { profileUrl, name, email, provider } = userInformation;
+    const { profileUrl, name, provider, nickname, createdAt } = userInformation;
 
-    const userPageMenu = [
-        {
-            name: '이름',
-            content: name,
-        },
-        {
-            name: '이메일',
-            content: email,
-        },
-        {
-            name: '연결된 소셜 계정',
-            content: `${provider} 계정으로 가입되셨습니다.`
-        }];
+    const createdDateInDateFormat = useConvertUnixTimeToDateFormat(createdAt);
+    const daysDiffFromCreatedDate = useGetDaysDiff(createdAt);
+    const daysDiffInfoString = `(+ 가입한 지 ${daysDiffFromCreatedDate}일이 지났습니다.)`;
+    const providerInfoString = `${provider} 계정으로 가입되셨습니다.`;
+
+    function userPageMenuNameAndContent(
+        name: string,
+        content: string | number | string[]
+    ) {
+        return { name, content };
+    }
+
+    function CreatedDateInfo() {
+        return <Box
+            sx={{
+                display: 'flex',
+                alignItems: {
+                    xs: 'flex-start',
+                    sm: 'center',
+                },
+                flexDirection: {
+                    xs: 'column',
+                    sm: 'row',
+                },
+                gap: {
+                    xs: '0',
+                    sm: '4px',
+                }
+            }}
+        >
+            <Typography
+                sx={{
+                    ...userPageMenuTypographyStyle,
+                    fontWeight: '400',
+                }}
+            >
+                {createdDateInDateFormat}
+            </Typography>
+            <Typography
+                sx={countDiffFromCreatedDateTypographyStyle}
+            >
+                {daysDiffInfoString}
+            </Typography>
+        </Box>
+    }
+
+    const userPageMenus = [
+        userPageMenuNameAndContent('이름', name),
+        userPageMenuNameAndContent('닉네임', nickname),
+        userPageMenuNameAndContent('가입날짜', [createdDateInDateFormat, daysDiffInfoString]),
+        userPageMenuNameAndContent('연결된 소셜 계정', providerInfoString),
+    ];
+
+    const userPageMenuTypographyStyle = {
+        color: theme.color.Gray_090,
+        fontSize: '16px',
+        lineHeight: '150%',
+    };
+
+    const countDiffFromCreatedDateTypographyStyle = {
+        color: theme.color.Gray_080,
+        fontSize: '14px',
+        fontWeight: '400',
+        lineHeight: '150%',
+    };
 
     return (
-        <>
-            <Wrapper>
+        <Wrapper>
+            <Box
+                sx={{
+                    position: 'fixed',
+                    bottom: '-20px',
+                    overflow: 'hidden',
+                }}
+            >
+                <LightWaveVector />
+            </Box>
+            <Box
+                sx={{
+                    position: 'fixed',
+                    bottom: '-20px',
+                    overflow: 'hidden',
+                }}
+            >
+                <DarkWaveVector />
+            </Box>
+            <Box
+                sx={{
+                    maxWidth: '580px',
+                    width: '100%',
+                }}
+            >
                 <UserInfoWrapper>
                     <ProfileContainer>
                         {profileUrl
@@ -43,55 +121,126 @@ function UserPage() {
                             : <ProfileImage src={defaultUserImage} />
                         }
                     </ProfileContainer>
-                    <Content>
-                        {userPageMenu.map(menu => {
-                            return (
-                                <TextWrapper>
-                                    <DefaultTypography><b>{menu.name}</b></DefaultTypography>
-                                    <DefaultTypography>{menu.content}</DefaultTypography>
-                                </TextWrapper>
-                            )
-                        })}
-                    </Content>
-                    <Box>
-                        <Button
-                            onClick={handleLogout}
-                            color={'inherit'}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            gap: '20px',
+                            width: '100%',
+                            p: {
+                                xs: '120px 16px 20px 16px',
+                                sm: '120px 0px 20px 80px',
+                            },
+                            boxSizing: 'border-box',
+                        }}
+                    >
+                        <TableContainer component={Box}
+                            sx={{
+                                width: '100%',
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                            }}
                         >
-                            로그아웃
-                        </Button>
-                        <Button
-                            onClick={() => openModal('userDelete')}
-                            color={'inherit'}
-                        >
-                            탈퇴하기
-                        </Button>
+                            <Table>
+                                <TableBody>
+                                    {userPageMenus.map((menu) => (
+                                        <TableRow>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                sx={{
+                                                    ...userPageMenuTypographyStyle,
+                                                    fontWeight: '600',
+                                                    border: 'none',
+                                                    p: '7px 20px 7px 0',
+                                                    width: 'max-content',
+                                                }}
+                                            >
+                                                {menu.name}
+                                            </TableCell>
+                                            <TableCell
+                                                sx={{
+                                                    ...userPageMenuTypographyStyle,
+                                                    fontWeight: '400',
+                                                    border: 'none',
+                                                    p: '7px 0px',
+                                                }}
+                                            >
+                                                {typeof (menu.content) === 'string'
+                                                    ? menu.content
+                                                    : <CreatedDateInfo />
+                                                }
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </Box>
+                    <Button
+                        variant='outlined'
+                        startIcon={<EditPencilSquareIcon width='17' height='17' fill={theme.color.Blue_080} />}
+                        sx={{
+                            mb: '32px',
+                        }}
+                    >
+                        프로필 수정하기
+                    </Button>
                 </UserInfoWrapper>
-            </Wrapper >
-        </>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        gap: '8px',
+                        mt: '20px',
+                        width: '100%',
+                        justifyContent: 'flex-end',
+                    }}
+                >
+                    <Button
+                        onClick={handleLogout}
+                        sx={{
+                            color: 'white',
+                            backgroundColor: theme.color.Gray_070,
+                            '&:hover': {
+                                backgroundColor: theme.color.Gray_080,
+                            }
+                        }}
+                    >
+                        로그아웃
+                    </Button>
+                    <Button
+                        onClick={() => openModal('userDelete')}
+                        sx={{
+                            color: theme.color.Gray_080,
+                            backgroundColor: 'transparent',
+                            border: `1px solid ${theme.color.Gray_060}`,
+                        }}
+                    >
+                        탈퇴하기
+                    </Button>
+                </Box>
+            </Box >
+        </Wrapper >
     );
 }
 
 const Wrapper = styled.div`
     width: 100%;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 56px);
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${theme.color.background_color};
+    padding: 24px;
+    box-sizing: border-box;
 `
 
 const ProfileContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    position: absolute;
+    top: -25%;
 `
 
 const ProfileImage = styled.img`
-    width: 128px;
-    height: 128px;
+    width: 200px;
+    height: 200px;
     border-radius: 100%;
 `
 
@@ -99,28 +248,11 @@ const UserInfoWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    width: 500px;
-    gap: 80px;
+    width: 100%;
     align-items: center;
-    background-color: white;
-    height: 100%;
-    padding-top: 50px;
-`
-
-const Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-`
-
-const TextWrapper = styled.div`
-    display: flex;
-    gap: 10px;
-`
-
-const DefaultTypography = styled.span`
-    font-size: 14px;
-    color: ${theme.color.secondary_text_gray_color};
+    background-color: ${theme.color.Gray_020};
+    border-radius: 8px;
+    position: relative;
 `
 
 export default UserPage;
