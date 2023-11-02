@@ -37,7 +37,7 @@ function UserNicknameChangeWrapper({ mode, nickname, changeModeIntoView }: UserN
         }
 
         if (!isNicknameInputChanged()) {
-            return '닉네임이 변경되지 않았습니다.';
+            return ' ';
         }
 
         return;
