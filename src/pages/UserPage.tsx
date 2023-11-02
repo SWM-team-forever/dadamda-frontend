@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box, Button, OutlinedInput, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 
 import theme from '@/assets/styles/theme';
@@ -52,8 +52,8 @@ function UserPage() {
         setMode('view');
     }
 
-    return (
-        <Wrapper>
+    function WaveVector({ vector }: { vector: JSX.Element }) {
+        return (
             <Box
                 sx={{
                     position: 'fixed',
@@ -61,8 +61,15 @@ function UserPage() {
                     overflow: 'hidden',
                 }}
             >
-                <LightWaveVector />
+                {vector}
             </Box>
+        )
+    }
+
+    return (
+        <Wrapper>
+            <WaveVector vector={<LightWaveVector />} />
+            <WaveVector vector={<DarkWaveVector />} />
             <Box
                 sx={{
                     position: 'fixed',
