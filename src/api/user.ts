@@ -94,24 +94,23 @@ export const useGetUserInformation = () => {
 	return { userInformation, isGetUserInformationLoading };
 };
 
-// const changeFileToMultiPartFormData = (file: File) => {
-
-// 	return formData;
-// };
+const changeFileToMultiPartFormData = (file: File) => {
+	const formData = new FormData();
+	formData.append("file", file);
+	return formData;
+};
 
 const uploadUserProfileImage = (file: File) => {
 	const token = useGetToken();
 
-	const formData = new FormData();
-	formData.append("file", file);
-	// const fileFormData = changeFileToMultiPartFormData(file);
+	const fileFormData = changeFileToMultiPartFormData(file);
 
 	const response = fetch(UPLOAD_USER_PROFILE_IMAGE_URL, {
 		method: "POST",
 		headers: {
 			"X-AUTH-TOKEN": token,
 		},
-		body: formData,
+		body: fileFormData,
 	}).then((response) => {
 		return response.json().then((body) => {
 			if (response.ok) {
