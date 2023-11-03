@@ -1,14 +1,15 @@
 import styled from 'styled-components';
-import { Box, Button, OutlinedInput, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 
 import theme from '@/assets/styles/theme';
-import defaultUserImage from '@/assets/images/Avatar.png';
 import { useGetUserInformation } from '@/api/user';
 
 import { DarkWaveVector, EditPencilSquareIcon, LightWaveVector } from '@/components/atoms/Icon';
 import UserInfoTable from '@/components/molcules/UserPage/UserInfoTable';
 import UserActionButtonGroup from '@/components/molcules/UserPage/UserActionButtonGroup';
+import UserImageChangeWrapper from '@/components/molcules/UserPage/UserImageChangeWrapper';
+import UserNicknameChangeWrapper from '@/components/molcules/UserPage/UserNicknameChangeWrapper';
 
 export const useIsUserPageEditMode = (mode: string) => {
     return mode === 'edit';
@@ -51,40 +52,8 @@ function UserPage() {
         setMode('view');
     }
 
-    function UserImage({ mode }: { mode: string }) {
+    function WaveVector({ vector }: { vector: JSX.Element }) {
         return (
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: '-25%',
-                }}
-            >
-                <Box>
-                    {profileUrl
-                        ? <ProfileImage src={profileUrl} />
-                        : <ProfileImage src={defaultUserImage} />
-                    }
-                    {mode === 'edit' &&
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                width: '100%',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                mt: '24px',
-                            }}
-                        >
-                            <Button sx={grayOutlinedButtonStyle}>이미지 변경</Button>
-                            <Button sx={grayFullfilledButtonStyle}>이미지 삭제</Button>
-                        </Box>
-                    }
-                </Box>
-            </Box>
-        )
-    }
-
-    return (
-        <Wrapper>
             <Box
                 sx={{
                     position: 'fixed',
@@ -92,8 +61,15 @@ function UserPage() {
                     overflow: 'hidden',
                 }}
             >
-                <LightWaveVector />
+                {vector}
             </Box>
+        )
+    }
+
+    return (
+        <Wrapper>
+            <WaveVector vector={<LightWaveVector />} />
+            <WaveVector vector={<DarkWaveVector />} />
             <Box
                 sx={{
                     position: 'fixed',
@@ -110,7 +86,7 @@ function UserPage() {
                 }}
             >
                 <UserInfoWrapper>
-                    <UserImage mode={mode} />
+                    <UserImageChangeWrapper mode={mode} profileUrl={profileUrl} />
                     <Box
                         sx={{
                             display: 'flex',
@@ -125,55 +101,8 @@ function UserPage() {
                         }}
                     >
                         <UserInfoTable userInformation={userInformation} mode={mode} />
-                        {useIsUserPageEditMode(mode) &&
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '13px',
-                                    mt: '100px',
-                                    width: '100%',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontWeight: '600',
-                                        fontSize: '16px',
-                                        lineHeight: '150%',
-                                        color: theme.color.Gray_090,
-                                    }}
-                                >닉네임: </Typography>
-                                <OutlinedInput
-                                    value={nickname}
-                                    sx={{
-                                        width: {
-                                            xs: '217px',
-                                            sm: '260px',
-                                        },
-                                        'input': {
-                                            p: '8px 0 8px 12px',
-                                            backgroundColor: '#FFF',
-                                            borderRadius: '8px',
-                                            border: `1px solid ${theme.color.Gray_040}`
-                                        }
-                                    }} />
-                            </Box>
-                        }
+                        <UserNicknameChangeWrapper mode={mode} nickname={nickname} changeModeIntoView={changeModeIntoView} />
                     </Box>
-                    {
-                        useIsUserPageEditMode(mode)
-                        && <Button
-                            variant='contained'
-                            sx={{
-                                m: '60px 0 32px 0',
-                                width: '180px',
-                            }}
-                            onClick={changeModeIntoView}
-                        >
-                            프로필 변경하기
-                        </Button>
-                    }
                     {
                         useIsUserPageViewMode(mode)
                         && <Button
@@ -202,12 +131,6 @@ const Wrapper = styled.div`
     align-items: center;
     padding: 24px;
     box-sizing: border-box;
-`
-
-const ProfileImage = styled.img`
-    width: 200px;
-    height: 200px;
-    border-radius: 100%;
 `
 
 const UserInfoWrapper = styled.div`
