@@ -10,8 +10,8 @@ function TrendingPage() {
 
 const PageWrapper = styled.div`
     display: flex;
-    width: 100vw;
-    height: calc(100vh - 50px);
+    width: 100%;
+    height: calc(100vh - 56px);
     justify-content: center;
     align-items: center;
 `
