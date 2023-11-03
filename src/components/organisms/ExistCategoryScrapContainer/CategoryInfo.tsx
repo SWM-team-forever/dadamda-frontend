@@ -5,7 +5,8 @@ import MemoList from '@/components/molcules/CategoryItem/Memo/MemoList';
 import { MoveToPageIcon } from '@/components/atoms/Icon';
 
 function CategoryInfo({ data, scrapId }: { data: any, scrapId: number }) {
-    const selectedScrap = data?.pages[0].data.content.find((scrap: any) => scrap.scrapId === scrapId);
+    let selectedScrap = data?.pages[0].data.content.find((scrap: any) => scrap.scrapId === scrapId);
+    selectedScrap = typeof selectedScrap === 'undefined' ? data?.pages[0].data.content[0] : selectedScrap;
 
     return (
         <>
