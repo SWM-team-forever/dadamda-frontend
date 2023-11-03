@@ -188,7 +188,11 @@ const editUserNickname = async (nickname: string) => {
 	return response;
 };
 
-export const useEditUserNickname = () => {
+export const useEditUserNickname = ({
+	changeModeIntoView,
+}: {
+	changeModeIntoView: () => void;
+}) => {
 	const queryClient = useQueryClient();
 	const isExistName = (error: any) => error.message === "BR003";
 
@@ -199,6 +203,7 @@ export const useEditUserNickname = () => {
 				"닉네임이 변경되었습니다.",
 				"success"
 			);
+			changeModeIntoView();
 		},
 		onError: (error: any) => {
 			isExistName(error)
