@@ -12,6 +12,7 @@ import {
 	GET_SHORTENED_SHARING_BOARD_URL,
 	POST_CREATE_BOARD_URL,
 	SEARCH_BOARD_LIST_URL,
+	TOGGLE_BOARD_IS_PUBLIC_URL,
 } from "@/secret";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from "@sentry/react";
@@ -19,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetToken } from "@/hooks/useAccount";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { logEvent } from "@amplitude/analytics-browser";
+import { useModal } from "@/hooks/useModal";
 
 interface fetchDatasProps {
 	url?: string;
@@ -769,4 +771,54 @@ export const useGetBoardIsPublic = (boardUUID: string | null) => {
 
 	const [isBoardPublic, isLoadingGetIsBoardPublic] = [data, isLoading];
 	return { isBoardPublic, isLoadingGetIsBoardPublic };
+};
+
+const toggleBoardIsPublic = async (boardUUID: string) => {
+	const token = useGetToken();
+
+	const response = await fetch(
+		`${TOGGLE_BOARD_IS_PUBLIC_URL}/${boardUUID}`,
+		{
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				"X-AUTH-TOKEN": token,
+			},
+		}
+	).then((response) => {
+		return response.json().then((body) => {
+			if (response.ok) {
+				return body;
+			} else {
+				throw new Error(body.resultCode);
+			}
+		});
+	});
+
+	return response;
+};
+
+export const useToggleBoardIsPublic = () => {
+	const queryClient = useQueryClient();
+	const { closeModal } = useModal();
+
+	return useMutation(toggleBoardIsPublic, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(["boardIsPublic"]);
+			logEvent("is_board_public_toggle_clicked");
+			closeModal();
+			useDefaultSnackbar(
+				"보드 게시 상태가 변경되었습니다.",
+				"success"
+			);
+		},
+		onError: (error) => {
+			Sentry.captureException(error);
+			useDefaultSnackbar(
+				"보드 게시 상태 변경에 실패하였습니다.",
+				"error"
+			);
+		},
+		retry: false,
+	});
 };
