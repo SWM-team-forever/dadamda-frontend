@@ -8,9 +8,9 @@ import { useDeleteUserProfileImage, useUploadUserProfileImage } from "@/api/user
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 import { ProfileIcon } from "@/components/atoms/Icon";
-import { grayOutlinedButtonStyle, grayFullfilledButtonStyle, useIsUserPageEditMode } from "@/pages/UserPage";
+import { grayOutlinedButtonStyle, grayFullfilledButtonStyle } from "@/pages/UserPage";
 
-function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl?: string }) {
+function UserImageChangeWrapper({ profileUrl, changeModeIntoView }: { profileUrl?: string, changeModeIntoView: () => void }) {
     const [requestPrevieFile, file] = useGetPreviewFile();
     const [image, setImage] = useState(profileUrl);
 
@@ -50,13 +50,10 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
     }
 
     const { uploadUserProfileImageMutate } = useUploadUserProfileImage();
-    const { deleteUserProfileImageMutate, isDeleteUserProfileImageMutateSuccess } = useDeleteUserProfileImage();
+    const { deleteUserProfileImageMutate } = useDeleteUserProfileImage({ changeModeIntoView });
     const handleRemoveImage = () => {
         deleteUserProfileImageMutate();
-        if (isDeleteUserProfileImageMutateSuccess) {
-            setImage(undefined);
-        }
-    }
+    };
 
     const handleUploadUserProfileImage = (file: File | null) => {
         if (!file) {
@@ -65,6 +62,7 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
         }
 
         uploadUserProfileImageMutate(file);
+        changeModeIntoView();
     }
 
     function ProfileImage({ src }: { src?: string }) {
@@ -114,6 +112,7 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
             </Typography>
         </Box>
     }
+
     return (
         <Box
             sx={{
@@ -123,30 +122,28 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
         >
             <Box>
                 <ProfileImage src={image} />
-                {useIsUserPageEditMode(mode) &&
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            width: '100%',
-                            justifyContent: 'center',
-                            gap: '8px',
-                            mt: '24px',
-                        }}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        mt: '24px',
+                    }}
+                >
+                    <Button
+                        sx={grayOutlinedButtonStyle}
+                        onClick={() => handleUploadUserProfileImage(file)}
                     >
-                        <Button
-                            sx={grayOutlinedButtonStyle}
-                            onClick={() => handleUploadUserProfileImage(file)}
-                        >
-                            이미지 변경
-                        </Button>
-                        <Button
-                            sx={grayFullfilledButtonStyle}
-                            onClick={handleRemoveImage}
-                        >
-                            이미지 삭제
-                        </Button>
-                    </Box>
-                }
+                        이미지 변경
+                    </Button>
+                    <Button
+                        sx={grayFullfilledButtonStyle}
+                        onClick={handleRemoveImage}
+                    >
+                        이미지 삭제
+                    </Button>
+                </Box>
             </Box>
         </Box>
     );

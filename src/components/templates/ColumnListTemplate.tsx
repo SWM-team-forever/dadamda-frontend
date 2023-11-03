@@ -83,7 +83,7 @@ function ColumnListTemplate({ type }: { type: string }) {
                 >
                     <CategoryList data={data} fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
                 </Box>
-                <CategoryInfo data={data} scrapId={scrapId ? +scrapId : data?.pages[0].data.content[0].scrapId} />
+                <CategoryInfo data={data} scrapId={typeof scrapId === 'string' ? +scrapId : data?.pages[0].data.content[0].scrapId} />
             </Desktop >
         </Box>
     )

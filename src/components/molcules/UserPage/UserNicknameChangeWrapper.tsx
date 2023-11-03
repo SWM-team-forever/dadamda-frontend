@@ -19,14 +19,10 @@ function UserNicknameChangeWrapper({ mode, nickname, changeModeIntoView }: UserN
         setNicknameInput(event.target.value);
     }
 
-    const { mutate, error } = useEditUserNickname();
+    const { mutate } = useEditUserNickname({ changeModeIntoView });
     const isNicknameExist = (error: any) => error.message === 'BR003';
     const handleEditUserNickname = () => {
         mutate(nicknameInput);
-        if (isNicknameExist(error)) {
-            return;
-        }
-        changeModeIntoView()
     }
 
     const validateUserNickname = () => {
