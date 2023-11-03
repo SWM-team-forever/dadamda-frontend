@@ -10,6 +10,7 @@ import UserInfoTable from '@/components/molcules/UserPage/UserInfoTable';
 import UserActionButtonGroup from '@/components/molcules/UserPage/UserActionButtonGroup';
 import UserImageChangeWrapper from '@/components/molcules/UserPage/UserImageChangeWrapper';
 import UserNicknameChangeWrapper from '@/components/molcules/UserPage/UserNicknameChangeWrapper';
+import UserImageByModeWrapper from '@/components/molcules/UserPage/UserImageByModeWrapper';
 
 export const useIsUserPageEditMode = (mode: string) => {
     return mode === 'edit';
@@ -86,7 +87,7 @@ function UserPage() {
                 }}
             >
                 <UserInfoWrapper>
-                    <UserImageChangeWrapper mode={mode} profileUrl={profileUrl} />
+                    <UserImageByModeWrapper profileUrl={profileUrl} mode={mode} />
                     <Box
                         sx={{
                             display: 'flex',
