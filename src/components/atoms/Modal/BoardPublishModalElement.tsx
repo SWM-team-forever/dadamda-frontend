@@ -1,5 +1,5 @@
 import { useGetBoardIsPublic } from "@/api/board";
-import BoardPublishButton from "@/components/atoms/Board/BoardPublishButton";
+import PublishBoardButton from "@/components/atoms/Board/PublishBoardButton";
 import { typographyStyle } from "@/components/atoms/Modal/BoardShareAndPublishModalElement";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { Box, Typography } from "@mui/material";
@@ -47,7 +47,7 @@ function BoardPublishModalElement() {
             }}>
                 {getTextByIsBoardPublic()}
             </Typography>
-            <BoardPublishButton />
+            <PublishBoardButton isBoardPublic={isBoardPublic} />
         </Box>
     )
 }
