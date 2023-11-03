@@ -12,7 +12,7 @@ import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { useSearch } from '@/hooks/useSearch';
 
-import { MenuIcon, StarIcon } from '@/components/atoms/Icon';
+import { SettingIcon, FixedIcon, UnFixedIcon } from '@/components/atoms/Icon';
 import DefaultBoardThumbnail from '@/components/atoms/Board/DefaultBoardThumbnail';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
@@ -147,7 +147,7 @@ function BoardListTemplate() {
                                                 <Box
                                                     sx={{
                                                         display: 'flex',
-                                                        gap: '5px',
+                                                        gap: '12px',
                                                     }}
                                                 >
                                                     <Box
@@ -159,7 +159,7 @@ function BoardListTemplate() {
                                                             mutate(board.uuid.toString());
                                                         }}
                                                     >
-                                                        <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
+                                                        {board.isFixed ? <UnFixedIcon width='20' height='20' fill={theme.color.Blue_090} /> : <FixedIcon width='20' height='20' fill={theme.color.Gray_070} />}
                                                     </Box>
                                                     <Box
                                                         sx={{
@@ -176,7 +176,7 @@ function BoardListTemplate() {
                                                             openModal('boardEdit');
                                                         }}
                                                     >
-                                                        <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                        <SettingIcon width='20' height='20' fill={theme.color.Gray_070} />
                                                     </Box>
                                                 </Box>
                                             </Box>
