@@ -10,19 +10,19 @@ import { useState } from "react";
 
 export const chipInformation = [
     {
-        label: '엔터테인먼트/예술',
+        label: '#엔터테인먼트/예술',
         tagValue: "ENTERTAINMENT_ART",
     },
     {
-        label: '취미/여가/여행',
+        label: '#취미/여가/여행',
         tagValue: "HOBBY_TRAVEL",
     },
     {
-        label: '생활/노하우/쇼핑',
+        label: '#생활/노하우/쇼핑',
         tagValue: "LIFE_SHOPPING",
     },
     {
-        label: '지식/동향',
+        label: '#지식/동향',
         tagValue: "KNOWLEDGE_TREND",
     }
 ];
@@ -189,13 +189,15 @@ function BoardEditModalElement() {
                             key={index}
                             label={element.label}
                             sx={{
-                                background: isSelected ? theme.color.Blue_060 : theme.color.Gray_040,
-                                color: theme.color.Gray_090,
-                                fontWeight: '500',
+                                background: isSelected ? theme.color.Blue_080 : theme.color.Gray_020,
+                                color: isSelected ? theme.color.Gray_020 : theme.color.Gray_090,
+                                fontWeight: '400',
                                 fontSize: '14px',
-                                lineHeight: '150%',
-                                borderRadius: '8px',
+                                lineHeight: '160%',
+                                borderRadius: '999px',
+                                border: `1px solid ${isSelected ? theme.color.Blue_080 : theme.color.Gray_040}`,
                                 padding: '10px',
+                                paddingInline: '8px 14px 8px 14px',
                                 m: '0 10px 10px 0',
                             }}
                             onClick={e => handleTagValue(e)}
