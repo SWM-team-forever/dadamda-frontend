@@ -15,7 +15,7 @@ function PublishBoardButton({ isBoardPublic }: { isBoardPublic: boolean }) {
             size="large"
             onClick={handlePublishBoard}
         >
-            {isBoardPublic ? '트렌딩에 보드 게시' : '트렌딩에 보드 게시 취소'}
+            {isBoardPublic ? '트렌딩에 보드 게시 취소' : '트렌딩에 보드 게시'}
         </Button>
     )
 }

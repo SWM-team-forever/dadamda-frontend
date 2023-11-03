@@ -59,8 +59,8 @@ function BoardShareAndPublishModalElement() {
                     />
                 </Tabs>
             </Box>
-            <BoardShareModalElement />
-            <BoardPublishModalElement />
+            <BoardShareModalElement index={0} value={value} />
+            <BoardPublishModalElement index={1} value={value} />
         </Box>
     )
 }

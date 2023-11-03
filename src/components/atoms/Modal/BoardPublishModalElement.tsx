@@ -4,7 +4,7 @@ import { typographyStyle } from "@/components/atoms/Modal/BoardShareAndPublishMo
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { Box, Typography } from "@mui/material";
 
-function BoardPublishModalElement() {
+function BoardPublishModalElement({ value, index }: { value: number, index: number }) {
     const info = {
         isPublished: {
             text: `이 보드는 트렌딩 보드에 게시되었습니다.
@@ -31,6 +31,10 @@ function BoardPublishModalElement() {
         return (
             <Typography>게시 여부를 확인 중입니다...</Typography>
         )
+    }
+
+    if (value !== index) {
+        return;
     }
 
     return (

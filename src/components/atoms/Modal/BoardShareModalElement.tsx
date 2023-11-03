@@ -7,7 +7,7 @@ import { logEvent } from "@amplitude/analytics-browser";
 
 import { typographyStyle } from "@/components/atoms/Modal/BoardShareAndPublishModalElement";
 
-function BoardShareModalElement() {
+function BoardShareModalElement({ value, index }: { value: number, index: number }) {
     const { board, setBoard } = useBoardAtom();
     const sharingBoardUrl = window.location.href + `?bs=shared`;
     const { isBoardShared } = useGetBoardIsShared(board.boardUUID);
@@ -26,6 +26,10 @@ function BoardShareModalElement() {
         return (
             <Typography>링크를 불러오는 중입니다...</Typography>
         )
+    }
+
+    if (value !== index) {
+        return;
     }
 
     return (
