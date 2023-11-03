@@ -5,6 +5,8 @@ import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { logEvent } from "@amplitude/analytics-browser";
 
+import { typographyStyle } from "@/components/atoms/Modal/BoardShareAndPublishModalElement";
+
 function BoardShareModalElement() {
     const { board, setBoard } = useBoardAtom();
     const sharingBoardUrl = window.location.href + `?bs=shared`;
@@ -34,14 +36,17 @@ function BoardShareModalElement() {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: '100%',
+                    p: '25px 0',
                 }}
             >
-                <Typography>공유 허용</Typography>
+                <Typography sx={typographyStyle} >
+                    공유 허용
+                </Typography>
                 <Switch
                     checked={isBoardShared}
                     onChange={() => board.boardUUID && mutate(board.boardUUID)}
                 />
-            </Box>
+            </Box >
             <Box
                 sx={{
                     display: 'flex',
