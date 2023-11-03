@@ -17,9 +17,10 @@ function DeleteBoardButton() {
 
     return (
         <Button
-            variant="contained"
+            variant="outlined"
             fullWidth
             onClick={handleDeleteBoardButtonClick}
+            size="large"
         >
             삭제하기
         </Button>

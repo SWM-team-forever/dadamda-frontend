@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Box, Chip, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -12,7 +12,7 @@ import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { useSearch } from '@/hooks/useSearch';
 
-import { MenuIcon, StarIcon } from '@/components/atoms/Icon';
+import { SettingIcon, FixedIcon, UnFixedIcon } from '@/components/atoms/Icon';
 import DefaultBoardThumbnail from '@/components/atoms/Board/DefaultBoardThumbnail';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
@@ -123,6 +123,7 @@ function BoardListTemplate() {
                                             sx={{
                                                 p: '10px',
                                                 backgroundColor: theme.color.Gray_020,
+                                                padding: '15px',
                                             }}
                                         >
                                             <Box
@@ -133,6 +134,7 @@ function BoardListTemplate() {
                                                 }}
                                             >
                                                 <Typography
+                                                    variant="h3"
                                                     sx={{
                                                         overflow: 'hidden',
                                                         textOverflow: 'ellipsis',
@@ -147,7 +149,7 @@ function BoardListTemplate() {
                                                 <Box
                                                     sx={{
                                                         display: 'flex',
-                                                        gap: '5px',
+                                                        gap: '12px',
                                                     }}
                                                 >
                                                     <Box
@@ -159,7 +161,7 @@ function BoardListTemplate() {
                                                             mutate(board.uuid.toString());
                                                         }}
                                                     >
-                                                        <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
+                                                        {board.isFixed ? <UnFixedIcon width='20' height='20' fill={theme.color.Blue_080} /> : <FixedIcon width='20' height='20' fill={theme.color.Gray_070} />}
                                                     </Box>
                                                     <Box
                                                         sx={{
@@ -176,7 +178,7 @@ function BoardListTemplate() {
                                                             openModal('boardEdit');
                                                         }}
                                                     >
-                                                        <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
+                                                        <SettingIcon width='20' height='20' fill={theme.color.Gray_070} />
                                                     </Box>
                                                 </Box>
                                             </Box>
@@ -184,13 +186,35 @@ function BoardListTemplate() {
                                                 sx={{
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    gap: '10px',
+                                                    gap: '5px',
+                                                    paddingTop: '10px',
                                                 }}
                                             >
-                                                <Chip label={chipInformation.map((chipInfo) =>
-                                                    chipInfo.tagValue === board.tag && chipInfo.label
-                                                )} />
-                                                <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
+                                                 <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                        color : theme.color.Gray_080, 
+                                                    }}
+                                                >
+                                                    {chipInformation.map((chipInfo) =>
+                                                        chipInfo.tagValue === board.tag && chipInfo.label
+                                                    )} 
+                                                </Typography>
+                                                <Typography
+                                                    color={theme.color.Gray_080}
+                                                    variant="body2"
+                                                    sx={{
+                                                        fontWeight: '300',
+                                                        lineHeight: '160%',
+                                                    }}
+                                                >
+                                                    {' • '}
+                                                </Typography>
+                                                <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                        color : theme.color.Gray_080
+                                                    }}>{getTimeDiff(board.modifiedDate)}</Typography>
                                             </Box>
                                         </Box>
                                     </Box>
