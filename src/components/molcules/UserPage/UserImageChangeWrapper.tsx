@@ -8,9 +8,9 @@ import { useDeleteUserProfileImage, useUploadUserProfileImage } from "@/api/user
 import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 
 import { ProfileIcon } from "@/components/atoms/Icon";
-import { grayOutlinedButtonStyle, grayFullfilledButtonStyle, useIsUserPageEditMode } from "@/pages/UserPage";
+import { grayOutlinedButtonStyle, grayFullfilledButtonStyle } from "@/pages/UserPage";
 
-function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl?: string }) {
+function UserImageChangeWrapper({ profileUrl }: { profileUrl?: string }) {
     const [requestPrevieFile, file] = useGetPreviewFile();
     const [image, setImage] = useState(profileUrl);
 
@@ -123,30 +123,28 @@ function UserImageChangeWrapper({ mode, profileUrl }: { mode: string, profileUrl
         >
             <Box>
                 <ProfileImage src={image} />
-                {useIsUserPageEditMode(mode) &&
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            width: '100%',
-                            justifyContent: 'center',
-                            gap: '8px',
-                            mt: '24px',
-                        }}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        mt: '24px',
+                    }}
+                >
+                    <Button
+                        sx={grayOutlinedButtonStyle}
+                        onClick={() => handleUploadUserProfileImage(file)}
                     >
-                        <Button
-                            sx={grayOutlinedButtonStyle}
-                            onClick={() => handleUploadUserProfileImage(file)}
-                        >
-                            이미지 변경
-                        </Button>
-                        <Button
-                            sx={grayFullfilledButtonStyle}
-                            onClick={handleRemoveImage}
-                        >
-                            이미지 삭제
-                        </Button>
-                    </Box>
-                }
+                        이미지 변경
+                    </Button>
+                    <Button
+                        sx={grayFullfilledButtonStyle}
+                        onClick={handleRemoveImage}
+                    >
+                        이미지 삭제
+                    </Button>
+                </Box>
             </Box>
         </Box>
     );
