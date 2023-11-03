@@ -15,7 +15,7 @@ export const typographyStyle = {
 
 function BoardShareAndPublishModalElement() {
     const [value, setValue] = useState(0);
-    const handleChangeValue = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChangeValue = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
