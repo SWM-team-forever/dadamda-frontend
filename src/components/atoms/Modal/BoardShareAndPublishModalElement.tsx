@@ -9,6 +9,8 @@ export const typographyStyle = {
     fontWeight: '400',
     lineHeight: '150%',
     color: theme.color.Gray_090,
+    whiteSpace: 'pre-line',
+    textAlign: 'center',
 }
 
 function BoardShareAndPublishModalElement() {
