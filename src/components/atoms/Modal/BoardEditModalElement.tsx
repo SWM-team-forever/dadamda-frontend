@@ -214,15 +214,16 @@ function BoardEditModalElement() {
             >
                 {validateTag() === 'success' ? ' ' : validateTag()}
             </FormHelperText>
-            <DeleteBoardButton />
             <Button
                 variant="contained"
                 fullWidth
                 onClick={handleEditBoardButtonClick}
                 disabled={!isValidationSuccess()}
+                size="large"
             >
-                해당 보드 변경하기
+                변경하기
             </Button>
+            <DeleteBoardButton />
         </Box>
     );
 }

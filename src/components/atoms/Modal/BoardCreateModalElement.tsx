@@ -220,6 +220,7 @@ function BoardCreateModalElement() {
                 fullWidth
                 onClick={handleCreateButtonClick}
                 disabled={!isValidationSuccess()}
+                size="large"
             >
                 추가하기
             </Button>
