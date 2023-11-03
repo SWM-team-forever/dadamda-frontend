@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import useGetPreviewFile from "@/hooks/useGetPrevieFile";
 import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileTypeImage } from "@/hooks/useValidation";
