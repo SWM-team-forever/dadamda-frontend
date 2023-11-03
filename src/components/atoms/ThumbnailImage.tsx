@@ -8,7 +8,12 @@ interface ThumbnailImageProps {
 function ThumbnailImage({ thumbnailUrl }: ThumbnailImageProps) {
     return (
         <CardImageWrapper>
-            <CardImage src={thumbnailUrl} />
+            <CardImage 
+                src={thumbnailUrl}
+                onError={e => {
+                    e.currentTarget.src = '/default_image.png';
+                }}
+            />
         </CardImageWrapper>
     );
 }
