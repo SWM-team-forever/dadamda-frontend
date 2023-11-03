@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import useGetPreviewFile from "@/hooks/useGetPrevieFile";
 import { IMAGE_FILE_SIZE_LIMITATION, useIsFileSizeLessThanLimitation, useIsFileTypeImage } from "@/hooks/useValidation";
@@ -10,7 +10,7 @@ import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
 import { ProfileIcon } from "@/components/atoms/Icon";
 import { grayOutlinedButtonStyle, grayFullfilledButtonStyle } from "@/pages/UserPage";
 
-function UserImageChangeWrapper({ profileUrl }: { profileUrl?: string }) {
+function UserImageChangeWrapper({ profileUrl, changeModeIntoView }: { profileUrl?: string, changeModeIntoView: () => void }) {
     const [requestPrevieFile, file] = useGetPreviewFile();
     const [image, setImage] = useState(profileUrl);
 
@@ -50,13 +50,10 @@ function UserImageChangeWrapper({ profileUrl }: { profileUrl?: string }) {
     }
 
     const { uploadUserProfileImageMutate } = useUploadUserProfileImage();
-    const { deleteUserProfileImageMutate, isDeleteUserProfileImageMutateSuccess } = useDeleteUserProfileImage();
+    const { deleteUserProfileImageMutate } = useDeleteUserProfileImage({ changeModeIntoView });
     const handleRemoveImage = () => {
         deleteUserProfileImageMutate();
-        if (isDeleteUserProfileImageMutateSuccess) {
-            setImage(undefined);
-        }
-    }
+    };
 
     const handleUploadUserProfileImage = (file: File | null) => {
         if (!file) {
@@ -65,6 +62,7 @@ function UserImageChangeWrapper({ profileUrl }: { profileUrl?: string }) {
         }
 
         uploadUserProfileImageMutate(file);
+        changeModeIntoView();
     }
 
     function ProfileImage({ src }: { src?: string }) {
@@ -114,6 +112,7 @@ function UserImageChangeWrapper({ profileUrl }: { profileUrl?: string }) {
             </Typography>
         </Box>
     }
+
     return (
         <Box
             sx={{

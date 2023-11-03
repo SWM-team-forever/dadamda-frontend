@@ -234,9 +234,13 @@ const deleteUserProfileImage = async () => {
 	});
 };
 
-export const useDeleteUserProfileImage = () => {
+export const useDeleteUserProfileImage = ({
+	changeModeIntoView,
+}: {
+	changeModeIntoView: () => void;
+}) => {
 	const queryClient = useQueryClient();
-	const { mutate, isSuccess } = useMutation(deleteUserProfileImage, {
+	const { mutate } = useMutation(deleteUserProfileImage, {
 		onSuccess: () => {
 			queryClient.invalidateQueries(["userInformation"]);
 			useDefaultSnackbar(
@@ -244,6 +248,7 @@ export const useDeleteUserProfileImage = () => {
 				"success"
 			);
 			localStorage.setItem("profileImageURL", "");
+			changeModeIntoView();
 		},
 		onError: (error) => {
 			Sentry.captureException(error);
@@ -256,12 +261,8 @@ export const useDeleteUserProfileImage = () => {
 		retry: false,
 	});
 
-	const [
-		deleteUserProfileImageMutate,
-		isDeleteUserProfileImageMutateSuccess,
-	] = [mutate, isSuccess];
+	const [deleteUserProfileImageMutate] = [mutate];
 	return {
 		deleteUserProfileImageMutate,
-		isDeleteUserProfileImageMutateSuccess,
 	};
 };
