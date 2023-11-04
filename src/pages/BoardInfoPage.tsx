@@ -135,10 +135,11 @@ function BoardInfoPage() {
                     flexDirection: 'column',
                     position: 'fixed',
                     right: '0',
-                    width: '100px',
+                    width: '86px',
                     height: '100%',
                     gap: '16px',
-                    mt: '30px',
+					backgroundColor: 'rgba(255, 255, 255, 0.40)',
+
 				}}
 			>
 				<Button
@@ -146,13 +147,14 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: theme.color.Gray_030,
+						backgroundColor: theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
 						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "15px",
-						ml: "15px",
+						mt: "15px",
+						mr: "10px",
+						ml: "10px",
 					}}
 					onClick={() =>
 						openModal("scrapCreateOnBoard")
@@ -186,13 +188,13 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: theme.color.Gray_030,
+						backgroundColor: theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
 						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "15px",
-						ml: "15px",
+						mr: "10px",
+						ml: "10px",
 					}}
 					onClick={() =>
 						openModal("stickerPaste")
@@ -227,13 +229,13 @@ function BoardInfoPage() {
 							cursor: "pointer",
 							flexDirection: "column",
 							textAlign: "center",
-							backgroundColor: theme.color.Gray_030,
+							backgroundColor: theme.color.Gray_020,
 							borderRadius: "20px",
 							paddingTop: "10px",
 							paddingBottom: "10px",
 							border: "1px solid rgba(0, 0, 0, 0.12)",
-							mr: "15px",
-							ml: "15px",
+							mr: "10px",
+							ml: "10px",
 						}}
 						onClick={() => setMode("edit")}
 					>
@@ -264,13 +266,13 @@ function BoardInfoPage() {
 							cursor: "pointer",
 							flexDirection: "column",
 							textAlign: "center",
-							backgroundColor: theme.color.Gray_030,
+							backgroundColor: theme.color.Gray_020,
 							borderRadius: "20px",
 							paddingTop: "10px",
 							paddingBottom: "10px",
 							border: "1px solid rgba(0, 0, 0, 0.12)",
-							mr: "15px",
-							ml: "15px",
+							mr: "10px",
+							ml: "10px",
 						}}
 						onClick={() => {
 							setMode("view");
@@ -304,13 +306,13 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: theme.color.Gray_030,
+						backgroundColor: theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
 						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "15px",
-						ml: "15px",
+						mr: "10px",
+						ml: "10px",
 					}}
 					onClick={() => {
 						setMode("view");
@@ -344,14 +346,13 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor:
-							theme.color.Gray_030,
+						backgroundColor: theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
 						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "15px",
-						ml: "15px",
+						mr: "10px",
+						ml: "10px",
 					}}
                     onClick={() => openModal('boardShare')}
 				>
@@ -384,13 +385,13 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: theme.color.Gray_030,
+						backgroundColor: theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
 						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "15px",
-						ml: "15px",
+						mr: "10px",
+						ml: "10px",
 					}}
                     onClick={() => openModal('boardEdit')}
 				>
