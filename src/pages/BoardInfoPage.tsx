@@ -165,13 +165,13 @@ function BoardInfoPage() {
 						}}
 					>
 						<PasteScrapIcon
-							width="16"
-							height="16"
+							width="20"
+							height="20"
 							fill={isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080}
 						/>
 					</Box>
 					<Typography
-						variant="h3"
+						variant="h4"
 						sx={{
 							overflow: "hidden",
                             color: isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080
@@ -205,13 +205,13 @@ function BoardInfoPage() {
 						}}
 					>
 						<PasteStickerIcon
-							width="16"
-							height="16"
+							width="20"
+							height="20"
 							fill={isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080}
 						/>
 					</Box>
 					<Typography
-						variant="h3"
+						variant="h4"
 						sx={{
 							overflow: "hidden",
 							color: isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080
@@ -243,13 +243,13 @@ function BoardInfoPage() {
 							}}
 						>
 							<EditModeIcon
-								width="16"
-								height="16"
+								width="20"
+								height="20"
 								fill={theme.color.Gray_080}
 							/>
 						</Box>
 						<Typography
-							variant="h3"
+							variant="h4"
 							sx={{
 								overflow: "hidden",
 								color: theme.color.Gray_080
@@ -283,13 +283,13 @@ function BoardInfoPage() {
 							}}
 						>
 							<ReadModeIcon
-								width="16"
-								height="16"
+								width="20"
+								height="20"
 								fill={theme.color.Gray_080}
 							/>
 						</Box>
 						<Typography
-							variant="h3"
+							variant="h4"
 							sx={{
 								overflow: "hidden",
 								color: theme.color.Gray_080
@@ -323,13 +323,13 @@ function BoardInfoPage() {
 						}}
 					>
 						<BoardInfoSaveIcon
-							width="16"
-							height="16"
+							width="20"
+							height="20"
 							fill={theme.color.Gray_080}
 						/>
 					</Box>
 					<Typography
-						variant="h3"
+						variant="h4"
 						sx={{
 							overflow: "hidden",
 							color: theme.color.Gray_080
@@ -361,15 +361,15 @@ function BoardInfoPage() {
 						}}
 					>
 						<BoardInfoShareIcon
-							width="16"
-							height="16"
+							width="20"
+							height="20"
 							fill={
 								theme.color.Gray_080
 							}
 						/>
 					</Box>
 					<Typography
-						variant="h3"
+						variant="h4"
 						sx={{
 							overflow: "hidden",
 							color: theme.color.Gray_080
@@ -400,13 +400,13 @@ function BoardInfoPage() {
 						}}
 					>
 						<SettingIcon
-							width="16"
-							height="16"
+							width="20"
+							height="20"
 							fill={theme.color.Gray_080}
 						/>
 					</Box>
 					<Typography
-						variant="h3"
+						variant="h4"
 						sx={{
 							overflow: "hidden",
 							color: theme.color.Gray_080
