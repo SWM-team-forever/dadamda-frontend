@@ -147,7 +147,7 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
+						backgroundColor: isViewerMode(mode)? theme.color.Gray_040 : theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
@@ -188,7 +188,7 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
+						backgroundColor: isViewerMode(mode)? theme.color.Gray_040 : theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
@@ -216,7 +216,7 @@ function BoardInfoPage() {
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-							color: isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080
+                            color: isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080
 						}}
 					>
 						스티커
