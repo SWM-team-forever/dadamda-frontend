@@ -94,7 +94,7 @@ function BoardInfoPage() {
                     left: '0',
                     width: {
                         xs: '100%',
-                        sm: 'calc(100% - 100px)',
+                        sm: 'calc(100% - 86px)',
                     },
                     height: '100%',
                     overflow: 'auto',
