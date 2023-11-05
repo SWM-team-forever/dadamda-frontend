@@ -1,5 +1,5 @@
 interface ICustomModalInfo {
-    title: string,
+    title?: string,
     isOpen: boolean,
     element: React.ReactNode,
     callback?: () => void,
