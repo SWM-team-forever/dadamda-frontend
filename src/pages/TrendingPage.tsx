@@ -123,6 +123,8 @@ function TrendingPage() {
                         },
                         minHeight: 'auto',
                     }}
+                    scrollButtons="auto"
+                    variant="scrollable"
                 >
                     {Object.values(category).map((item: any, index: number) => {
                         return <Tab
