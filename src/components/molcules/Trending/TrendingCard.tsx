@@ -1,11 +1,12 @@
 import theme from "@/assets/styles/theme";
 import DefaultBoardThumbnail from "@/components/atoms/Board/DefaultBoardThumbnail";
 import { getTimeDiff } from "@/hooks/useCalculateDateDiff";
-import { IBoardContentAtom } from "@/types/IBoardContentAtom";
-import { Box, Button, Divider, ImageList, Typography } from "@mui/material";
-import defaultImage from '@/assets/images/dadamda-logo128.png';
+import { Box, Button, Divider, Grid, ImageList, Typography } from "@mui/material";
 import ThumbnailImage from "@/components/atoms/ThumbnailImage";
 import { HeartIcon, PasteIcon, ViewIcon } from "@/components/atoms/Icon";
+import { useModal } from "@/hooks/useModal";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
+import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
 
 export interface TrendingCardProps {
     profileUrl: string,
@@ -19,6 +20,7 @@ export interface TrendingCardProps {
     createdAt: number,
     thumbnailUrl: string,
     contents: any,
+    uuid: string,
 }
 
 const tagMapping = {
@@ -28,7 +30,7 @@ const tagMapping = {
     KNOWLEDGE_TREND: '지식/동향',
 }
 
-function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt, shareCnt, viewCnt, createdAt, thumbnailUrl, contents, ...props }: TrendingCardProps) {
+function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt, shareCnt, viewCnt, createdAt, thumbnailUrl, contents, uuid, ...props }: TrendingCardProps) {
     function Info() {
         return (
             <Box
@@ -96,9 +98,28 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ThumbnailImageList() {
+        const { openModal } = useModal();
+        const { setBoard } = useBoardAtom();
+        const handleClickBoardView = () => {
+            setBoard((prev) => {
+                return {
+                    ...prev,
+                    boardUUID: uuid,
+                    title: title,
+                    description: description,
+                    tag: tagMapping[tag as keyof typeof tagMapping],
+                }
+            })
+            openModal('boardView');
+        }
+
+        let images = foundImagesInContents();
+        images = images.length < 4 ? [images[0] && images[0]] : images;
+        images = images[0] === undefined ? [] : images;
+
         return <ImageList
             variant="quilted"
-            cols={2}
+            cols={images.length > 1 ? 2 : 1}
             sx={{
                 width: '100%',
                 borderRadius: '8px',
@@ -106,9 +127,15 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                 '& > div > img': {
                     borderRadius: '8px',
                 },
+                cursor: 'pointer',
             }}
+            onClick={handleClickBoardView}
         >
-            {foundImagesInContents().map((image: string, index: number) => {
+            {
+                (images.length === 0) &&
+                <DefaultBoardThumbnail />
+            }
+            {images.map((image: string, index: number) => {
                 return <ThumbnailImage key={index} thumbnailUrl={image} />
             }
             )}
@@ -140,7 +167,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     function PasteButton() {
         return (
             <Button
-                startIcon={<PasteIcon width="14" height="14" fill={theme.color.Gray_070} />}
+                startIcon={<CopyBoardButton boardId={uuid} isOnlyIcon />}
                 sx={buttonTextStyle}
             >
                 {shareCnt}
@@ -212,6 +239,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
             </Box>
         )
     }
+
     return (
         <Box
             sx={{
