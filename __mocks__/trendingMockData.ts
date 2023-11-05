@@ -11,6 +11,7 @@ export const trendingMockData = [
 		viewCnt: 0,
 		createdAt: 1699069078,
 		thumbnailUrl: "",
+		uuid: "f542acb3-db2c-4b6a-be5b-1edf0945575e",
 		contents: {
 			H: [
 				{
@@ -716,5 +717,20 @@ export const trendingMockData = [
 				},
 			],
 		},
+	},
+	{
+		profileUrl: "https://dadamda-board-thumbnail.s3.ap-northeast-2.amazonaws.com/profileImage/a45339b0-6d80-4013-954d-f9cb18dda6a6",
+		nickname: "즐거운판다5840",
+		description:
+			"텐동 - 네코정\n사케동 - 아소코, 일상다반\n돈카츠 - 백소정, 휴돈정\n대창덮밥 - 로지다이닝\n카레 - 솔직하다",
+		title: "공릉 맛집 정리 - 일식편",
+		tag: "ENTERTAINMENT_ART",
+		heartCnt: 0,
+		shareCnt: 0,
+		viewCnt: 0,
+		createdAt: 1699069078,
+		thumbnailUrl: "",
+		uuid: "f542acb3-db2c-4b6a-be5b-1edf0945575e",
+		contents: {},
 	},
 ];
