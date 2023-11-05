@@ -1,11 +1,11 @@
 interface ICustomModalInfo {
-    title?: string,
-    isOpen: boolean,
-    element: React.ReactNode,
-    callback?: () => void,
-    scrapId?: number,
-    position: string,
-    redirectURL?: string,
+	title?: string;
+	isOpen: boolean;
+	element: React.ReactNode;
+	callback?: () => void;
+	scrapId?: number;
+	position: string;
+	redirectURL?: string;
 }
 
-export type {ICustomModalInfo};
+export type { ICustomModalInfo };
