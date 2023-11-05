@@ -1,5 +1,6 @@
 import theme from '@/assets/styles/theme';
 import TrendingCard, { TrendingCardProps } from '@/components/molcules/Trending/TrendingCard';
+import { useTrendingAtom } from '@/hooks/useTrendingAtom';
 import { TabContext } from '@mui/lab';
 import { Box, Button, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { trendingMockData } from '__mocks__/trendingMockData';
@@ -9,23 +10,37 @@ import styled from 'styled-components';
 const category = {
     LIST: {
         text: '전체',
+        value: 'LIST',
     },
     ENTERTAINMENT_ART: {
         text: '엔터테인먼트/예술',
+        value: 'ENTERTAINMENT_ART',
     },
     HOBBY_TRAVEL: {
         text: '취미/여가/여행',
+        value: 'HOBBY_TRAVEL',
     },
     LIFE_SHOPPING: {
         text: '생활/노하우/쇼핑',
+        value: 'LIFE_SHOPPING',
     },
     KNOWLEDGE_TREND: {
         text: '지식/동향',
+        value: 'KNOWLEDGE_TREND',
     },
 }
 
 function TrendingPage() {
     function Topic() {
+        const { trending, setTrending } = useTrendingAtom();
+        const handleClickTopic = (value: string) => {
+            setTrending({ ...trending, tag: value });
+        }
+
+        const isValueSelected = (value: string) => {
+            return trending.tag === value;
+        }
+
         return (
             <Box
                 sx={{
@@ -63,17 +78,19 @@ function TrendingPage() {
                         return <Button
                             key={index}
                             sx={{
-                                color: theme.color.Gray_080,
+                                color: isValueSelected(item.value) ? theme.color.Gray_090 : theme.color.Gray_080,
                                 fontSize: '14px',
                                 lineHeight: '150%',
-                                fontWeight: '400',
+                                fontWeight: isValueSelected(item.value) ? '600' : '400',
                                 '&:hover': {
                                     backgroundColor: 'transparent',
                                 },
                                 minWidth: '0',
                                 width: '100%',
                                 justifyContent: 'flex-start',
+                                backgroundColor: isValueSelected(item.value) ? theme.color.Gray_030 : 'transparent',
                             }}
+                            onClick={() => handleClickTopic(item.value)}
                         >
                             {item.text}
                         </Button>
@@ -85,14 +102,14 @@ function TrendingPage() {
     }
 
     function HorizontalTopic() {
-        const [value, setValue] = useState('LIST');
+        const { trending, setTrending } = useTrendingAtom();
         const handleTabValueChange = (_event: SyntheticEvent<Element, Event>, newValue: string) => {
-            setValue(newValue);
+            setTrending({ ...trending, tag: newValue });
         }
 
         return (
-            <TabContext value={value}>
-                <Tabs value={value} onChange={handleTabValueChange}
+            <TabContext value={trending.tag}>
+                <Tabs value={trending.tag} onChange={handleTabValueChange}
                     sx={{
                         '& .MuiButtonBase-root': {
                             minHeight: 'auto',
