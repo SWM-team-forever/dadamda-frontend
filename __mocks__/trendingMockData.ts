@@ -730,7 +730,7 @@ export const trendingMockData = [
 		viewCnt: 0,
 		createdAt: 1699069078,
 		thumbnailUrl: "",
-		uuid: "f542acb3-db2c-4b6a-be5b-1edf0945575e",
+		uuid: "df162e6b-91d9-4bcf-abdd-0252274a39ce",
 		contents: {},
 	},
 ];
