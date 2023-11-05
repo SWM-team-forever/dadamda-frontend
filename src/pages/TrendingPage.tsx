@@ -1,29 +1,31 @@
 import theme from '@/assets/styles/theme';
 import TrendingCard, { TrendingCardProps } from '@/components/molcules/Trending/TrendingCard';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { TabContext } from '@mui/lab';
+import { Box, Button, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { trendingMockData } from '__mocks__/trendingMockData';
+import { useState, SyntheticEvent } from 'react';
 import styled from 'styled-components';
+
+const category = {
+    LIST: {
+        text: '전체',
+    },
+    ENTERTAINMENT_ART: {
+        text: '엔터테인먼트/예술',
+    },
+    HOBBY_TRAVEL: {
+        text: '취미/여가/여행',
+    },
+    LIFE_SHOPPING: {
+        text: '생활/노하우/쇼핑',
+    },
+    KNOWLEDGE_TREND: {
+        text: '지식/동향',
+    },
+}
 
 function TrendingPage() {
     function Topic() {
-        const category = {
-            LIST: {
-                text: '전체',
-            },
-            ENTERTAINMENT_ART: {
-                text: '엔터테인먼트/예술',
-            },
-            HOBBY_TRAVEL: {
-                text: '취미/여가/여행',
-            },
-            LIFE_SHOPPING: {
-                text: '생활/노하우/쇼핑',
-            },
-            KNOWLEDGE_TREND: {
-                text: '지식/동향',
-            },
-        }
-
         return (
             <Box
                 sx={{
@@ -82,6 +84,47 @@ function TrendingPage() {
         )
     }
 
+    function HorizontalTopic() {
+        const [value, setValue] = useState('LIST');
+        const handleTabValueChange = (_event: SyntheticEvent<Element, Event>, newValue: string) => {
+            setValue(newValue);
+        }
+
+        return (
+            <TabContext value={value}>
+                <Tabs value={value} onChange={handleTabValueChange}
+                    sx={{
+                        '& .MuiButtonBase-root': {
+                            minHeight: 'auto',
+                            color: theme.color.Gray_080,
+                            fontWeight: '400',
+                            fontSize: '14px',
+                        },
+                        '& .Mui-selected': {
+                            color: theme.color.Blue_080,
+                            fontWeight: '600'
+                        },
+                        minHeight: 'auto',
+                    }}
+                >
+                    {Object.values(category).map((item: any, index: number) => {
+                        return <Tab
+                            key={index}
+                            value={item.value}
+                            label={item.text}
+                            sx={{
+                                minWidth: 'auto',
+                                justifyContent: 'flex-start',
+                            }}
+                        />
+                    }
+                    )}
+                </Tabs>
+                <Divider />
+            </TabContext>
+        )
+    }
+
     return (
         <PageWrapper>
             <Box
@@ -92,7 +135,6 @@ function TrendingPage() {
                     md: 'grid',
                 }}
                 sx={{
-                    width: 'auto',
                     height: '100%',
                 }}
             >
@@ -103,12 +145,18 @@ function TrendingPage() {
                             md: 'flex',
                         },
                         maxWidth: '100%',
-                        justifyContent: 'end'
+                        justifyContent: 'end',
+                        pt: '20px',
                     }}
                 >
                     <Topic />
                 </Grid>
-                <Grid item>
+                <Grid item
+                    sx={{
+                        p: '20px 0',
+                    }}
+                >
+                    <HorizontalTopic />
                     {trendingMockData.map((data: TrendingCardProps, index: number) => (
                         <TrendingCard
                             key={index}
