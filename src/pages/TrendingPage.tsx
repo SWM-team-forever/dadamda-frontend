@@ -51,6 +51,7 @@ function TrendingPage() {
                     width: '100%',
                     p: '12px',
                     boxSizing: 'border-box',
+                    position: 'fixed',
                 }}
             >
                 <Typography
