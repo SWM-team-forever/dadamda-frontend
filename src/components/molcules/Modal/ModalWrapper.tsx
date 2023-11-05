@@ -29,7 +29,7 @@ function ModalWrapper() {
                     },
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '16px',
+                    gap: modal.title && '16px',
                     boxSizing: 'border-box',
                 }}
             >
