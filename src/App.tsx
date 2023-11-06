@@ -19,6 +19,7 @@ import ModalWrapper from '@/components/molcules/Modal/ModalWrapper';
 import Header from '@/components/molcules/Navigation/Header';
 import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
 import ErrorPage from '@/pages/ErrorPage';
+import FullScreenModalWrapper from '@/components/molcules/Modal/FullScreenModalWrapper';
 
 const queryClient = new QueryClient();
 Sentry.init({
@@ -50,6 +51,16 @@ function App() {
   const { modal } = useModal();
   RouteChangeTracker();
 
+  const modalWrapperMatching = {
+    center: <ModalWrapper />,
+    right: <RightSideModalWrapper />,
+    full: <FullScreenModalWrapper />,
+  }
+
+  const getModalWrapper = () => {
+    return modalWrapperMatching[modal.position as keyof typeof modalWrapperMatching];
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
@@ -62,9 +73,7 @@ function App() {
           >
             <LoginProvider>
               <Header />
-              {modal.isOpen && (
-                modal.position === 'center' ? <ModalWrapper /> : <RightSideModalWrapper />
-              )}
+              {modal.isOpen && getModalWrapper()}
               <Routing />
               <ReactQueryDevtools initialIsOpen={false} />
             </LoginProvider>

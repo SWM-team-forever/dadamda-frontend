@@ -14,7 +14,13 @@ import BoardCreateModalElement from "@/components/atoms/Modal/BoardCreateModalEl
 import StickerPasteModalElement from "@/components/atoms/Modal/StickerPasteModalElement";
 import BoardEditModalElement from "@/components/atoms/Modal/BoardEditModalElement";
 import { logEvent } from "@/utility/amplitude";
+
+import BoardShareModalElement from "@/components/atoms/Modal/BoardShareModalElement";
+import OpenBoardPage from "@/pages/OpenBoardPage";
+import BoardContentsWrapperPage from "@/pages/BoardContentsWrapperPage";
+import BoardPublicModalElement from "@/components/atoms/Modal/BoardPublicModalElement";
 import BoardShareAndPublishModalElement from "@/components/atoms/Modal/BoardShareAndPublishModalElement";
+
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
@@ -77,6 +83,10 @@ export const useModal = () => {
         boardShare: {
             element: <BoardShareAndPublishModalElement />,
             position: 'center',
+        },
+        boardView: {
+            element: <BoardPublicModalElement />,
+            position: 'full',
         }
     }
 
