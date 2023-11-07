@@ -120,7 +120,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                     title: title,
                     description: description,
                     tag: tagMapping[tag as keyof typeof tagMapping],
-                    type: 'mine',
+                    type: 'trending',
                 }
             })
             setBoardContent(JSON.parse(contents));

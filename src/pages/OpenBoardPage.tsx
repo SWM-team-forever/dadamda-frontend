@@ -85,7 +85,7 @@ function OpenBoardPage() {
                             display: 'flex',
                         }}
                     >
-                        <TrashableItems confirmDrop={false} mode={'view'} isBoardShared={true} />
+                        <TrashableItems confirmDrop={false} mode={'view'} />
                     </Box>
                 </Box>
             </Box>

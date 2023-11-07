@@ -432,12 +432,13 @@ export function MultipleContainers({
 			}
 		);
 
-		return [data, isLoading];
+		return isLoading;
 	};
 
-	const [data, isLoading] = isPublicBoard()
-		? [boardContent, false]
-		: useGetData();
+	const isLoading = isPublicBoard() ? false : useGetData();
+	useEffect(() => {
+		isPublicBoard() && setContainers(Object.keys(boardContent));
+	}, [isPublicBoard()]);
 
 	const [activeId, setActiveId] = useState(null);
 	const lastOverId = useRef(null);
