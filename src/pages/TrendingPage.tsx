@@ -184,6 +184,7 @@ function TrendingPage() {
                 <Grid item
                     sx={{
                         p: '20px 0',
+                        height: '100%',
                     }}
                 >
                     <HorizontalTopic />
