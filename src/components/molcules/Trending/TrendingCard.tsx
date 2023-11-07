@@ -202,6 +202,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                         xs: '0',
                         sm: '54px',
                     },
+                    boxSizing: 'border-box',
                 }}
             >
                 <Typography

@@ -1,6 +1,8 @@
 import { useGetTrendingList } from '@/api/trend';
 import theme from '@/assets/styles/theme';
 import TrendingCard, { TrendingCardProps } from '@/components/molcules/Trending/TrendingCard';
+import EmptyTrendingContainer from '@/components/organisms/EmptyTrendingContainer';
+import EmptyBoardContainer from '@/components/organisms/board/EmptyBoardContainer';
 import { useTrendingAtom } from '@/hooks/useTrendingAtom';
 import { TabContext } from '@mui/lab';
 import { Box, Button, CircularProgress, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
@@ -193,25 +195,33 @@ function TrendingPage() {
                             }
                             useWindow={false}
                         >
-                            {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
-                                return page.data.content.map((card: TrendingCardProps, index: number) => (
-                                    <TrendingCard
-                                        key={index}
-                                        profileUrl={card.profileUrl}
-                                        nickname={card.nickname}
-                                        title={card.title}
-                                        description={card.description}
-                                        tag={card.tag}
-                                        heartCnt={card.heartCnt}
-                                        shareCnt={card.shareCnt}
-                                        viewCnt={card.viewCnt}
-                                        createdAt={card.createdAt}
-                                        thumbnailUrl={card.thumbnailUrl}
-                                        contents={card.contents}
-                                        uuid={card.uuid}
-                                    />
-                                ))
-                            })}
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                }}
+                            >
+                                {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
+                                    return page.data.content.length > 0
+                                        ? page.data.content.map((card: TrendingCardProps, index: number) => (
+                                            <TrendingCard
+                                                key={index}
+                                                profileUrl={card.profileUrl}
+                                                nickname={card.nickname}
+                                                title={card.title}
+                                                description={card.description}
+                                                tag={card.tag}
+                                                heartCnt={card.heartCnt}
+                                                shareCnt={card.shareCnt}
+                                                viewCnt={card.viewCnt}
+                                                createdAt={card.createdAt}
+                                                thumbnailUrl={card.thumbnailUrl}
+                                                contents={card.contents}
+                                                uuid={card.uuid}
+                                            />
+                                        ))
+                                        : <EmptyTrendingContainer />
+                                })}
+                            </Box>
                         </InfiniteScroll>
                     }
                 </Grid>
