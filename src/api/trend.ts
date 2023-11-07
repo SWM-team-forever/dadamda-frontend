@@ -118,7 +118,7 @@ export const useChangeHeart = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation(changeHeart, {
-		onSuccess: (data) => {
+		onSuccess: () => {
 			queryClient.invalidateQueries(["trendingList"]);
 		},
 		onError: (error) => {
@@ -158,7 +158,7 @@ export const useIncreaseTrendingViewCount = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation(increaseTrendingViewCount, {
-		onSuccess: (data) => {
+		onSuccess: () => {
 			queryClient.invalidateQueries(["trendingList"]);
 		},
 		onError: (error) => {

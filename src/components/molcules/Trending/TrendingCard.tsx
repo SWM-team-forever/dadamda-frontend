@@ -33,7 +33,7 @@ const tagMapping = {
     KNOWLEDGE_TREND: '지식/동향',
 }
 
-function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt, shareCnt, viewCnt, createdAt, thumbnailUrl, contents, uuid, ...props }: TrendingCardProps) {
+function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt, shareCnt, viewCnt, createdAt, contents, uuid }: TrendingCardProps) {
     function Info() {
         return (
             <Box
