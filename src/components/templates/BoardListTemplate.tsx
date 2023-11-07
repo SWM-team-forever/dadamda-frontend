@@ -109,7 +109,7 @@ function BoardListTemplate() {
             cols={images.length > 1 ? 2 : 1}
             sx={{
                 width: '100%',
-                borderRadius: '8px',
+                borderRadius: '8px 8px 0px 0px',
                 backgroundColor: theme.color.Gray_030,
                 '& > div > img': {
                     borderRadius: '8px',
@@ -164,7 +164,7 @@ function BoardListTemplate() {
                                     <Box
                                         sx={{
                                             borderRadius: '8px',
-                                            overflow: 'hidden',
+                                            overflow: 'hidden'
                                         }}
                                     >
                                         <ThumbnailImageList contents={board.contents} />
@@ -173,6 +173,7 @@ function BoardListTemplate() {
                                                 p: '10px',
                                                 backgroundColor: theme.color.Gray_020,
                                                 padding: '15px',
+                                                marginTop: '-16px',
                                             }}
                                         >
                                             <Box
