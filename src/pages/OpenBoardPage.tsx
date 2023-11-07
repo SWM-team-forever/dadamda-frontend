@@ -5,6 +5,8 @@ import { useGetOpenBoardTitle } from "@/api/board";
 
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
+import { useBoardAtom } from "@/hooks/useBoardAtom";
+import { useEffect } from "react";
 
 function OpenBoardPage() {
     const params = useParams();
@@ -16,6 +18,14 @@ function OpenBoardPage() {
     const boardPageId = getBoardPageId();
 
     const { title, isTitleLoading } = useGetOpenBoardTitle(boardPageId);
+
+    const { setBoard } = useBoardAtom();
+    useEffect(() => {
+        setBoard((prev) => ({
+            ...prev,
+            type: 'shared',
+        }))
+    }, [])
 
     if (isTitleLoading) {
         return (
