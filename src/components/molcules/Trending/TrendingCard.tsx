@@ -9,6 +9,7 @@ import { useBoardAtom } from "@/hooks/useBoardAtom";
 import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
 import { useChangeHeart, useIncreaseTrendingViewCount } from "@/api/trend";
 import { logEvent } from "@/utility/amplitude";
+import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 
 export interface TrendingCardProps {
     profileUrl: string,
@@ -110,6 +111,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
 
         const { openModal } = useModal();
         const { setBoard } = useBoardAtom();
+        const { setBoardContent } = useBoardContentAtom();
         const handleClickBoardView = () => {
             setBoard((prev) => {
                 return {
@@ -118,8 +120,10 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                     title: title,
                     description: description,
                     tag: tagMapping[tag as keyof typeof tagMapping],
+                    type: 'mine',
                 }
             })
+            setBoardContent(JSON.parse(contents));
             openModal('boardView');
             handleIncreaeViewCount();
         }
