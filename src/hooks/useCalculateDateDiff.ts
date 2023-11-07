@@ -27,3 +27,26 @@ export function useConvertUnixTimeToDateFormat(unixTime: number): string {
 export function useGetDaysDiff(unixTime: number): number {
 	return dayjs().diff(dayjs.unix(unixTime), "day");
 }
+
+function convertUnixTimeToSpecificDateFormat(unixTIme: number) {
+	return dayjs.unix(unixTIme).format("YYYY-MM-DD HH:mm:ss");
+}
+
+function getCurrentTime() {
+	return dayjs().subtract(1, "month").unix();
+}
+
+function getMonthLaterTime() {
+	return dayjs().unix();
+}
+
+export function useGetCurrentTimeAndMonthLaterInSpecificDateFormat() {
+	return {
+		currentTime: convertUnixTimeToSpecificDateFormat(
+			getCurrentTime()
+		),
+		monthLaterTime: convertUnixTimeToSpecificDateFormat(
+			getMonthLaterTime()
+		),
+	};
+}

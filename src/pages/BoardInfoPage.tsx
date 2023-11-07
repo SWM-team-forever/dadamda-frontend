@@ -11,73 +11,74 @@ import { useGetBoard } from "@/api/board";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useModal } from "@/hooks/useModal";
 
-import {PasteScrapIcon, PasteStickerIcon, EditModeIcon, ReadModeIcon, BoardInfoSaveIcon, BoardInfoShareIcon, SettingIcon} from "@/components/atoms/Icon";
+import { PasteScrapIcon, PasteStickerIcon, EditModeIcon, ReadModeIcon, BoardInfoSaveIcon, BoardInfoShareIcon, SettingIcon } from "@/components/atoms/Icon";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 
 function BoardInfoPage() {
-    const params = useParams();
+	const params = useParams();
 
-    function getBoardPageId(): string | null {
-        return params['boardUUID'] || null;
-    }
+	function getBoardPageId(): string | null {
+		return params['boardUUID'] || null;
+	}
 
-    const { board, setBoard } = useBoardAtom();
-    const boardPageId = getBoardPageId();
+	const { board, setBoard } = useBoardAtom();
+	const boardPageId = getBoardPageId();
 
-    const [mode, setMode] = useState<'view' | 'edit'>('view');
-    const isViewerMode = (mode: string) => mode === 'view';
+	const [mode, setMode] = useState<'view' | 'edit'>('view');
+	const isViewerMode = (mode: string) => mode === 'view';
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
-    const { data, isLoading } = useQuery(
-        ['board', boardPageId],
-        () => boardPageId && useGetBoard(boardPageId.toString()),
-        {
-            enabled: !!boardPageId,
-            onSuccess: (data) => {
-                if (data) {
-                    setBoard((prev) => ({
-                        ...prev,
-                        boardUUID: boardPageId,
-                        ...data.data,
-                    }))
-                }
-            },
-            onError: () => {
-                useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
-                navigate('/board');
-            },
-            retry: false,
-            useErrorBoundary: (error: Error) => error.message !== "NF005",
-        }
-    )
+	const { data, isLoading } = useQuery(
+		['board', boardPageId],
+		() => boardPageId && useGetBoard(boardPageId.toString()),
+		{
+			enabled: !!boardPageId,
+			onSuccess: (data) => {
+				if (data) {
+					setBoard((prev) => ({
+						...prev,
+						boardUUID: boardPageId,
+						...data.data,
+						type: 'mine',
+					}))
+				}
+			},
+			onError: () => {
+				useDefaultSnackbar('존재하지 않거나 권한이 없는 보드입니다.', 'error');
+				navigate('/board');
+			},
+			retry: false,
+			useErrorBoundary: (error: Error) => error.message !== "NF005",
+		}
+	)
 
 	const { openModal } = useModal();
 	const { handleSaveBoard } = useBoardContentAtom();
 
-    if (isLoading) {
-        return (
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    width: '100%',
-                    height: 'calc(100% - 56px)',
-                }}
-            >
-                <Typography
-                    variant="h1"
-                    sx={{
-                        fontSize: '24px',
-                        fontWeight: '500',
-                    }}
-                >
-                    Loading...
-                </Typography>
-            </Box>
-        )
-    }
+	if (isLoading) {
+		return (
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					width: '100%',
+					height: 'calc(100% - 56px)',
+				}}
+			>
+				<Typography
+					variant="h1"
+					sx={{
+						fontSize: '24px',
+						fontWeight: '500',
+					}}
+				>
+					Loading...
+				</Typography>
+			</Box>
+		)
+	}
 
 
 	return (
@@ -91,23 +92,23 @@ function BoardInfoPage() {
 			<Box
 				sx={{
 					position: 'fixed',
-                    left: '0',
-                    width: {
-                        xs: '100%',
-                        sm: 'calc(100% - 86px)',
-                    },
-                    height: '100%',
-                    overflow: 'auto',
-                    pb: '100px',
-                    boxSizing: 'border-box',
-                }}
+					left: '0',
+					width: {
+						xs: '100%',
+						sm: 'calc(100% - 86px)',
+					},
+					height: '100%',
+					overflow: 'auto',
+					pb: '100px',
+					boxSizing: 'border-box',
+				}}
 			>
 				<Typography
 					variant="h1"
 					sx={{
 						fontSize: '24px',
-                        fontWeight: '500',
-                        m: '20px',
+						fontWeight: '500',
+						m: '20px',
 					}}
 				>
 					{board.title}
@@ -115,29 +116,29 @@ function BoardInfoPage() {
 				<Box
 					sx={{
 						display: 'flex',
-                        justifyContent: 'space-between',
+						justifyContent: 'space-between',
 					}}
 				>
 					{boardPageId &&
-                        <TrashableItems
-                            confirmDrop={false}
-                            mode={mode}
-                        />
-                    }
+						<TrashableItems
+							confirmDrop={false}
+							mode={mode}
+						/>
+					}
 				</Box>
 			</Box>
 			<Box
 				sx={{
 					display: {
-                        xs: 'none',
-                        sm: 'flex',
-                    },
-                    flexDirection: 'column',
-                    position: 'fixed',
-                    right: '0',
-                    width: '86px',
-                    height: '100%',
-                    gap: '16px',
+						xs: 'none',
+						sm: 'flex',
+					},
+					flexDirection: 'column',
+					position: 'fixed',
+					right: '0',
+					width: '86px',
+					height: '100%',
+					gap: '16px',
 					backgroundColor: 'rgba(255, 255, 255, 0.40)',
 
 				}}
@@ -147,7 +148,7 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: isViewerMode(mode)? theme.color.Gray_040 : theme.color.Gray_020,
+						backgroundColor: isViewerMode(mode) ? theme.color.Gray_040 : theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
@@ -169,14 +170,14 @@ function BoardInfoPage() {
 						<PasteScrapIcon
 							width="20"
 							height="20"
-							fill={isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080}
+							fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
 						/>
 					</Box>
 					<Typography
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-                            color: isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080
+							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080
 						}}
 					>
 						스크랩
@@ -188,7 +189,7 @@ function BoardInfoPage() {
 						cursor: "pointer",
 						flexDirection: "column",
 						textAlign: "center",
-						backgroundColor: isViewerMode(mode)? theme.color.Gray_040 : theme.color.Gray_020,
+						backgroundColor: isViewerMode(mode) ? theme.color.Gray_040 : theme.color.Gray_020,
 						borderRadius: "20px",
 						paddingTop: "10px",
 						paddingBottom: "10px",
@@ -209,14 +210,14 @@ function BoardInfoPage() {
 						<PasteStickerIcon
 							width="20"
 							height="20"
-							fill={isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080}
+							fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
 						/>
 					</Box>
 					<Typography
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-                            color: isViewerMode(mode)? theme.color.Gray_050 : theme.color.Gray_080
+							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080
 						}}
 					>
 						스티커
@@ -341,7 +342,7 @@ function BoardInfoPage() {
 					</Typography>
 				</Button>
 
-                <Button
+				<Button
 					sx={{
 						cursor: "pointer",
 						flexDirection: "column",
@@ -354,7 +355,7 @@ function BoardInfoPage() {
 						mr: "10px",
 						ml: "10px",
 					}}
-                    onClick={() => openModal('boardShare')}
+					onClick={() => openModal('boardShare')}
 				>
 					<Box
 						sx={{
@@ -380,7 +381,7 @@ function BoardInfoPage() {
 					</Typography>
 				</Button>
 
-                <Button
+				<Button
 					sx={{
 						cursor: "pointer",
 						flexDirection: "column",
@@ -393,7 +394,7 @@ function BoardInfoPage() {
 						mr: "10px",
 						ml: "10px",
 					}}
-                    onClick={() => openModal('boardEdit')}
+					onClick={() => openModal('boardEdit')}
 				>
 					<Box
 						sx={{
@@ -416,8 +417,8 @@ function BoardInfoPage() {
 						설정
 					</Typography>
 				</Button>
-            </Box>
-        </Box >
+			</Box>
+		</Box >
 	);
 }
 

@@ -7,6 +7,9 @@ import { HeartIcon, PasteIcon, ViewIcon } from "@/components/atoms/Icon";
 import { useModal } from "@/hooks/useModal";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
+import { useChangeHeart, useIncreaseTrendingViewCount } from "@/api/trend";
+import { logEvent } from "@/utility/amplitude";
+import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 
 export interface TrendingCardProps {
     profileUrl: string,
@@ -30,7 +33,7 @@ const tagMapping = {
     KNOWLEDGE_TREND: '지식/동향',
 }
 
-function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt, shareCnt, viewCnt, createdAt, thumbnailUrl, contents, uuid, ...props }: TrendingCardProps) {
+function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt, shareCnt, viewCnt, createdAt, contents, uuid }: TrendingCardProps) {
     function Info() {
         return (
             <Box
@@ -88,7 +91,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function foundImagesInContents() {
-        const result = Object.values(contents).map((content: any) => {
+        const result = Object.values(JSON.parse(contents)).map((content: any) => {
             return content.map((item: any) => {
                 return item.thumbnailUrl;
             })
@@ -98,8 +101,17 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ThumbnailImageList() {
+        const { mutate } = useIncreaseTrendingViewCount();
+
+        const handleIncreaeViewCount = () => {
+            mutate(uuid);
+
+            logEvent('view_trending_board_click');
+        }
+
         const { openModal } = useModal();
         const { setBoard } = useBoardAtom();
+        const { setBoardContent } = useBoardContentAtom();
         const handleClickBoardView = () => {
             setBoard((prev) => {
                 return {
@@ -108,9 +120,12 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                     title: title,
                     description: description,
                     tag: tagMapping[tag as keyof typeof tagMapping],
+                    type: 'trending',
                 }
             })
+            setBoardContent(JSON.parse(contents));
             openModal('boardView');
+            handleIncreaeViewCount();
         }
 
         let images = foundImagesInContents();
@@ -154,10 +169,30 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function HeartButton() {
+        const { mutate } = useChangeHeart();
+
+        const { openModal } = useModal();
+        const currentURL = window.location.href;
+        function isTokenExist() {
+            return localStorage.getItem('token') !== null;
+        }
+
+        const handleChangeHeart = () => {
+            if (!isTokenExist()) {
+                openModal('login', currentURL);
+                return;
+            }
+
+            mutate(uuid);
+
+            logEvent('change_heart_click');
+        }
+
         return (
             <Button
                 startIcon={<HeartIcon width="14" height="14" fill={theme.color.Gray_070} />}
                 sx={buttonTextStyle}
+                onClick={handleChangeHeart}
             >
                 {heartCnt}
             </Button>
@@ -176,10 +211,35 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ViewButton() {
+        const { mutate } = useIncreaseTrendingViewCount();
+
+        const handleIncreaeViewCount = () => {
+            mutate(uuid);
+
+            logEvent('view_trending_board_click');
+        }
+
+        const { openModal } = useModal();
+        const { setBoard } = useBoardAtom();
+        const handleClickBoardView = () => {
+            setBoard((prev) => {
+                return {
+                    ...prev,
+                    boardUUID: uuid,
+                    title: title,
+                    description: description,
+                    tag: tagMapping[tag as keyof typeof tagMapping],
+                }
+            })
+            openModal('boardView');
+            handleIncreaeViewCount();
+        }
+
         return (
             <Button
                 startIcon={<ViewIcon width="14" height="14" fill={theme.color.Gray_070} />}
                 sx={buttonTextStyle}
+                onClick={handleClickBoardView}
             >
                 {viewCnt}
             </Button>
@@ -187,6 +247,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function Contents() {
+
         return (
             <Box
                 sx={{
@@ -202,6 +263,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                         xs: '0',
                         sm: '54px',
                     },
+                    boxSizing: 'border-box',
                 }}
             >
                 <Typography

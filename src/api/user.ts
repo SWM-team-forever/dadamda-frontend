@@ -47,7 +47,6 @@ export const useDeleteUser = () => {
 			Sentry.captureException(error);
 			useDefaultSnackbar("회원 탈퇴에 실패했습니다", "error");
 		},
-		useErrorBoundary: true,
 	});
 };
 
@@ -85,7 +84,6 @@ export const useGetUserInformation = () => {
 			onError: (error) => {
 				Sentry.captureException(error);
 			},
-			useErrorBoundary: true,
 		}
 	);
 
@@ -155,7 +153,6 @@ export const useUploadUserProfileImage = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: false,
 		retry: false,
 	});
 
@@ -262,7 +259,6 @@ export const useDeleteUserProfileImage = ({
 				"error"
 			);
 		},
-		useErrorBoundary: false,
 		retry: false,
 	});
 

@@ -21,8 +21,11 @@ function CopyBoardButton({ boardId, isOnlyIcon }: { boardId: string | null, isOn
             openModal('login', currentURL);
             return;
         }
-
-        mutate(boardId);
+        const tag = isOnlyIcon ? 'trend' : 'share';
+        mutate({
+            boardUUID: boardId,
+            type: tag,
+        });
 
         logEvent('copy_board_click');
     }

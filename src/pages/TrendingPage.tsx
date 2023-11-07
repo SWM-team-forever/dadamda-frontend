@@ -1,10 +1,14 @@
+import { useGetTrendingList } from '@/api/trend';
 import theme from '@/assets/styles/theme';
 import TrendingCard, { TrendingCardProps } from '@/components/molcules/Trending/TrendingCard';
+import EmptyTrendingContainer from '@/components/organisms/EmptyTrendingContainer';
+import EmptyBoardContainer from '@/components/organisms/board/EmptyBoardContainer';
 import { useTrendingAtom } from '@/hooks/useTrendingAtom';
 import { TabContext } from '@mui/lab';
-import { Box, Button, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { trendingMockData } from '__mocks__/trendingMockData';
 import { useState, SyntheticEvent } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 
 const category = {
@@ -47,8 +51,6 @@ function TrendingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '10px',
-                    maxWidth: '230px',
-                    width: '100%',
                     p: '12px',
                     boxSizing: 'border-box',
                     position: 'fixed',
@@ -73,6 +75,7 @@ function TrendingPage() {
                         borderRadius: '8px',
                         p: '16px',
                         boxSizing: 'border-box',
+                        maxWidth: '100%',
                     }}
                 >
                     {Object.values(category).map((item: any, index: number) => {
@@ -145,6 +148,8 @@ function TrendingPage() {
         )
     }
 
+    const { trendingList, hasNextTrendingList, fetchNextTrendingList, isTrendingListLoading } = useGetTrendingList();
+
     return (
         <PageWrapper>
             <Box
@@ -156,17 +161,22 @@ function TrendingPage() {
                 }}
                 sx={{
                     height: '100%',
+                    width: 'auto',
                 }}
             >
                 <Grid item
                     sx={{
                         display: {
                             xs: 'none',
-                            md: 'flex',
+                            sm: 'flex',
                         },
-                        maxWidth: '100%',
+                        width: '100%',
+                        minWidth: '176px',
+                        maxWidth: '230px',
                         justifyContent: 'end',
+                        justifySelf: 'end',
                         pt: '20px',
+                        boxSizing: 'border-box',
                     }}
                 >
                     <Topic />
@@ -177,23 +187,47 @@ function TrendingPage() {
                     }}
                 >
                     <HorizontalTopic />
-                    {trendingMockData.map((data: TrendingCardProps, index: number) => (
-                        <TrendingCard
-                            key={index}
-                            profileUrl={data.profileUrl}
-                            nickname={data.nickname}
-                            title={data.title}
-                            description={data.description}
-                            tag={data.tag}
-                            heartCnt={data.heartCnt}
-                            shareCnt={data.shareCnt}
-                            viewCnt={data.viewCnt}
-                            createdAt={data.createdAt}
-                            thumbnailUrl={data.thumbnailUrl}
-                            contents={data.contents}
-                            uuid={data.uuid}
-                        />
-                    ))}
+                    {isTrendingListLoading ? <CircularProgress /> :
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={() => fetchNextTrendingList()}
+                            hasMore={hasNextTrendingList}
+                            loader={
+                                <div className="loader" key={0}>
+                                    <CircularProgress />
+                                </div>
+                            }
+                            useWindow={false}
+                        >
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                }}
+                            >
+                                {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
+                                    return page.data.content.length > 0
+                                        ? page.data.content.map((card: TrendingCardProps, index: number) => (
+                                            <TrendingCard
+                                                key={index}
+                                                profileUrl={card.profileUrl}
+                                                nickname={card.nickname}
+                                                title={card.title}
+                                                description={card.description}
+                                                tag={card.tag}
+                                                heartCnt={card.heartCnt}
+                                                shareCnt={card.shareCnt}
+                                                viewCnt={card.viewCnt}
+                                                createdAt={card.createdAt}
+                                                thumbnailUrl={card.thumbnailUrl}
+                                                contents={card.contents}
+                                                uuid={card.uuid}
+                                            />
+                                        ))
+                                        : <EmptyTrendingContainer />
+                                })}
+                            </Box>
+                        </InfiniteScroll>
+                    }
                 </Grid>
             </Box>
         </PageWrapper >

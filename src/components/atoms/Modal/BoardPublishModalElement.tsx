@@ -8,9 +8,8 @@ function BoardPublishModalElement({ value, index }: { value: number, index: numb
     const info = {
         isPublished: {
             text: `이 보드는 트렌딩 보드에 게시되었습니다.
-            혼자만 보고 싶다면, 게시 취소 버튼을
-            현재 상태로 트렌딩에 업데이트하고 싶다면,
-            업데이트 버튼을 누르세요.`,
+            혼자만 보고 싶다면,
+            게시 취소 버튼을 누르세요.`,
         },
         isNotPublished: {
             text: `

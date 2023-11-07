@@ -15,6 +15,10 @@ import { useModal } from '@/hooks/useModal';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
+    name: '트렌딩',
+    link: '/trending',
+}, {
+    isVisibleWithoutLogin: true,
     name: '사이트 소개',
     link: '/main',
 }, {

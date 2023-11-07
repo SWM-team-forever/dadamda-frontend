@@ -112,7 +112,6 @@ export const usePostCreateBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -183,7 +182,6 @@ export const useDeleteBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -243,7 +241,6 @@ export const useEditBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -296,7 +293,6 @@ export const useSaveBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -310,7 +306,6 @@ export const useAutoSaveBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 
@@ -426,7 +421,6 @@ export const useFixBoardList = () => {
 			Sentry.captureException(error);
 			useDefaultSnackbar("다시 시도해주세요.", "error");
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -526,7 +520,6 @@ export const useToggleBoardIsShared = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -658,7 +651,6 @@ export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
 			select: (data) => {
 				return `https://${data?.forward_url}/${data?.short_id}`;
 			},
-			useErrorBoundary: true,
 		}
 	);
 
@@ -670,20 +662,29 @@ export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
 	};
 };
 
-const copyOpenBoard = (boardUUID: string | null) => {
+const copyOpenBoard = ({
+	boardUUID,
+	type,
+}: {
+	boardUUID: string | null;
+	type: string;
+}) => {
 	if (!boardUUID) {
 		throw new Error("NOT_KNOWN_ERROR");
 	}
 
 	const token = useGetToken();
 
-	const response = fetch(`${COPY_OPEN_BOARD_URL}/${boardUUID}`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			"X-AUTH-TOKEN": token,
-		},
-	}).then((response) => {
+	const response = fetch(
+		`${COPY_OPEN_BOARD_URL}/${boardUUID}?type=${type}`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-AUTH-TOKEN": token,
+			},
+		}
+	).then((response) => {
 		if (response.ok) {
 			return response.json().then((body) => {
 				return body;
@@ -702,6 +703,7 @@ export const useCopyOpenBoard = () => {
 	return useMutation(copyOpenBoard, {
 		onSuccess: (data) => {
 			queryClient.invalidateQueries(["boards"]);
+			queryClient.invalidateQueries(["trendingList"]);
 			useDefaultSnackbar("보드가 복사되었습니다.", "success");
 			window.open(
 				`board-contents/${data?.data?.uuid}`,
@@ -715,7 +717,6 @@ export const useCopyOpenBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -801,6 +802,7 @@ const toggleBoardIsPublic = async (boardUUID: string) => {
 export const useToggleBoardIsPublic = () => {
 	const queryClient = useQueryClient();
 	const { closeModal } = useModal();
+	const hasNoAccessToPublish = (error: any) => error.message === "BR005";
 
 	return useMutation(toggleBoardIsPublic, {
 		onSuccess: () => {
@@ -814,10 +816,15 @@ export const useToggleBoardIsPublic = () => {
 		},
 		onError: (error) => {
 			Sentry.captureException(error);
-			useDefaultSnackbar(
-				"보드 게시 상태 변경에 실패하였습니다.",
-				"error"
-			);
+			hasNoAccessToPublish(error)
+				? useDefaultSnackbar(
+						"보드 게시 권한이 없습니다.",
+						"error"
+				  )
+				: useDefaultSnackbar(
+						"보드 게시 상태가 변경에 실패하였습니다.",
+						"error"
+				  );
 		},
 		retry: false,
 	});

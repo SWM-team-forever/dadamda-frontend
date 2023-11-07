@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, ImageList, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -17,6 +17,7 @@ import DefaultBoardThumbnail from '@/components/atoms/Board/DefaultBoardThumbnai
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
 import EmptyBoardContainer from '@/components/organisms/board/EmptyBoardContainer';
+import ThumbnailImage from '@/components/atoms/ThumbnailImage';
 
 export interface IBoardListInfo {
     uuid: number;
@@ -25,6 +26,7 @@ export interface IBoardListInfo {
     isFixed?: string,
     tag: string,
     modifiedDate: number,
+    contents: any,
 }
 
 function BoardListTemplate() {
@@ -43,7 +45,6 @@ function BoardListTemplate() {
                 return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
             retry: false,
-            useErrorBoundary: true,
         }
     );
 
@@ -77,6 +78,49 @@ function BoardListTemplate() {
         return (
             <EmptyBoardContainer />
         );
+    }
+
+    function isImageExist(image: string) {
+        return image !== undefined && image !== null && image !== '';
+    }
+
+    function foundImagesInContents(contents: any) {
+        const result = Object.values(JSON.parse(contents)).map((content: any) => {
+            return content.map((item: any) => {
+                return item.thumbnailUrl;
+            })
+        });
+
+        return result.flat().filter((item: any) => isImageExist(item)).splice(0, 4);
+    }
+
+    function ThumbnailImageList({ contents }: { contents: any }) {
+        let images = foundImagesInContents(contents);
+        images = images.length < 4 ? [images[0] && images[0]] : images;
+        images = images[0] === undefined ? [] : images;
+
+        return <ImageList
+            variant="quilted"
+            cols={images.length > 1 ? 2 : 1}
+            sx={{
+                width: '100%',
+                borderRadius: '8px',
+                backgroundColor: theme.color.Gray_030,
+                '& > div > img': {
+                    borderRadius: '8px',
+                },
+                cursor: 'pointer',
+            }}
+        >
+            {
+                (images.length === 0) &&
+                <DefaultBoardThumbnail />
+            }
+            {images.map((image: string, index: number) => {
+                return <ThumbnailImage key={index} thumbnailUrl={image} />
+            }
+            )}
+        </ImageList>
     }
 
     function ExistResults() {
@@ -118,7 +162,7 @@ function BoardListTemplate() {
                                             overflow: 'hidden',
                                         }}
                                     >
-                                        <DefaultBoardThumbnail />
+                                        <ThumbnailImageList contents={board.contents} />
                                         <Box
                                             sx={{
                                                 p: '10px',
@@ -190,15 +234,15 @@ function BoardListTemplate() {
                                                     paddingTop: '10px',
                                                 }}
                                             >
-                                                 <Typography
+                                                <Typography
                                                     variant="body2"
                                                     sx={{
-                                                        color : theme.color.Gray_080, 
+                                                        color: theme.color.Gray_080,
                                                     }}
                                                 >
                                                     {chipInformation.map((chipInfo) =>
                                                         chipInfo.tagValue === board.tag && chipInfo.label
-                                                    )} 
+                                                    )}
                                                 </Typography>
                                                 <Typography
                                                     color={theme.color.Gray_080}
@@ -213,7 +257,7 @@ function BoardListTemplate() {
                                                 <Typography
                                                     variant="body2"
                                                     sx={{
-                                                        color : theme.color.Gray_080
+                                                        color: theme.color.Gray_080
                                                     }}>{getTimeDiff(board.modifiedDate)}</Typography>
                                             </Box>
                                         </Box>
