@@ -670,20 +670,29 @@ export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
 	};
 };
 
-const copyOpenBoard = (boardUUID: string | null) => {
+const copyOpenBoard = ({
+	boardUUID,
+	type,
+}: {
+	boardUUID: string | null;
+	type: string;
+}) => {
 	if (!boardUUID) {
 		throw new Error("NOT_KNOWN_ERROR");
 	}
 
 	const token = useGetToken();
 
-	const response = fetch(`${COPY_OPEN_BOARD_URL}/${boardUUID}`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-			"X-AUTH-TOKEN": token,
-		},
-	}).then((response) => {
+	const response = fetch(
+		`${COPY_OPEN_BOARD_URL}/${boardUUID}?type=${type}`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"X-AUTH-TOKEN": token,
+			},
+		}
+	).then((response) => {
 		if (response.ok) {
 			return response.json().then((body) => {
 				return body;
