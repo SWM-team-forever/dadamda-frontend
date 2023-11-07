@@ -49,6 +49,7 @@ export const usePostCreateMemo = () => {
 				"error"
 			);
 		},
+		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -95,6 +96,7 @@ export const useDeleteMemo = () => {
 				"error"
 			);
 		},
+		useErrorBoundary: true,
 		retry: false,
 	});
 };

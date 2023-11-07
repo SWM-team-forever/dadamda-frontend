@@ -50,6 +50,7 @@ export const useGetScrapCount = (type: string) => {
 			select: (data) => {
 				return data?.data.count;
 			},
+			useErrorBoundary: true,
 			retry: false,
 		}
 	);
@@ -91,6 +92,7 @@ export const useGetBoardListCount = () => {
 				return data?.data.count;
 			},
 			retry: false,
+			useErrorBoundary: true,
 		}
 	);
 

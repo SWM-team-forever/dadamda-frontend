@@ -428,6 +428,7 @@ export function MultipleContainers({
 						Sentry.captureException(error);
 					}
 				},
+				useErrorBoundary: true,
 			}
 		);
 
