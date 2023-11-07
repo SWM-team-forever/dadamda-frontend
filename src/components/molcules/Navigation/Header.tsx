@@ -92,7 +92,7 @@ function Header() {
     return (
         <>
             <HeaderContainer>
-                <LogoContainer onClick={() => navigate('/trending')}>
+                <LogoContainer onClick={() => navigate('/')}>
                     <img src={logo} alt='logo' width='32px' height='30px' />
                     <LogoTextIcon width='49.185px' height='16px' />
                 </LogoContainer>
