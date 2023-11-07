@@ -86,6 +86,10 @@ function BoardListTemplate() {
     }
 
     function foundImagesInContents(contents: any) {
+        if (!contents) {
+            return [];
+        }
+        console.log(contents)
         const result = Object.values(JSON.parse(contents)).map((content: any) => {
             return content.map((item: any) => {
                 return item.thumbnailUrl;
