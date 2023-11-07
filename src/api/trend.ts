@@ -12,6 +12,7 @@ import {
 	useQueryClient,
 } from "@tanstack/react-query";
 import * as Sentry from "@sentry/react";
+import { useGetToken } from "@/hooks/useAccount";
 
 const getTrendingList = async ({
 	pages,
@@ -92,10 +93,13 @@ export const useGetTrendingList = () => {
 };
 
 const changeHeart = async (boardUUID: string) => {
+	const token = useGetToken();
+
 	const response = await fetch(`${CHANGE_HEART_URL}/${boardUUID}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
+			"X-AUTH-TOKEN": token,
 		},
 	}).then((response) => {
 		return response.json().then((body) => {
