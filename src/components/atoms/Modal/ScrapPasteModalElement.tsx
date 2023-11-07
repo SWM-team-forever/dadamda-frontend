@@ -40,7 +40,6 @@ function ScrapPasteModalElement() {
                 return nextPage;
             },
             retry: false,
-            useErrorBoundary: true,
         }
     );
 

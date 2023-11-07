@@ -112,7 +112,6 @@ export const usePostCreateBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -183,7 +182,6 @@ export const useDeleteBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -243,7 +241,6 @@ export const useEditBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -296,7 +293,6 @@ export const useSaveBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -310,7 +306,6 @@ export const useAutoSaveBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 
@@ -426,7 +421,6 @@ export const useFixBoardList = () => {
 			Sentry.captureException(error);
 			useDefaultSnackbar("다시 시도해주세요.", "error");
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -526,7 +520,6 @@ export const useToggleBoardIsShared = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -658,7 +651,6 @@ export const useGetShortenedSharingBoardUrl = (nativeUrl: string) => {
 			select: (data) => {
 				return `https://${data?.forward_url}/${data?.short_id}`;
 			},
-			useErrorBoundary: true,
 		}
 	);
 
@@ -725,7 +717,6 @@ export const useCopyOpenBoard = () => {
 				"error"
 			);
 		},
-		useErrorBoundary: true,
 		retry: false,
 	});
 };

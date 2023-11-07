@@ -29,7 +29,6 @@ function MasonryListTemplate({ type }: { type: string }) {
                 return lastPage.data.last ? undefined : lastPage.data.number + 1;
             },
             retry: false,
-            useErrorBoundary: true,
         }
     );
 
