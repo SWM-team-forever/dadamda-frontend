@@ -7,6 +7,8 @@ import { HeartIcon, PasteIcon, ViewIcon } from "@/components/atoms/Icon";
 import { useModal } from "@/hooks/useModal";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
+import { useChangeHeart, useIncreaseTrendingViewCount } from "@/api/trend";
+import { logEvent } from "@/utility/amplitude";
 
 export interface TrendingCardProps {
     profileUrl: string,
@@ -154,10 +156,30 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function HeartButton() {
+        const { mutate } = useChangeHeart();
+
+        const { openModal } = useModal();
+        const currentURL = window.location.href;
+        function isTokenExist() {
+            return localStorage.getItem('token') !== null;
+        }
+
+        const handleChangeHeart = () => {
+            if (!isTokenExist()) {
+                openModal('login', currentURL);
+                return;
+            }
+
+            mutate(uuid);
+
+            logEvent('change_heart_click');
+        }
+
         return (
             <Button
                 startIcon={<HeartIcon width="14" height="14" fill={theme.color.Gray_070} />}
                 sx={buttonTextStyle}
+                onClick={handleChangeHeart}
             >
                 {heartCnt}
             </Button>
@@ -176,10 +198,19 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ViewButton() {
+        const { mutate } = useIncreaseTrendingViewCount();
+
+        const handleIncreaeViewCount = () => {
+            mutate(uuid);
+
+            logEvent('view_trending_board_click');
+        }
+
         return (
             <Button
                 startIcon={<ViewIcon width="14" height="14" fill={theme.color.Gray_070} />}
                 sx={buttonTextStyle}
+                onClick={handleIncreaeViewCount}
             >
                 {viewCnt}
             </Button>

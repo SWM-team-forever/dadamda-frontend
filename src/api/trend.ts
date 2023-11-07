@@ -1,7 +1,17 @@
 import { useGetCurrentTimeAndMonthLaterInSpecificDateFormat } from "@/hooks/useCalculateDateDiff";
 import { useTrendingAtom } from "@/hooks/useTrendingAtom";
-import { GET_TRENDING_LIST_URL } from "@/secret";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useDefaultSnackbar } from "@/hooks/useWarningSnackbar";
+import {
+	CHANGE_HEART_URL,
+	GET_TRENDING_LIST_URL,
+	INCREASE_TRENDING_VIEW_COUNT_URL,
+} from "@/secret";
+import {
+	useInfiniteQuery,
+	useMutation,
+	useQueryClient,
+} from "@tanstack/react-query";
+import * as Sentry from "@sentry/react";
 
 const getTrendingList = async ({
 	pages,
@@ -79,4 +89,77 @@ export const useGetTrendingList = () => {
 		hasNextTrendingList,
 		isTrendingListLoading,
 	};
+};
+
+const changeHeart = async (boardUUID: string) => {
+	const response = await fetch(`${CHANGE_HEART_URL}/${boardUUID}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	}).then((response) => {
+		return response.json().then((body) => {
+			if (response.ok) {
+				return body;
+			} else {
+				throw new Error(body.resultCode);
+			}
+		});
+	});
+
+	return response;
+};
+
+export const useChangeHeart = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(changeHeart, {
+		onSuccess: (data) => {
+			queryClient.invalidateQueries(["trendingList"]);
+		},
+		onError: (error) => {
+			Sentry.captureException(error);
+			useDefaultSnackbar(
+				"하트 클릭에 실패하였습니다",
+				"error"
+			);
+		},
+		retry: false,
+	});
+};
+
+const increaseTrendingViewCount = async (boardUUID: string) => {
+	const response = await fetch(
+		`${INCREASE_TRENDING_VIEW_COUNT_URL}/${boardUUID}`,
+		{
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		}
+	).then((response) => {
+		return response.json().then((body) => {
+			if (response.ok) {
+				return body;
+			} else {
+				throw new Error(body.resultCode);
+			}
+		});
+	});
+
+	return response;
+};
+
+export const useIncreaseTrendingViewCount = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(increaseTrendingViewCount, {
+		onSuccess: (data) => {
+			queryClient.invalidateQueries(["trendingList"]);
+		},
+		onError: (error) => {
+			Sentry.captureException(error);
+		},
+		retry: false,
+	});
 };
