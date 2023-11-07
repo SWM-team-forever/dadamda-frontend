@@ -811,6 +811,7 @@ const toggleBoardIsPublic = async (boardUUID: string) => {
 export const useToggleBoardIsPublic = () => {
 	const queryClient = useQueryClient();
 	const { closeModal } = useModal();
+	const hasNoAccessToPublish = (error: any) => error.message === "BR005";
 
 	return useMutation(toggleBoardIsPublic, {
 		onSuccess: () => {
@@ -824,10 +825,15 @@ export const useToggleBoardIsPublic = () => {
 		},
 		onError: (error) => {
 			Sentry.captureException(error);
-			useDefaultSnackbar(
-				"보드 게시 상태 변경에 실패하였습니다.",
-				"error"
-			);
+			hasNoAccessToPublish(error)
+				? useDefaultSnackbar(
+						"보드 게시 권한이 없습니다.",
+						"error"
+				  )
+				: useDefaultSnackbar(
+						"보드 게시 상태가 변경에 실패하였습니다.",
+						"error"
+				  );
 		},
 		retry: false,
 	});
