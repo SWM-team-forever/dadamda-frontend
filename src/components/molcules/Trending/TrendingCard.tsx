@@ -100,6 +100,14 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ThumbnailImageList() {
+        const { mutate } = useIncreaseTrendingViewCount();
+
+        const handleIncreaeViewCount = () => {
+            mutate(uuid);
+
+            logEvent('view_trending_board_click');
+        }
+
         const { openModal } = useModal();
         const { setBoard } = useBoardAtom();
         const handleClickBoardView = () => {
@@ -113,6 +121,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                 }
             })
             openModal('boardView');
+            handleIncreaeViewCount();
         }
 
         let images = foundImagesInContents();
@@ -206,11 +215,27 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
             logEvent('view_trending_board_click');
         }
 
+        const { openModal } = useModal();
+        const { setBoard } = useBoardAtom();
+        const handleClickBoardView = () => {
+            setBoard((prev) => {
+                return {
+                    ...prev,
+                    boardUUID: uuid,
+                    title: title,
+                    description: description,
+                    tag: tagMapping[tag as keyof typeof tagMapping],
+                }
+            })
+            openModal('boardView');
+            handleIncreaeViewCount();
+        }
+
         return (
             <Button
                 startIcon={<ViewIcon width="14" height="14" fill={theme.color.Gray_070} />}
                 sx={buttonTextStyle}
-                onClick={handleIncreaeViewCount}
+                onClick={handleClickBoardView}
             >
                 {viewCnt}
             </Button>
@@ -218,6 +243,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function Contents() {
+
         return (
             <Box
                 sx={{
