@@ -22,8 +22,14 @@ import BoardShareAndPublishModalElement from "@/components/atoms/Modal/BoardShar
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
 
+    const defaultMoalState = {
+        isOpen: false,
+        element: "",
+        position: "",
+    }
+
     const closeModal = useCallback(() => {
-        setModal((prev) => { return { ...prev, isOpen: false } })
+        setModal(() => { return { ...defaultMoalState } })
     }, [setModal]);
 
     const modalTypeMatching = {
