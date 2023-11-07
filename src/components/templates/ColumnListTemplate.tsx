@@ -32,6 +32,7 @@ function ColumnListTemplate({ type }: { type: string }) {
                 return nextPage;
             },
             retry: false,
+            useErrorBoundary: true,
         }
     );
 

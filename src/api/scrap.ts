@@ -149,6 +149,7 @@ export const usePostCreateScrap = () => {
 						"error"
 				  );
 		},
+		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -195,6 +196,7 @@ export const useDeleteScrap = () => {
 				"error"
 			);
 		},
+		useErrorBoundary: true,
 		retry: false,
 	});
 };
@@ -237,6 +239,7 @@ export const useEditScrap = () => {
 				"error"
 			);
 		},
+		useErrorBoundary: true,
 		retry: false,
 	});
 };
