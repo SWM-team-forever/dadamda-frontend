@@ -13,7 +13,7 @@ interface IBoardAtom {
 	boardUUID: string | null;
 	description?: string;
 	tag?: string;
-	type: "mine" | "shared" | "public";
+	type: "mine" | "shared" | "trending";
 }
 
 export type { IBoardAtom };

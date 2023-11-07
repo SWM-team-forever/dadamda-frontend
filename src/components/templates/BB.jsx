@@ -371,7 +371,6 @@ export function MultipleContainers({
 	vertical = false,
 	scrollable,
 	mode,
-	isBoardShared,
 }) {
 	const {
 		boardContent,
@@ -403,7 +402,7 @@ export function MultipleContainers({
 		mine: useGetBoardContents,
 	};
 
-	const isPublicBoard = () => board.type === "public";
+	const isPublicBoard = () => board.type === "trending";
 
 	const useGetData = () => {
 		const { data, isLoading } = useQuery(
