@@ -441,14 +441,13 @@ export function MultipleContainers({
 		setContainers([]);
 	};
 	useEffect(() => {
-		console.log("boardContent", boardContent);
 		isPublicBoard() &&
 			setContainers(
 				boardContent ? Object.keys(boardContent) : []
 			);
 
 		return () => removeBoard();
-	}, [isPublicBoard(), boardContent]);
+	}, [isPublicBoard()]);
 
 	const [activeId, setActiveId] = useState(null);
 	const lastOverId = useRef(null);
