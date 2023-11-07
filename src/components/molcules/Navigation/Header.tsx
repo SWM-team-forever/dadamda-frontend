@@ -15,6 +15,10 @@ import { useModal } from '@/hooks/useModal';
 
 const headerPanelMenus = [{
     isVisibleWithoutLogin: true,
+    name: '트렌딩',
+    link: '/trending',
+}, {
+    isVisibleWithoutLogin: true,
     name: '사이트 소개',
     link: '/main',
 }, {
@@ -88,7 +92,7 @@ function Header() {
     return (
         <>
             <HeaderContainer>
-                <LogoContainer onClick={() => navigate('/')}>
+                <LogoContainer onClick={() => navigate('/trending')}>
                     <img src={logo} alt='logo' width='32px' height='30px' />
                     <LogoTextIcon width='49.185px' height='16px' />
                 </LogoContainer>
