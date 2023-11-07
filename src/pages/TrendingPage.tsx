@@ -147,7 +147,7 @@ function TrendingPage() {
         )
     }
 
-    const { trendingList, hasNextTrendingList, fetchNextTrendingList } = useGetTrendingList();
+    const { trendingList, hasNextTrendingList, fetchNextTrendingList, isTrendingListLoading } = useGetTrendingList();
 
     return (
         <PageWrapper>
@@ -181,37 +181,39 @@ function TrendingPage() {
                     }}
                 >
                     <HorizontalTopic />
-                    <InfiniteScroll
-                        pageStart={0}
-                        loadMore={() => fetchNextTrendingList()}
-                        hasMore={hasNextTrendingList}
-                        loader={
-                            <div className="loader" key={0}>
-                                <CircularProgress />
-                            </div>
-                        }
-                        useWindow={false}
-                    >
-                        {trendingList?.pages.map((page) => {
-                            return page.data.content.map((data: TrendingCardProps, index: number) => (
-                                <TrendingCard
-                                    key={index}
-                                    profileUrl={data.profileUrl}
-                                    nickname={data.nickname}
-                                    title={data.title}
-                                    description={data.description}
-                                    tag={data.tag}
-                                    heartCnt={data.heartCnt}
-                                    shareCnt={data.shareCnt}
-                                    viewCnt={data.viewCnt}
-                                    createdAt={data.createdAt}
-                                    thumbnailUrl={data.thumbnailUrl}
-                                    contents={data.contents}
-                                    uuid={data.uuid}
-                                />
-                            ))
-                        })}
-                    </InfiniteScroll>
+                    {isTrendingListLoading ? <CircularProgress /> :
+                        <InfiniteScroll
+                            pageStart={0}
+                            loadMore={() => fetchNextTrendingList()}
+                            hasMore={hasNextTrendingList}
+                            loader={
+                                <div className="loader" key={0}>
+                                    <CircularProgress />
+                                </div>
+                            }
+                            useWindow={false}
+                        >
+                            {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
+                                return page.data.content.map((card: TrendingCardProps, index: number) => (
+                                    <TrendingCard
+                                        key={index}
+                                        profileUrl={card.profileUrl}
+                                        nickname={card.nickname}
+                                        title={card.title}
+                                        description={card.description}
+                                        tag={card.tag}
+                                        heartCnt={card.heartCnt}
+                                        shareCnt={card.shareCnt}
+                                        viewCnt={card.viewCnt}
+                                        createdAt={card.createdAt}
+                                        thumbnailUrl={card.thumbnailUrl}
+                                        contents={card.contents}
+                                        uuid={card.uuid}
+                                    />
+                                ))
+                            })}
+                        </InfiniteScroll>
+                    }
                 </Grid>
             </Box>
         </PageWrapper >

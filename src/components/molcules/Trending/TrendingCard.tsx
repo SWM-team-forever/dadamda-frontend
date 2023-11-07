@@ -88,7 +88,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function foundImagesInContents() {
-        const result = Object.values(contents).map((content: any) => {
+        const result = Object.values(JSON.parse(contents)).map((content: any) => {
             return content.map((item: any) => {
                 return item.thumbnailUrl;
             })
