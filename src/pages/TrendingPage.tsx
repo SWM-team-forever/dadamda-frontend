@@ -168,7 +168,7 @@ function TrendingPage() {
                     sx={{
                         display: {
                             xs: 'none',
-                            sm: 'flex',
+                            md: 'flex',
                         },
                         width: '100%',
                         minWidth: '176px',
@@ -188,21 +188,17 @@ function TrendingPage() {
                 >
                     <HorizontalTopic />
                     {isTrendingListLoading ? <CircularProgress /> :
-                        <InfiniteScroll
-                            pageStart={0}
-                            loadMore={() => fetchNextTrendingList()}
-                            hasMore={hasNextTrendingList}
-                            loader={
-                                <div className="loader" key={0}>
-                                    <CircularProgress />
-                                </div>
-                            }
-                            useWindow={false}
+                        <Box
+                            sx={{
+                                width: '100%',
+                                height: '100%',
+                                overflow: 'auto',
+                            }}
                         >
-                            <Box
-                                sx={{
-                                    width: '100%',
-                                }}
+                            <InfiniteScroll
+                                loadMore={() => fetchNextTrendingList()}
+                                hasMore={hasNextTrendingList}
+                                useWindow={false}
                             >
                                 {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
                                     return page.data.content.length > 0
@@ -225,8 +221,8 @@ function TrendingPage() {
                                         ))
                                         : <EmptyTrendingContainer />
                                 })}
-                            </Box>
-                        </InfiniteScroll>
+                            </InfiniteScroll>
+                        </Box>
                     }
                 </Grid>
             </Box>
