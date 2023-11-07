@@ -51,8 +51,6 @@ function TrendingPage() {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '10px',
-                    maxWidth: '230px',
-                    width: '100%',
                     p: '12px',
                     boxSizing: 'border-box',
                     position: 'fixed',
@@ -77,6 +75,7 @@ function TrendingPage() {
                         borderRadius: '8px',
                         p: '16px',
                         boxSizing: 'border-box',
+                        maxWidth: '100%',
                     }}
                 >
                     {Object.values(category).map((item: any, index: number) => {
@@ -162,17 +161,22 @@ function TrendingPage() {
                 }}
                 sx={{
                     height: '100%',
+                    width: 'auto',
                 }}
             >
                 <Grid item
                     sx={{
                         display: {
                             xs: 'none',
-                            md: 'flex',
+                            sm: 'flex',
                         },
-                        maxWidth: '100%',
+                        width: '100%',
+                        minWidth: '176px',
+                        maxWidth: '230px',
                         justifyContent: 'end',
+                        justifySelf: 'end',
                         pt: '20px',
+                        boxSizing: 'border-box',
                     }}
                 >
                     <Topic />
