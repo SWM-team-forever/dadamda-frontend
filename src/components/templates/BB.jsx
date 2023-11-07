@@ -436,9 +436,19 @@ export function MultipleContainers({
 	};
 
 	const isLoading = isPublicBoard() ? false : useGetData();
+	const removeBoard = () => {
+		setBoardContent({});
+		setContainers([]);
+	};
 	useEffect(() => {
-		isPublicBoard() && setContainers(Object.keys(boardContent));
-	}, [isPublicBoard()]);
+		console.log("boardContent", boardContent);
+		isPublicBoard() &&
+			setContainers(
+				boardContent ? Object.keys(boardContent) : []
+			);
+
+		return () => removeBoard();
+	}, [isPublicBoard(), boardContent]);
 
 	const [activeId, setActiveId] = useState(null);
 	const lastOverId = useRef(null);
