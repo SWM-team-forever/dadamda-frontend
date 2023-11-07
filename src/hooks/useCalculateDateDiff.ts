@@ -33,11 +33,11 @@ function convertUnixTimeToSpecificDateFormat(unixTIme: number) {
 }
 
 function getCurrentTime() {
-	return dayjs().unix();
+	return dayjs().subtract(1, "month").unix();
 }
 
 function getMonthLaterTime() {
-	return dayjs().add(1, "month").unix();
+	return dayjs().unix();
 }
 
 export function useGetCurrentTimeAndMonthLaterInSpecificDateFormat() {
