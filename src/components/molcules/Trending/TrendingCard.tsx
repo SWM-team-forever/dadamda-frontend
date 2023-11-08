@@ -147,6 +147,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                     borderRadius: '8px',
                 },
                 cursor: 'pointer',
+                m: 'auto',
             }}
             onClick={handleClickBoardView}
         >
@@ -283,7 +284,18 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                 >
                     {title}
                 </Typography>
-                <ThumbnailImageList />
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '8px',
+                        overflow: 'hidden',
+                        backgroundColor: theme.color.Gray_030,
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <ThumbnailImageList />
+                </Box>
                 <Typography
                     sx={{
                         color: theme.color.Gray_090,
