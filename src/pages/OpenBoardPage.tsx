@@ -7,6 +7,8 @@ import { TrashableItems } from "@/components/templates/TrashableItems";
 import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
 import { useEffect } from "react";
+import { useIncreaseTrendingViewCount } from "@/api/trend";
+import { logEvent } from "@/utility/amplitude";
 
 function OpenBoardPage() {
     const params = useParams();
@@ -25,7 +27,17 @@ function OpenBoardPage() {
             ...prev,
             type: 'shared',
         }))
+        handleIncreaeViewCount();
     }, [])
+
+    const { mutate } = useIncreaseTrendingViewCount();
+
+    const handleIncreaeViewCount = () => {
+        if (getBoardPageId()) {
+            mutate(getBoardPageId());
+        }
+        logEvent('view_open_board_click');
+    }
 
     if (isTitleLoading) {
         return (
