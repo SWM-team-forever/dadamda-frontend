@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Box, Grid, ImageList, Typography } from '@mui/material';
+import { Box, Grid, ImageList, ImageListItem, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -12,7 +12,7 @@ import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
 import { useSearch } from '@/hooks/useSearch';
 
-import { SettingIcon, FixedIcon, UnFixedIcon } from '@/components/atoms/Icon';
+import { SettingIcon, FixedIcon, UnFixedIcon, DefaultBoardThumbnailIcon } from '@/components/atoms/Icon';
 import DefaultBoardThumbnail from '@/components/atoms/Board/DefaultBoardThumbnail';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
@@ -103,25 +103,39 @@ function BoardListTemplate() {
         let images = foundImagesInContents(contents);
         images = images.length < 4 ? [images[0] && images[0]] : images;
         images = images[0] === undefined ? [] : images;
+        const isImageExist = () => images.length > 0;
 
         return <ImageList
-            variant="quilted"
             cols={images.length > 1 ? 2 : 1}
             sx={{
                 width: '100%',
-                borderRadius: '8px',
                 backgroundColor: theme.color.Gray_030,
-                '& > div > img': {
-                    borderRadius: '8px',
-                },
                 cursor: 'pointer',
+                height: '100%',
+                margin: 'auto',
+                overflow: 'hidden',
             }}
         >
             {
-                (images.length === 0) &&
-                <DefaultBoardThumbnail />
+                (!isImageExist()) &&
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        p: '10px 0',
+                        backgroundColor: '#7DACFA',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        boxSizing: 'border-box',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <DefaultBoardThumbnailIcon width="60%" height="calc(100% - 30px)" />
+                </Box>
             }
-            {images.map((image: string, index: number) => {
+            {isImageExist() && images.map((image: string, index: number) => {
                 return <ThumbnailImage key={index} thumbnailUrl={image} />
             }
             )}
@@ -167,7 +181,14 @@ function BoardListTemplate() {
                                             overflow: 'hidden',
                                         }}
                                     >
-                                        <ThumbnailImageList contents={board.contents} />
+                                        <Box
+                                            sx={{
+                                                width: '100%',
+                                                aspectRatio: '16/9',
+                                            }}
+                                        >
+                                            <ThumbnailImageList contents={board.contents} />
+                                        </Box>
                                         <Box
                                             sx={{
                                                 p: '10px',

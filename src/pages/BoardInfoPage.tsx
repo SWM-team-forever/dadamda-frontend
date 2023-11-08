@@ -56,6 +56,73 @@ function BoardInfoPage() {
 	const { openModal } = useModal();
 	const { handleSaveBoard } = useBoardContentAtom();
 
+	const iconStyle = (isCareViewerMode: boolean) => {
+		return {
+			width: '16px',
+			height: '16px',
+			fill: isCareViewerMode ? (isViewerMode(mode) ? theme.color.Gray_060 : theme.color.Gray_080) : theme.color.Gray_080,
+		}
+	}
+
+	const typoStyle = (isCareViewerMode: boolean) => {
+		return {
+			color: {
+				xs: isCareViewerMode ? (isViewerMode(mode) ? theme.color.Gray_060 : theme.color.Gray_080) : theme.color.Gray_080,
+				sm: theme.color.Gray_080
+			},
+			fontSize: '12px',
+		}
+	}
+
+	const menus = [
+		{
+			text: '스크랩',
+			icon: <PasteScrapIcon {...iconStyle(true)} />,
+			handleButtonClick: () => openModal("scrapCreateOnBoard"),
+			isCareViewerMode: true,
+		},
+		{
+			text: '스티커',
+			icon: <PasteStickerIcon {...iconStyle(true)} />,
+			handleButtonClick: () => openModal("stickerPaste"),
+			isCareViewerMode: true,
+		},
+		{
+			text: isViewerMode(mode) ? '편집' : '읽기',
+			icon: isViewerMode(mode) ? <EditModeIcon {...iconStyle(false)} /> : <ReadModeIcon {...iconStyle(false)} />,
+			handleButtonClick: () => {
+				if (isViewerMode(mode)) {
+					setMode("edit");
+				} else {
+					setMode("view");
+					handleSaveBoard();
+				}
+			},
+			isCareViewerMode: false,
+		},
+		{
+			text: '저장',
+			icon: <BoardInfoSaveIcon {...iconStyle(false)} />,
+			handleButtonClick: () => {
+				setMode("view");
+				handleSaveBoard();
+			},
+			isCareViewerMode: false,
+		},
+		{
+			text: '공유',
+			icon: <BoardInfoShareIcon {...iconStyle(false)} />,
+			handleButtonClick: () => openModal('boardShare'),
+			isCareViewerMode: false,
+		},
+		{
+			text: '설정',
+			icon: <SettingIcon {...iconStyle(false)} />,
+			handleButtonClick: () => openModal('boardEdit'),
+			isCareViewerMode: false,
+		},
+	];
+
 	if (isLoading) {
 		return (
 			<Box
@@ -80,6 +147,36 @@ function BoardInfoPage() {
 		)
 	}
 
+	function ButtonWrapper({ isCareViewerMode, isViewerMode, handleButtonClick, children }: { isCareViewerMode: boolean, isViewerMode: boolean, handleButtonClick: () => void, children: React.ReactNode }) {
+		return (
+			<Button
+				sx={{
+					flexDirection: "column",
+					textAlign: "center",
+					backgroundColor: {
+						xs: 'none',
+						sm: isCareViewerMode ? (isViewerMode ? theme.color.Gray_040 : theme.color.Gray_020) : theme.color.Gray_020,
+					},
+					borderRadius: "20px",
+					p: {
+						xs: '0',
+						sm: '10px 11px',
+					},
+					border: {
+						xs: 'none',
+						sm: "1px solid rgba(0, 0, 0, 0.12)",
+					},
+					minWidth: '0',
+					gap: '5px',
+					width: '100%',
+				}}
+				onClick={handleButtonClick}
+				disabled={isCareViewerMode ? isViewerMode : false}
+			>
+				{children}
+			</Button>
+		)
+	}
 
 	return (
 		<Box
@@ -129,294 +226,49 @@ function BoardInfoPage() {
 			</Box>
 			<Box
 				sx={{
-					display: {
-						xs: 'none',
-						sm: 'flex',
+					display: 'flex',
+					flexDirection: {
+						xs: 'row',
+						sm: 'column',
 					},
-					flexDirection: 'column',
 					position: 'fixed',
 					right: '0',
-					width: '86px',
-					height: '100%',
+					bottom: '0',
+					width: {
+						xs: '100%',
+						sm: '86px',
+					},
+					height: {
+						xs: '56px',
+						sm: 'calc(100% - 56px)',
+					},
 					gap: '16px',
-					backgroundColor: 'rgba(255, 255, 255, 0.40)',
-
+					backgroundColor: {
+						xs: theme.color.Gray_030,
+						sm: 'rgba(255, 255, 255, 0.40)',
+					},
+					p: {
+						xs: '0',
+						sm: '16px 15px',
+					},
+					boxSizing: 'border-box',
 				}}
 			>
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: isViewerMode(mode) ? theme.color.Gray_040 : theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mt: "15px",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() =>
-						openModal("scrapCreateOnBoard")
-					}
-					disabled={isViewerMode(mode)}
-				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
+				{menus.map((menu, index) => (
+					<ButtonWrapper
+						key={index}
+						isCareViewerMode={menu.isCareViewerMode}
+						isViewerMode={isViewerMode(mode)}
+						handleButtonClick={menu.handleButtonClick}
 					>
-						<PasteScrapIcon
-							width="20"
-							height="20"
-							fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
-						/>
-					</Box>
-					<Typography
-						variant="h4"
-						sx={{
-							overflow: "hidden",
-							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080
-						}}
-					>
-						스크랩
-					</Typography>
-				</Button>
-
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: isViewerMode(mode) ? theme.color.Gray_040 : theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() =>
-						openModal("stickerPaste")
-					}
-					disabled={isViewerMode(mode)}
-				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<PasteStickerIcon
-							width="20"
-							height="20"
-							fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
-						/>
-					</Box>
-					<Typography
-						variant="h4"
-						sx={{
-							overflow: "hidden",
-							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080
-						}}
-					>
-						스티커
-					</Typography>
-				</Button>
-
-				{isViewerMode(mode) ? (
-					<Button
-						sx={{
-							cursor: "pointer",
-							flexDirection: "column",
-							textAlign: "center",
-							backgroundColor: theme.color.Gray_020,
-							borderRadius: "20px",
-							paddingTop: "10px",
-							paddingBottom: "10px",
-							border: "1px solid rgba(0, 0, 0, 0.12)",
-							mr: "10px",
-							ml: "10px",
-						}}
-						onClick={() => setMode("edit")}
-					>
-						<Box
-							sx={{
-								cursor: "pointer",
-							}}
-						>
-							<EditModeIcon
-								width="20"
-								height="20"
-								fill={theme.color.Gray_080}
-							/>
-						</Box>
+						{menu.icon}
 						<Typography
-							variant="h4"
-							sx={{
-								overflow: "hidden",
-								color: theme.color.Gray_080
-							}}
+							sx={typoStyle(menu.isCareViewerMode)}
 						>
-							편집
+							{menu.text}
 						</Typography>
-					</Button>
-				) : (
-					<Button
-						sx={{
-							cursor: "pointer",
-							flexDirection: "column",
-							textAlign: "center",
-							backgroundColor: theme.color.Gray_020,
-							borderRadius: "20px",
-							paddingTop: "10px",
-							paddingBottom: "10px",
-							border: "1px solid rgba(0, 0, 0, 0.12)",
-							mr: "10px",
-							ml: "10px",
-						}}
-						onClick={() => {
-							setMode("view");
-							handleSaveBoard();
-						}}
-					>
-						<Box
-							sx={{
-								cursor: "pointer",
-							}}
-						>
-							<ReadModeIcon
-								width="20"
-								height="20"
-								fill={theme.color.Gray_080}
-							/>
-						</Box>
-						<Typography
-							variant="h4"
-							sx={{
-								overflow: "hidden",
-								color: theme.color.Gray_080
-							}}
-						>
-							읽기
-						</Typography>
-					</Button>
-				)}
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() => {
-						setMode("view");
-						handleSaveBoard();
-					}}
-				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<BoardInfoSaveIcon
-							width="20"
-							height="20"
-							fill={theme.color.Gray_080}
-						/>
-					</Box>
-					<Typography
-						variant="h4"
-						sx={{
-							overflow: "hidden",
-							color: theme.color.Gray_080
-						}}
-					>
-						저장
-					</Typography>
-				</Button>
-
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() => openModal('boardShare')}
-				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<BoardInfoShareIcon
-							width="20"
-							height="20"
-							fill={
-								theme.color.Gray_080
-							}
-						/>
-					</Box>
-					<Typography
-						variant="h4"
-						sx={{
-							overflow: "hidden",
-							color: theme.color.Gray_080
-						}}
-					>
-						공유
-					</Typography>
-				</Button>
-
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() => openModal('boardEdit')}
-				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<SettingIcon
-							width="20"
-							height="20"
-							fill={theme.color.Gray_080}
-						/>
-					</Box>
-					<Typography
-						variant="h4"
-						sx={{
-							overflow: "hidden",
-							color: theme.color.Gray_080
-						}}
-					>
-						설정
-					</Typography>
-				</Button>
+					</ButtonWrapper>
+				))}
 			</Box>
 		</Box >
 	);
