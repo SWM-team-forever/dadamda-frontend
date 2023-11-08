@@ -73,7 +73,12 @@ function Memo({ memoImageURL, memoText, createdDate, scrapId, memoId }: MemoProp
                     >
                         {memoText}
                     </Typography>
-                    : <ImageMemo src={memoImageURL} />
+                    : <ImageMemo
+                        src={memoImageURL}
+                        onError={e => {
+                            e.currentTarget.src = '/default_image.png';
+                        }}
+                    />
             }
         </Box >
     );

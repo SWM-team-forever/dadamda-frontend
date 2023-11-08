@@ -13,6 +13,7 @@ import {
 } from "@tanstack/react-query";
 import * as Sentry from "@sentry/react";
 import { useGetToken } from "@/hooks/useAccount";
+import { NOT_KNOWN_ERROR } from "@/utility/constants";
 
 const getTrendingList = async ({
 	pages,
@@ -132,7 +133,11 @@ export const useChangeHeart = () => {
 	});
 };
 
-const increaseTrendingViewCount = async (boardUUID: string) => {
+const increaseTrendingViewCount = async (boardUUID: string | null) => {
+	if (!boardUUID) {
+		throw new Error(NOT_KNOWN_ERROR);
+	}
+
 	const response = await fetch(
 		`${INCREASE_TRENDING_VIEW_COUNT_URL}/${boardUUID}`,
 		{

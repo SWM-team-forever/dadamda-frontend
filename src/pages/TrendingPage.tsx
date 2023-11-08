@@ -53,7 +53,9 @@ function TrendingPage() {
                     gap: '10px',
                     p: '12px',
                     boxSizing: 'border-box',
-                    position: 'fixed',
+                    position: 'absolute',
+                    width: '100%',
+
                 }}
             >
                 <Typography
@@ -75,7 +77,7 @@ function TrendingPage() {
                         borderRadius: '8px',
                         p: '16px',
                         boxSizing: 'border-box',
-                        maxWidth: '100%',
+                        width: '100%',
                     }}
                 >
                     {Object.values(category).map((item: any, index: number) => {
@@ -89,7 +91,6 @@ function TrendingPage() {
                                 '&:hover': {
                                     backgroundColor: 'transparent',
                                 },
-                                minWidth: '0',
                                 width: '100%',
                                 justifyContent: 'flex-start',
                                 backgroundColor: isValueSelected(item.value) ? theme.color.Gray_030 : 'transparent',
@@ -161,7 +162,7 @@ function TrendingPage() {
                 }}
                 sx={{
                     height: '100%',
-                    width: 'auto',
+                    width: '100%',
                 }}
             >
                 <Grid item
@@ -177,6 +178,7 @@ function TrendingPage() {
                         justifySelf: 'end',
                         pt: '20px',
                         boxSizing: 'border-box',
+                        position: 'relative',
                     }}
                 >
                     <Topic />
@@ -200,28 +202,37 @@ function TrendingPage() {
                                 loadMore={() => fetchNextTrendingList()}
                                 hasMore={hasNextTrendingList}
                                 useWindow={false}
+                                style={{
+                                    width: '100%',
+                                }}
                             >
-                                {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
-                                    return page.data.content.length > 0
-                                        ? page.data.content.map((card: TrendingCardProps, index: number) => (
-                                            <TrendingCard
-                                                key={index}
-                                                profileUrl={card.profileUrl}
-                                                nickname={card.nickname}
-                                                title={card.title}
-                                                description={card.description}
-                                                tag={card.tag}
-                                                heartCnt={card.heartCnt}
-                                                shareCnt={card.shareCnt}
-                                                viewCnt={card.viewCnt}
-                                                createdAt={card.createdAt}
-                                                thumbnailUrl={card.thumbnailUrl}
-                                                contents={card.contents}
-                                                uuid={card.uuid}
-                                            />
-                                        ))
-                                        : <EmptyTrendingContainer />
-                                })}
+                                <Box
+                                    sx={{
+                                        width: '100%',
+                                    }}
+                                >
+                                    {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
+                                        return page.data.content.length > 0
+                                            ? page.data.content.map((card: TrendingCardProps, index: number) => (
+                                                <TrendingCard
+                                                    key={index}
+                                                    profileUrl={card.profileUrl}
+                                                    nickname={card.nickname}
+                                                    title={card.title}
+                                                    description={card.description}
+                                                    tag={card.tag}
+                                                    heartCnt={card.heartCnt}
+                                                    shareCnt={card.shareCnt}
+                                                    viewCnt={card.viewCnt}
+                                                    createdAt={card.createdAt}
+                                                    thumbnailUrl={card.thumbnailUrl}
+                                                    contents={card.contents}
+                                                    uuid={card.uuid}
+                                                />
+                                            ))
+                                            : <EmptyTrendingContainer />
+                                    })}
+                                </Box>
                             </InfiniteScroll>
                         </Box>
                     }
@@ -238,6 +249,7 @@ const PageWrapper = styled.div`
     justify-content: center;
     align-items: center;
     overflow: auto;
+    maxWidth: 1280px;
 `
 
 export default TrendingPage;
