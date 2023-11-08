@@ -80,6 +80,36 @@ function BoardInfoPage() {
 		)
 	}
 
+	function ButtonWrapper({ isCareViewerMode, isViewerMode, handleButtonClick, children }: { isCareViewerMode: boolean, isViewerMode: boolean, handleButtonClick: () => void, children: React.ReactNode }) {
+		return (
+			<Button
+				sx={{
+					flexDirection: "column",
+					textAlign: "center",
+					backgroundColor: {
+						xs: 'none',
+						sm: isCareViewerMode ? (isViewerMode ? theme.color.Gray_040 : theme.color.Gray_020) : theme.color.Gray_020,
+					},
+					borderRadius: "20px",
+					p: {
+						xs: '0',
+						sm: '10px 11px',
+					},
+					border: {
+						xs: 'none',
+						sm: "1px solid rgba(0, 0, 0, 0.12)",
+					},
+					minWidth: '0',
+					gap: '5px',
+					width: '100%',
+				}}
+				onClick={handleButtonClick}
+				disabled={isCareViewerMode ? isViewerMode : false}
+			>
+				{children}
+			</Button>
+		)
+	}
 
 	return (
 		<Box
@@ -129,294 +159,195 @@ function BoardInfoPage() {
 			</Box>
 			<Box
 				sx={{
-					display: {
-						xs: 'none',
-						sm: 'flex',
+					display: 'flex',
+					flexDirection: {
+						xs: 'row',
+						sm: 'column',
 					},
-					flexDirection: 'column',
 					position: 'fixed',
 					right: '0',
-					width: '86px',
-					height: '100%',
+					bottom: '0',
+					width: {
+						xs: '100%',
+						sm: '86px',
+					},
+					height: {
+						xs: '56px',
+						sm: 'calc(100% - 56px)',
+					},
 					gap: '16px',
-					backgroundColor: 'rgba(255, 255, 255, 0.40)',
-
+					backgroundColor: {
+						xs: theme.color.Gray_030,
+						sm: 'rgba(255, 255, 255, 0.40)',
+					},
+					p: {
+						xs: '0',
+						sm: '16px 15px',
+					},
+					boxSizing: 'border-box',
 				}}
 			>
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: isViewerMode(mode) ? theme.color.Gray_040 : theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mt: "15px",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() =>
-						openModal("scrapCreateOnBoard")
-					}
-					disabled={isViewerMode(mode)}
+				<ButtonWrapper
+					isCareViewerMode={true}
+					isViewerMode={isViewerMode(mode)}
+					handleButtonClick={() => openModal("scrapCreateOnBoard")}
 				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<PasteScrapIcon
-							width="20"
-							height="20"
-							fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
-						/>
-					</Box>
+					<PasteScrapIcon
+						width="16"
+						height="16"
+						fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
+					/>
 					<Typography
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080
+							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080,
+							fontSize: '12px',
 						}}
 					>
 						스크랩
 					</Typography>
-				</Button>
-
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: isViewerMode(mode) ? theme.color.Gray_040 : theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() =>
+				</ButtonWrapper>
+				<ButtonWrapper
+					handleButtonClick={() =>
 						openModal("stickerPaste")
 					}
-					disabled={isViewerMode(mode)}
+					isCareViewerMode={true}
+					isViewerMode={isViewerMode(mode)}
 				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<PasteStickerIcon
-							width="20"
-							height="20"
-							fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
-						/>
-					</Box>
+					<PasteStickerIcon
+						width="16"
+						height="16"
+						fill={isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080}
+					/>
 					<Typography
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080
+							color: isViewerMode(mode) ? theme.color.Gray_050 : theme.color.Gray_080,
+							fontSize: '12px',
 						}}
 					>
 						스티커
 					</Typography>
-				</Button>
+				</ButtonWrapper>
 
 				{isViewerMode(mode) ? (
-					<Button
-						sx={{
-							cursor: "pointer",
-							flexDirection: "column",
-							textAlign: "center",
-							backgroundColor: theme.color.Gray_020,
-							borderRadius: "20px",
-							paddingTop: "10px",
-							paddingBottom: "10px",
-							border: "1px solid rgba(0, 0, 0, 0.12)",
-							mr: "10px",
-							ml: "10px",
-						}}
-						onClick={() => setMode("edit")}
+					<ButtonWrapper
+						handleButtonClick={() => setMode("edit")}
+						isCareViewerMode={false}
+						isViewerMode={isViewerMode(mode)}
 					>
-						<Box
-							sx={{
-								cursor: "pointer",
-							}}
-						>
-							<EditModeIcon
-								width="20"
-								height="20"
-								fill={theme.color.Gray_080}
-							/>
-						</Box>
+						<EditModeIcon
+							width="16"
+							height="16"
+							fill={theme.color.Gray_080}
+						/>
 						<Typography
 							variant="h4"
 							sx={{
 								overflow: "hidden",
-								color: theme.color.Gray_080
+								color: theme.color.Gray_080,
+								fontSize: '12px',
 							}}
 						>
 							편집
 						</Typography>
-					</Button>
+					</ButtonWrapper>
 				) : (
-					<Button
-						sx={{
-							cursor: "pointer",
-							flexDirection: "column",
-							textAlign: "center",
-							backgroundColor: theme.color.Gray_020,
-							borderRadius: "20px",
-							paddingTop: "10px",
-							paddingBottom: "10px",
-							border: "1px solid rgba(0, 0, 0, 0.12)",
-							mr: "10px",
-							ml: "10px",
-						}}
-						onClick={() => {
+					<ButtonWrapper
+						handleButtonClick={() => {
 							setMode("view");
 							handleSaveBoard();
 						}}
+						isCareViewerMode={false}
+						isViewerMode={isViewerMode(mode)}
 					>
-						<Box
-							sx={{
-								cursor: "pointer",
-							}}
-						>
-							<ReadModeIcon
-								width="20"
-								height="20"
-								fill={theme.color.Gray_080}
-							/>
-						</Box>
+						<ReadModeIcon
+							width="16"
+							height="16"
+							fill={theme.color.Gray_080}
+						/>
 						<Typography
 							variant="h4"
 							sx={{
 								overflow: "hidden",
-								color: theme.color.Gray_080
+								color: theme.color.Gray_080,
+								fontSize: '12px',
 							}}
 						>
 							읽기
 						</Typography>
-					</Button>
+					</ButtonWrapper>
 				)}
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() => {
+				<ButtonWrapper
+					handleButtonClick={() => {
 						setMode("view");
 						handleSaveBoard();
 					}}
+					isCareViewerMode={false}
+					isViewerMode={isViewerMode(mode)}
 				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<BoardInfoSaveIcon
-							width="20"
-							height="20"
-							fill={theme.color.Gray_080}
-						/>
-					</Box>
+					<BoardInfoSaveIcon
+						width="16"
+						height="16"
+						fill={theme.color.Gray_080}
+					/>
 					<Typography
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-							color: theme.color.Gray_080
+							color: theme.color.Gray_080,
+							fontSize: '12px',
 						}}
 					>
 						저장
 					</Typography>
-				</Button>
-
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() => openModal('boardShare')}
+				</ButtonWrapper>
+				<ButtonWrapper
+					handleButtonClick={() => openModal('boardShare')}
+					isCareViewerMode={false}
+					isViewerMode={isViewerMode(mode)}
 				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<BoardInfoShareIcon
-							width="20"
-							height="20"
-							fill={
-								theme.color.Gray_080
-							}
-						/>
-					</Box>
+					<BoardInfoShareIcon
+						width="16"
+						height="16"
+						fill={
+							theme.color.Gray_080
+						}
+					/>
 					<Typography
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-							color: theme.color.Gray_080
+							color: theme.color.Gray_080,
+							fontSize: '12px',
 						}}
 					>
 						공유
 					</Typography>
-				</Button>
-
-				<Button
-					sx={{
-						cursor: "pointer",
-						flexDirection: "column",
-						textAlign: "center",
-						backgroundColor: theme.color.Gray_020,
-						borderRadius: "20px",
-						paddingTop: "10px",
-						paddingBottom: "10px",
-						border: "1px solid rgba(0, 0, 0, 0.12)",
-						mr: "10px",
-						ml: "10px",
-					}}
-					onClick={() => openModal('boardEdit')}
+				</ButtonWrapper>
+				<ButtonWrapper
+					handleButtonClick={() => openModal('boardEdit')}
+					isCareViewerMode={false}
+					isViewerMode={isViewerMode(mode)}
 				>
-					<Box
-						sx={{
-							cursor: "pointer",
-						}}
-					>
-						<SettingIcon
-							width="20"
-							height="20"
-							fill={theme.color.Gray_080}
-						/>
-					</Box>
+					<SettingIcon
+						width="16"
+						height="16"
+						fill={theme.color.Gray_080}
+					/>
 					<Typography
 						variant="h4"
 						sx={{
 							overflow: "hidden",
-							color: theme.color.Gray_080
+							color: theme.color.Gray_080,
+							fontSize: '12px',
 						}}
 					>
 						설정
 					</Typography>
-				</Button>
+				</ButtonWrapper>
 			</Box>
 		</Box >
 	);
