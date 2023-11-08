@@ -1,10 +1,14 @@
+import theme from "@/assets/styles/theme";
 import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
+import { CloseIcon } from "@/components/atoms/Icon";
 import { TrashableItems } from "@/components/templates/TrashableItems";
 import { useBoardAtom } from "@/hooks/useBoardAtom";
-import { Box, Typography } from "@mui/material";
+import { useModal } from "@/hooks/useModal";
+import { Box, Button, Typography } from "@mui/material";
 
 function BoardPublicModalElement() {
     const { board } = useBoardAtom();
+    const { closeModal } = useModal();
 
     return (
         <Box
@@ -25,21 +29,32 @@ function BoardPublicModalElement() {
                 <Box
                     sx={{
                         display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
+                        justifyContent: 'space-between',
                     }}
                 >
-                    <Typography
-                        variant="h1"
+                    <Box
                         sx={{
-                            fontSize: '24px',
-                            fontWeight: '500',
-                            m: '20px 0 20px 20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px',
                         }}
                     >
-                        {board.title}
-                    </Typography>
-                    <CopyBoardButton boardId={board.boardUUID} />
+                        <Typography
+                            variant="h1"
+                            sx={{
+                                fontSize: '24px',
+                                fontWeight: '500',
+                                m: '20px 0 20px 20px',
+                            }}
+                        >
+                            {board.title}
+                        </Typography>
+                        <CopyBoardButton boardId={board.boardUUID} />
+                    </Box>
+                    <Button
+                        startIcon={<CloseIcon width='20' height='20' fill={theme.color.Gray_080} />}
+                        onClick={closeModal}
+                    />
                 </Box>
                 <Box
                     sx={{
