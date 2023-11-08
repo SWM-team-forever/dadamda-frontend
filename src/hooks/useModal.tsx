@@ -14,13 +14,22 @@ import BoardCreateModalElement from "@/components/atoms/Modal/BoardCreateModalEl
 import StickerPasteModalElement from "@/components/atoms/Modal/StickerPasteModalElement";
 import BoardEditModalElement from "@/components/atoms/Modal/BoardEditModalElement";
 import { logEvent } from "@/utility/amplitude";
-import BoardShareModalElement from "@/components/atoms/Modal/BoardShareModalElement";
+
+import BoardPublicModalElement from "@/components/atoms/Modal/BoardPublicModalElement";
+import BoardShareAndPublishModalElement from "@/components/atoms/Modal/BoardShareAndPublishModalElement";
+
 
 export const useModal = () => {
     const [modal, setModal] = useAtom(modalAtom);
 
+    const defaultMoalState = {
+        isOpen: false,
+        element: "",
+        position: "",
+    }
+
     const closeModal = useCallback(() => {
-        setModal((prev) => { return { ...prev, isOpen: false } })
+        setModal(() => { return { ...defaultMoalState } })
     }, [setModal]);
 
     const modalTypeMatching = {
@@ -75,9 +84,12 @@ export const useModal = () => {
             position: 'right',
         },
         boardShare: {
-            title: '보드 공유하기',
-            element: <BoardShareModalElement />,
+            element: <BoardShareAndPublishModalElement />,
             position: 'center',
+        },
+        boardView: {
+            element: <BoardPublicModalElement />,
+            position: 'full',
         }
     }
 

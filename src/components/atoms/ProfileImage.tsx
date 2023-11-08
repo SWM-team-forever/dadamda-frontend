@@ -9,7 +9,13 @@ interface ProfileImageProps {
 function ProfileImage({ source, size, onClick }: ProfileImageProps) {
   return (
     <ImageContainer onClick={onClick}>
-      <Image src={source} size={size} />
+      <Image
+        src={source}
+        size={size}
+        onError={e => {
+          e.currentTarget.src = '/default_image.png';
+        }} 
+      />
     </ImageContainer>
   );
 }

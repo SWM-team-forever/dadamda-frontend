@@ -8,7 +8,12 @@ interface ThumbnailImageProps {
 function ThumbnailImage({ thumbnailUrl }: ThumbnailImageProps) {
     return (
         <CardImageWrapper>
-            <CardImage src={thumbnailUrl} />
+            <CardImage
+                src={thumbnailUrl}
+                onError={e => {
+                    e.currentTarget.src = '/default_image.png';
+                }}
+            />
         </CardImageWrapper>
     );
 }
@@ -17,16 +22,14 @@ const CardImageWrapper = styled.div`
    width: 100%;
    aspect-ratio: 16 / 9;
    overflow: hidden;
-   position: relative;
    border-radius: 8px;
 `
 
 const CardImage = styled.img`
-    position: absolute;
     width: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
 `
 
 export default ThumbnailImage;

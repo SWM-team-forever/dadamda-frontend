@@ -7,7 +7,7 @@ import { PasteIcon } from "@/components/atoms/Icon";
 import theme from "@/assets/styles/theme";
 import { useModal } from "@/hooks/useModal";
 
-function CopyBoardButton({ boardId }: { boardId: string | null }) {
+function CopyBoardButton({ boardId, isOnlyIcon }: { boardId: string | null, isOnlyIcon?: boolean }) {
     const { mutate } = useCopyOpenBoard();
 
     const { openModal } = useModal();
@@ -21,8 +21,11 @@ function CopyBoardButton({ boardId }: { boardId: string | null }) {
             openModal('login', currentURL);
             return;
         }
-
-        mutate(boardId);
+        const tag = isOnlyIcon ? 'trend' : 'share';
+        mutate({
+            boardUUID: boardId,
+            type: tag,
+        });
 
         logEvent('copy_board_click');
     }
@@ -47,8 +50,8 @@ function CopyBoardButton({ boardId }: { boardId: string | null }) {
                 }}
                 onClick={handleCopyBoard}
             >
-                <PasteIcon width="20" height="20" fill={theme.color.Gray_070} />
-                <Typography variant="h5">내 보드에 담기</Typography>
+                <PasteIcon width={isOnlyIcon ? '14' : '20'} height={isOnlyIcon ? '14' : '20'} fill={theme.color.Gray_070} />
+                {!isOnlyIcon && <Typography variant="h5">내 보드에 담기</Typography>}
             </Box>
         </Tooltip>
     );

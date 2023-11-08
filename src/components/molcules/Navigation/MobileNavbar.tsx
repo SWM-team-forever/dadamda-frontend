@@ -39,6 +39,13 @@ function MobileNavbar({ toggleMobileNavbar }: MobileNavbarProps) {
 
   const navbarMenus = [{
     isVisibleWithoutLogin: true,
+    name: '트렌딩',
+    onclick: () => {
+      navigate('/trending');
+      toggleMobileNavbar();
+    },
+  }, {
+    isVisibleWithoutLogin: true,
     name: '사이트 소개',
     onclick: () => {
       navigate('/main');

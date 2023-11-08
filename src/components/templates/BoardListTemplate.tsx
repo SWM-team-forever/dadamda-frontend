@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
-import { Box, Chip, Grid, Typography } from '@mui/material';
+import { Box, Grid, ImageList, ImageListItem, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -9,13 +10,14 @@ import theme from '@/assets/styles/theme';
 import { getTimeDiff } from '@/hooks/useCalculateDateDiff';
 import { useModal } from '@/hooks/useModal';
 import { useBoardAtom } from '@/hooks/useBoardAtom';
+import { useSearch } from '@/hooks/useSearch';
 
-import { MenuIcon, ProfileIcon, StarIcon } from '@/components/atoms/Icon';
+import { SettingIcon, FixedIcon, UnFixedIcon, DefaultBoardThumbnailIcon } from '@/components/atoms/Icon';
+import DefaultBoardThumbnail from '@/components/atoms/Board/DefaultBoardThumbnail';
 import { chipInformation } from '@/components/atoms/Modal/BoardEditModalElement';
 import BoardListHeader from '@/components/molcules/BoardListHeader';
-import { useSearch } from '@/hooks/useSearch';
-import { useEffect } from 'react';
 import EmptyBoardContainer from '@/components/organisms/board/EmptyBoardContainer';
+import ThumbnailImage from '@/components/atoms/ThumbnailImage';
 
 export interface IBoardListInfo {
     uuid: number;
@@ -24,6 +26,7 @@ export interface IBoardListInfo {
     isFixed?: string,
     tag: string,
     modifiedDate: number,
+    contents: any,
 }
 
 function BoardListTemplate() {
@@ -78,6 +81,67 @@ function BoardListTemplate() {
         );
     }
 
+    function isImageExist(image: string) {
+        return image !== undefined && image !== null && image !== '';
+    }
+
+    function foundImagesInContents(contents: any) {
+        if (!contents) {
+            return [];
+        }
+
+        const result = Object.values(JSON.parse(contents)).map((content: any) => {
+            return content.map((item: any) => {
+                return item.thumbnailUrl;
+            })
+        });
+
+        return result.flat().filter((item: any) => isImageExist(item)).splice(0, 4);
+    }
+
+    function ThumbnailImageList({ contents }: { contents: any }) {
+        let images = foundImagesInContents(contents);
+        images = images.length < 4 ? [images[0] && images[0]] : images;
+        images = images[0] === undefined ? [] : images;
+        const isImageExist = () => images.length > 0;
+
+        return <ImageList
+            cols={images.length > 1 ? 2 : 1}
+            sx={{
+                width: '100%',
+                backgroundColor: theme.color.Gray_030,
+                cursor: 'pointer',
+                height: '100%',
+                margin: 'auto',
+                overflow: 'hidden',
+            }}
+        >
+            {
+                (!isImageExist()) &&
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        p: '10px 0',
+                        backgroundColor: '#7DACFA',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        boxSizing: 'border-box',
+                        overflow: 'hidden',
+                    }}
+                >
+                    <DefaultBoardThumbnailIcon width="60%" height="calc(100% - 30px)" />
+                </Box>
+            }
+            {isImageExist() && images.map((image: string, index: number) => {
+                return <ThumbnailImage key={index} thumbnailUrl={image} />
+            }
+            )}
+        </ImageList>
+    }
+
     function ExistResults() {
         return (
             <InfiniteScroll
@@ -113,94 +177,115 @@ function BoardListTemplate() {
                                 >
                                     <Box
                                         sx={{
-                                            height: '180px',
-                                            width: '100%',
-                                            backgroundColor: theme.color.Blue_090,
-                                            borderRadius: '8px 8px 0 0',
-                                            cursor: 'pointer',
-                                            '&:hover': {
-                                                backgroundColor: theme.color.Blue_080,
-                                            },
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <ProfileIcon size='80' />
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            p: '10px',
-                                            backgroundColor: theme.color.Gray_020,
-                                            borderRadius: '0 0 8px 8px',
+                                            borderRadius: '8px',
+                                            overflow: 'hidden',
                                         }}
                                     >
                                         <Box
                                             sx={{
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
+                                                width: '100%',
+                                                aspectRatio: '16/9',
                                             }}
                                         >
-                                            <Typography
-                                                sx={{
-                                                    overflow: 'hidden',
-                                                    textOverflow: 'ellipsis',
-                                                    display: '-webkit-box',
-                                                    '-webkit-line-clamp': '1',
-                                                    '-webkit-box-orient': 'vertical',
-                                                    wordWrap: 'break-word',
-                                                }}
-                                            >
-                                                {board.title}
-                                            </Typography>
-                                            <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    gap: '5px',
-                                                }}
-                                            >
-                                                <Box
-                                                    sx={{
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        mutate(board.uuid.toString());
-                                                    }}
-                                                >
-                                                    <StarIcon width='12' height='12' fill={board.isFixed ? theme.color.Blue_090 : theme.color.Gray_070} />
-                                                </Box>
-                                                <Box
-                                                    sx={{
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    onClick={async (e) => {
-                                                        e.stopPropagation();
-                                                        const boardInfo = await useGetBoard(board.uuid.toString());
-                                                        setBoard((prev) => ({
-                                                            ...prev,
-                                                            boardUUID: board.uuid.toString(),
-                                                            ...boardInfo.data,
-                                                        }))
-                                                        openModal('boardEdit');
-                                                    }}
-                                                >
-                                                    <MenuIcon width='12' height='12' fill={theme.color.Gray_070} />
-                                                </Box>
-                                            </Box>
+                                            <ThumbnailImageList contents={board.contents} />
                                         </Box>
                                         <Box
                                             sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '10px',
+                                                p: '10px',
+                                                backgroundColor: theme.color.Gray_020,
+                                                padding: '15px',
                                             }}
                                         >
-                                            <Chip label={chipInformation.map((chipInfo) =>
-                                                chipInfo.tagValue === board.tag && chipInfo.label
-                                            )} />
-                                            <Typography>{getTimeDiff(board.modifiedDate)}</Typography>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    justifyContent: 'space-between',
+                                                    alignItems: 'center',
+                                                }}
+                                            >
+                                                <Typography
+                                                    variant="h3"
+                                                    sx={{
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
+                                                        display: '-webkit-box',
+                                                        '-webkit-line-clamp': '1',
+                                                        '-webkit-box-orient': 'vertical',
+                                                        wordWrap: 'break-word',
+                                                    }}
+                                                >
+                                                    {board.title}
+                                                </Typography>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        gap: '12px',
+                                                    }}
+                                                >
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            mutate(board.uuid.toString());
+                                                        }}
+                                                    >
+                                                        {board.isFixed ? <UnFixedIcon width='20' height='20' fill={theme.color.Blue_080} /> : <FixedIcon width='20' height='20' fill={theme.color.Gray_070} />}
+                                                    </Box>
+                                                    <Box
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        onClick={async (e) => {
+                                                            e.stopPropagation();
+                                                            const boardInfo = await useGetBoard(board.uuid.toString());
+                                                            setBoard((prev) => ({
+                                                                ...prev,
+                                                                boardUUID: board.uuid.toString(),
+                                                                ...boardInfo.data,
+                                                            }))
+                                                            openModal('boardEdit');
+                                                        }}
+                                                    >
+                                                        <SettingIcon width='20' height='20' fill={theme.color.Gray_070} />
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '5px',
+                                                    paddingTop: '10px',
+                                                }}
+                                            >
+                                                <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                        color: theme.color.Gray_080,
+                                                    }}
+                                                >
+                                                    {chipInformation.map((chipInfo) =>
+                                                        chipInfo.tagValue === board.tag && chipInfo.label
+                                                    )}
+                                                </Typography>
+                                                <Typography
+                                                    color={theme.color.Gray_080}
+                                                    variant="body2"
+                                                    sx={{
+                                                        fontWeight: '300',
+                                                        lineHeight: '160%',
+                                                    }}
+                                                >
+                                                    {' • '}
+                                                </Typography>
+                                                <Typography
+                                                    variant="body2"
+                                                    sx={{
+                                                        color: theme.color.Gray_080
+                                                    }}>{getTimeDiff(board.modifiedDate)}</Typography>
+                                            </Box>
                                         </Box>
                                     </Box>
                                 </Grid>
