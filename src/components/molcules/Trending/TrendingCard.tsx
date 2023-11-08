@@ -220,7 +220,6 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
 
         const handleIncreaeViewCount = () => {
             mutate(uuid);
-
             logEvent('view_trending_board_click');
         }
 
