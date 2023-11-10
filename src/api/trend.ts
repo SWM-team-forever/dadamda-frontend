@@ -76,6 +76,7 @@ export const useGetTrendingList = () => {
 						: lastPage.data.number + 1;
 				},
 				retry: false,
+				refetchOnWindowFocus: false,
 			}
 		);
 
@@ -115,12 +116,12 @@ const changeHeart = async (boardUUID: string) => {
 	return response;
 };
 
-export const useChangeHeart = () => {
-	const queryClient = useQueryClient();
-
+export const useChangeHeart = (
+	changeHeartCount: (isHeart: boolean) => void
+) => {
 	return useMutation(changeHeart, {
-		onSuccess: () => {
-			queryClient.invalidateQueries(["trendingList"]);
+		onSuccess: (data) => {
+			changeHeartCount(data.data.isHeart);
 		},
 		onError: (error) => {
 			Sentry.captureException(error);
@@ -159,12 +160,10 @@ const increaseTrendingViewCount = async (boardUUID: string | null) => {
 	return response;
 };
 
-export const useIncreaseTrendingViewCount = () => {
-	const queryClient = useQueryClient();
-
+export const useIncreaseTrendingViewCount = (changeViewCount?: () => void) => {
 	return useMutation(increaseTrendingViewCount, {
 		onSuccess: () => {
-			queryClient.invalidateQueries(["trendingList"]);
+			changeViewCount && changeViewCount();
 		},
 		onError: (error) => {
 			Sentry.captureException(error);
