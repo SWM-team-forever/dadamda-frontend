@@ -179,7 +179,7 @@ function TrendingPage() {
                         height: '100%',
                         justifyContent: 'end',
                         justifySelf: 'end',
-                        pt: '20px',
+                        p: '20px 0 0 10px',
                         boxSizing: 'border-box',
                     }}
                 >
@@ -275,19 +275,21 @@ function TrendingPage() {
                 >
                     <Box
                         sx={{
-                            width: '176px',
-                            height: '176px',
-                            position: 'sticky',
-                            top: '56px',
+                            width: '100%',
+                            minWidth: '176px',
+                            maxWidth: '230px',
+                            height: '100%',
                             borderRadius: '8px',
                             overflow: 'hidden',
                             cursor: 'pointer',
+                            p: '20px 10px 0 0',
+                            boxSizing: 'border-box',
                         }}
                         onClick={useMoveToEventLink}
                     >
                         <img src={desktopEventImage} alt="mobileEventImage" style={{
                             width: '100%',
-                            height: '100%',
+                            aspectRatio: '1',
                             objectFit: 'cover',
                             display: 'block',
                         }} />
