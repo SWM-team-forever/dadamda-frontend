@@ -132,6 +132,7 @@ function TrendingPage() {
                             xs: '0',
                             md: '20px',
                         },
+                        width: '100%',
                     }}
                     scrollButtons="auto"
                     variant="scrollable"
@@ -168,6 +169,10 @@ function TrendingPage() {
                 sx={{
                     height: '100%',
                     width: '100%',
+                    overflow: {
+                        xs: 'hidden',
+                        md: 'auto',
+                    },
                 }}
             >
                 <Grid item
@@ -191,6 +196,10 @@ function TrendingPage() {
                 <Box
                     sx={{
                         height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        width: '100%',
                     }}
                 >
                     <Box
@@ -200,6 +209,7 @@ function TrendingPage() {
                                 md: 'none',
                             },
                             width: '100%',
+                            maxWidth: '420px',
                             boxSizing: 'border-box',
                             cursor: 'pointer',
                             borderRadius: '8px',
@@ -208,7 +218,7 @@ function TrendingPage() {
                     >
                         <img src={mobileEventImage} alt="mobileEventImage" style={{
                             width: '100%',
-                            aspectRatio: '2.5',
+                            aspectRatio: '5',
                         }} />
                     </Box>
                     <HorizontalTopic />
@@ -217,10 +227,14 @@ function TrendingPage() {
                         : <Box
                             sx={{
                                 height: {
-                                    xs: 'calc(100vh - 226px)',
+                                    xs: 'calc(100vh - 170px)',
                                     md: 'calc(100vh - 125px)',
                                 },
                                 overflow: 'auto',
+                                boxSizing: 'border-box',
+                                pb: {
+                                    xs: '10px',
+                                }
                             }}
                         >
                             <InfiniteScroll
