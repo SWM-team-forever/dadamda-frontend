@@ -128,6 +128,7 @@ function TrendingPage() {
                             fontWeight: '600'
                         },
                         minHeight: 'auto',
+                        pt: '20px',
                     }}
                     scrollButtons="auto"
                     variant="scrollable"
@@ -186,7 +187,6 @@ function TrendingPage() {
                 </Grid>
                 <Box
                     sx={{
-                        p: '20px 0',
                         height: '100%',
                     }}
                 >
@@ -210,11 +210,11 @@ function TrendingPage() {
                         }} />
                     </Box>
                     <HorizontalTopic />
-                    {isTrendingListLoading ? <CircularProgress /> :
-                        <Box
+                    {isTrendingListLoading
+                        ? <CircularProgress />
+                        : <Box
                             sx={{
-                                width: '100%',
-                                height: '100%',
+                                height: 'calc(100vh - 125px)',
                                 overflow: 'auto',
                             }}
                         >
@@ -222,13 +222,13 @@ function TrendingPage() {
                                 loadMore={() => fetchNextTrendingList()}
                                 hasMore={hasNextTrendingList}
                                 useWindow={false}
-                                style={{
-                                    width: '100%',
-                                }}
+                                loader={<CircularProgress key={0} />}
+                                height='100%'
                             >
                                 <Box
                                     sx={{
                                         width: '100%',
+                                        height: '100%',
                                     }}
                                 >
                                     {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
