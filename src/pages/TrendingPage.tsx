@@ -10,6 +10,9 @@ import { trendingMockData } from '__mocks__/trendingMockData';
 import { useState, SyntheticEvent } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
+import mobileEventImage from '@/assets/images/mobileEventImage.png';
+import { useMoveToEventLink } from '@/hooks/useCustomNavigation';
+import desktopEventImage from '@/assets/images/desktopEventImage.png';
 
 const category = {
     LIST: {
@@ -53,9 +56,7 @@ function TrendingPage() {
                     gap: '10px',
                     p: '12px',
                     boxSizing: 'border-box',
-                    position: 'absolute',
                     width: '100%',
-
                 }}
             >
                 <Typography
@@ -174,21 +175,40 @@ function TrendingPage() {
                         width: '100%',
                         minWidth: '176px',
                         maxWidth: '230px',
+                        height: '100%',
                         justifyContent: 'end',
                         justifySelf: 'end',
                         pt: '20px',
                         boxSizing: 'border-box',
-                        position: 'relative',
                     }}
                 >
                     <Topic />
                 </Grid>
-                <Grid item
+                <Box
                     sx={{
                         p: '20px 0',
                         height: '100%',
                     }}
                 >
+                    <Box
+                        sx={{
+                            display: {
+                                xs: 'flex',
+                                md: 'none',
+                            },
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            pb: '25px',
+                            cursor: 'pointer',
+                            borderRadius: '8px',
+                        }}
+                        onClick={useMoveToEventLink}
+                    >
+                        <img src={mobileEventImage} alt="mobileEventImage" style={{
+                            width: '100%',
+                            aspectRatio: '2.5',
+                        }} />
+                    </Box>
                     <HorizontalTopic />
                     {isTrendingListLoading ? <CircularProgress /> :
                         <Box
@@ -236,7 +256,43 @@ function TrendingPage() {
                             </InfiniteScroll>
                         </Box>
                     }
-                </Grid>
+                </Box>
+                <Box
+                    sx={{
+                        display: {
+                            xs: 'none',
+                            md: 'flex',
+                        },
+                        width: '100%',
+                        minWidth: '176px',
+                        maxWidth: '230px',
+                        height: '100%',
+                        justifyContent: 'start',
+                        justifySelf: 'start',
+                        pt: '20px',
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            width: '176px',
+                            height: '176px',
+                            position: 'sticky',
+                            top: '56px',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            cursor: 'pointer',
+                        }}
+                        onClick={useMoveToEventLink}
+                    >
+                        <img src={desktopEventImage} alt="mobileEventImage" style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover',
+                            display: 'block',
+                        }} />
+                    </Box>
+                </Box>
             </Box>
         </PageWrapper >
     );
