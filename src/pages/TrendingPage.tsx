@@ -128,7 +128,10 @@ function TrendingPage() {
                             fontWeight: '600'
                         },
                         minHeight: 'auto',
-                        pt: '20px',
+                        pt: {
+                            xs: '0',
+                            md: '20px',
+                        },
                     }}
                     scrollButtons="auto"
                     variant="scrollable"
@@ -198,7 +201,6 @@ function TrendingPage() {
                             },
                             width: '100%',
                             boxSizing: 'border-box',
-                            pb: '25px',
                             cursor: 'pointer',
                             borderRadius: '8px',
                         }}
@@ -214,7 +216,10 @@ function TrendingPage() {
                         ? <CircularProgress />
                         : <Box
                             sx={{
-                                height: 'calc(100vh - 125px)',
+                                height: {
+                                    xs: 'calc(100vh - 226px)',
+                                    md: 'calc(100vh - 125px)',
+                                },
                                 overflow: 'auto',
                             }}
                         >
