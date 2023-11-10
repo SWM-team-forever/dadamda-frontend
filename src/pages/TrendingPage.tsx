@@ -10,6 +10,9 @@ import { trendingMockData } from '__mocks__/trendingMockData';
 import { useState, SyntheticEvent } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
+import mobileEventImage from '@/assets/images/mobileEventImage.png';
+import { useMoveToEventLink } from '@/hooks/useCustomNavigation';
+import desktopEventImage from '@/assets/images/desktopEventImage.png';
 
 const category = {
     LIST: {
@@ -53,9 +56,7 @@ function TrendingPage() {
                     gap: '10px',
                     p: '12px',
                     boxSizing: 'border-box',
-                    position: 'absolute',
                     width: '100%',
-
                 }}
             >
                 <Typography
@@ -127,6 +128,11 @@ function TrendingPage() {
                             fontWeight: '600'
                         },
                         minHeight: 'auto',
+                        pt: {
+                            xs: '0',
+                            md: '20px',
+                        },
+                        width: '100%',
                     }}
                     scrollButtons="auto"
                     variant="scrollable"
@@ -163,6 +169,10 @@ function TrendingPage() {
                 sx={{
                     height: '100%',
                     width: '100%',
+                    overflow: {
+                        xs: 'hidden',
+                        md: 'auto',
+                    },
                 }}
             >
                 <Grid item
@@ -174,41 +184,70 @@ function TrendingPage() {
                         width: '100%',
                         minWidth: '176px',
                         maxWidth: '230px',
+                        height: '100%',
                         justifyContent: 'end',
                         justifySelf: 'end',
-                        pt: '20px',
+                        p: '20px 0 0 10px',
                         boxSizing: 'border-box',
-                        position: 'relative',
                     }}
                 >
                     <Topic />
                 </Grid>
-                <Grid item
+                <Box
                     sx={{
-                        p: '20px 0',
                         height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        width: '100%',
                     }}
                 >
+                    <Box
+                        sx={{
+                            display: {
+                                xs: 'flex',
+                                md: 'none',
+                            },
+                            width: '100%',
+                            maxWidth: '420px',
+                            boxSizing: 'border-box',
+                            cursor: 'pointer',
+                            borderRadius: '8px',
+                        }}
+                        onClick={useMoveToEventLink}
+                    >
+                        <img src={mobileEventImage} alt="mobileEventImage" style={{
+                            width: '100%',
+                            aspectRatio: '5',
+                        }} />
+                    </Box>
                     <HorizontalTopic />
-                    {isTrendingListLoading ? <CircularProgress /> :
-                        <Box
+                    {isTrendingListLoading
+                        ? <CircularProgress />
+                        : <Box
                             sx={{
-                                width: '100%',
-                                height: '100%',
+                                height: {
+                                    xs: 'calc(100vh - 170px)',
+                                    md: 'calc(100vh - 125px)',
+                                },
                                 overflow: 'auto',
+                                boxSizing: 'border-box',
+                                pb: {
+                                    xs: '10px',
+                                }
                             }}
                         >
                             <InfiniteScroll
                                 loadMore={() => fetchNextTrendingList()}
                                 hasMore={hasNextTrendingList}
                                 useWindow={false}
-                                style={{
-                                    width: '100%',
-                                }}
+                                loader={<CircularProgress key={0} />}
+                                height='100%'
                             >
                                 <Box
                                     sx={{
                                         width: '100%',
+                                        height: '100%',
                                     }}
                                 >
                                     {trendingList?.pages.map((page: { data: { content: any[]; }; }) => {
@@ -236,7 +275,45 @@ function TrendingPage() {
                             </InfiniteScroll>
                         </Box>
                     }
-                </Grid>
+                </Box>
+                <Box
+                    sx={{
+                        display: {
+                            xs: 'none',
+                            md: 'flex',
+                        },
+                        width: '100%',
+                        minWidth: '176px',
+                        maxWidth: '230px',
+                        height: '100%',
+                        justifyContent: 'start',
+                        justifySelf: 'start',
+                        pt: '20px',
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <Box
+                        sx={{
+                            width: '100%',
+                            minWidth: '176px',
+                            maxWidth: '230px',
+                            height: '100%',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            cursor: 'pointer',
+                            p: '20px 10px 0 0',
+                            boxSizing: 'border-box',
+                        }}
+                        onClick={useMoveToEventLink}
+                    >
+                        <img src={desktopEventImage} alt="desktopEventImage" style={{
+                            width: '100%',
+                            aspectRatio: '1',
+                            objectFit: 'cover',
+                            display: 'block',
+                        }} />
+                    </Box>
+                </Box>
             </Box>
         </PageWrapper >
     );
