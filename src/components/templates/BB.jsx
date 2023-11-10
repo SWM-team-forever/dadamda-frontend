@@ -429,6 +429,7 @@ export function MultipleContainers({
 					}
 				},
 				useErrorBoundary: true,
+				refetchOnWindowFocus: false,
 			}
 		);
 
