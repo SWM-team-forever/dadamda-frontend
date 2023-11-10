@@ -711,7 +711,6 @@ export const useCopyOpenBoard = () => {
 	return useMutation(copyOpenBoard, {
 		onSuccess: (data) => {
 			queryClient.invalidateQueries(["boards"]);
-			queryClient.invalidateQueries(["trendingList"]);
 			useDefaultSnackbar("보드가 복사되었습니다.", "success");
 			window.open(
 				`board-contents/${data?.data?.uuid}`,

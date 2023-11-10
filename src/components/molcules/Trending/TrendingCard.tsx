@@ -243,6 +243,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
             <Button
                 startIcon={<CopyBoardButton boardId={uuid} isOnlyIcon />}
                 sx={buttonTextStyle}
+                onClick={changeShareCount}
             >
                 {counts.shareCnt}
             </Button>

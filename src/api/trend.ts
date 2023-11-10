@@ -76,6 +76,7 @@ export const useGetTrendingList = () => {
 						: lastPage.data.number + 1;
 				},
 				retry: false,
+				refetchOnWindowFocus: false,
 			}
 		);
 
