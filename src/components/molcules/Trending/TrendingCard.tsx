@@ -241,9 +241,8 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     function PasteButton() {
         return (
             <Button
-                startIcon={<CopyBoardButton boardId={uuid} isOnlyIcon />}
+                startIcon={<CopyBoardButton boardId={uuid} isOnlyIcon changeShareCount={changeShareCount} />}
                 sx={buttonTextStyle}
-                onClick={changeShareCount}
             >
                 {counts.shareCnt}
             </Button>

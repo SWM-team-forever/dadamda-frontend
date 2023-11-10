@@ -705,7 +705,7 @@ const copyOpenBoard = ({
 	return response;
 };
 
-export const useCopyOpenBoard = () => {
+export const useCopyOpenBoard = (changeShareCount?: () => void) => {
 	const queryClient = useQueryClient();
 
 	return useMutation(copyOpenBoard, {
@@ -716,6 +716,7 @@ export const useCopyOpenBoard = () => {
 				`board-contents/${data?.data?.uuid}`,
 				"_blank"
 			);
+			changeShareCount && changeShareCount();
 		},
 		onError: (error) => {
 			Sentry.captureException(error);

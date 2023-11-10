@@ -160,10 +160,10 @@ const increaseTrendingViewCount = async (boardUUID: string | null) => {
 	return response;
 };
 
-export const useIncreaseTrendingViewCount = (changeViewCount: () => void) => {
+export const useIncreaseTrendingViewCount = (changeViewCount?: () => void) => {
 	return useMutation(increaseTrendingViewCount, {
 		onSuccess: () => {
-			changeViewCount();
+			changeViewCount && changeViewCount();
 		},
 		onError: (error) => {
 			Sentry.captureException(error);
