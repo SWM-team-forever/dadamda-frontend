@@ -306,7 +306,7 @@ function TrendingPage() {
                         }}
                         onClick={useMoveToEventLink}
                     >
-                        <img src={desktopEventImage} alt="mobileEventImage" style={{
+                        <img src={desktopEventImage} alt="desktopEventImage" style={{
                             width: '100%',
                             aspectRatio: '1',
                             objectFit: 'cover',
