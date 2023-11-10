@@ -118,8 +118,6 @@ const changeHeart = async (boardUUID: string) => {
 export const useChangeHeart = (
 	changeHeartCount: (isHeart: boolean) => void
 ) => {
-	const queryClient = useQueryClient();
-
 	return useMutation(changeHeart, {
 		onSuccess: (data) => {
 			changeHeartCount(data.data.isHeart);
@@ -161,12 +159,10 @@ const increaseTrendingViewCount = async (boardUUID: string | null) => {
 	return response;
 };
 
-export const useIncreaseTrendingViewCount = () => {
-	const queryClient = useQueryClient();
-
+export const useIncreaseTrendingViewCount = (changeViewCount: () => void) => {
 	return useMutation(increaseTrendingViewCount, {
 		onSuccess: () => {
-			queryClient.invalidateQueries(["trendingList"]);
+			changeViewCount();
 		},
 		onError: (error) => {
 			Sentry.captureException(error);

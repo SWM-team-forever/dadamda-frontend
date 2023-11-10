@@ -139,7 +139,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ThumbnailImageList() {
-        const { mutate } = useIncreaseTrendingViewCount();
+        const { mutate } = useIncreaseTrendingViewCount(changeViewCount);
 
         const handleIncreaeViewCount = () => {
             mutate(uuid);
@@ -250,7 +250,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ViewButton() {
-        const { mutate } = useIncreaseTrendingViewCount();
+        const { mutate } = useIncreaseTrendingViewCount(changeViewCount);
 
         const handleIncreaeViewCount = () => {
             mutate(uuid);
