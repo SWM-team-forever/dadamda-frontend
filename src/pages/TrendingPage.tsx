@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import mobileEventImage from '@/assets/images/mobileEventImage.png';
 import { useMoveToEventLink } from '@/hooks/useCustomNavigation';
 import desktopEventImage from '@/assets/images/desktopEventImage.png';
+import { MedalIcon } from '@/components/atoms/Icon';
 
 const category = {
     LIST: {
@@ -155,6 +156,101 @@ function TrendingPage() {
         )
     }
 
+    function PopularUsers() {
+        const users = [
+            { profileUrl: '/dadamda_img.png', nickname: '김댐댐' },
+            { profileUrl: '/dadamda_img.png', nickname: '김댐댐' },
+        ]
+
+        const rankTypographyStyle = {
+            color: theme.color.Gray_070,
+            fontSize: '14px',
+            fontWeight: '400',
+            lineHeight: '160%',
+        };
+
+        const nicknameTypographyStyle = {
+            color: theme.color.Gray_090,
+            fontSize: '14px',
+            lineHeight: '150%',
+            fontWeight: '600',
+        }
+
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    p: '12px',
+                    boxSizing: 'border-box',
+                    width: '100%',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                    }}
+                >
+                    <MedalIcon />
+                    <Typography
+                        sx={{
+                            color: theme.color.text_gray_color,
+                            fontSize: '14px',
+                            lineHeight: '150%',
+                            fontWeight: '600',
+                        }}
+                    >
+                        이달의 유저
+                    </Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'start',
+                        backgroundColor: theme.color.Gray_020,
+                        borderRadius: '8px',
+                        p: '16px',
+                        boxSizing: 'border-box',
+                        width: '100%',
+                    }}
+                >
+                    {users.map((user, index) => {
+                        return <Box
+                            key={index}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                width: '100%',
+                                height: '44px',
+                            }}
+                        >
+                            <Typography
+                                sx={rankTypographyStyle}
+                            >
+                                {index + 1}
+                            </Typography>
+                            <img src={user.profileUrl} alt="profileImage" style={{
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '50%',
+                            }} />
+                            <Typography
+                                sx={nicknameTypographyStyle}
+                            >
+                                {user.nickname}
+                            </Typography>
+                        </Box>
+                    })}
+                </Box>
+            </Box>
+        )
+    }
+
     const { trendingList, hasNextTrendingList, fetchNextTrendingList, isTrendingListLoading } = useGetTrendingList();
 
     return (
@@ -290,6 +386,7 @@ function TrendingPage() {
                         justifySelf: 'start',
                         pt: '20px',
                         boxSizing: 'border-box',
+                        flexDirection: 'column',
                     }}
                 >
                     <Box
@@ -297,7 +394,7 @@ function TrendingPage() {
                             width: '100%',
                             minWidth: '176px',
                             maxWidth: '230px',
-                            height: '100%',
+                            aspectRatio: '1',
                             borderRadius: '8px',
                             overflow: 'hidden',
                             cursor: 'pointer',
@@ -313,6 +410,7 @@ function TrendingPage() {
                             display: 'block',
                         }} />
                     </Box>
+                    <PopularUsers />
                 </Box>
             </Box>
         </PageWrapper >
