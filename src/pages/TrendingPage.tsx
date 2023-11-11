@@ -7,7 +7,7 @@ import { useTrendingAtom } from '@/hooks/useTrendingAtom';
 import { TabContext } from '@mui/lab';
 import { Box, Button, CircularProgress, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { trendingMockData } from '__mocks__/trendingMockData';
-import { useState, SyntheticEvent, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
+import { useState, SyntheticEvent, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import mobileEventImage from '@/assets/images/mobileEventImage.png';
@@ -173,6 +173,14 @@ function TrendingPage() {
         }
 
         const { popularUsers, isGetPopularUsersLoading } = useGetPopularUsers();
+        const [currentSlide, setCurrentSlide] = useState(0);
+
+        useEffect(() => {
+            const interval = setInterval(() => {
+                setCurrentSlide((prev) => (prev + 1) % popularUsers.length);
+            }, 3000);
+            return () => clearInterval(interval);
+        }, [popularUsers.length]);
 
         if (isGetPopularUsersLoading) {
             return <CircularProgress />
@@ -226,7 +234,7 @@ function TrendingPage() {
                         return <Box
                             key={index}
                             sx={{
-                                display: 'flex',
+                                display: currentSlide === index ? 'flex' : 'none',
                                 alignItems: 'center',
                                 gap: '10px',
                                 width: '100%',
