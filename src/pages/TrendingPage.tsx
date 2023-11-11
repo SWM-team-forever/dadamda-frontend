@@ -157,6 +157,104 @@ function TrendingPage() {
         )
     }
 
+    function CarouselPopularUsers() {
+        const rankTypographyStyle = {
+            color: theme.color.Gray_070,
+            fontSize: '14px',
+            fontWeight: '400',
+            lineHeight: '160%',
+        };
+
+        const nicknameTypographyStyle = {
+            color: theme.color.Gray_090,
+            fontSize: '14px',
+            lineHeight: '150%',
+            fontWeight: '600',
+        }
+
+        const { popularUsers, isGetPopularUsersLoading } = useGetPopularUsers();
+
+        if (isGetPopularUsersLoading) {
+            return <CircularProgress />
+        }
+
+        return (
+            <Box
+                sx={{
+                    display: {
+                        xs: 'flex',
+                        md: 'none',
+                    },
+                    flexDirection: 'column',
+                    gap: '10px',
+                    p: '12px',
+                    boxSizing: 'border-box',
+                    width: '100%',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                    }}
+                >
+                    <MedalIcon />
+                    <Typography
+                        sx={{
+                            color: theme.color.text_gray_color,
+                            fontSize: '14px',
+                            lineHeight: '150%',
+                            fontWeight: '600',
+                        }}
+                    >
+                        이달의 유저
+                    </Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'start',
+                        backgroundColor: theme.color.Gray_020,
+                        borderRadius: '8px',
+                        boxSizing: 'border-box',
+                        width: '100%',
+                    }}
+                >
+                    {popularUsers.map((user: { profileUrl: string; nickname: string; }, index: number) => {
+                        return <Box
+                            key={index}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                width: '100%',
+                                p: '9px 10px',
+                            }}
+                        >
+                            <Typography
+                                sx={rankTypographyStyle}
+                            >
+                                {index + 1}
+                            </Typography>
+                            <img src={user.profileUrl} alt="profileImage" style={{
+                                width: '20px',
+                                height: '20px',
+                                borderRadius: '100%',
+                            }} />
+                            <Typography
+                                sx={nicknameTypographyStyle}
+                            >
+                                {user.nickname}
+                            </Typography>
+                        </Box>
+                    })}
+                </Box>
+            </Box>
+        )
+    }
+
     function PopularUsers() {
         const rankTypographyStyle = {
             color: theme.color.Gray_070,
@@ -319,6 +417,7 @@ function TrendingPage() {
                             aspectRatio: '5',
                         }} />
                     </Box>
+                    <CarouselPopularUsers />
                     <HorizontalTopic />
                     {isTrendingListLoading
                         ? <CircularProgress />
