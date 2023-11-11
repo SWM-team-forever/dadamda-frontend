@@ -7,13 +7,14 @@ import { useTrendingAtom } from '@/hooks/useTrendingAtom';
 import { TabContext } from '@mui/lab';
 import { Box, Button, CircularProgress, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { trendingMockData } from '__mocks__/trendingMockData';
-import { useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import styled from 'styled-components';
 import mobileEventImage from '@/assets/images/mobileEventImage.png';
 import { useMoveToEventLink } from '@/hooks/useCustomNavigation';
 import desktopEventImage from '@/assets/images/desktopEventImage.png';
 import { MedalIcon } from '@/components/atoms/Icon';
+import { useGetPopularUsers } from '@/api/user';
 
 const category = {
     LIST: {
@@ -157,11 +158,6 @@ function TrendingPage() {
     }
 
     function PopularUsers() {
-        const users = [
-            { profileUrl: '/dadamda_img.png', nickname: '김댐댐' },
-            { profileUrl: '/dadamda_img.png', nickname: '김댐댐' },
-        ]
-
         const rankTypographyStyle = {
             color: theme.color.Gray_070,
             fontSize: '14px',
@@ -174,6 +170,12 @@ function TrendingPage() {
             fontSize: '14px',
             lineHeight: '150%',
             fontWeight: '600',
+        }
+
+        const { popularUsers, isGetPopularUsersLoading } = useGetPopularUsers();
+
+        if (isGetPopularUsersLoading) {
+            return <CircularProgress />
         }
 
         return (
@@ -218,7 +220,7 @@ function TrendingPage() {
                         width: '100%',
                     }}
                 >
-                    {users.map((user, index) => {
+                    {popularUsers.map((user: { profileUrl: string; nickname: string; }, index: number) => {
                         return <Box
                             key={index}
                             sx={{
@@ -237,7 +239,7 @@ function TrendingPage() {
                             <img src={user.profileUrl} alt="profileImage" style={{
                                 width: '32px',
                                 height: '32px',
-                                borderRadius: '50%',
+                                borderRadius: '100%',
                             }} />
                             <Typography
                                 sx={nicknameTypographyStyle}
