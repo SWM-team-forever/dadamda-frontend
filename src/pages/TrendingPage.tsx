@@ -9,11 +9,11 @@ import { Box, Button, CircularProgress, Divider, Grid, Tab, Tabs, Typography } f
 import { trendingMockData } from '__mocks__/trendingMockData';
 import { useState, SyntheticEvent, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import mobileEventImage from '@/assets/images/mobileEventImage.png';
 import { useMoveToEventLink } from '@/hooks/useCustomNavigation';
 import desktopEventImage from '@/assets/images/desktopEventImage.png';
-import { MedalIcon } from '@/components/atoms/Icon';
+import { CloseIcon, MedalIcon } from '@/components/atoms/Icon';
 import { useGetPopularUsers } from '@/api/user';
 
 const category = {
@@ -180,7 +180,7 @@ function TrendingPage() {
                 setCurrentSlide((prev) => (prev + 1) % popularUsers.length);
             }, 3000);
             return () => clearInterval(interval);
-        }, [popularUsers.length]);
+        }, []);
 
         if (isGetPopularUsersLoading) {
             return <CircularProgress />
@@ -239,6 +239,15 @@ function TrendingPage() {
                                 gap: '10px',
                                 width: '100%',
                                 p: '9px 10px',
+                                animation: 'fadeIn 0.7s',
+                                '@keyframes fadeIn': {
+                                    '0%': {
+                                        opacity: 0.2,
+                                    },
+                                    '100%': {
+                                        opacity: 1,
+                                    },
+                                },
                             }}
                         >
                             <Typography
@@ -360,6 +369,12 @@ function TrendingPage() {
     }
 
     const { trendingList, hasNextTrendingList, fetchNextTrendingList, isTrendingListLoading } = useGetTrendingList();
+    const [isEventVisible, setIsEventVisible] = useState(true);
+
+    function closeEvent(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        e.stopPropagation();
+        setIsEventVisible(false);
+    }
 
     return (
         <PageWrapper>
@@ -406,25 +421,44 @@ function TrendingPage() {
                         width: '100%',
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: {
-                                xs: 'flex',
-                                md: 'none',
-                            },
-                            width: '100%',
-                            maxWidth: '420px',
-                            boxSizing: 'border-box',
-                            cursor: 'pointer',
-                            borderRadius: '8px',
-                        }}
-                        onClick={useMoveToEventLink}
-                    >
-                        <img src={mobileEventImage} alt="mobileEventImage" style={{
-                            width: '100%',
-                            aspectRatio: '5',
-                        }} />
-                    </Box>
+                    {isEventVisible
+                        && <Box
+                            sx={{
+                                display: {
+                                    xs: 'flex',
+                                    md: 'none',
+                                },
+                                width: '100%',
+                                maxWidth: '420px',
+                                boxSizing: 'border-box',
+                                cursor: 'pointer',
+                                borderRadius: '8px',
+                                position: 'relative',
+                            }}
+                            onClick={useMoveToEventLink}
+                        >
+                            <img src={mobileEventImage} alt="mobileEventImage" style={{
+                                width: '100%',
+                                aspectRatio: '5',
+                            }} />
+                            <Button
+                                startIcon={<CloseIcon width='16px' height='16px' fill={theme.color.Gray_080} />}
+                                sx={{
+                                    position: 'absolute',
+                                    top: '0',
+                                    right: '0',
+                                    zIndex: 1,
+                                    backgroundColor: 'transparent',
+                                    minWidth: '0',
+                                    p: '5px',
+                                    '& .MuiButton-startIcon': {
+                                        m: '0',
+                                    },
+                                }}
+                                onClick={closeEvent}
+                            />
+                        </Box>
+                    }
                     <CarouselPopularUsers />
                     <HorizontalTopic />
                     {isTrendingListLoading
