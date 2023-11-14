@@ -7,12 +7,14 @@ import { useTrendingAtom } from '@/hooks/useTrendingAtom';
 import { TabContext } from '@mui/lab';
 import { Box, Button, CircularProgress, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { trendingMockData } from '__mocks__/trendingMockData';
-import { useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import mobileEventImage from '@/assets/images/mobileEventImage.png';
 import { useMoveToEventLink } from '@/hooks/useCustomNavigation';
 import desktopEventImage from '@/assets/images/desktopEventImage.png';
+import { CloseIcon, MedalIcon } from '@/components/atoms/Icon';
+import { useGetPopularUsers } from '@/api/user';
 
 const category = {
     LIST: {
@@ -155,7 +157,224 @@ function TrendingPage() {
         )
     }
 
+    function CarouselPopularUsers() {
+        const rankTypographyStyle = {
+            color: theme.color.Gray_070,
+            fontSize: '14px',
+            fontWeight: '400',
+            lineHeight: '160%',
+        };
+
+        const nicknameTypographyStyle = {
+            color: theme.color.Gray_090,
+            fontSize: '14px',
+            lineHeight: '150%',
+            fontWeight: '600',
+        }
+
+        const { popularUsers, isGetPopularUsersLoading } = useGetPopularUsers();
+        const [currentSlide, setCurrentSlide] = useState(0);
+
+        useEffect(() => {
+            const interval = setInterval(() => {
+                setCurrentSlide((prev) => (prev + 1) % popularUsers.length);
+            }, 3000);
+            return () => clearInterval(interval);
+        }, []);
+
+        if (isGetPopularUsersLoading) {
+            return <CircularProgress />
+        }
+
+        return (
+            <Box
+                sx={{
+                    display: {
+                        xs: 'flex',
+                        md: 'none',
+                    },
+                    flexDirection: 'column',
+                    gap: '10px',
+                    p: '12px',
+                    boxSizing: 'border-box',
+                    width: '100%',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                    }}
+                >
+                    <MedalIcon />
+                    <Typography
+                        sx={{
+                            color: theme.color.text_gray_color,
+                            fontSize: '14px',
+                            lineHeight: '150%',
+                            fontWeight: '600',
+                        }}
+                    >
+                        이달의 유저
+                    </Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'start',
+                        backgroundColor: theme.color.Gray_020,
+                        borderRadius: '8px',
+                        boxSizing: 'border-box',
+                        width: '100%',
+                    }}
+                >
+                    {popularUsers.map((user: { profileUrl: string; nickname: string; }, index: number) => {
+                        return <Box
+                            key={index}
+                            sx={{
+                                display: currentSlide === index ? 'flex' : 'none',
+                                alignItems: 'center',
+                                gap: '10px',
+                                width: '100%',
+                                p: '9px 10px',
+                                animation: 'fadeIn 0.7s',
+                                '@keyframes fadeIn': {
+                                    '0%': {
+                                        opacity: 0.2,
+                                    },
+                                    '100%': {
+                                        opacity: 1,
+                                    },
+                                },
+                            }}
+                        >
+                            <Typography
+                                sx={rankTypographyStyle}
+                            >
+                                {index + 1}
+                            </Typography>
+                            <img src={user.profileUrl} alt="profileImage" style={{
+                                width: '20px',
+                                height: '20px',
+                                borderRadius: '100%',
+                            }} />
+                            <Typography
+                                sx={nicknameTypographyStyle}
+                            >
+                                {user.nickname}
+                            </Typography>
+                        </Box>
+                    })}
+                </Box>
+            </Box>
+        )
+    }
+
+    function PopularUsers() {
+        const rankTypographyStyle = {
+            color: theme.color.Gray_070,
+            fontSize: '14px',
+            fontWeight: '400',
+            lineHeight: '160%',
+        };
+
+        const nicknameTypographyStyle = {
+            color: theme.color.Gray_090,
+            fontSize: '14px',
+            lineHeight: '150%',
+            fontWeight: '600',
+        }
+
+        const { popularUsers, isGetPopularUsersLoading } = useGetPopularUsers();
+
+        if (isGetPopularUsersLoading) {
+            return <CircularProgress />
+        }
+
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '10px',
+                    p: '12px',
+                    boxSizing: 'border-box',
+                    width: '100%',
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                    }}
+                >
+                    <MedalIcon />
+                    <Typography
+                        sx={{
+                            color: theme.color.text_gray_color,
+                            fontSize: '14px',
+                            lineHeight: '150%',
+                            fontWeight: '600',
+                        }}
+                    >
+                        이달의 유저
+                    </Typography>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'start',
+                        backgroundColor: theme.color.Gray_020,
+                        borderRadius: '8px',
+                        p: '16px',
+                        boxSizing: 'border-box',
+                        width: '100%',
+                    }}
+                >
+                    {popularUsers.map((user: { profileUrl: string; nickname: string; }, index: number) => {
+                        return <Box
+                            key={index}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                width: '100%',
+                                height: '44px',
+                            }}
+                        >
+                            <Typography
+                                sx={rankTypographyStyle}
+                            >
+                                {index + 1}
+                            </Typography>
+                            <img src={user.profileUrl} alt="profileImage" style={{
+                                width: '32px',
+                                height: '32px',
+                                borderRadius: '100%',
+                            }} />
+                            <Typography
+                                sx={nicknameTypographyStyle}
+                            >
+                                {user.nickname}
+                            </Typography>
+                        </Box>
+                    })}
+                </Box>
+            </Box>
+        )
+    }
+
     const { trendingList, hasNextTrendingList, fetchNextTrendingList, isTrendingListLoading } = useGetTrendingList();
+    const [isEventVisible, setIsEventVisible] = useState(true);
+
+    function closeEvent(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        e.stopPropagation();
+        setIsEventVisible(false);
+    }
 
     return (
         <PageWrapper>
@@ -202,25 +421,45 @@ function TrendingPage() {
                         width: '100%',
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: {
-                                xs: 'flex',
-                                md: 'none',
-                            },
-                            width: '100%',
-                            maxWidth: '420px',
-                            boxSizing: 'border-box',
-                            cursor: 'pointer',
-                            borderRadius: '8px',
-                        }}
-                        onClick={useMoveToEventLink}
-                    >
-                        <img src={mobileEventImage} alt="mobileEventImage" style={{
-                            width: '100%',
-                            aspectRatio: '5',
-                        }} />
-                    </Box>
+                    {isEventVisible
+                        && <Box
+                            sx={{
+                                display: {
+                                    xs: 'flex',
+                                    md: 'none',
+                                },
+                                width: '100%',
+                                maxWidth: '420px',
+                                boxSizing: 'border-box',
+                                cursor: 'pointer',
+                                borderRadius: '8px',
+                                position: 'relative',
+                            }}
+                            onClick={useMoveToEventLink}
+                        >
+                            <img src={mobileEventImage} alt="mobileEventImage" style={{
+                                width: '100%',
+                                aspectRatio: '5',
+                            }} />
+                            <Button
+                                startIcon={<CloseIcon width='16px' height='16px' fill={theme.color.Gray_080} />}
+                                sx={{
+                                    position: 'absolute',
+                                    top: '0',
+                                    right: '0',
+                                    zIndex: 1,
+                                    backgroundColor: 'transparent',
+                                    minWidth: '0',
+                                    p: '5px',
+                                    '& .MuiButton-startIcon': {
+                                        m: '0',
+                                    },
+                                }}
+                                onClick={closeEvent}
+                            />
+                        </Box>
+                    }
+                    <CarouselPopularUsers />
                     <HorizontalTopic />
                     {isTrendingListLoading
                         ? <CircularProgress />
@@ -290,6 +529,7 @@ function TrendingPage() {
                         justifySelf: 'start',
                         pt: '20px',
                         boxSizing: 'border-box',
+                        flexDirection: 'column',
                     }}
                 >
                     <Box
@@ -297,7 +537,7 @@ function TrendingPage() {
                             width: '100%',
                             minWidth: '176px',
                             maxWidth: '230px',
-                            height: '100%',
+                            aspectRatio: '1',
                             borderRadius: '8px',
                             overflow: 'hidden',
                             cursor: 'pointer',
@@ -313,6 +553,7 @@ function TrendingPage() {
                             display: 'block',
                         }} />
                     </Box>
+                    <PopularUsers />
                 </Box>
             </Box>
         </PageWrapper >
