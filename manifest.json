@@ -22,5 +22,13 @@
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#1B5BBA",
-	"theme_color": "#155EEF"
+	"theme_color": "#155EEF",
+	"share_target": {
+		"action": "/bookmark",
+		"method": "POST",
+		"enctype": "multipart/form-data",
+		"params": {
+			"url": "link"
+		}
+	}
 }
