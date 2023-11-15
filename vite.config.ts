@@ -19,11 +19,5 @@ export default defineConfig({
 	build: {
 		publicDir: "public",
 		sourcemap: true,
-		rollupOptions: {
-			input: {
-				main: "./index.html",
-				sw: "./service-worker.js",
-			},
-		},
 	},
 });
