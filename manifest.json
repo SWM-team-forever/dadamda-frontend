@@ -3,18 +3,18 @@
 	"short_name": "다담다",
 	"icons": [
 		{
-			"src": "/src/assets/images/dadamda-logo128.png",
+			"src": "/dadamda-logo128.png",
 			"sizes": "128x128",
 			"type": "image/png",
 			"purpose": "any maskable"
 		},
 		{
-			"src": "/src/assets/images/dadamda-logo144.png",
+			"src": "/dadamda-logo144.png",
 			"sizes": "144x144",
 			"type": "image/png"
 		},
 		{
-			"src": "/src/assets/images/dadamda-logo512.png",
+			"src": "/dadamda-logo512.png",
 			"sizes": "512x512",
 			"type": "image/png"
 		}
