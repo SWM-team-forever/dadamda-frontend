@@ -26,11 +26,6 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": [
-		"src",
-		"__tests__",
-		"__mocks__",
-		"public/service-worker.js"
-	],
+	"include": ["src", "__tests__", "__mocks__", "service-worker.js"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
