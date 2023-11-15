@@ -4,11 +4,13 @@ import {
 	DELETE_USER_PROFILE_IMAGE_URL,
 	DELETE_USER_URL,
 	EDIT_USER_NICKNAME_URL,
+	GET_POPULAR_USERS_URL,
 	GET_USER_INFORMATION_URL,
 	UPLOAD_USER_PROFILE_IMAGE_URL,
 } from "@/secret";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Sentry from "@sentry/react";
+import { useGetCurrentTimeAndMonthLaterInSpecificDateFormat } from "@/hooks/useCalculateDateDiff";
 
 const fetchDeleteUser = async () => {
 	const token = useGetToken();
@@ -270,4 +272,43 @@ export const useDeleteUserProfileImage = ({
 	return {
 		deleteUserProfileImageMutate,
 	};
+};
+
+const getPopularUsers = () => {
+	const { currentTime, monthLaterTime } =
+		useGetCurrentTimeAndMonthLaterInSpecificDateFormat();
+
+	return fetch(
+		`${GET_POPULAR_USERS_URL}?startDate=${currentTime}&endDate=${monthLaterTime}&limit=5`,
+		{
+			method: "GET",
+		}
+	).then((response) => {
+		return response.json().then((body) => {
+			if (response.ok) {
+				return body;
+			} else {
+				throw new Error(body.resultCode);
+			}
+		});
+	});
+};
+
+export const useGetPopularUsers = () => {
+	const { data, isLoading } = useQuery(
+		["popularUsers"],
+		() => getPopularUsers(),
+		{
+			retry: false,
+			onError: (error) => {
+				Sentry.captureException(error);
+			},
+			select: (data) => {
+				return data.data;
+			},
+		}
+	);
+
+	const [popularUsers, isGetPopularUsersLoading] = [data, isLoading];
+	return { popularUsers, isGetPopularUsersLoading };
 };

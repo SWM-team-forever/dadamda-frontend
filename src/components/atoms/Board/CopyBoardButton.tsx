@@ -7,8 +7,8 @@ import { PasteIcon } from "@/components/atoms/Icon";
 import theme from "@/assets/styles/theme";
 import { useModal } from "@/hooks/useModal";
 
-function CopyBoardButton({ boardId, isOnlyIcon }: { boardId: string | null, isOnlyIcon?: boolean }) {
-    const { mutate } = useCopyOpenBoard();
+function CopyBoardButton({ boardId, isOnlyIcon, changeShareCount }: { boardId: string | null, isOnlyIcon?: boolean, changeShareCount?: () => void }) {
+    const { mutate } = useCopyOpenBoard(changeShareCount);
 
     const { openModal } = useModal();
     const currentURL = window.location.href;

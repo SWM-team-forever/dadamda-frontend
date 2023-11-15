@@ -10,6 +10,7 @@ import CopyBoardButton from "@/components/atoms/Board/CopyBoardButton";
 import { useChangeHeart, useIncreaseTrendingViewCount } from "@/api/trend";
 import { logEvent } from "@/utility/amplitude";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
+import { useState } from "react";
 
 export interface TrendingCardProps {
     profileUrl: string,
@@ -34,6 +35,39 @@ const tagMapping = {
 }
 
 function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt, shareCnt, viewCnt, createdAt, contents, uuid }: TrendingCardProps) {
+    const [counts, setCounts] = useState({
+        heartCnt: heartCnt,
+        shareCnt: shareCnt,
+        viewCnt: viewCnt,
+    });
+
+    const changeHeartCount = (isHeart: boolean) => {
+        setCounts((prev) => {
+            return {
+                ...prev,
+                heartCnt: isHeart ? prev.heartCnt + 1 : prev.heartCnt - 1,
+            }
+        })
+    }
+
+    const changeShareCount = () => {
+        setCounts((prev) => {
+            return {
+                ...prev,
+                shareCnt: prev.shareCnt + 1,
+            }
+        })
+    }
+
+    const changeViewCount = () => {
+        setCounts((prev) => {
+            return {
+                ...prev,
+                viewCnt: prev.viewCnt + 1,
+            }
+        })
+    }
+
     function Info() {
         return (
             <Box
@@ -105,7 +139,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function ThumbnailImageList() {
-        const { mutate } = useIncreaseTrendingViewCount();
+        const { mutate } = useIncreaseTrendingViewCount(changeViewCount);
 
         const handleIncreaeViewCount = () => {
             mutate(uuid);
@@ -174,7 +208,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     }
 
     function HeartButton() {
-        const { mutate } = useChangeHeart();
+        const { mutate } = useChangeHeart(changeHeartCount);
 
         const { openModal } = useModal();
         const currentURL = window.location.href;
@@ -199,7 +233,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                 sx={buttonTextStyle}
                 onClick={handleChangeHeart}
             >
-                {heartCnt}
+                {counts.heartCnt}
             </Button>
         )
     }
@@ -207,16 +241,16 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
     function PasteButton() {
         return (
             <Button
-                startIcon={<CopyBoardButton boardId={uuid} isOnlyIcon />}
+                startIcon={<CopyBoardButton boardId={uuid} isOnlyIcon changeShareCount={changeShareCount} />}
                 sx={buttonTextStyle}
             >
-                {shareCnt}
+                {counts.shareCnt}
             </Button>
         )
     }
 
     function ViewButton() {
-        const { mutate } = useIncreaseTrendingViewCount();
+        const { mutate } = useIncreaseTrendingViewCount(changeViewCount);
 
         const handleIncreaeViewCount = () => {
             mutate(uuid);
@@ -249,7 +283,7 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                 sx={buttonTextStyle}
                 onClick={handleClickBoardView}
             >
-                {viewCnt}
+                {counts.viewCnt}
             </Button>
         )
     }
