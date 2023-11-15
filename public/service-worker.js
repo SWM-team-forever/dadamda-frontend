@@ -1,5 +1,3 @@
-import { usePostCreateScrap } from "@/api/scrap";
-
 // 캐시 이름
 const CACHE_NAME = "cache-v1";
 
@@ -42,19 +40,19 @@ self.addEventListener("fetch", (event) => {
 	);
 });
 
-self.addEventListener("fetch", (event) => {
-	const url = new URL(event.request.url);
-	// If this is an incoming POST request for the
-	// registered "action" URL, respond to it.
-	if (event.request.method === "POST" && url.pathname === "/bookmark") {
-		event.respondWith(
-			(async () => {
-				const formData = await event.request.formData();
-				const link = formData.get("link") || "";
-				const { mutate } = usePostCreateScrap();
-				await mutate(link);
-				return Response.redirect("/");
-			})()
-		);
-	}
-});
+// self.addEventListener("fetch", (event) => {
+// 	const url = new URL(event.request.url);
+// 	// If this is an incoming POST request for the
+// 	// registered "action" URL, respond to it.
+// 	if (event.request.method === "POST" && url.pathname === "/bookmark") {
+// 		event.respondWith(
+// 			(async () => {
+// 				const formData = await event.request.formData();
+// 				const link = formData.get("link") || "";
+// 				const { mutate } = usePostCreateScrap();
+// 				await mutate(link);
+// 				return Response.redirect("/");
+// 			})()
+// 		);
+// 	}
+// });
