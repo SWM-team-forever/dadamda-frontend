@@ -20,37 +20,7 @@ import Header from '@/components/molcules/Navigation/Header';
 import RightSideModalWrapper from '@/components/molcules/Modal/RightSideModalWrapper';
 import ErrorPage from '@/pages/ErrorPage';
 import FullScreenModalWrapper from '@/components/molcules/Modal/FullScreenModalWrapper';
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.addEventListener(
-    "controllerchange",
-    () => {
-      window.location.reload();
-    }
-  );
 
-  window.addEventListener("load", async () => {
-    const registration =
-      await navigator.serviceWorker.register(
-        "/service-worker.js", {
-        scope: "/"
-      }
-      );
-
-    // After the initial load, force a service worker update check each time
-    // our web app is hidden and then brought back to the foreground.
-    document.addEventListener(
-      "visibilitychange",
-      () => {
-        if (
-          document.visibilityState ===
-          "visible"
-        ) {
-          registration.update();
-        }
-      }
-    );
-  });
-}
 const queryClient = new QueryClient();
 Sentry.init({
   dsn: process.env.NODE_ENV === "production" ? SENTRY_DSN : "",

@@ -1,7 +1,6 @@
 {
 	"name": "세상의 모든 URL, 다담다",
 	"short_name": "다담다",
-	"scope": ".",
 	"icons": [
 		{
 			"src": "/src/assets/images/dadamda-logo128.png",
@@ -20,7 +19,7 @@
 			"type": "image/png"
 		}
 	],
-	"start_url": "./",
+	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#1B5BBA",
 	"theme_color": "#155EEF",
