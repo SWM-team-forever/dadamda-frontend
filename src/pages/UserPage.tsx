@@ -86,7 +86,7 @@ function UserPage() {
                 }}
             >
                 <UserInfoWrapper>
-                    <UserImageByModeWrapper profileUrl={profileUrl} mode={mode} changeModeIntoView={changeModeIntoView} />
+                    <UserImageByModeWrapper profileUrl={profileUrl} mode={'view'} changeModeIntoView={changeModeIntoView} />
                     <Box
                         sx={{
                             display: 'flex',
