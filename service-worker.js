@@ -40,7 +40,11 @@ self.addEventListener("fetch", (event) => {
 		fetch(event.request).catch(() =>
 			caches
 				.open(CACHE_NAME)
-				.then((cache) => cache.match("/offline.html"))
+				.then((cache) =>
+					cache.match(
+						"https://dev.dadamda.me/offline.html"
+					)
+				)
 		)
 	);
 });
