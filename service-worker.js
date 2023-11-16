@@ -1,3 +1,5 @@
+import { POST_CREATE_OTHER_SCRAP_URL } from "./src/secret.js";
+
 // 캐시 이름
 const CACHE_NAME = "cache-v1";
 
@@ -40,19 +42,44 @@ self.addEventListener("fetch", (event) => {
 	);
 });
 
-// self.addEventListener("fetch", (event) => {
-// 	const url = new URL(event.request.url);
-// 	// If this is an incoming POST request for the
-// 	// registered "action" URL, respond to it.
-// 	if (event.request.method === "POST" && url.pathname === "/bookmark") {
-// 		event.respondWith(
-// 			(async () => {
-// 				const formData = await event.request.formData();
-// 				const link = formData.get("link") || "";
-// 				const { mutate } = usePostCreateScrap();
-// 				await mutate(link);
-// 				return Response.redirect("/");
-// 			})()
-// 		);
-// 	}
-// });
+self.addEventListener("fetch", (event) => {
+	const url = new URL(event.request.url);
+	// If this is an incoming POST request for the
+	// registered "action" URL, respond to it.
+	if (event.request.method === "POST" && url.pathname === "/bookmark") {
+		event.respondWith(
+			(async () => {
+				const formData = await event.request.formData();
+				const url = formData.get("url") || "";
+				const token =
+					localStorage.getItem("token") || "";
+				const response = await fetch(
+					POST_CREATE_OTHER_SCRAP_URL,
+					{
+						method: "POST",
+						headers: {
+							"Content-Type":
+								"application/json",
+							"X-AUTH-TOKEN": token,
+						},
+						body: JSON.stringify({
+							pageUrl: url,
+						}),
+					}
+				).then((response) => {
+					return response.json().then((body) => {
+						if (response.ok) {
+							return body;
+						} else {
+							throw new Error(
+								body.resultCode
+							);
+						}
+					});
+				});
+
+				return response;
+			})()
+		);
+	}
+});
