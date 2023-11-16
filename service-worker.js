@@ -51,34 +51,10 @@ self.addEventListener("fetch", (event) => {
 			(async () => {
 				const formData = await event.request.formData();
 				const url = formData.get("url") || "";
-				const token =
-					localStorage.getItem("token") || "";
-				const response = await fetch(
-					POST_CREATE_OTHER_SCRAP_URL,
-					{
-						method: "POST",
-						headers: {
-							"Content-Type":
-								"application/json",
-							"X-AUTH-TOKEN": token,
-						},
-						body: JSON.stringify({
-							pageUrl: url,
-						}),
-					}
-				).then((response) => {
-					return response.json().then((body) => {
-						if (response.ok) {
-							return body;
-						} else {
-							throw new Error(
-								body.resultCode
-							);
-						}
-					});
-				});
-
-				return response;
+				const redirectUrl = `/bookmark?url=${encodeURIComponent(
+					url
+				)}`;
+				return Response.redirect(redirectUrl, 303);
 			})()
 		);
 	}
