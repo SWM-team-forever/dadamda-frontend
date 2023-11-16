@@ -15,6 +15,7 @@ import BoardContentsWrapperPage from '@/pages/BoardContentsWrapperPage';
 
 import { RequireAuth } from '@/context/LoginContext';
 import { logEvent } from '@/utility/amplitude';
+import ShareTarget from '@/pages/ShareTarget';
 
 function Routing() {
   const location = useLocation();
@@ -50,6 +51,7 @@ function Routing() {
         <Route path='/board-contents/:boardUUID' element={<BoardContentsWrapperPage />}></Route>
         <Route path='/not-found' element={<NotFoundPage />} />
         <Route path='*' element={<NotFoundPage />}></Route>
+        <Route path='/bookmark/:url' element={<ShareTarget />}></Route>
       </Routes>
     </>
   );
