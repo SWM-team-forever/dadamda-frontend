@@ -49,7 +49,7 @@ self.addEventListener("fetch", (event) => {
 			(async () => {
 				const formData = await event.request.formData();
 				const url = formData.get("url") || "";
-				const redirectUrl = `/bookmark?url=${encodeURIComponent(
+				const redirectUrl = `https://dev.dadamda.me/bookmark?url=${encodeURIComponent(
 					url
 				)}`;
 				return Response.redirect(redirectUrl, 303);
