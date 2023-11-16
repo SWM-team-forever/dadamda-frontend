@@ -51,7 +51,7 @@ function Routing() {
         <Route path='/board-contents/:boardUUID' element={<BoardContentsWrapperPage />}></Route>
         <Route path='/not-found' element={<NotFoundPage />} />
         <Route path='*' element={<NotFoundPage />}></Route>
-        <Route path='/bookmark/:url' element={<ShareTarget />}></Route>
+        <Route path='/bookmark' element={<ShareTarget />}></Route>
       </Routes>
     </>
   );
