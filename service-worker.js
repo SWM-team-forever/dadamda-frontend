@@ -1,3 +1,5 @@
+import { POST_CREATE_OTHER_SCRAP_URL } from "./src/secret.js";
+
 // 캐시 이름
 const CACHE_NAME = "cache-v1";
 
