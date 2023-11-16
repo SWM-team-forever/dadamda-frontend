@@ -2,7 +2,12 @@
 const CACHE_NAME = "cache-v1";
 
 // 캐싱할 파일
-const FILES_TO_CACHE = ["/", "/index.html", "/offline.html"];
+const FILES_TO_CACHE = [
+	"/",
+	"/index.html",
+	"/offline.html",
+	"/shareTarget.html",
+];
 
 // 상술한 파일 캐싱
 self.addEventListener("install", (event) => {
@@ -41,19 +46,29 @@ self.addEventListener("fetch", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-	const url = new URL(event.request.url);
 	// If this is an incoming POST request for the
 	// registered "action" URL, respond to it.
-	if (event.request.method === "POST" && url.pathname === "/bookmark") {
+	if (
+		event.request.method === "POST" &&
+		event.request.url === "https://dev.dadamda.me/bookmark"
+	) {
 		event.respondWith(
-			(async () => {
-				const formData = await event.request.formData();
-				const url = formData.get("url") || "";
-				const redirectUrl = `https://dev.dadamda.me/bookmark?url=${encodeURIComponent(
-					url
-				)}`;
-				return Response.redirect(redirectUrl, 303);
+			Response.redirect(
+				"https://dev.dadamda.me/shareTarget.html"
+			)
+		);
+		event.waitUntil(
+			(async function () {
+				const data = await event.request.formData();
+				const client = await self.clients.get(
+					event.resultingClientId ||
+						event.clientId
+				);
+				const url = data.get("url");
+				client.postMessage(url);
 			})()
 		);
+	} else {
+		return;
 	}
 });
