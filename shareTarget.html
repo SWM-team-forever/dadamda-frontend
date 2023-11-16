@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>세상의 모든 URL, 다담다</title>
+		<link rel="manifest" href="/manifest.webmanifest" />
+		<link
+			rel="apple-touch-icon"
+			href="/src/assets/image/dadamda-logo128.png"
+		/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black"
+		/>
+		<meta name="apple-mobile-web-app-title" content="다담다" />
+		<meta name="theme-color" content="#155EEF" />
+	</head>
+	<body>
+		<div>성공적으로 추가하였습니다.</div>
+		<script>
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker.addEventListener(
+					"controllerchange",
+					() => {
+						window.location.reload();
+					}
+				);
+
+				window.addEventListener("load", async () => {
+					const registration =
+						await navigator.serviceWorker.register(
+							"/service-worker.js"
+						);
+
+					// After the initial load, force a service worker update check each time
+					// our web app is hidden and then brought back to the foreground.
+					document.addEventListener(
+						"visibilitychange",
+						() => {
+							if (
+								document.visibilityState ===
+								"visible"
+							) {
+								registration.update();
+							}
+						}
+					);
+
+					navigator.serviceWorker.onmessage =
+						function (event) {
+							const token =
+								localStorage.getItem(
+									"token"
+								);
+							const url =
+								event.data.url;
+							fetch(
+								"https://api-dev.dadamda.me/v1/scraps",
+								{
+									method: "POST",
+									headers: {
+										"Content-Type":
+											"application/json",
+										"X-AUTH-TOKEN":
+											token,
+									},
+									body: JSON.stringify(
+										{
+											pageUrl: url,
+										}
+									),
+								}
+							).then((response) => {
+								return response
+									.json()
+									.then(
+										(
+											body
+										) => {
+											if (
+												response.ok
+											) {
+												return body;
+											} else {
+												throw new Error(
+													body.resultCode
+												);
+											}
+										}
+									);
+							});
+						};
+				});
+			}
+		</script>
+	</body>
+</html>
