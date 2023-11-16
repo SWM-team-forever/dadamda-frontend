@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-=======
-import { redirect } from "react-router-dom";
-
->>>>>>> Stashed changes
 // 캐시 이름
 const CACHE_NAME = "cache-v1";
 
