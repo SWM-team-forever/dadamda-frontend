@@ -53,8 +53,12 @@ self.addEventListener("fetch", (event) => {
 		event.request.url === "https://dev.dadamda.me/bookmark"
 	) {
 		event.respondWith(
-			Response.redirect(
-				"https://dev.dadamda.me/shareTarget.html"
+			fetch(event.request).catch(() =>
+				caches
+					.open(CACHE_NAME)
+					.then((cache) =>
+						cache.match("/shareTarget.html")
+					)
 			)
 		);
 		event.waitUntil(
