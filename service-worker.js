@@ -53,30 +53,20 @@ self.addEventListener("fetch", (event) => {
 	// If this is an incoming POST request for the
 	// registered "action" URL, respond to it.
 	if (
-		event.request.method === "POST" &&
-		event.request.url === "https://dev.dadamda.me/bookmark"
+		event.request.method !== "POST" ||
+		event.request.url !== "/bookmark"
 	) {
-		event.respondWith(
-			fetch(event.request).catch(() =>
-				caches
-					.open(CACHE_NAME)
-					.then((cache) =>
-						cache.match("/shareTarget.html")
-					)
-			)
-		);
-		event.waitUntil(
-			(async function () {
-				const data = await event.request.formData();
-				const client = await self.clients.get(
-					event.resultingClientId ||
-						event.clientId
-				);
-				const url = data.get("url");
-				client.postMessage(url);
-			})()
-		);
-	} else {
 		return;
 	}
+
+	event.waitUntil(
+		(async function () {
+			const data = await event.request.formData();
+			const client = await self.clients.get(
+				event.resultingClientId || event.clientId
+			);
+			const url = data.get("url");
+			client.postMessage(url);
+		})()
+	);
 });
