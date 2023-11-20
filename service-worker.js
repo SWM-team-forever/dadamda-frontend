@@ -64,7 +64,8 @@ self.addEventListener("fetch", async (event) => {
 		const url = data.get("link") || data.get("description");
 
 		return Response.redirect(
-			`https://dev.dadamda.me/bookmark?url=${url}`
+			`https://dev.dadamda.me/bookmark?url=${url}`,
+			303
 		);
 	});
 	// event.waitUntil(
