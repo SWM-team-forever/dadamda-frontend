@@ -61,7 +61,8 @@ self.addEventListener("fetch", async (event) => {
 
 	event.respondWith(async () => {
 		const data = await event.request.formData();
-		const url = await data.get("link");
+		const url = data.get("link") || data.get("description");
+
 		return Response.redirect(
 			`https://dev.dadamda.me/bookmark?url=${url}`
 		);
