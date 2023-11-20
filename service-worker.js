@@ -59,11 +59,14 @@ self.addEventListener("fetch", async (event) => {
 		return;
 	}
 
-	const data = await event.request.formData();
-	const url = data.get("url");
-
 	event.respondWith(
-		Response.redirect(`https://dev.dadamda.me/bookmark?url=${url}`)
+		(async () => {
+			const data = await event.request.formData();
+			const url = data.get("link");
+			return Response.redirect(
+				`https://dev.dadamda.me/bookmark?url=${url}`
+			);
+		})()
 	);
 	// event.waitUntil(
 	// 	(async function () {
