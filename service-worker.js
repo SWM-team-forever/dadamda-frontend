@@ -62,6 +62,8 @@ self.addEventListener("fetch", async (event) => {
 	event.respondWith(async () => {
 		const data = await event.request.formData();
 		const url = data.get("link") || data.get("description");
+		console.log("url in service worker", url);
+		console.log("data in service worker", data);
 
 		return Response.redirect(
 			`https://dev.dadamda.me/bookmark?url=${url}`,

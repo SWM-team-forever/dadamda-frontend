@@ -10,6 +10,7 @@ function ShareTarget() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log('url in share target page', url);
         fetch(POST_CREATE_OTHER_SCRAP_URL, {
             method: "POST",
             headers: {
