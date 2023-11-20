@@ -49,7 +49,7 @@ self.addEventListener("fetch", (event) => {
 	);
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", async (event) => {
 	// If this is an incoming POST request for the
 	// registered "action" URL, respond to it.
 	if (
@@ -59,14 +59,20 @@ self.addEventListener("fetch", (event) => {
 		return;
 	}
 
-	event.waitUntil(
-		(async function () {
-			const data = await event.request.formData();
-			const client = await self.clients.get(
-				event.resultingClientId || event.clientId
-			);
-			const url = data.get("url");
-			client.postMessage(url);
-		})()
+	const data = await event.request.formData();
+	const url = data.get("url");
+
+	event.respondWith(
+		Response.redirect(`https://dev.dadamda.me/bookmark?url=${url}`)
 	);
+	// event.waitUntil(
+	// 	(async function () {
+	// 		const data = await event.request.formData();
+	// 		const client = await self.clients.get(
+	// 			event.resultingClientId || event.clientId
+	// 		);
+	// 		const url = data.get("url");
+	// 		client.postMessage(url);
+	// 	})()
+	// );
 });
