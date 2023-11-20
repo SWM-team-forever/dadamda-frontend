@@ -52,10 +52,7 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener("fetch", async (event) => {
 	// If this is an incoming POST request for the
 	// registered "action" URL, respond to it.
-	if (
-		event.request.method !== "POST" ||
-		event.request.url !== "/bookmark"
-	) {
+	if (event.request.method !== "POST") {
 		return;
 	}
 
