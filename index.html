@@ -104,50 +104,50 @@
 						}
 					);
 
-					navigator.serviceWorker.onmessage =
-						function (event) {
-							const token =
-								localStorage.getItem(
-									"token"
+					navigator.serviceWorker.onmessage = (
+						event
+					) => {
+						const token =
+							localStorage.getItem(
+								"token"
+							);
+						const url = event.data.url;
+						fetch(
+							"https://api-dev.dadamda.me/v1/scraps",
+							{
+								method: "POST",
+								headers: {
+									"Content-Type":
+										"application/json",
+									"X-AUTH-TOKEN":
+										token,
+								},
+								body: JSON.stringify(
+									{
+										pageUrl: url,
+									}
+								),
+							}
+						).then((response) => {
+							return response
+								.json()
+								.then(
+									(
+										body
+									) => {
+										if (
+											response.ok
+										) {
+											return body;
+										} else {
+											throw new Error(
+												body.resultCode
+											);
+										}
+									}
 								);
-							const url =
-								event.data.url;
-							fetch(
-								"https://api-dev.dadamda.me/v1/scraps",
-								{
-									method: "POST",
-									headers: {
-										"Content-Type":
-											"application/json",
-										"X-AUTH-TOKEN":
-											token,
-									},
-									body: JSON.stringify(
-										{
-											pageUrl: url,
-										}
-									),
-								}
-							).then((response) => {
-								return response
-									.json()
-									.then(
-										(
-											body
-										) => {
-											if (
-												response.ok
-											) {
-												return body;
-											} else {
-												throw new Error(
-													body.resultCode
-												);
-											}
-										}
-									);
-							});
-						};
+						});
+					};
 				});
 			}
 		</script>
