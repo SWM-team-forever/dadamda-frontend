@@ -56,25 +56,16 @@ self.addEventListener("fetch", async (event) => {
 		return;
 	}
 
-	event.respondWith(async () => {
-		const data = await event.request.formData();
-		const url = data.get("link") || data.get("description");
-		console.log("url in service worker", url);
-		console.log("data in service worker", data);
+	event.respondWith(Response.redirect("/"));
 
-		return Response.redirect(
-			`https://dev.dadamda.me/bookmark?url=${url}`,
-			303
-		);
-	});
-	// event.waitUntil(
-	// 	(async function () {
-	// 		const data = await event.request.formData();
-	// 		const client = await self.clients.get(
-	// 			event.resultingClientId || event.clientId
-	// 		);
-	// 		const url = data.get("url");
-	// 		client.postMessage(url);
-	// 	})()
-	// );
+	event.waitUntil(
+		(async function () {
+			const data = await event.request.formData();
+			const client = await self.clients.get(
+				event.resultingClientId || event.clientId
+			);
+			const url = data.get("link") || data.get("description");
+			client.postMessage({ url });
+		})()
+	);
 });
