@@ -104,51 +104,153 @@
 						}
 					);
 
-					navigator.serviceWorker.onmessage = (
-						event
-					) => {
-						const token =
-							localStorage.getItem(
-								"token"
-							);
-						const url = event.data.url;
-						fetch(
-							"https://api-dev.dadamda.me/v1/scraps",
-							{
-								method: "POST",
-								headers: {
-									"Content-Type":
-										"application/json",
-									"X-AUTH-TOKEN":
-										token,
-								},
-								body: JSON.stringify(
-									{
-										pageUrl: url,
-									}
-								),
+					document.addEventListener(
+						"fetch",
+						async (event) => {
+							// If this is an incoming POST request for the
+							// registered "action" URL, respond to it.
+							if (
+								event.request
+									.method !==
+								"POST"
+							) {
+								return;
 							}
-						).then((response) => {
-							return response
-								.json()
-								.then(
-									(
-										body
-									) => {
-										if (
-											response.ok
-										) {
-											return body;
-										} else {
-											throw new Error(
-												body.resultCode
-											);
+
+							event.waitUntil(
+								(async function () {
+									const data =
+										await event.request.formData();
+
+									const url =
+										data.get(
+											"link"
+										) ||
+										data.get(
+											"description"
+										);
+									const token =
+										localStorage.getItem(
+											"token"
+										);
+
+									fetch(
+										"https://api-dev.dadamda.me/v1/scraps",
+										{
+											method: "POST",
+											headers: {
+												"Content-Type":
+													"application/json",
+												"X-AUTH-TOKEN":
+													token,
+											},
+											body: JSON.stringify(
+												{
+													pageUrl: url,
+												}
+											),
 										}
+									).then(
+										(
+											response
+										) => {
+											return response
+												.json()
+												.then(
+													(
+														body
+													) => {
+														if (
+															response.ok
+														) {
+															return body;
+														} else {
+															throw new Error(
+																body.resultCode
+															);
+														}
+													}
+												);
+										}
+									);
+								})()
+							);
+						}
+					);
+				});
+
+				window.addEventListener(
+					"fetch",
+					async (event) => {
+						// If this is an incoming POST request for the
+						// registered "action" URL, respond to it.
+						if (
+							event.request.method !==
+							"POST"
+						) {
+							return;
+						}
+
+						event.waitUntil(
+							(async function () {
+								const data =
+									await event.request.formData();
+
+								const url =
+									data.get(
+										"link"
+									) ||
+									data.get(
+										"description"
+									);
+								const token =
+									localStorage.getItem(
+										"token"
+									);
+
+								fetch(
+									"https://api-dev.dadamda.me/v1/scraps",
+									{
+										method: "POST",
+										headers: {
+											"Content-Type":
+												"application/json",
+											"X-AUTH-TOKEN":
+												token,
+										},
+										body: JSON.stringify(
+											{
+												pageUrl: url,
+											}
+										),
+									}
+								).then(
+									(
+										response
+									) => {
+										return response
+											.json()
+											.then(
+												(
+													body
+												) => {
+													if (
+														response.ok
+													) {
+														return body;
+													} else {
+														throw new Error(
+															body.resultCode
+														);
+													}
+												}
+											);
 									}
 								);
-						});
-					};
-				});
+							})()
+						);
+					}
+				);
 			}
 		</script>
 	</body>
