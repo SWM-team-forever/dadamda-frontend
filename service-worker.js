@@ -56,7 +56,7 @@ self.addEventListener("fetch", async (event) => {
 		return;
 	}
 
-	event.respondWith(Response.redirect("/"));
+	event.respondWith(Response.redirect(`https://dev.dadamda.me/bookmark`));
 
 	event.waitUntil(
 		(async function () {

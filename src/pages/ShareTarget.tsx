@@ -29,7 +29,7 @@ function ShareTarget() {
                 }
             });
         });
-        navigate('/');
+        navigate('/scrap/list');
     }, [])
 
     return (
