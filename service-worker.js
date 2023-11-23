@@ -42,7 +42,7 @@ self.addEventListener("fetch", (event) => {
 				.open(CACHE_NAME)
 				.then((cache) =>
 					cache.match(
-						"https://dev.dadamda.me/offline.html"
+						"https://dadamda.me/offline.html"
 					)
 				)
 		)
@@ -56,7 +56,7 @@ self.addEventListener("fetch", async (event) => {
 		return;
 	}
 
-	event.respondWith(Response.redirect(`https://dev.dadamda.me/bookmark`));
+	event.respondWith(Response.redirect(`https://dadamda.me/bookmark`));
 
 	event.waitUntil(
 		(async function () {
