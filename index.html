@@ -87,7 +87,7 @@
 				window.addEventListener("load", async () => {
 					const registration =
 						await navigator.serviceWorker.register(
-							"/service-worker.js"
+							"./service-worker.js"
 						);
 
 					// After the initial load, force a service worker update check each time
@@ -135,7 +135,7 @@
 										);
 
 									fetch(
-										"https://api-dev.dadamda.me/v1/scraps",
+										"https://api.dadamda.me/v1/scraps",
 										{
 											method: "POST",
 											headers: {
@@ -209,7 +209,7 @@
 									);
 
 								fetch(
-									"https://api-dev.dadamda.me/v1/scraps",
+									"https://api.dadamda.me/v1/scraps",
 									{
 										method: "POST",
 										headers: {
