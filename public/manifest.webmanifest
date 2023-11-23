@@ -1,0 +1,36 @@
+{
+	"name": "세상의 모든 URL, 다담다",
+	"short_name": "다담다",
+	"icons": [
+		{
+			"src": "/dadamda-logo128.png",
+			"sizes": "128x128",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/dadamda-logo144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		},
+		{
+			"src": "/dadamda-logo512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#1B5BBA",
+	"theme_color": "#155EEF",
+	"share_target": {
+		"action": "/",
+		"method": "POST",
+		"enctype": "multipart/form-data",
+		"params": {
+			"url": "link",
+			"title": "name",
+			"text": "description"
+		}
+	}
+}

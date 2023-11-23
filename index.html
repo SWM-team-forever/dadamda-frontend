@@ -1,38 +1,257 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="referrer" content="no-referrer" />
-    <link rel="icon" type="image/svg+xml" href="/dadamda-logo128.png" />
-    <link rel="stylesheet" type="text/css" href='https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google-site-verification" content="WgU_59s6SZXvKL07o-aHQVJBQHkvuTgaX2wd8tjDyjY" />
-    <title>세상의 모든 URL, 다담다</title>
-    <meta name="description" content="내용에 따라 자동으로 북마크를 구성하는 신개념 컨텐츠 맞춤 스크랩 서비스, 다담다"/>
-    <meta name="title" content="세상의 모든 URL, 다담다"/>
-    <meta property="og:title" content="세상의 모든 URL, 다담다"/>
-    <meta property="og:description" content="내용에 따라 자동으로 북마크를 구성하는 신개념 컨텐츠 맞춤 스크랩 서비스, 다담다"/>
-    <meta property="og:image" content="/dadamda_img.png"/>
-    <meta property="og:url" content="https://dadamda.me"/>
-    <meta property="og:site_name" content="다담다"/>
-    <meta property="og:type" content="website"/>
-    <meta name="twitter:title" content="세상의 모든 URL, 다담다"/>
-    <meta name="twitter:description" content="내용에 따라 자동으로 북마크를 구성하는 신개념 컨텐츠 맞춤 스크랩 서비스, 다담다"/>
-    <meta name="twitter:image" content="/dadamda_img.png"/>
-    <meta name="twitter:url" content="https://dadamda.me"/>
-    <base href="/"/>
-  </head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PC556BBB16"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="referrer" content="no-referrer" />
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/dadamda-logo128.png"
+		/>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<meta
+			name="google-site-verification"
+			content="WgU_59s6SZXvKL07o-aHQVJBQHkvuTgaX2wd8tjDyjY"
+		/>
+		<title>세상의 모든 URL, 다담다</title>
+		<meta
+			name="description"
+			content="내용에 따라 자동으로 북마크를 구성하는 신개념 컨텐츠 맞춤 스크랩 서비스, 다담다"
+		/>
+		<meta name="title" content="세상의 모든 URL, 다담다" />
+		<meta property="og:title" content="세상의 모든 URL, 다담다" />
+		<meta
+			property="og:description"
+			content="내용에 따라 자동으로 북마크를 구성하는 신개념 컨텐츠 맞춤 스크랩 서비스, 다담다"
+		/>
+		<meta property="og:image" content="/dadamda_img.png" />
+		<meta property="og:url" content="https://dadamda.me" />
+		<meta property="og:site_name" content="다담다" />
+		<meta property="og:type" content="website" />
+		<meta name="twitter:title" content="세상의 모든 URL, 다담다" />
+		<meta
+			name="twitter:description"
+			content="내용에 따라 자동으로 북마크를 구성하는 신개념 컨텐츠 맞춤 스크랩 서비스, 다담다"
+		/>
+		<meta name="twitter:image" content="/dadamda_img.png" />
+		<meta name="twitter:url" content="https://dadamda.me" />
 
-  gtag('config', 'G-PC556BBB16');
-</script>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+		<link rel="manifest" href="/manifest.webmanifest" />
+		<link
+			rel="apple-touch-icon"
+			href="/src/assets/image/dadamda-logo128.png"
+		/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black"
+		/>
+		<meta name="apple-mobile-web-app-title" content="다담다" />
+		<meta name="theme-color" content="#155EEF" />
+		<base href="/" />
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script
+		async
+		src="https://www.googletagmanager.com/gtag/js?id=G-PC556BBB16"
+	></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag("js", new Date());
+
+		gtag("config", "G-PC556BBB16");
+	</script>
+	<body>
+		<div id="root"></div>
+		<script type="module" src="/src/main.tsx"></script>
+		<script>
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker.addEventListener(
+					"controllerchange",
+					() => {
+						window.location.reload();
+					}
+				);
+
+				window.addEventListener("load", async () => {
+					const registration =
+						await navigator.serviceWorker.register(
+							"/service-worker.js"
+						);
+
+					// After the initial load, force a service worker update check each time
+					// our web app is hidden and then brought back to the foreground.
+					document.addEventListener(
+						"visibilitychange",
+						() => {
+							if (
+								document.visibilityState ===
+								"visible"
+							) {
+								registration.update();
+							}
+						}
+					);
+
+					document.addEventListener(
+						"fetch",
+						async (event) => {
+							// If this is an incoming POST request for the
+							// registered "action" URL, respond to it.
+							if (
+								event.request
+									.method !==
+								"POST"
+							) {
+								return;
+							}
+
+							event.waitUntil(
+								(async function () {
+									const data =
+										await event.request.formData();
+
+									const url =
+										data.get(
+											"link"
+										) ||
+										data.get(
+											"description"
+										);
+									const token =
+										localStorage.getItem(
+											"token"
+										);
+
+									fetch(
+										"https://api-dev.dadamda.me/v1/scraps",
+										{
+											method: "POST",
+											headers: {
+												"Content-Type":
+													"application/json",
+												"X-AUTH-TOKEN":
+													token,
+											},
+											body: JSON.stringify(
+												{
+													pageUrl: url,
+												}
+											),
+										}
+									).then(
+										(
+											response
+										) => {
+											return response
+												.json()
+												.then(
+													(
+														body
+													) => {
+														if (
+															response.ok
+														) {
+															return body;
+														} else {
+															throw new Error(
+																body.resultCode
+															);
+														}
+													}
+												);
+										}
+									);
+								})()
+							);
+						}
+					);
+				});
+
+				window.addEventListener(
+					"fetch",
+					async (event) => {
+						// If this is an incoming POST request for the
+						// registered "action" URL, respond to it.
+						if (
+							event.request.method !==
+							"POST"
+						) {
+							return;
+						}
+
+						event.waitUntil(
+							(async function () {
+								const data =
+									await event.request.formData();
+
+								const url =
+									data.get(
+										"link"
+									) ||
+									data.get(
+										"description"
+									);
+								const token =
+									localStorage.getItem(
+										"token"
+									);
+
+								fetch(
+									"https://api-dev.dadamda.me/v1/scraps",
+									{
+										method: "POST",
+										headers: {
+											"Content-Type":
+												"application/json",
+											"X-AUTH-TOKEN":
+												token,
+										},
+										body: JSON.stringify(
+											{
+												pageUrl: url,
+											}
+										),
+									}
+								).then(
+									(
+										response
+									) => {
+										return response
+											.json()
+											.then(
+												(
+													body
+												) => {
+													if (
+														response.ok
+													) {
+														return body;
+													} else {
+														throw new Error(
+															body.resultCode
+														);
+													}
+												}
+											);
+									}
+								);
+							})()
+						);
+					}
+				);
+			}
+		</script>
+	</body>
 </html>
