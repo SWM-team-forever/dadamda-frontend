@@ -11,6 +11,7 @@ import { useChangeHeart, useIncreaseTrendingViewCount } from "@/api/trend";
 import { logEvent } from "@/utility/amplitude";
 import { useBoardContentAtom } from "@/hooks/useBoardContentAtom";
 import { useState } from "react";
+import ProfileImage from "@/components/atoms/ProfileImage";
 
 export interface TrendingCardProps {
     profileUrl: string,
@@ -75,14 +76,9 @@ function TrendingCard({ profileUrl, nickname, title, description, tag, heartCnt,
                     display: 'flex',
                 }}
             >
-                <img
-                    src={profileUrl}
-                    alt="profile"
-                    style={{
-                        width: '44px',
-                        height: '44px',
-                        borderRadius: '100%',
-                    }}
+                <ProfileImage
+                    source={profileUrl}
+                    size={44}
                 />
                 <Box
                     sx={{

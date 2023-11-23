@@ -1,20 +1,21 @@
-import { useGetTrendingList } from '@/api/trend';
-import theme from '@/assets/styles/theme';
-import TrendingCard, { TrendingCardProps } from '@/components/molcules/Trending/TrendingCard';
-import EmptyTrendingContainer from '@/components/organisms/EmptyTrendingContainer';
-import EmptyBoardContainer from '@/components/organisms/board/EmptyBoardContainer';
-import { useTrendingAtom } from '@/hooks/useTrendingAtom';
-import { TabContext } from '@mui/lab';
 import { Box, Button, CircularProgress, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
-import { trendingMockData } from '__mocks__/trendingMockData';
+import { TabContext } from '@mui/lab';
 import { useState, SyntheticEvent, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+
+import { useGetTrendingList } from '@/api/trend';
+import theme from '@/assets/styles/theme';
+import { useTrendingAtom } from '@/hooks/useTrendingAtom';
 import mobileEventImage from '@/assets/images/mobileEventImage.png';
 import { useMoveToEventLink } from '@/hooks/useCustomNavigation';
 import desktopEventImage from '@/assets/images/desktopEventImage.png';
-import { CloseIcon, MedalIcon } from '@/components/atoms/Icon';
 import { useGetPopularUsers } from '@/api/user';
+
+import TrendingCard, { TrendingCardProps } from '@/components/molcules/Trending/TrendingCard';
+import EmptyTrendingContainer from '@/components/organisms/EmptyTrendingContainer';
+import { CloseIcon, MedalIcon } from '@/components/atoms/Icon';
+import ProfileImage from '@/components/atoms/ProfileImage';
 
 const category = {
     LIST: {
@@ -255,11 +256,10 @@ function TrendingPage() {
                             >
                                 {index + 1}
                             </Typography>
-                            <img src={user.profileUrl} alt="profileImage" style={{
-                                width: '20px',
-                                height: '20px',
-                                borderRadius: '100%',
-                            }} />
+                            <ProfileImage
+                                size={20}
+                                source={user.profileUrl}
+                            />
                             <Typography
                                 sx={nicknameTypographyStyle}
                             >
@@ -351,11 +351,10 @@ function TrendingPage() {
                             >
                                 {index + 1}
                             </Typography>
-                            <img src={user.profileUrl} alt="profileImage" style={{
-                                width: '32px',
-                                height: '32px',
-                                borderRadius: '100%',
-                            }} />
+                            <ProfileImage
+                                size={32}
+                                source={user.profileUrl}
+                            />
                             <Typography
                                 sx={nicknameTypographyStyle}
                             >
