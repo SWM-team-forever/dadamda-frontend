@@ -62,7 +62,7 @@ const Footer = () => {
                                 whiteSpace: 'nowrap',
                             }}
                         >
-                            (주) 다담다
+                            다담다
                         </Typography>
                         <Box>
                             <Typography
