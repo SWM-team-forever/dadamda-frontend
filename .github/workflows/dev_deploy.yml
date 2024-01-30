@@ -14,7 +14,7 @@ jobs:
 
       - name: properties 파일 복사
         run: |
-          echo "${{ secrets.WEB_DEV_SECRET }}" | base64 --decode > src/secret.tsx
+          echo "${{ secrets.WEB_PROD_SECRET }}" | base64 --decode > src/secret.tsx
 
       - name: Build
         run: |
