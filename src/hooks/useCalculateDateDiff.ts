@@ -33,7 +33,8 @@ function convertUnixTimeToSpecificDateFormat(unixTIme: number) {
 }
 
 function getCurrentTime() {
-	return dayjs().subtract(1, "month").unix();
+	const serviceStartedTime = dayjs("2023-10-05 00:00:00");
+	return serviceStartedTime.unix();
 }
 
 function getMonthLaterTime() {
